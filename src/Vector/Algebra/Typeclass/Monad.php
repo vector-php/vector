@@ -2,10 +2,10 @@
 
 namespace Vector\Algebra\Typeclass;
 
-use Vector\Algebra\Typeclass\Functor;
+use Vector\Algebra\Typeclass\Applicative;
 
-interface Monad extends Functor
+interface Monad extends Applicative
 {
-    public function pure($a);
+    // bind :: Monad m => (a -> m b) -> m a -> m b
     public function bind(Callable $f);
 }

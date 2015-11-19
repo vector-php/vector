@@ -5,6 +5,15 @@ namespace Vector\Algebra\Lambda;
 use Vector\Algebra\Typeclass\Functor;
 use Vector\Algebra\Typeclass\Monad;
 
+function using(...$requirements)
+{
+    return array_map(function($requirement) {
+        return function(...$args) use ($requirement) {
+            return call_user_func_array('Vector\\Algebra\\Lambda\\' . $requirement, $args);
+        };
+    }, $requirements);
+}
+
 function curry(Callable $f, $appliedArgs = [])
 {
     $arity = (new \ReflectionFunction($f))->getNumberOfParameters();

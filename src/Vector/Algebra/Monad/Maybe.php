@@ -4,42 +4,42 @@ namespace Vector\Algebra\Monad;
 
 use Vector\Algebra\Typeclass\Monad;
 
-class Either implements Monad
+class Maybe implements Monad
 {
-    private $isRight = true;
+    private $isJust = true;
     private $heldValue;
     
-    private function __construct($value, $isRight) 
+    private function __construct($value, $isJust)
     {
         $this->heldValue = $value;
-        $this->isRight   = $isRight;
+        $this->isJust    = $isJust;
     }
     
     /*
      * Constructor Methods (Static)
      \ --- */
      
-    // Left :: a -> Left a
-    public static function Left($value) 
+    // Just :: a -> Just a
+    public static function Just($a)
     {
-        return new Either($value, false);
+        return new Maybe($a, true);
     }
     
-    // Right :: a -> Right a
-    public static function Right($value) 
+    // Nothing :: Nothing
+    public static function Nothing()
     {
-        return new Either($value, true);
+        return new Maybe(null, false);
     }
     
     /*
      * Functor Instance
      \ --- */
 
-    // fmap :: Either f => (a -> b) -> f a -> f b
+    // fmap :: Maybe f => (a -> b) -> f a -> f b
     public function fmap(Callable $f)
     {
-        if ($this->isRight) {
-            return self::Right($f($this->heldValue));
+        if ($this->isJust) {
+            return self::Just($f($this->heldValue));
         }
         
         return $this;
@@ -49,17 +49,17 @@ class Either implements Monad
      * Applicative Instance
      \ --- */
      
-    // pure :: Either f => a -> f a
+    // pure :: Maybe f => a -> f a
     public function pure($a)
     {
-        return self::Right($a);
+        return self::Just($a);
     }
     
-    // apply :: Either f => f (a -> b) -> f a -> f b
+    // apply :: Maybe f => f (a -> b) -> f a -> f b
     public function apply($a)
     {
-        if ($this->isRight) {
-            // Applicative a => apply (Either f) (a) === fmap f a
+        if ($this->isJust) {
+            // Applicative a => apply (Maybe f) (a) === fmap f a
             return $a->fmap($this->heldValue);
         }
         
@@ -70,10 +70,10 @@ class Either implements Monad
      * Monad Instances
      \ --- */
      
-    // bind :: Either m => (a -> m b) -> m a -> m b
+    // bind :: Maybe m => (a -> m b) -> m a -> m b
     public function bind(Callable $f)
     {
-        if ($this->isRight) {
+        if ($this->isJust) {
             return $f($this->heldValue);
         }
         

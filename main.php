@@ -1,70 +1,37 @@
 <?php
 
-namespace Vector\Algebra\Lambda;
+use Vector\Util\FunctionCapsule;
 
-abstract class FunctionCapsule
+use Vector\Algebra\Monad\Maybe;
+
+use Vector\Algebra\Lib\Applicative;
+use Vector\Algebra\Lib\Lambda;
+
+require(__DIR__ . '/vendor/autoload.php');
+
+class Temp extends FunctionCapsule
 {
-    private static function curry(Callable $f, $appliedArgs = [])
+    protected static function add($a, $b, $c)
     {
-        $arity = (new \ReflectionMethod($f[0], $f[1]))->getNumberOfParameters();
-        
-        return function(...$suppliedArgs) use ($f, $appliedArgs, $arity) {
-            $args = array_merge($appliedArgs, $suppliedArgs);
-            
-            // TODO: Testing >= arity as opposed to == 
-            // is a hack to support currying of variadic
-            // functions. I have no idea if this works in every 
-            // situation - it needs to be more rigorously tested
-            if (count($args) >= $arity)
-                return call_user_func_array($f, $args);
-            else
-                return self::curry($f, $args);
-        };
-    }
-    
-    public static function using(...$requestedFunctions)
-    {
-        $context = get_called_class();
-        
-        $fulfilledRequest = array_map(function($f) use ($context) {
-            return self::curry([$context, $f]);
-        }, $requestedFunctions);
-        
-        return count($fulfilledRequest) === 1 
-            ? $fulfilledRequest[0] 
-            : $fulfilledRequest;
+        return $a + $b + $c;
     }
 }
 
-abstract class Lambda extends FunctionCapsule
-{    
-    protected static function compose(...$a)
-    {
-        return "Composed Implementation";
-    }
-}
+list($pure, $apply) = Applicative::using('pure', 'apply');
+$compose            = Lambda::using('compose');
+$add                = Temp::using('add');
 
-abstract class Functor extends FunctionCapsule
-{
-    protected static function fmap($f, $container)
-    {
-        return $container->fmap($f);
-    }
-}
+$justOne = Maybe::Just(1);
+$justTwo = Maybe::Just(2);
 
-abstract class Baz extends FunctionCapsule
-{
-    protected static function foo($a)
-    {
-        return $a + 1;
-    }
-    
-    protected static function bar($a, $b, $c)
-    {
-        return $a + $b * $c;
-    }
-}
+$pureAdd = $pure(Maybe::class, $add); // We want the Maybe instance of pure()
 
-$compose         = Lambda::using('compose');
-$fmap            = Functor::using('fmap');
-list($foo, $bar) = Baz::using('foo', 'bar');
+$argOneApplied = $apply($pureAdd, $justOne);
+$argTwoApplied = $apply($argOneApplied, $justTwo);
+$result        = $apply($argTwoApplied, $justOne);
+
+$pipe($pure(Maybe::class, $add), $apply, $justOne, $apply, $justTwo, $apply, $justOne);
+// Can be used to write a liftAN Function, e.g.
+// $liftA2($add, $justOne, $justTwo);
+
+var_dump($result);

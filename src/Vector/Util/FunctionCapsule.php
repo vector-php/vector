@@ -21,7 +21,11 @@ abstract class FunctionCapsule
                 return self::curry($f, $args);
         };
     }
-    
+
+    /**
+     * @param ...$requestedFunctions
+     * @return callable
+     */
     public static function using(...$requestedFunctions)
     {
         $context = get_called_class();

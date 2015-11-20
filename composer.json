@@ -12,7 +12,6 @@
     "autoload": {
         "psr-4": {
             "Vector\\": "src/Vector/"
-        },
-        "files": ["src/Vector/Algebra/Lambda.php"]
+        }
     }
 }

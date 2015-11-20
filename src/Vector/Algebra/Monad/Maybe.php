@@ -50,7 +50,7 @@ class Maybe implements Monad
      \ --- */
      
     // pure :: Maybe f => a -> f a
-    public function pure($a)
+    public static function pure($a)
     {
         return self::Just($a);
     }

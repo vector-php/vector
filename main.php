@@ -35,3 +35,8 @@ $pipe($pure(Maybe::class, $add), $apply, $justOne, $apply, $justTwo, $apply, $ju
 // $liftA2($add, $justOne, $justTwo);
 
 var_dump($result);
+
+// get :: Request -> Response
+// 
+// validateLogin :: Request -> Maybe User
+// saveUpdate :: Request -> Maybe User -> Either Response Response

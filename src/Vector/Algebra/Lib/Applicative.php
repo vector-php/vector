@@ -16,4 +16,17 @@ abstract class Applicative extends FunctionCapsule
     {
         return $f->apply($a);
     }
+    
+    protected static function liftA2($instance, $f, $a1, $a2)
+    {
+        list($pure, $apply) = self::using('pure', 'apply');
+        
+        return $apply(
+            $apply(
+                $pure($instance, $f),
+                $a1
+            ),
+            $a2
+        );
+    }
 }

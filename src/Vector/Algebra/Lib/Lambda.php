@@ -20,6 +20,6 @@ abstract class Lambda extends FunctionCapsule
 
     protected static function compose(...$fs)
     {
-        return pipe(...array_reverse($fs));
+        return self::pipe(...array_reverse($fs));
     }
 }

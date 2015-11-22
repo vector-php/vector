@@ -9,34 +9,24 @@ use Vector\Algebra\Lib\Lambda;
 
 require(__DIR__ . '/vendor/autoload.php');
 
-class Temp extends FunctionCapsule
+class App extends FunctionCapsule
 {
-    protected static function add($a, $b, $c)
+    protected static function add($a, $b)
     {
-        return $a + $b + $c;
+        return $a + $b;
     }
 }
 
-list($pure, $apply) = Applicative::using('pure', 'apply');
-$compose            = Lambda::using('compose');
-$add                = Temp::using('add');
+$liftA2  = Applicative::using('liftA2');
+$compose = Lambda::using('compose');
+$add     = App::using('add');
 
+$nothing = Maybe::Nothing();
 $justOne = Maybe::Just(1);
 $justTwo = Maybe::Just(2);
 
-$pureAdd = $pure(Maybe::class, $add); // We want the Maybe instance of pure()
+$maybeAdd = $liftA2(Maybe::class, $add);
 
-$argOneApplied = $apply($pureAdd, $justOne);
-$argTwoApplied = $apply($argOneApplied, $justTwo);
-$result        = $apply($argTwoApplied, $justOne);
-
-$pipe($pure(Maybe::class, $add), $apply, $justOne, $apply, $justTwo, $apply, $justOne);
-// Can be used to write a liftAN Function, e.g.
-// $liftA2($add, $justOne, $justTwo);
-
-var_dump($result);
-
-// get :: Request -> Response
-// 
-// validateLogin :: Request -> Maybe User
-// saveUpdate :: Request -> Maybe User -> Either Response Response
+var_dump($maybeAdd($justOne, $justTwo)); // Just 3
+var_dump($maybeAdd($justOne, $nothing)); // Nothing
+var_dump($maybeAdd($nothing, $justTwo)); // Nothing

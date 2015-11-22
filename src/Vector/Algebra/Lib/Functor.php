@@ -11,4 +11,9 @@ abstract class Functor extends FunctionCapsule
     {
         return $container->fmap($f);
     }
+
+    protected static function extract(Functor $f)
+    {
+        return $f->extract();
+    }
 }

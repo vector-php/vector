@@ -23,7 +23,7 @@ abstract class FunctionCapsule
     }
 
     /**
-     * @param ...$requestedFunctions
+     * @param mixed
      * @return callable
      */
     public static function using(...$requestedFunctions)
@@ -34,7 +34,7 @@ abstract class FunctionCapsule
             return self::curry([$context, $f]);
         }, $requestedFunctions);
         
-        return count($fulfilledRequest) === 1 
+        return count($fulfilledRequest) === 1
             ? $fulfilledRequest[0] 
             : $fulfilledRequest;
     }

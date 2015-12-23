@@ -3,30 +3,30 @@
 use Vector\Util\FunctionCapsule;
 
 use Vector\Algebra\Monad\Maybe;
+use Vector\Algebra\Monad\Reader;
 
-use Vector\Algebra\Lib\Applicative;
+use Vector\Algebra\Lib\Reader as ReaderLib;
+use Vector\Algebra\Lib\Monad;
 use Vector\Algebra\Lib\Lambda;
 
 require(__DIR__ . '/vendor/autoload.php');
 
 class App extends FunctionCapsule
 {
-    protected static function add($a, $b)
+    protected static function greet($name)
     {
-        return $a + $b;
+        $bind    = Monad::using('bind');
+        $ask     = ReaderLib::using('ask');
+
+        $greeter = function($ctx) use ($name) {
+            return Reader::pure($ctx . ", " . $name);
+        };
+
+        return $bind($greeter, $ask());
     }
 }
 
-$liftA2  = Applicative::using('liftA2');
-$compose = Lambda::using('compose');
-$add     = App::using('add');
+$runReader = ReaderLib::using('runReader');
+$greet     = App::using('greet');
 
-$nothing = Maybe::Nothing();
-$justOne = Maybe::Just(1);
-$justTwo = Maybe::Just(2);
-
-$maybeAdd = $liftA2(Maybe::class, $add);
-
-var_dump($maybeAdd($justOne, $justTwo)); // Just 3
-var_dump($maybeAdd($justOne, $nothing)); // Nothing
-var_dump($maybeAdd($nothing, $justTwo)); // Nothing
+echo $runReader($greet("Joseph"), "Hello");

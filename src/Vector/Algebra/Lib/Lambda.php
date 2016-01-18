@@ -12,7 +12,9 @@ abstract class Lambda extends FunctionCapsule
             $carry = null;
 
             foreach ($fs as $f) {
-                $carry = $carry ? $f($carry) : $f(...$args);
+                $carry = $carry
+                    ? $f($carry)
+                    : $f(...$args);
             }
 
             return $carry;

@@ -13,20 +13,35 @@ require(__DIR__ . '/vendor/autoload.php');
 
 class App extends FunctionCapsule
 {
-    protected static function greet($name)
+    // verifyUser :: UserID -> Bool
+    protected static function verifyUser($user)
     {
-        $bind    = Monad::using('bind');
-        $ask     = ReaderLib::using('ask');
+        return $user == 1;
+    }
 
-        $greeter = function($ctx) use ($name) {
-            return Reader::pure($ctx . ", " . $name);
-        };
+    // saveData :: Reader Data Bool
+    protected static function saveData()
+    {
+        $ask  = ReaderLib::using('ask');
+        $bind = Monad::using('bind');
 
-        return $bind($greeter, $ask());
+        return $bind(function($request) {
+            return Reader::pure($request['data'] == 'FooBar');
+        }, $ask);
+    }
+
+    // postSave :: Reader Error Response
+    protected static function postSave()
+    {
+        $ask                         = ReaderLib::using('ask');
+        $compose                     = Lambda::using('compose');
+        list($verifyUser, $saveData) = self::using('verifyUser', 'saveData');
+
+        return
     }
 }
 
 $runReader = ReaderLib::using('runReader');
-$greet     = App::using('greet');
+$postSave  = App::using('postSave');
 
-echo $runReader($greet("Joseph"), "Hello");
+var_dump($runReader($postSave(), ['user' => 1, 'data' => 'FooBar']));

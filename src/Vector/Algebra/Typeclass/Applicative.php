@@ -2,8 +2,6 @@
 
 namespace Vector\Algebra\Typeclass;
 
-use Vector\Algebra\Typeclass\Functor;
-
 interface Applicative extends Functor
 {
     // pure :: Applicative f => a -> f a

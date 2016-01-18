@@ -3,7 +3,7 @@
 namespace Vector\Algebra\Lib;
 
 use Vector\Util\FunctionCapsule;
-use Vector\Algebra\Typeclass\Applicative;
+use Vector\Algebra\Typeclass\Applicative as TypeclassApplicative;
 
 abstract class Applicative extends FunctionCapsule
 {
@@ -12,7 +12,7 @@ abstract class Applicative extends FunctionCapsule
         return call_user_func_array([$context, 'pure'], [$a]);
     }
      
-    protected static function apply(Applicative $f, Applicative $a)
+    protected static function apply(TypeclassApplicative $f, TypeclassApplicative $a)
     {
         return $f->apply($a);
     }

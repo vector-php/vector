@@ -6,7 +6,7 @@ abstract class FunctionCapsule
 {
     protected static $doNotCurry = false;
 
-    private static function curry(Callable $f, $appliedArgs = [])
+    protected static function curry(Callable $f, $appliedArgs = [])
     {
         $arity = (new \ReflectionMethod($f[0], $f[1]))->getNumberOfParameters();
 

@@ -79,4 +79,9 @@ class Maybe implements Monad
         
         return $this;
     }
+
+    public function extract()
+    {
+        return $this->heldValue;
+    }
 }

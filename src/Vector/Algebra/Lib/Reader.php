@@ -3,7 +3,6 @@
 namespace Vector\Algebra\Lib;
 
 use Vector\Util\FunctionCapsule;
-use Vector\Algebra\Monad\Reader;
 
 abstract class Reader extends FunctionCapsule
 {

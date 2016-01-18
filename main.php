@@ -37,7 +37,7 @@ class App extends FunctionCapsule
         $compose                     = Lambda::using('compose');
         list($verifyUser, $saveData) = self::using('verifyUser', 'saveData');
 
-        return
+        return null;
     }
 }
 

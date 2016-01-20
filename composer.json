@@ -6,6 +6,10 @@
             "email": "joseph.walker@outlook.com"
         }
     ],
+    "description": "A functional programming library for PHP",
+    "type": "library",
+    "keywords": ["utility", "functional", "monad", "compose", "curry"],
+    "license": "MIT",
     "require": {
         "phpunit/phpunit": "^5.0"
     },

@@ -10,7 +10,8 @@ class Prelude
             'compose' => Lambda::using('compose'),
             'map' => Functor::using('fmap'),
             'extract' => Functor::using('extract'),
-            'bind' => Monad::using('bind')
+            'bind' => Monad::using('bind'),
+            'pure' => Applicative::using('pure')
         ];
     }
 }

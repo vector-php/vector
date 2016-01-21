@@ -15,10 +15,12 @@ class PreludeTest extends \PHPUnit_Framework_TestCase
         /** @var closure $bind */
         /** @var closure $extract */
         /** @var closure $compose */
+        /** @var closure $pure */
 
         $this->assertInstanceOf('closure', $map);
         $this->assertInstanceOf('closure', $bind);
         $this->assertInstanceOf('closure', $extract);
         $this->assertInstanceOf('closure', $compose);
+        $this->assertInstanceOf('closure', $pure);
     }
 }

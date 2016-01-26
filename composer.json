@@ -10,7 +10,7 @@
     "type": "library",
     "keywords": ["utility", "functional", "monad", "compose", "curry"],
     "license": "MIT",
-    "require": {
+    "require-dev": {
         "phpunit/phpunit": "^5.0"
     },
     "autoload": {

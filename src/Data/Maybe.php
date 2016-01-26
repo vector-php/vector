@@ -82,6 +82,8 @@ class Maybe implements Monad
 
     public function extract()
     {
-        return $this->heldValue;
+        return $this->isJust
+            ? $this->heldValue
+            : null;
     }
 }

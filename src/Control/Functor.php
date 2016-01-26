@@ -1,9 +1,9 @@
 <?php
 
-namespace Vector\Algebra\Lib;
+namespace Vector\Control;
 
-use Vector\Util\FunctionCapsule;
-use Vector\Algebra\Typeclass\Functor as TypeclassFunctor;
+use Vector\Core\FunctionCapsule;
+use Vector\Typeclass\Functor as TypeclassFunctor;
 
 abstract class Functor extends FunctionCapsule
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Vector\Algebra\Lib;
+namespace Vector\Control;
 
-use Vector\Util\FunctionCapsule;
-use Vector\Algebra\Typeclass\Applicative as TypeclassApplicative;
+use Vector\Core\FunctionCapsule;
+use Vector\Typeclass\Applicative as TypeclassApplicative;
 
 abstract class Applicative extends FunctionCapsule
 {

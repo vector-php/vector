@@ -1,9 +1,9 @@
 <?php
 
-namespace Vector\Algebra\Lib;
+namespace Vector\Control;
 
-use Vector\Util\FunctionCapsule;
-use Vector\Algebra\Typeclass\Monad as TypeclassMonad;
+use Vector\Core\FunctionCapsule;
+use Vector\Typeclass\Monad as TypeclassMonad;
 
 abstract class Monad extends FunctionCapsule
 {

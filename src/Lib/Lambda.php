@@ -1,8 +1,8 @@
 <?php
 
-namespace Vector\Algebra\Lib;
+namespace Vector\Lib;
 
-use Vector\Util\FunctionCapsule;
+use Vector\Core\FunctionCapsule;
 
 abstract class Lambda extends FunctionCapsule
 {

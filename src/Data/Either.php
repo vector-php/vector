@@ -1,8 +1,8 @@
 <?php
 
-namespace Vector\Algebra\Monad;
+namespace Vector\Data;
 
-use Vector\Algebra\Typeclass\Monad;
+use Vector\Typeclass\Monad;
 
 class Either implements Monad
 {

@@ -1,12 +1,14 @@
 <?php
 
-namespace Vector\Algebra\Lib\__tests__;
+namespace Vector\Test\Lib;
 
-use Vector\Algebra\Lib\Functor;
-use Vector\Algebra\Lib\Lambda;
-use Vector\Algebra\Lib\Maybe;
-use Vector\Algebra\Lib\Monad;
-use Vector\Algebra\Monad\Maybe as MaybeMonad;
+use Vector\Control\Functor;
+use Vector\Control\Monad;
+
+use Vector\Lib\Lambda;
+use Vector\Lib\Maybe;
+
+use Vector\Data\Maybe as MaybeMonad;
 
 class MaybeTest extends \PHPUnit_Framework_TestCase
 {

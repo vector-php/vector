@@ -1,6 +1,6 @@
 <?php
 
-namespace Vector\Algebra\Typeclass;
+namespace Vector\Typeclass;
 
 interface Functor
 {

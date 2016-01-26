@@ -1,9 +1,9 @@
 <?php
 
-namespace Vector\Algebra\Lib;
+namespace Vector\Lib;
 
-use Vector\Util\FunctionCapsule;
-use Vector\Algebra\Monad\Maybe as MaybeMonad;
+use Vector\Core\FunctionCapsule;
+use Vector\Data\Maybe as MaybeMonad;
 
 class Maybe extends FunctionCapsule
 {

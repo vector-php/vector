@@ -1,6 +1,6 @@
 <?php
 
-namespace Vector\Util;
+namespace Vector\Core;
 
 abstract class FunctionCapsule
 {

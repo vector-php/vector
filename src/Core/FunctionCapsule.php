@@ -13,10 +13,6 @@ abstract class FunctionCapsule
         return function(...$suppliedArgs) use ($f, $appliedArgs, $arity) {
             $args = array_merge($appliedArgs, $suppliedArgs);
 
-            // TODO: Testing >= arity as opposed to ==
-            // is a hack to support currying of variadic
-            // functions. I have no idea if this works in every
-            // situation - it needs to be more rigorously tested
             if (count($args) >= $arity)
                 return call_user_func_array($f, $args);
             else
@@ -33,7 +29,7 @@ abstract class FunctionCapsule
         $context = get_called_class();
 
         $fulfilledRequest = array_map(function($f) use ($context) {
-            if ($context::$doNotCurry) {
+            if ($context::$doNotCurry === true || (is_array($context::$doNotCurry) && in_array($f, $context::$doNotCurry))) {
                 return function(...$args) use ($context, $f) {
                     return call_user_func_array([$context, $f], $args);
                 };

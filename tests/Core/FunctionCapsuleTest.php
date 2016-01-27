@@ -12,7 +12,14 @@ class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
     {
         $noArgFunction = Stub\TestFunctions::Using('noArgFunction');
 
+        $functionMap = Stub\TestFunctions::Using('noArgFunction', 'oneArgFunction');
+
+        // Test that singular-loading works
         $this->assertInstanceOf('\\Closure', $noArgFunction);
+
+        // Test that multiple-loading works
+        $this->assertInstanceOf('\\Closure', $functionMap[0]);
+        $this->assertInstanceOf('\\Closure', $functionMap[1]);
     }
 
     /**
@@ -109,5 +116,26 @@ class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
 
         // Test two arguments
         $this->assertEquals($oneArgApplied('a', 'b'), ['a', 'b']);
+    }
+
+    /**
+     * Tests that when a function capsule is set to not curry a specific function
+     * that it is not curried
+     * @covers Vector\Core\FunctionCapsule::using
+     */
+    public function testDoesNotCurryFunctionsCorrectly()
+    {
+        // Given a function with m arguments...
+        $nonCurriedFunction = Stub\TestFunctions::Using('nonCurriedFunction');
+
+        // Test that we can't just apply n arguments where n < m
+        try {
+            $nonCurriedFunction('a');
+        } catch (\Exception $e) {
+            $this->assertStringStartsWith('Missing argument', $e->getMessage());
+        }
+
+        // Test that if we do apply m arguments that we get the right result
+        $this->assertEquals($nonCurriedFunction(true, true), true);
     }
 }

@@ -61,8 +61,8 @@ class MaybeTest extends \PHPUnit_Framework_TestCase
     
     public function testMaybeExtractNothingIsNull()
     {
-        $extract = \Vector\Algebra\Lib\Functor::using('extract');
-        $value = \Vector\Algebra\Monad\Maybe::Nothing();
+        $extract = \Vector\Control\Functor::using('extract');
+        $value = \Vector\Data\Maybe::Nothing();
 
         $this->assertNull($extract($value));
     }

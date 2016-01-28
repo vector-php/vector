@@ -155,10 +155,21 @@ class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
         };
 
         $myCurriedLambda = $curry($myInlineLambda);
+        $partiallyApplied = $myCurriedLambda(1);
 
+        // A curried function should be a closure
         $this->assertInstanceOf('\\Closure', $myCurriedLambda);
+
+        // Invoking a curried function should be a closure
         $this->assertInstanceOf('\\Closure', $myCurriedLambda());
-        $this->assertInstanceOf('\\Closure', $myCurriedLambda(1));
+
+        // Passing the first argument should return a closure
+        $this->assertInstanceOf('\\Closure', $partiallyApplied);
+
+        // Passing the arguments all at once should be a result
+        $this->assertEquals(3, $partiallyApplied(2));
+
+        // Passing all the remaining arguments should be a result
         $this->assertEquals(2, $myCurriedLambda(1, 1));
     }
 }

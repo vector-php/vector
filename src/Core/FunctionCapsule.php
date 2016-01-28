@@ -4,7 +4,7 @@ namespace Vector\Core;
 
 abstract class FunctionCapsule
 {
-    protected static $doNotCurry = true;
+    protected static $doNotCurry = ['curry'];
 
     protected static function curry(Callable $f, $appliedArgs = [])
     {

@@ -58,7 +58,7 @@ class MaybeTest extends \PHPUnit_Framework_TestCase
             $getChained($thing)
         );
     }
-    
+
     public function testMaybeExtractNothingIsNull()
     {
         $extract = \Vector\Control\Functor::using('extract');

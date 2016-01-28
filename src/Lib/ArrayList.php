@@ -4,7 +4,7 @@ namespace Vector\Lib;
 
 use Vector\Core\FunctionCapsule;
 
-class List extends FunctionCapsule
+class ArrayList extends FunctionCapsule
 {
     // [a] -> a
     protected static function head($list)

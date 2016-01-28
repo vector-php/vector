@@ -9,7 +9,7 @@ use Vector\Data\Constant;
 
 use Vector\Lib\Functor;
 use Vector\Lib\Lambda;
-use Vector\Lib\List;
+use Vector\Lib\ArrayList;
 use Vector\Lib\Object;
 
 class Lens extends FunctionCapsule
@@ -68,7 +68,7 @@ class Lens extends FunctionCapsule
 
         $indexLens = $curry(function($index, $f, $arr) {
             $fmap = Functor::Using('fmap');
-            $set  = List::Using('set');
+            $set  = ArrayList::Using('set');
 
             return $fmap($set($index, $arr), $f($arr[$index]));
         });

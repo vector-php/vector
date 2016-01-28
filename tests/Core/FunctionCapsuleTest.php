@@ -144,7 +144,7 @@ class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests that curry works as a regular function off the function capsule for
      * by-hand currying
-     * @covers Vector\Core\FunctionCapusle::curry
+     * @covers Vector\Core\FunctionCapsule::curry
      */
     public function testCurryWorksStandalone()
     {

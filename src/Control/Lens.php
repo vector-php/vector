@@ -9,6 +9,7 @@ use Vector\Data\Constant;
 
 use Vector\Lib\Functor;
 use Vector\Lib\Lambda;
+use Vector\Lib\List;
 
 class Lens extends FunctionCapsule
 {
@@ -20,11 +21,6 @@ class Lens extends FunctionCapsule
     protected static function identity($a)
     {
         return Identity::Identity($a);
-    }
-
-    protected static function setIndexVal($key, $obj, $val)
-    {
-        $obj[$key] = $val; return $obj;
     }
 
     protected static function view($lens, $x)
@@ -67,19 +63,15 @@ class Lens extends FunctionCapsule
 
     protected static function indexLens($index)
     {
-        $indexLens = self::Using('__indexLens');
+        $curry = FunctionCapsule::Using('curry');
+
+        $indexLens = $curry(function($index, $f, $arr) {
+            $fmap = Functor::Using('fmap');
+            $set  = List::Using('set');
+
+            return $fmap($set($index, $arr), $f($arr[$index]));
+        });
 
         return $indexLens($index);
-    }
-
-    // TODO:
-    // Manually pull in $curry and curry this privately so it's not exposed globally for everyone
-    // to shoot themselves in the foot with.
-    protected static function __indexLens($index, $f, $arr)
-    {
-        $fmap = Functor::Using('fmap');
-        $set  = self::Using('setIndexVal');
-
-        return $fmap($set($index, $arr), $f($arr[$index]));
     }
 }

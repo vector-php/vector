@@ -41,4 +41,11 @@ class List extends FunctionCapsule
     {
         return $list[$i];
     }
+
+    // Int -> [a] -> a -> [a]
+    protected static function set($key, $arr, $val)
+    {
+        $arr[$key] = $val;
+        return $arr;
+    }
 }

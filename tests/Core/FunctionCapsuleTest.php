@@ -2,6 +2,8 @@
 
 namespace Vector\Test\Core;
 
+use Vector\Core\FunctionCapsule;
+
 class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -137,5 +139,26 @@ class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
 
         // Test that if we do apply m arguments that we get the right result
         $this->assertEquals($nonCurriedFunction(true, true), true);
+    }
+
+    /**
+     * Tests that curry works as a regular function off the function capsule for
+     * by-hand currying
+     * @covers Vector\Core\FunctionCapusle::curry
+     */
+    public function testCurryWorksStandalone()
+    {
+        $curry = FunctionCapsule::Using('curry');
+
+        $myInlineLambda = function($a, $b) {
+            return $a + $b;
+        };
+
+        $myCurriedLambda = $curry($myInlineLambda);
+
+        $this->assertInstanceOf('\\Closure', $myCurriedLambda);
+        $this->assertInstanceOf('\\Closure', $myCurriedLambda());
+        $this->assertInstanceOf('\\Closure', $myCurriedLambda(1));
+        $this->assertEquals(2, $myCurriedLambda(1, 1));
     }
 }

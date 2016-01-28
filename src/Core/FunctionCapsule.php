@@ -4,11 +4,17 @@ namespace Vector\Core;
 
 abstract class FunctionCapsule
 {
-    protected static $doNotCurry = false;
+    protected static $doNotCurry = true;
 
     protected static function curry(Callable $f, $appliedArgs = [])
     {
-        $arity = (new \ReflectionMethod($f[0], $f[1]))->getNumberOfParameters();
+        if ($f instanceof \Closure) {
+            $reflector = (new \ReflectionFunction($f));
+        } else {
+            $reflector = (new \ReflectionMethod($f[0], $f[1]));
+        }
+
+        $arity = $reflector->getNumberOfParameters();
 
         return function(...$suppliedArgs) use ($f, $appliedArgs, $arity) {
             $args = array_merge($appliedArgs, $suppliedArgs);

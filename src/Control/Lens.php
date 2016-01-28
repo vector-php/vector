@@ -10,6 +10,7 @@ use Vector\Data\Constant;
 use Vector\Lib\Functor;
 use Vector\Lib\Lambda;
 use Vector\Lib\List;
+use Vector\Lib\Object;
 
 class Lens extends FunctionCapsule
 {
@@ -73,5 +74,17 @@ class Lens extends FunctionCapsule
         });
 
         return $indexLens($index);
+    }
+
+    protected static function propLens($prop)
+    {
+        $curry = FunctionCapsule::Using('curry');
+
+        $propLens = $curry(function($prop, $f, $obj) {
+            $fmap = Functor::Using('fmap');
+            $set  = Object::Using('set');
+        });
+
+        return $propLens($prop);
     }
 }

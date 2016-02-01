@@ -8,6 +8,10 @@ use Vector\Lib\Lambda;
 
 class FunctorTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Tests the $fmap function - It should call to the given container's FMap method
+     * @covers Vector\Control\Functor::fmap
+     */
     public function testThatFMapCallsToFMapMethod()
     {
         $fmap = Functor::using('fmap');
@@ -16,6 +20,10 @@ class FunctorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(7, $fmap($noop, Stub\TestFunctor::Make()));
     }
 
+    /**
+     * Tests the $extract function - It should call to a given container's Extract method
+     * @covers Vector\Control\Functor::extract
+     */
     public function testThatFunctorsCanBeExtracted()
     {
         $extract = Functor::using('extract');
@@ -23,6 +31,10 @@ class FunctorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(7, $extract(Stub\TestFunctor::Make()));
     }
 
+    /**
+     * FMap should behave as if it were array_map when invoked on an array
+     * @covers Vector\Control\Functor::fmap
+     */
     public function testThatFMapHandlesArrays()
     {
         $fmap = Functor::using('fmap');

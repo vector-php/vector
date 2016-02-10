@@ -6,4 +6,7 @@ php:
     - hhvm
     - nightly
 before_script:
+    - composer install
     - composer dump-autoload
+script:
+    - ./vendor/bin/phpunit

@@ -11,4 +11,13 @@ abstract class Monad extends FunctionCapsule
     {
         return $container->bind($f);
     }
+
+    protected static function kleisliCompose($f, $g)
+    {
+        return function($x) use ($f, $g) {
+            $bind = self::Using('bind');
+
+            return $bind($g, $f($x));
+        };
+    }
 }

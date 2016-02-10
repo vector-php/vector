@@ -134,7 +134,7 @@ class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
         try {
             $nonCurriedFunction('a');
         } catch (\Exception $e) {
-            $this->assertStringStartsWith('Missing argument', $e->getMessage());
+            $this->assertRegExp('/missing argument 2|expects exactly 2/i', $e->getMessage());
         }
 
         // Test that if we do apply m arguments that we get the right result

@@ -12,7 +12,8 @@
     "license": "MIT",
     "require-dev": {
         "phpunit/phpunit": "^5.0",
-        "phpunit/php-code-coverage": "^3"
+        "phpunit/php-code-coverage": "^3",
+        "satooshi/php-coveralls": "^1.0"
     },
     "autoload": {
         "psr-4": {

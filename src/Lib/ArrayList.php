@@ -27,7 +27,7 @@ class ArrayList extends FunctionCapsule
     // [a] -> a
     protected static function last($list)
     {
-        return $list[count($list)];
+        return $list[count($list) - 1];
     }
 
     // [a] -> Int
@@ -45,7 +45,9 @@ class ArrayList extends FunctionCapsule
     // Int -> [a] -> a -> [a]
     protected static function set($key, $arr, $val)
     {
+        $arrCopy   = $arr;
         $arr[$key] = $val;
+
         return $arr;
     }
 }

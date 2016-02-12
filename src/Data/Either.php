@@ -20,13 +20,13 @@ class Either implements Monad
      \ --- */
 
     // Left :: a -> Left a
-    public static function Left($value)
+    public static function left($value)
     {
         return new Either($value, false);
     }
 
     // Right :: a -> Right a
-    public static function Right($value)
+    public static function right($value)
     {
         return new Either($value, true);
     }

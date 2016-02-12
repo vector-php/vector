@@ -81,7 +81,7 @@ class Lens extends FunctionCapsule
     {
         $curry = FunctionCapsule::Using('curry');
 
-        $propLens = $curry(function($prop, $f, $obj) {
+        $propLens = $curry(function($prop, $f, \stdClass $obj) {
             $fmap = Functor::Using('fmap');
             $set  = Object::Using('set');
 

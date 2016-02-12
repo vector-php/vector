@@ -2,9 +2,9 @@
 
 namespace Vector\Data;
 
-use Vector\Typeclass\Monad;
+use Vector\Typeclass\MonadInterface;
 
-class Maybe implements Monad
+class Maybe implements MonadInterface
 {
     private $isJust = true;
     private $heldValue;

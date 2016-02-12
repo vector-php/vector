@@ -2,9 +2,9 @@
 
 namespace Vector\Data;
 
-use Vector\Typeclass\Monad;
+use Vector\Typeclass\MonadInterface;
 
-class Identity implements Monad
+class Identity implements MonadInterface
 {
     private $heldValue;
 

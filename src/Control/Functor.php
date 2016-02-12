@@ -3,7 +3,7 @@
 namespace Vector\Control;
 
 use Vector\Core\FunctionCapsule;
-use Vector\Typeclass\Functor as TypeclassFunctor;
+use Vector\Typeclass\FunctorInterface as TypeclassFunctor;
 
 abstract class Functor extends FunctionCapsule
 {

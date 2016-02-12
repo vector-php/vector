@@ -3,7 +3,7 @@
 namespace Vector\Control;
 
 use Vector\Core\FunctionCapsule;
-use Vector\Typeclass\Monad as TypeclassMonad;
+use Vector\Typeclass\MonadInterface as TypeclassMonad;
 
 abstract class Monad extends FunctionCapsule
 {

@@ -7,7 +7,7 @@ use Vector\Core\FunctionCapsule;
 use Vector\Data\Identity;
 use Vector\Data\Constant;
 
-use Vector\Control\Functor;
+use Vector\Control\FunctorInterface;
 
 use Vector\Lib\Lambda;
 use Vector\Lib\ArrayList;

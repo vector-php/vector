@@ -2,9 +2,9 @@
 
 namespace Vector\Test\Control\Stub;
 
-use Vector\Typeclass\Functor;
+use Vector\Typeclass\FunctorInterface;
 
-class TestFunctor implements Functor
+class TestFunctor implements FunctorInterface
 {
     private function __construct()
     {

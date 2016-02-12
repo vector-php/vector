@@ -2,9 +2,9 @@
 
 namespace Vector\Data;
 
-use Vector\Typeclass\Monad;
+use Vector\Typeclass\MonadInterface;
 
-class Either implements Monad
+class Either implements MonadInterface
 {
     private $isRight = true;
     private $heldValue;

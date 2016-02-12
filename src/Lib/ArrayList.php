@@ -45,9 +45,7 @@ class ArrayList extends FunctionCapsule
     // Int -> [a] -> a -> [a]
     protected static function set($key, $arr, $val)
     {
-        $arrCopy   = $arr;
         $arr[$key] = $val;
-
         return $arr;
     }
 }

@@ -20,5 +20,8 @@
             "Vector\\": "src/",
             "Vector\\Test\\": "tests/"
         }
+    },
+    "require": {
+        "nette/tokenizer": "^2.2"
     }
 }

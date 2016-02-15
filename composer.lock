@@ -4,9 +4,59 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "88ec5151ceda886558846efe832614fa",
-    "content-hash": "8db2eb77ac7bfa50a23fdaa38aec9c81",
-    "packages": [],
+    "hash": "95cb580a28b1bd0f7557c32a88f3690c",
+    "content-hash": "aff2673d87de355e02f33f5b10050ba2",
+    "packages": [
+        {
+            "name": "nette/tokenizer",
+            "version": "v2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nette/tokenizer.git",
+                "reference": "cbb4920d166af495f83eb213f16512a421d44f63"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nette/tokenizer/zipball/cbb4920d166af495f83eb213f16512a421d44f63",
+                "reference": "cbb4920d166af495f83eb213f16512a421d44f63",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.1"
+            },
+            "conflict": {
+                "nette/nette": "<2.2"
+            },
+            "require-dev": {
+                "nette/tester": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "http://davidgrudl.com"
+                },
+                {
+                    "name": "Nette Community",
+                    "homepage": "http://nette.org/contributors"
+                }
+            ],
+            "description": "Nette Tokenizer",
+            "homepage": "http://nette.org",
+            "time": "2015-07-11 21:24:02"
+        }
+    ],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",

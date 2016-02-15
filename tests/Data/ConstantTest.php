@@ -6,8 +6,15 @@ use Vector\Data\Constant;
 use Vector\Control\Functor;
 use Vector\Lib\Lambda;
 
-class ConstantTest extends \PHPUnit_Framework_TestCase
+class ConstantTest extends Generic\GenericFunctorTestCase
 {
+    public function setUp()
+    {
+        $this->testCases = [
+            Constant::constant(7)
+        ];
+    }
+
     /**
      * Test that constant functors are created properly from the static constructor
      */
@@ -18,30 +25,9 @@ class ConstantTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Constant::class, $myConst);
     }
 
-    public function testFunctorLawIdentity()
-    {
-        $id = Lambda::using('id');
-        $fmap = Functor::using('fmap');
-        $myConst = Constant::constant(7);
-
-        $this->assertEquals($fmap($id, $myConst), $myConst);
-    }
-
-    public function testFunctorLawComposition()
-    {
-        $compose = Lambda::using('compose');
-        $fmap = Functor::using('fmap');
-        $myConst = Constant::constant(7);
-
-        $funcG = function($a) { return $a + 1; };
-        $funcF = function($b) { return $b + 2; };
-
-        $fmapCompose = $fmap($compose($funcG, $funcF), $myConst);
-        $composeFmap = $compose($fmap($funcG), $fmap($funcF));
-
-        $this->assertEquals($fmapCompose, $composeFmap($myConst));
-    }
-
+    /**
+     * Tests that extraction off the functor works for interfacing with PHP land
+     */
     public function testFunctorExtract()
     {
         $extract = Functor::using('extract');

@@ -31,6 +31,11 @@ class Constant implements MonadInterface
         return $this;
     }
 
+    public function extract()
+    {
+        return $this->heldValue;
+    }
+
     /*
      * Applicative Instance
      \ --- */
@@ -52,10 +57,5 @@ class Constant implements MonadInterface
     public function bind(Callable $f)
     {
         return $this;
-    }
-
-    public function extract()
-    {
-        return $this->heldValue;
     }
 }

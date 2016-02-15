@@ -10,7 +10,6 @@ class LensTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Lenses use Identity functor constructors - test those here
-     * @covers Vector\Control\Lens::identity
      */
     public function testConstituentIdentity()
     {
@@ -21,7 +20,6 @@ class LensTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Lenses use Constant functor constructors - test those here
-     * @covers Vector\Control\Lens::constant
      */
     public function testConstituentConstant()
     {
@@ -32,8 +30,6 @@ class LensTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test that lenses can be created at all
-     * @covers Vector\Control\Lens::indexLens
-     * @covers Vector\Control\Lens::propLens
      */
     public function testLensesCanBeCreated()
     {
@@ -48,7 +44,6 @@ class LensTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test that you can view through indexLens
-     * @covers Vector\Control\Lens::view
      */
     public function testViewThroughArrayLens()
     {
@@ -62,7 +57,6 @@ class LensTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test that you can view through propLens
-     * @covers Vector\Control\Lens::view
      */
     public function testViewThroughObjectLens()
     {
@@ -79,7 +73,6 @@ class LensTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that you can set through indexLens. Also test that it results
      * in immutability.
-     * @covers Vector\Control\Lens::set
      */
     public function testSetThroughArrayLens()
     {
@@ -98,7 +91,6 @@ class LensTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that you can set through objectLens. Also test that it results
      * in immutability.
-     * @covers Vector\Control\Lens::set
      */
     public function testSetThroughObjectLens()
     {
@@ -125,7 +117,6 @@ class LensTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that map over indexLenses. Also test that it results
      * in immutability.
-     * @covers Vector\Control\Lens::over
      */
     public function testOverArrayLens()
     {
@@ -146,7 +137,6 @@ class LensTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test that map over propLenses. Also test that it results in immutability.
-     * @covers Vector\Control\Lens::over
      */
     public function testOverObjectLens()
     {
@@ -172,8 +162,6 @@ class LensTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test lens composition - covers all lens types
-     * @covers Vector\Control\Lens::indexLens
-     * @covers Vector\Control\Lens::propLens
      */
     public function testLensComposition()
     {

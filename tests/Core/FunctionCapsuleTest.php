@@ -8,7 +8,6 @@ class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test to make sure we can pull functions off the capsule and they'll return closures
-     * @covers Vector\Core\FunctionCapsule::using
      */
     public function testUsingFunctions()
     {
@@ -27,7 +26,6 @@ class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
     /**
      * Test to make sure that a function in the function capsule with no arguments is
      * curried properly
-     * @covers Vector\Core\FunctionCapsule::curry
      */
     public function testNoArgFunctionIsCurried()
     {
@@ -39,7 +37,6 @@ class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test to make sure that one-argument functions are treated like normal functions
-     * @covers Vector\Core\FunctionCapsule::curry
      */
     public function testOneArgFunctionIsCurried()
     {
@@ -54,7 +51,6 @@ class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test that two-argument functions are curried and partially applicable
-     * @covers Vector\Core\FunctionCapsule::curry
      */
     public function testTwoArgFunctionIsCurried()
     {
@@ -80,7 +76,6 @@ class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests the currying of variadic functions
-     * @covers Vector\Core\FunctionCapsule::curry
      */
     public function testVariadicFunctionIsCurried()
     {
@@ -99,7 +94,6 @@ class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests the currying of functions that mix both normal arguments and variadic
      * functions
-     * @covers Vector\Core\FunctionCapsule::curry
      */
     public function testComplicatedVariadicFunctionIsCurried()
     {
@@ -123,7 +117,6 @@ class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests that when a function capsule is set to not curry a specific function
      * that it is not curried
-     * @covers Vector\Core\FunctionCapsule::using
      */
     public function testDoesNotCurryFunctionsCorrectly()
     {
@@ -144,7 +137,6 @@ class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests that curry works as a regular function off the function capsule for
      * by-hand currying
-     * @covers Vector\Core\FunctionCapsule::curry
      */
     public function testCurryWorksStandalone()
     {

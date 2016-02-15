@@ -10,7 +10,6 @@ class FunctorTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests the $fmap function - It should call to the given container's FMap method
-     * @covers Vector\Control\Functor::fmap
      */
     public function testThatFMapCallsToFMapMethod()
     {
@@ -22,7 +21,6 @@ class FunctorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests the $extract function - It should call to a given container's Extract method
-     * @covers Vector\Control\Functor::extract
      */
     public function testThatFunctorsCanBeExtracted()
     {
@@ -33,7 +31,6 @@ class FunctorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * FMap should behave as if it were array_map when invoked on an array
-     * @covers Vector\Control\Functor::fmap
      */
     public function testThatFMapHandlesArrays()
     {

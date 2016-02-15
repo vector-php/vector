@@ -15,7 +15,6 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests that head returns the first element of a list
-     * @covers Vector\Lib\ArrayList::head
      */
     public function testHeadReturnsFirstElement()
     {
@@ -26,7 +25,6 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test that tail returns the rest of a list sans first element
-     * @covers Vector\Lib\ArrayList::tail
      */
     public function testTailReturnsAllButFirstElement()
     {
@@ -37,7 +35,6 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test that init returns the first chunk of an array
-     * @covers Vector\Lib\ArrayList::init
      */
     public function testInitReturnsAllButLastElement()
     {
@@ -48,7 +45,6 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test that last returns the last element of a list
-     * @covers Vector\Lib\ArrayList::last
      */
     public function testLastReturnsLastElement()
     {
@@ -59,7 +55,6 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test that length returns the length of a list
-     * @covers Vector\Lib\ArrayList::length
      */
     public function testLengthReturnsLength()
     {
@@ -70,7 +65,6 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test that index returns the element of a list at the given index
-     * @covers Vector\Lib\ArrayList::index
      */
     public function testIndexReturnsElementAtIndex()
     {
@@ -82,7 +76,6 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that set properly sets the value of an array at the index in an
      * immutable way
-     * @covers Vector\Lib\ArrayList::set
      */
     public function testSetSetsArrayValueAtIndex()
     {

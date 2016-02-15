@@ -8,7 +8,6 @@ class LambdaTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test that compose works - compose goes back to front
-     * @covers Vector\Lib\Lambda::compose
      */
     public function testCompose()
     {
@@ -27,7 +26,6 @@ class LambdaTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test that pipe works - pipe goes front to back
-     * @covers Vector\Lib\Lambda::pipe
      */
     public function testPipe()
     {

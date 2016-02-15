@@ -15,7 +15,7 @@ class Math extends FunctionCapsule
     // Num a => a -> a -> a
     protected static function subtract($a, $b)
     {
-        return $b - a;
+        return $b - $a;
     }
 
     // Num a => a -> a -> a

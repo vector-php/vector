@@ -41,4 +41,28 @@ class LambdaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($pipeSingle(0), 2);
         $this->assertEquals($pipeDouble(2), 6);
     }
+
+    /**
+     * Test the constant function
+     */
+    public function testK()
+    {
+        $k = Lambda::using('k');
+
+        $constant = $k(2);
+
+        $this->assertEquals(2, $constant(7));
+        $this->assertEquals(2, $constant(1, 2, 3));
+    }
+
+    /**
+     * Test the identity function
+     */
+    public function testId()
+    {
+        $id = Lambda::using('id');
+
+        $this->assertEquals(4, $id(4));
+        $this->assertEquals('foo', $id('foo'));
+    }
 }

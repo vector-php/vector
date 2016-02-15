@@ -25,12 +25,17 @@ abstract class Lambda extends FunctionCapsule
     {
         return self::pipe(...array_reverse($fs));
     }
-    
+
     protected static function k($a)
     {
         return function(...$null) use ($a)
         {
             return $a;
         };
+    }
+
+    protected static function id($a)
+    {
+        return $a;
     }
 }

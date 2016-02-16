@@ -41,4 +41,9 @@ class Math extends FunctionCapsule
     {
         return pow($b, $a);
     }
+
+    protected static function mean($arr)
+    {
+        return array_sum($arr) / count($arr);
+    }
 }

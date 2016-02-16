@@ -6,21 +6,41 @@ use Nette\Utils\Tokenizer;
 
 class Interpreter
 {
+    /** @var SplQueue */
     private $tokenQueue;
+
+    /** @var array */
     private $moduleDictionary;
+
+    /** @var array */
     private $tokens = [
+        'V_FLOAT'       => '\d*\.\d+',
         'V_INTEGER'     => '\d+',
         'V_OPEN_PAREN'  => '\(',
         'V_CLOSE_PAREN' => '\)',
         'V_COMPOSE'     => ' \. ',
         'V_WHITESPACE'  => '\s+',
-        'V_FUNCTION'    => '\w+'
+        'V_FUNCTION'    => '\w+',
+        'V_STRING'      => '\".+?\"'
     ];
 
-    public function __construct()
+    /**
+     * Create a new Interpreter
+     *
+     * @param array $moduleDictionary List of modules to use for this interpreter
+     */
+    public function __construct($moduleDictionary = [])
     {
+        $this->moduleDictionary = $moduleDictionary;
     }
 
+    /**
+     * Add a module to the interpreter library for parsing funciton expression
+     * names
+     *
+     * @param  String $module Module name, fully qualified namespace
+     * @return self
+     */
     public function using($module)
     {
         $this->moduleDictionary[] = $module;
@@ -28,16 +48,37 @@ class Interpreter
         return $this;
     }
 
+    /**
+     * Expand an expression. The expression should be given as a string and the following
+     * syntax elements are supported:
+     *
+     * Strings (with double quotes), integers, floats, composition, and function names
+     *
+     * @param  String   $expression DSL Expression to expand into a Vector closure
+     * @return Callable             A function expression that is the result of
+     *                              expanding the given DSL expression
+     */
     public function expand($expression)
     {
         $this->tokenQueue = array_reduce($this->tokenize($expression), function($carry, $token) {
-            $carry->enqueue($token); return $carry;
+            // Ignore Whitespace tokens
+            if ($token[Tokenizer::TYPE] !== 'V_WHITESPACE') {
+                $carry->enqueue($token);
+            }
+
+            return $carry;
         }, new \SplQueue());
 
         return $this->evaluateStackFrame();
     }
 
-    public function evaluateStackFrame()
+    /**
+     * Evaluate the expression in a left-to-right way, consuming tokens one-by-one until
+     * the token queue is exhausted. Each call results in a new evaluation context.
+     *
+     * @return mixed The result of evaluating the token queue within a given frame
+     */
+    private function evaluateStackFrame()
     {
         $executionState = \Vector\Lib\Lambda::using('id');
         $compose = \Vector\Lib\Lambda::using('compose');
@@ -49,18 +90,20 @@ class Interpreter
                 case 'V_COMPOSE':
                     $operation = $this->evaluateStackFrame();
                     return $compose($executionState, $operation);
-                    break;
                 case 'V_FUNCTION':
                     $operation = $this->lookup($operator[Tokenizer::VALUE]);
-                    break;
-                case 'V_INTEGER':
-                    $operation = $operator[Tokenizer::VALUE];
                     break;
                 case 'V_OPEN_PAREN':
                     $operation = $this->evaluateStackFrame();
                     break;
                 case 'V_CLOSE_PAREN';
                     return $executionState;
+                case 'V_INTEGER':
+                case 'V_FLOAT':
+                    $operation = $operator[Tokenizer::VALUE];
+                    break;
+                case 'V_STRING':
+                    $operation = trim($operator[Tokenizer::VALUE], '\"');
                     break;
             }
 
@@ -70,209 +113,39 @@ class Interpreter
         return $executionState;
     }
 
+    /**
+     * Take an expression and tokenize it
+     *
+     * @param  String $expression DSL Expression to tokenize
+     * @return array              An array of tokens transformed from the expression
+     */
     private function tokenize($expression)
     {
         $tokenizer = new Tokenizer($this->tokens);
 
-        return array_filter($tokenizer->tokenize($expression), function($t) {
-            return $t[Tokenizer::TYPE] !== 'V_WHITESPACE';
-        });
+        return $tokenizer->tokenize($expression);
     }
 
+    /**
+     * Look in the interpreter dictionary and try to find the given function expression
+     * Throws an Exception if it's not found.
+     *
+     * @throws \Exception
+     *
+     * @param  String   $functionName Name of the function to lookup
+     * @return Callable               Function pulled from the correct module based
+     *                                on the requested function name
+     */
     private function lookup($functionName)
     {
         foreach ($this->moduleDictionary as $module) {
             $reflector = new \ReflectionClass($module);
 
-            if ($reflector->hasMethod($functionName))
+            if ($reflector->hasMethod($functionName)) {
                 return $module::using($functionName);
+            }
         }
 
         throw new \Exception($functionName . ' was not found in the supplied interpreter modules.');
     }
 }
-
-/*
-EXAMPLE 1
-=========
-
-GIVEN
-add 1 2
-
-BECOMES:
-
-QUEUE:
-add
-1
-2
-
-EXECUTE:
-ITERATION 1 =>
-    QUEUE:
-    1
-    2
-
-    EXECUTION:
-    id(add) => add
-
-ITERATION 2 =>
-    QUEUE:
-    2
-
-    EXECUTION:
-    add(1) => add(1)
-
-ITERATION 3:
-    QUEUE:
-    null
-
-    EXECUTION:
-    add(1)(2) => 3
-
-EXAMPLE 2
-=========
-
-GIVEN
-add 1 (add 2 3)
-
-BECOMES:
-
-QUEUE:
-add
-1
-(
-add
-2
-3
-)
-
-EXECUTE:
-ITERATION 1 =>
-    QUEUE:
-    1
-    (
-    add
-    2
-    3
-    )
-
-    EXECUTION:
-    id(add) => add
-
-ITERATION 2 =>
-    QUEUE:
-    (
-    add
-    2
-    3
-    )
-
-    EXECUTION:
-    add(1) => add(1)
-
-ITERATION 3 =>
-    QUEUE:
-    add
-    2
-    3
-    )
-
-    EXECUTION:
-    add(1)(newStackFrame(QUEUE)) => ...
-
-    SUB-ITERATION 1:
-        QUEUE:
-        2
-        3
-        )
-
-        EXECUTION:
-        id(add) => add
-
-
-    SUB-ITERATION 2:
-        QUEUE:
-        3
-        )
-
-        EXECUTION:
-        add(2) => add(2)
-
-    SUB-ITERATION 3:
-        QUEUE:
-        )
-
-        EXECUTION:
-        add(2)(3) => 5
-
-    SUB-ITERATION 3:
-        QUEUE:
-        null
-
-        EXECUTION:
-        5
-
-    RETURN 5
-
-    ... => add(1)(5) => 6
-
-EXAMPLE 3
-=========
-
-GIVEN
-add 1 . add 2
-
-BECOMES
-QUEUE:
-add
-1
-.
-add
-2
-
-EXECUTE:
-ITERATION 1 =>
-    QUEUE:
-    1
-    .
-    add
-    2
-
-    EXECUTION:
-    id(add) => add
-
-ITERATION 2 =>
-    QUEUE:
-    .
-    add
-    2
-
-    EXECUTION:
-    add(1) => add(1)
-
-ITERATION 3 =>
-    QUEUE:
-    add
-    2
-
-    EXECUTION:
-    compose(add(1), newStackFrame(QUEUE)) => ...
-
-    SUB-ITERATION 1 =>
-        QUEUE:
-        2
-
-        EXECUTION:
-        id(add) => add
-
-    SUB-ITERATION 2 =>
-        QUEUE:
-        null
-
-        EXECUTION:
-        add(2) => add(2)
-
-    RETURN add(2)
-
-    ... => compose(add(1), add(2))
-*/

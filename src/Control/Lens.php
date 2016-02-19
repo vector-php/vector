@@ -67,9 +67,10 @@ class Lens extends FunctionCapsule
 
         $indexLens = $curry(function($index, $f, $arr) {
             $fmap = Functor::Using('fmap');
+            $get  = ArrayList::using('index');
             $set  = ArrayList::Using('set');
 
-            return $fmap($set($index, $arr), $f($arr[$index]));
+            return $fmap($set($index, $arr), $f($get($index, $arr)));
         });
 
         return $indexLens($index);

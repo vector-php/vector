@@ -2,11 +2,18 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use Vector\Core\Interpreter;
+use Vector\Lib\Lambda;
+use Vector\Data\Maybe;
+use Vector\Control\Lens;
+use Vector\Control\Applicative;
 
-$v = (new Interpreter())
-    ->using('Vector\Lib\Math')
-    ->using('Vector\Lib\Strings')
-    ->using('Vector\Control\Functor');
+$compose = Lambda::using('compose');
+$pure = Applicative::using('pure');
+list($lens, $view) = Lens::using('propLens', 'view');
 
-print_r($v->expand('join " " . fmap (concat "!") . split " "')("Hello World"));
+$test = new \StdClass();
+$test->foo = 'bar';
+
+$propFoo = $lens('baz');
+
+echo $view($propFoo, $test);

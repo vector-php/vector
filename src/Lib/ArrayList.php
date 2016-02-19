@@ -3,6 +3,7 @@
 namespace Vector\Lib;
 
 use Vector\Core\FunctionCapsule;
+use Vector\Data\Maybe;
 
 class ArrayList extends FunctionCapsule
 {
@@ -40,6 +41,15 @@ class ArrayList extends FunctionCapsule
     protected static function index($i, $list)
     {
         return $list[$i];
+    }
+
+    // Int -> [a] -> Maybe a
+    protected static function maybeIndex($i, $list)
+    {
+        if (array_key_exists($i, $list))
+            return Maybe::Just($list[$i]);
+
+        return Maybe::Nothing();
     }
 
     // Int -> [a] -> a -> [a]

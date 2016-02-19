@@ -15,6 +15,13 @@ class Maybe implements MonadInterface
         $this->isJust    = $isJust;
     }
 
+    public function __toString()
+    {
+        return $this->isJust
+            ? 'Just ' . $this->heldValue
+            : 'Nothing';
+    }
+
     /*
      * Constructor Methods (Static)
      \ --- */

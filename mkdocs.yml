@@ -1,13 +1,43 @@
 site_name: Vector
-pages:
-- Introduction: index.md
-- User Guide:
-    - Functional Basics: 'user-guide/basics.md'
-    - The Function Capsule: 'user-guide/capsule.md'
-- API Reference:
-    - Data:
-        - Maybe: 'api-reference/maybe.md'
-        - Either: 'api-reference/either.md'
-    - Lib:
-        - Math: 'api-reference/math.md'
 theme: readthedocs
+pages:
+    -
+        Introduction: index.md
+    -
+        'User Guide':
+            -
+                'Functional Basics': user-guide/basics.md
+            -
+                'The Function Capsule': user-guide/capsule.md
+    -
+        'API Reference':
+            -
+                Data:
+                    -
+                        Maybe: api-reference/maybe.md
+                    -
+                        Either: api-reference/either.md
+            -
+                Lib:
+                    -
+                        ArrayList: auto-generate/Lib/ArrayList.md
+                    -
+                        Lambda: auto-generate/Lib/Lambda.md
+                    -
+                        Math: auto-generate/Lib/Math.md
+                    -
+                        Maybe: auto-generate/Lib/Maybe.md
+                    -
+                        Object: auto-generate/Lib/Object.md
+                    -
+                        Strings: auto-generate/Lib/Strings.md
+            -
+                Control:
+                    -
+                        Applicative: auto-generate/Control/Applicative.md
+                    -
+                        Functor: auto-generate/Control/Functor.md
+                    -
+                        Lens: auto-generate/Control/Lens.md
+                    -
+                        Monad: auto-generate/Control/Monad.md

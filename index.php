@@ -2,6 +2,7 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
+use Symfony\Component\Yaml\Yaml;
 use \phpDocumentor\Reflection\DocBlock;
 use Vector\Lib\Math;
 
@@ -11,4 +12,4 @@ $getFunctionDoc = function($class, $f) {
 
 $doc = $getFunctionDoc(Math::class, 'pow');
 
-print_r($doc->getTags());
+print_r(Yaml::dump(['a' => 1]));

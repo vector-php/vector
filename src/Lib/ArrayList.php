@@ -52,6 +52,33 @@ class ArrayList extends FunctionCapsule
         return Maybe::Nothing();
     }
 
+    protected static function filter($f, $arr)
+    {
+        return array_filter($arr, $f);
+    }
+
+    // [a] -> [b]
+    protected static function keys($arr)
+    {
+        return array_keys($arr);
+    }
+
+    protected static function values($arr)
+    {
+        return array_values($arr);
+    }
+
+    /**
+     * [concat description]
+     * @param  [a] $a [description]
+     * @param  [b] $b [description]
+     * @return [c]    [description]
+     */
+    protected static function concat($a, $b)
+    {
+        return array_merge($a, $b);
+    }
+
     // Int -> [a] -> a -> [a]
     protected static function set($key, $arr, $val)
     {

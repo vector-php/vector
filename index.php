@@ -2,18 +2,13 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use Vector\Lib\Lambda;
-use Vector\Data\Maybe;
-use Vector\Control\Lens;
-use Vector\Control\Applicative;
+use \phpDocumentor\Reflection\DocBlock;
+use Vector\Lib\Math;
 
-$compose = Lambda::using('compose');
-$pure = Applicative::using('pure');
-list($lens, $view) = Lens::using('propLens', 'view');
+$getFunctionDoc = function($class, $f) {
+    return new DocBlock(new ReflectionMethod($class, $f));
+};
 
-$test = new \StdClass();
-$test->foo = 'bar';
+$doc = $getFunctionDoc(Math::class, 'pow');
 
-$propFoo = $lens('baz');
-
-echo $view($propFoo, $test);
+print_r($doc->getTags());

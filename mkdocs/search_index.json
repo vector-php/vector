@@ -1,0 +1,399 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Vector / Core\n\n\nPurpose\n\n\nVector provides algebraic primities and loads of utilities for writing PHP in a more functional and declarative style. \nIt provides functors and monads like Maybe and Either that allow you to abstract away null checks and handle errors in a completely painless way.\nIt allows you to automatically curry your userland functions with zero effort on your part. It provides useful helpers for composing simple functions\ninto more complex ones, all while maintaining a simple and declarative module loading system so your dependencies are always clear and concise.\n\n\nMajor Features\n\n\n\n\nFunctors and Monads\n\n\nAutocurrying\n\n\nComposition\n\n\nHaskell-style module system\n\n\n\n\nPHP Version Support\n\n\n\n\n5.6 +", 
+            "title": "Introduction"
+        }, 
+        {
+            "location": "/#vector-core", 
+            "text": "", 
+            "title": "Vector / Core"
+        }, 
+        {
+            "location": "/#purpose", 
+            "text": "Vector provides algebraic primities and loads of utilities for writing PHP in a more functional and declarative style. \nIt provides functors and monads like Maybe and Either that allow you to abstract away null checks and handle errors in a completely painless way.\nIt allows you to automatically curry your userland functions with zero effort on your part. It provides useful helpers for composing simple functions\ninto more complex ones, all while maintaining a simple and declarative module loading system so your dependencies are always clear and concise.", 
+            "title": "Purpose"
+        }, 
+        {
+            "location": "/#major-features", 
+            "text": "Functors and Monads  Autocurrying  Composition  Haskell-style module system", 
+            "title": "Major Features"
+        }, 
+        {
+            "location": "/#php-version-support", 
+            "text": "5.6 +", 
+            "title": "PHP Version Support"
+        }, 
+        {
+            "location": "/user-guide/basics/", 
+            "text": "Functional Basics\n\n\nFirst of all, what is functional programming?\n\n\n\n\nIn computer science, functional programming is a programming paradigm that treats computation\nas the evaluation of mathematical functions and avoids changing-state and mutable data.\n\n\n\n\nVector is a functional programming library that follows this credo and implements helpers and utilities\nthat allow you to do the same in your own code.\n\n\nBefore we get started, here's some things to know:\n\n\nFunction Declaration vs. Function Expression\n\n\nYou're probably very familiar with functions in PHP. But what you might not know is that there are\nmultiple ways to declare functions in PHP. The first is a declaration, where a function name is placed\ninto a function table keyed to its name and accessible globally (so long as it's loaded). The second method is\na function expression, where a function is placed into the PHP Closure object and stored in a scoped variable.\n\n\n// Function Declaration\nfunction add($a, $b) {\n    return $a + $b;\n}\n\n// Function Expression\n$add = function($a, $b) {\n    return $a + $b;\n}\n\n\n\n\nWe can use a function expression in the same way we use a regular function:\n\n\n$add(1, 2); // Returns 3\n\n\n\n\nVector makes exclusive use of function expressions, both for consistency when combining functions together\nand for their scoped nature.\n\n\nUsing Vector Functions\n\n\nFunctions in Vector are organized into modules, which each have some related functionality or 'theme.' We tell our code\nthat we want to use a Vector functions using the \nUsing\n static method on the module we want to pull functions in from.\n\n\nFor instance, if we want to pull in the Vector wrapper function for \narray_map\n called \n$map\n from the List module, we would\nwrite:\n\n\n$map = Vector\\Lib\\List::Using('map');\n\n\n\n\nThis function expression places \n$map\n into the local scope for our use. We can load multiple functions using the built-in PHP syntax \nlist\n:\n\n\nlist($map, $filter, $fold) = Vector\\Lib\\List::Using('map', 'filter', 'list');\n\n\n\n\nAnd if you need an entire module and aren't afraid of using \nextract\n:\n\n\nextract(Vector\\Lib\\List::UsingAll());\n\n\n\n\nWe'll go into more detail about how this is implemented, and more importantly, how you can implement your own modules in the 'Function Capsule' section.\n\n\nCurrying\n\n\nCurrying is the act of modifying a function in such a way that it can accept its arguments in chunks. A curried function\ndoesn't have to be supplied all of its arguments in order to have some effect.\n\n\nSay we have a function that adds two numbers together.\n\n\n$add = function($a, $b) {\n    return $a + $b;\n}\n\n\n\n\nWhen we want to use add, we have to supply it two arguments, \n$a\n and \n$b\n. But say we want to give it is first argument,\ngo do something else, then come back and give it its second argument. We can curry the \n$add\n function to allow us to do this.\n\n\n$addCurried = function($a) {\n    return function($b) use ($a) {\n        return $a + $b;\n    }\n}\n\n\n\n\nNow we can use the \n$add\n function like this:\n\n\n$addNow = $addCurried(1); // $addNow = curried PHP closure\n$addLater = $addNow(2);   // $addLater = 3;\n\n\n\n\nWhy in the world would we ever want to do this? Currying in and of itself doesn't give us much,\nbut it has a powerful consequence: Partial Application.\n\n\nPartial Application\n\n\nNotice in the previous example how we stored the interim result of giving the first argument to our curried \n$add\n function in a local variable\ncalled \n$addNow\n. This variable is a function expression, and it can be used in the same way as any other function. The first argument we've given\nit has been closed over, and this is now a completely new function with different behaviors from \n$add\n. Let's rename it to \n$increment\n and see how it behaves:\n\n\n$increment = $addCurried(1);\n\n$increment(2); // 3\n$increment(0); // 1\n$increment(9); // 10\n\n\n\n\nWe've taken our \n$add\n function and created an increment function, without writing a single line of code aside from applying the first argument. We can create an infinite\nnumber of \n$addX\n functions in exactly the same way.\n\n\nAll functions in Vector are curried by default, so they can all be partially applied.\n\n\nComposition\n\n\nWe've now seen how we can create functions from other functions by partially applying them. But there are other ways to create new functions from small components.\nWe can also compose them together, which is like creating a chain of steps for a function to step through, from beginning to end.\n\n\nVector provides a \n$compose\n function in the Lambda module which we can pull in and play around with. \n$compose\n takes its arguments and applies them sequentially from\nback to front - provided every argument is a function.\n\n\nLet's say we want to create a function that converts from celcius to fahrenheit, and that we've already implmented the basic mathematical functions like\nadd, subtract, multiply, and divide. We can use \n$compose\n to chain all these calculations together to create a \n$toFahrenheit\n function:\n\n\n// Given that we have $add and $multiply, pull in compose:\n$compose = Vector\\Lib\\Lambda::Using('compose');\n\n// Then create our function\n$toFahrenheit = $compose(\n    $add(32),\n    $multiply(9/5)\n);\n\n$toFahrenheit(8); // Returns 46.4\n\n\n\n\nNotice how \n$compose\n reads: We first perform the operation last in the list, then move backward to the front of the list. This is laid out to match the mathematical definition\nof compose: \n(f \u2218 g)(x) = f(g(x))\n. If you can't wrap your head around the backwards nature, Vector also supplied a \n$pipe\n function on the Lambda module that acts as compose\nfrom front-to-back.\n\n\nNotice also how we used partial application to create helper functions from \n$add\n and \n$multiply\n. These two methods\ncan be mixed and matched to create more complex functions from very simple components.\n\n\nLifting\n\n\nLet's use our \n$toFahrenheit\n function from before, but imagine instead that we want to apply it to a list of temperatures. Instead of looping over the\nlist in a procedural way, let's use \n$map\n from the List module.\n\n\n$map = Vector\\Lib\\List::Using('map');\n\n// Our list of temperatures\n$data = [50.0, 176.0, 212.0];\n\n$map($toFahrenheit, $data); // Returns [10, 80, 100]\n\n\n\n\nIf you've ever used PHP's \narray_map\n before, you should recognize what's going on. \n$map\n is taking a function with one input and one output, and sequentially\napplying it to every element in an array.\n\n\nHowever, \n$map\n is a function just like any other - it's curried, and it can be partially applied. If we partially apply \n$map\n, we've created a new function that now operates\non a list as opposed to a single element. We've lifted it from one domain to another. Let's see how we can use this in conjunction with partial application and composition, putting\nit all together.\n\n\nSay we have a set of data from a temperature probe, but it's uncalibrated. Our task is to calculate the mean temperature from the probe's 10 samples after correcting the values by shifting\nthem one degree higher.\n\n\n// Using the $mean function from the Math module and all the functions we've made so far\n$mean = Vector\\Lib\\Math::Using('mean');\n\n$correctedMeanTemp = $compose(\n    $mean,\n    $map(\n        $compose($toFahrenheit, $add(1))\n    )\n);\n\n\n\n\nNotice how we have created a function to complete our task without even bothering to load our data in - we don't need it. Our function will first\nadd one to every element in the dataset and then convert it to fahrenheit, then pass that mapped array to our mean function.\n\n\nNow we can take our \n$correctedMeanTemp\n and add it to our own Vector module and use it throughout our codebase whenever we need to work with sample data.\n\n\nIn the next section, we'll go over the Vector function capsule - how it works, and how you can make your own.", 
+            "title": "Functional Basics"
+        }, 
+        {
+            "location": "/user-guide/basics/#functional-basics", 
+            "text": "First of all, what is functional programming?   In computer science, functional programming is a programming paradigm that treats computation\nas the evaluation of mathematical functions and avoids changing-state and mutable data.   Vector is a functional programming library that follows this credo and implements helpers and utilities\nthat allow you to do the same in your own code.  Before we get started, here's some things to know:", 
+            "title": "Functional Basics"
+        }, 
+        {
+            "location": "/user-guide/basics/#function-declaration-vs-function-expression", 
+            "text": "You're probably very familiar with functions in PHP. But what you might not know is that there are\nmultiple ways to declare functions in PHP. The first is a declaration, where a function name is placed\ninto a function table keyed to its name and accessible globally (so long as it's loaded). The second method is\na function expression, where a function is placed into the PHP Closure object and stored in a scoped variable.  // Function Declaration\nfunction add($a, $b) {\n    return $a + $b;\n}\n\n// Function Expression\n$add = function($a, $b) {\n    return $a + $b;\n}  We can use a function expression in the same way we use a regular function:  $add(1, 2); // Returns 3  Vector makes exclusive use of function expressions, both for consistency when combining functions together\nand for their scoped nature.", 
+            "title": "Function Declaration vs. Function Expression"
+        }, 
+        {
+            "location": "/user-guide/basics/#using-vector-functions", 
+            "text": "Functions in Vector are organized into modules, which each have some related functionality or 'theme.' We tell our code\nthat we want to use a Vector functions using the  Using  static method on the module we want to pull functions in from.  For instance, if we want to pull in the Vector wrapper function for  array_map  called  $map  from the List module, we would\nwrite:  $map = Vector\\Lib\\List::Using('map');  This function expression places  $map  into the local scope for our use. We can load multiple functions using the built-in PHP syntax  list :  list($map, $filter, $fold) = Vector\\Lib\\List::Using('map', 'filter', 'list');  And if you need an entire module and aren't afraid of using  extract :  extract(Vector\\Lib\\List::UsingAll());  We'll go into more detail about how this is implemented, and more importantly, how you can implement your own modules in the 'Function Capsule' section.", 
+            "title": "Using Vector Functions"
+        }, 
+        {
+            "location": "/user-guide/basics/#currying", 
+            "text": "Currying is the act of modifying a function in such a way that it can accept its arguments in chunks. A curried function\ndoesn't have to be supplied all of its arguments in order to have some effect.  Say we have a function that adds two numbers together.  $add = function($a, $b) {\n    return $a + $b;\n}  When we want to use add, we have to supply it two arguments,  $a  and  $b . But say we want to give it is first argument,\ngo do something else, then come back and give it its second argument. We can curry the  $add  function to allow us to do this.  $addCurried = function($a) {\n    return function($b) use ($a) {\n        return $a + $b;\n    }\n}  Now we can use the  $add  function like this:  $addNow = $addCurried(1); // $addNow = curried PHP closure\n$addLater = $addNow(2);   // $addLater = 3;  Why in the world would we ever want to do this? Currying in and of itself doesn't give us much,\nbut it has a powerful consequence: Partial Application.", 
+            "title": "Currying"
+        }, 
+        {
+            "location": "/user-guide/basics/#partial-application", 
+            "text": "Notice in the previous example how we stored the interim result of giving the first argument to our curried  $add  function in a local variable\ncalled  $addNow . This variable is a function expression, and it can be used in the same way as any other function. The first argument we've given\nit has been closed over, and this is now a completely new function with different behaviors from  $add . Let's rename it to  $increment  and see how it behaves:  $increment = $addCurried(1);\n\n$increment(2); // 3\n$increment(0); // 1\n$increment(9); // 10  We've taken our  $add  function and created an increment function, without writing a single line of code aside from applying the first argument. We can create an infinite\nnumber of  $addX  functions in exactly the same way.  All functions in Vector are curried by default, so they can all be partially applied.", 
+            "title": "Partial Application"
+        }, 
+        {
+            "location": "/user-guide/basics/#composition", 
+            "text": "We've now seen how we can create functions from other functions by partially applying them. But there are other ways to create new functions from small components.\nWe can also compose them together, which is like creating a chain of steps for a function to step through, from beginning to end.  Vector provides a  $compose  function in the Lambda module which we can pull in and play around with.  $compose  takes its arguments and applies them sequentially from\nback to front - provided every argument is a function.  Let's say we want to create a function that converts from celcius to fahrenheit, and that we've already implmented the basic mathematical functions like\nadd, subtract, multiply, and divide. We can use  $compose  to chain all these calculations together to create a  $toFahrenheit  function:  // Given that we have $add and $multiply, pull in compose:\n$compose = Vector\\Lib\\Lambda::Using('compose');\n\n// Then create our function\n$toFahrenheit = $compose(\n    $add(32),\n    $multiply(9/5)\n);\n\n$toFahrenheit(8); // Returns 46.4  Notice how  $compose  reads: We first perform the operation last in the list, then move backward to the front of the list. This is laid out to match the mathematical definition\nof compose:  (f \u2218 g)(x) = f(g(x)) . If you can't wrap your head around the backwards nature, Vector also supplied a  $pipe  function on the Lambda module that acts as compose\nfrom front-to-back.  Notice also how we used partial application to create helper functions from  $add  and  $multiply . These two methods\ncan be mixed and matched to create more complex functions from very simple components.", 
+            "title": "Composition"
+        }, 
+        {
+            "location": "/user-guide/basics/#lifting", 
+            "text": "Let's use our  $toFahrenheit  function from before, but imagine instead that we want to apply it to a list of temperatures. Instead of looping over the\nlist in a procedural way, let's use  $map  from the List module.  $map = Vector\\Lib\\List::Using('map');\n\n// Our list of temperatures\n$data = [50.0, 176.0, 212.0];\n\n$map($toFahrenheit, $data); // Returns [10, 80, 100]  If you've ever used PHP's  array_map  before, you should recognize what's going on.  $map  is taking a function with one input and one output, and sequentially\napplying it to every element in an array.  However,  $map  is a function just like any other - it's curried, and it can be partially applied. If we partially apply  $map , we've created a new function that now operates\non a list as opposed to a single element. We've lifted it from one domain to another. Let's see how we can use this in conjunction with partial application and composition, putting\nit all together.  Say we have a set of data from a temperature probe, but it's uncalibrated. Our task is to calculate the mean temperature from the probe's 10 samples after correcting the values by shifting\nthem one degree higher.  // Using the $mean function from the Math module and all the functions we've made so far\n$mean = Vector\\Lib\\Math::Using('mean');\n\n$correctedMeanTemp = $compose(\n    $mean,\n    $map(\n        $compose($toFahrenheit, $add(1))\n    )\n);  Notice how we have created a function to complete our task without even bothering to load our data in - we don't need it. Our function will first\nadd one to every element in the dataset and then convert it to fahrenheit, then pass that mapped array to our mean function.  Now we can take our  $correctedMeanTemp  and add it to our own Vector module and use it throughout our codebase whenever we need to work with sample data.  In the next section, we'll go over the Vector function capsule - how it works, and how you can make your own.", 
+            "title": "Lifting"
+        }, 
+        {
+            "location": "/user-guide/capsule/", 
+            "text": "The Function Capsule\n\n\nImplementing Your Own Capsule\n\n\nHow it Works", 
+            "title": "The Function Capsule"
+        }, 
+        {
+            "location": "/user-guide/capsule/#the-function-capsule", 
+            "text": "", 
+            "title": "The Function Capsule"
+        }, 
+        {
+            "location": "/user-guide/capsule/#implementing-your-own-capsule", 
+            "text": "", 
+            "title": "Implementing Your Own Capsule"
+        }, 
+        {
+            "location": "/user-guide/capsule/#how-it-works", 
+            "text": "", 
+            "title": "How it Works"
+        }, 
+        {
+            "location": "/api-reference/maybe/", 
+            "text": "The Maybe Monad", 
+            "title": "Maybe"
+        }, 
+        {
+            "location": "/api-reference/maybe/#the-maybe-monad", 
+            "text": "", 
+            "title": "The Maybe Monad"
+        }, 
+        {
+            "location": "/api-reference/either/", 
+            "text": "The Either Monad", 
+            "title": "Either"
+        }, 
+        {
+            "location": "/api-reference/either/#the-either-monad", 
+            "text": "", 
+            "title": "The Either Monad"
+        }, 
+        {
+            "location": "/auto-generate/Lib/ArrayList/", 
+            "text": "concat\n\n\n\n\n[a] -\n [a] -\n [a]\n\n\n\n\nArray Concatenation\n\n\nJoins two arrays together, with the second argument being appended\nto the end of the first. Defers to php build-in function \narray_merge\n,\nso repeated keys will be overwritten.\n\n\n$concat([1, 2], [2, 3]); // [1, 2, 2, 3]\n$concat(['a' =\n 1, 'b' =\n 2], ['a' =\n 'foo', 'c' =\n 3]); // ['a' =\n 'foo', 'b' =\n 2, 'c' =\n 3]\n\n\n\n\n\n\nfilter\n\n\n\n\n(a -\n Bool) -\n [a] -\n [a]\n\n\n\n\nFilter a List\n\n\nReturns a filtered list. Given a function that takes an element and returns\neither true or false, return a list of all the elements\nof the input list that pass the test.\n\n\n$filter(function($a) { return $a \n 2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function\n$filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module\n\n\n\n\n\n\nhead\n\n\n\n\n[a] -\n a\n\n\n\n\nList Head\n\n\nReturns the first element of a list, the element at index 0. Also functions\nproperly for key/value arrays, e.g. arrays whose first element may not necessarily\nbe index 0. If an empty array is given, head throws an Exception.\n\n\n$head([1, 2, 3]); // 1\n$head(['a' =\n 1, 'b' =\n 2]); // 1\n$head([]); // Exception thrown\n\n\n\n\n\n\nindex\n\n\n\n\nInt -\n [a] -\n a\n\n\n\n\nList Index\n\n\nReturns the element of a list at the given index. Throws an exception\nif the given index does not exist in the list.\n\n\n$index(0, [1, 2, 3]); // 1\n$index('foo', ['bar' =\n 1, 'foo' =\n 2]); // 2\n$index('baz', [1, 2, 3]); // Exception thrown\n\n\n\n\n\n\ninit\n\n\n\n\n[a] -\n [a]\n\n\n\n\nInitial List Values\n\n\nReturns an array without its last element, e.g. the inverse of \ntail\n. Works on\nkey/value arrays as well as 'regular' arrays. If an empty or single-value array is given,\nreturns an empty array.\n\n\n$init([1, 2, 3]); // [1, 2]\n$init(['a' =\n 1, 'b' =\n 2]); // ['a' =\n 1];\n\n\n\n\n\n\nkeys\n\n\n\n\n[a] -\n [b]\n\n\n\n\nArray Keys\n\n\nReturns the keys of an associative key/value array. Returns numerical indeces\nfor non key/value arrays.\n\n\n$keys(['a' =\n 1, 'b' =\n 2]); // ['a', 'b']\n$keys([1, 2, 3]); // [0, 1, 2]\n\n\n\n\n\n\nlast\n\n\n\n\n[a] -\n a\n\n\n\n\nLast List Value\n\n\nReturns the last element of an array, e.g. the complement of \ninit\n. Works on key/value\narrays as well as 'regular' arrays. If an empty array is given, throws an exception.\n\n\n$last([1, 2, 3]); // 3\n$last(['a' =\n 1, 'b' =\n 2]); // 2\n$last([]); // Exception thrown\n\n\n\n\n\n\nlength\n\n\n\n\n[a] -\n a\n\n\n\n\nArray Length\n\n\nReturns the length of a list or array. Wraps php \ncount\n function.\n\n\n$length([1, 2, 3]); // 3\n$length(['a' =\n 1, 'b' =\n 2]); // 2\n\n\n\n\n\n\nmaybeIndex\n\n\n\n\nInt -\n a -\n Maybe a\n\n\n\n\nMaybe List Index\n\n\nReturns the element of a list at the given index, or nothing. Is safe to call\nif you don't know if an index exists. If the index does not exist, returns \nNothing\n.\nOtherwise returns \nJust a\n.\n\n\n$index(0, [1, 2, 3]); // Just 1\n$index('foo', ['bar' =\n 1, 'foo' =\n 2]); // Just 2\n$index('baz', [1, 2, 3]); // Nothing - (No exception thrown)\n\n\n\n\n\n\nset\n\n\n\n\na -\n [b] -\n b -\n [b]\n\n\n\n\nSet Array Value\n\n\nSets the value of an array at the given index; works for non-numerical indeces.\nThe value is set in an immutable way, so the original array is not modified.\n\n\n$set(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]\n$set('c', 3, ['a' =\n 1, 'b' =\n 2]); // ['a' =\n 1, 'b' =\n 2, 'c' =\n 3]\n\n\n\n\n\n\ntail\n\n\n\n\n[a] -\n [a]\n\n\n\n\nList Tail\n\n\nReturns an array without its first element, e.g. the complement of \nhead\n. Works on\nkey/value arrays as well as 'regular' arrays. If an empty array of an array of one element\nis given, returns an empty array.\n\n\n$tail([1, 2, 3]); // [2, 3]\n$tail(['a' =\n 1, 'b' =\n 2]); // ['b' =\n 2];\n\n\n\n\n\n\nvalues\n\n\n\n\n[a] -\n [a]\n\n\n\n\nArray Values\n\n\nReturns the values of an associative key/value array.\n\n\n$values(['a' =\n 1, 'b' =\n 2]); // [1, 2]\n$values([1, 2, 3]); // [1, 2, 3]", 
+            "title": "ArrayList"
+        }, 
+        {
+            "location": "/auto-generate/Lib/ArrayList/#concat", 
+            "text": "[a] -  [a] -  [a]   Array Concatenation  Joins two arrays together, with the second argument being appended\nto the end of the first. Defers to php build-in function  array_merge ,\nso repeated keys will be overwritten.  $concat([1, 2], [2, 3]); // [1, 2, 2, 3]\n$concat(['a' =  1, 'b' =  2], ['a' =  'foo', 'c' =  3]); // ['a' =  'foo', 'b' =  2, 'c' =  3]", 
+            "title": "concat"
+        }, 
+        {
+            "location": "/auto-generate/Lib/ArrayList/#filter", 
+            "text": "(a -  Bool) -  [a] -  [a]   Filter a List  Returns a filtered list. Given a function that takes an element and returns\neither true or false, return a list of all the elements\nof the input list that pass the test.  $filter(function($a) { return $a   2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function\n$filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module", 
+            "title": "filter"
+        }, 
+        {
+            "location": "/auto-generate/Lib/ArrayList/#head", 
+            "text": "[a] -  a   List Head  Returns the first element of a list, the element at index 0. Also functions\nproperly for key/value arrays, e.g. arrays whose first element may not necessarily\nbe index 0. If an empty array is given, head throws an Exception.  $head([1, 2, 3]); // 1\n$head(['a' =  1, 'b' =  2]); // 1\n$head([]); // Exception thrown", 
+            "title": "head"
+        }, 
+        {
+            "location": "/auto-generate/Lib/ArrayList/#index", 
+            "text": "Int -  [a] -  a   List Index  Returns the element of a list at the given index. Throws an exception\nif the given index does not exist in the list.  $index(0, [1, 2, 3]); // 1\n$index('foo', ['bar' =  1, 'foo' =  2]); // 2\n$index('baz', [1, 2, 3]); // Exception thrown", 
+            "title": "index"
+        }, 
+        {
+            "location": "/auto-generate/Lib/ArrayList/#init", 
+            "text": "[a] -  [a]   Initial List Values  Returns an array without its last element, e.g. the inverse of  tail . Works on\nkey/value arrays as well as 'regular' arrays. If an empty or single-value array is given,\nreturns an empty array.  $init([1, 2, 3]); // [1, 2]\n$init(['a' =  1, 'b' =  2]); // ['a' =  1];", 
+            "title": "init"
+        }, 
+        {
+            "location": "/auto-generate/Lib/ArrayList/#keys", 
+            "text": "[a] -  [b]   Array Keys  Returns the keys of an associative key/value array. Returns numerical indeces\nfor non key/value arrays.  $keys(['a' =  1, 'b' =  2]); // ['a', 'b']\n$keys([1, 2, 3]); // [0, 1, 2]", 
+            "title": "keys"
+        }, 
+        {
+            "location": "/auto-generate/Lib/ArrayList/#last", 
+            "text": "[a] -  a   Last List Value  Returns the last element of an array, e.g. the complement of  init . Works on key/value\narrays as well as 'regular' arrays. If an empty array is given, throws an exception.  $last([1, 2, 3]); // 3\n$last(['a' =  1, 'b' =  2]); // 2\n$last([]); // Exception thrown", 
+            "title": "last"
+        }, 
+        {
+            "location": "/auto-generate/Lib/ArrayList/#length", 
+            "text": "[a] -  a   Array Length  Returns the length of a list or array. Wraps php  count  function.  $length([1, 2, 3]); // 3\n$length(['a' =  1, 'b' =  2]); // 2", 
+            "title": "length"
+        }, 
+        {
+            "location": "/auto-generate/Lib/ArrayList/#maybeindex", 
+            "text": "Int -  a -  Maybe a   Maybe List Index  Returns the element of a list at the given index, or nothing. Is safe to call\nif you don't know if an index exists. If the index does not exist, returns  Nothing .\nOtherwise returns  Just a .  $index(0, [1, 2, 3]); // Just 1\n$index('foo', ['bar' =  1, 'foo' =  2]); // Just 2\n$index('baz', [1, 2, 3]); // Nothing - (No exception thrown)", 
+            "title": "maybeIndex"
+        }, 
+        {
+            "location": "/auto-generate/Lib/ArrayList/#set", 
+            "text": "a -  [b] -  b -  [b]   Set Array Value  Sets the value of an array at the given index; works for non-numerical indeces.\nThe value is set in an immutable way, so the original array is not modified.  $set(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]\n$set('c', 3, ['a' =  1, 'b' =  2]); // ['a' =  1, 'b' =  2, 'c' =  3]", 
+            "title": "set"
+        }, 
+        {
+            "location": "/auto-generate/Lib/ArrayList/#tail", 
+            "text": "[a] -  [a]   List Tail  Returns an array without its first element, e.g. the complement of  head . Works on\nkey/value arrays as well as 'regular' arrays. If an empty array of an array of one element\nis given, returns an empty array.  $tail([1, 2, 3]); // [2, 3]\n$tail(['a' =  1, 'b' =  2]); // ['b' =  2];", 
+            "title": "tail"
+        }, 
+        {
+            "location": "/auto-generate/Lib/ArrayList/#values", 
+            "text": "[a] -  [a]   Array Values  Returns the values of an associative key/value array.  $values(['a' =  1, 'b' =  2]); // [1, 2]\n$values([1, 2, 3]); // [1, 2, 3]", 
+            "title": "values"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Lambda/", 
+            "text": "compose\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nid\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nk\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\npipe\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "title": "Lambda"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Lambda/#compose", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "compose"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Lambda/#id", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "id"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Lambda/#k", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "k"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Lambda/#pipe", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "pipe"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Math/", 
+            "text": "add\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\ndivide\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nmean\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nArithemtic mean\n\n\nReturns the average of a list, or zero for an empty list.\n\n\n$mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2\n$mean([]); // 0\n\n\n\n\n\n\nmod\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nmultiply\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\npow\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nPower function\n\n\nArithmetic exponentionation. Raises the second argument to the power\nof the first.\n\n\n$pow(2, 3); // 3 ^ 2 = 9\n$pow(3, 2); // 2 ^ 3 = 8\n\n\n\n\n\n\nsubtract\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "title": "Math"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Math/#add", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "add"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Math/#divide", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "divide"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Math/#mean", 
+            "text": "No Type Signature Provided   Arithemtic mean  Returns the average of a list, or zero for an empty list.  $mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2\n$mean([]); // 0", 
+            "title": "mean"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Math/#mod", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "mod"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Math/#multiply", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "multiply"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Math/#pow", 
+            "text": "No Type Signature Provided   Power function  Arithmetic exponentionation. Raises the second argument to the power\nof the first.  $pow(2, 3); // 3 ^ 2 = 9\n$pow(3, 2); // 2 ^ 3 = 8", 
+            "title": "pow"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Math/#subtract", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "subtract"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Maybe/", 
+            "text": "maybeGetPropertyOfObject\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nmaybeGetValueAtIndex\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "title": "Maybe"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Maybe/#maybegetpropertyofobject", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "maybeGetPropertyOfObject"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Maybe/#maybegetvalueatindex", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "maybeGetValueAtIndex"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Object/", 
+            "text": "get\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\ninvoke\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nisInstanceOf\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nset\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "title": "Object"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Object/#get", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "get"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Object/#invoke", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "invoke"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Object/#isinstanceof", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "isInstanceOf"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Object/#set", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "set"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Strings/", 
+            "text": "concat\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\njoin\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nsplit\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nstartsWith\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\ntoLowercase\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "title": "Strings"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Strings/#concat", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "concat"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Strings/#join", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "join"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Strings/#split", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "split"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Strings/#startswith", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "startsWith"
+        }, 
+        {
+            "location": "/auto-generate/Lib/Strings/#tolowercase", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "toLowercase"
+        }, 
+        {
+            "location": "/auto-generate/Control/Applicative/", 
+            "text": "apply\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nliftA2\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\npure\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "title": "Applicative"
+        }, 
+        {
+            "location": "/auto-generate/Control/Applicative/#apply", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "apply"
+        }, 
+        {
+            "location": "/auto-generate/Control/Applicative/#lifta2", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "liftA2"
+        }, 
+        {
+            "location": "/auto-generate/Control/Applicative/#pure", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "pure"
+        }, 
+        {
+            "location": "/auto-generate/Control/Functor/", 
+            "text": "extract\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nfmap\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "title": "Functor"
+        }, 
+        {
+            "location": "/auto-generate/Control/Functor/#extract", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "extract"
+        }, 
+        {
+            "location": "/auto-generate/Control/Functor/#fmap", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "fmap"
+        }, 
+        {
+            "location": "/auto-generate/Control/Lens/", 
+            "text": "constant\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nidentity\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nindexLens\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nover\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\npropLens\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nset\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nview\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "title": "Lens"
+        }, 
+        {
+            "location": "/auto-generate/Control/Lens/#constant", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "constant"
+        }, 
+        {
+            "location": "/auto-generate/Control/Lens/#identity", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "identity"
+        }, 
+        {
+            "location": "/auto-generate/Control/Lens/#indexlens", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "indexLens"
+        }, 
+        {
+            "location": "/auto-generate/Control/Lens/#over", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "over"
+        }, 
+        {
+            "location": "/auto-generate/Control/Lens/#proplens", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "propLens"
+        }, 
+        {
+            "location": "/auto-generate/Control/Lens/#set", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "set"
+        }, 
+        {
+            "location": "/auto-generate/Control/Lens/#view", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "view"
+        }, 
+        {
+            "location": "/auto-generate/Control/Monad/", 
+            "text": "bind\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nkleisliCompose\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "title": "Monad"
+        }, 
+        {
+            "location": "/auto-generate/Control/Monad/#bind", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "bind"
+        }, 
+        {
+            "location": "/auto-generate/Control/Monad/#kleislicompose", 
+            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "title": "kleisliCompose"
+        }
+    ]
+}

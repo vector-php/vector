@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Functional Basics - Vector</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <link href="../../extra.css" rel="stylesheet">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Functional Basics";
+    var mkdocs_page_input_path = "user-guide/basics.md";
+    var mkdocs_page_url = "/user-guide/basics/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Vector</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Introduction</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>User Guide</span></li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Functional Basics</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#functional-basics">Functional Basics</a></li>
+                
+                    <li><a class="toctree-l4" href="#function-declaration-vs-function-expression">Function Declaration vs. Function Expression</a></li>
+                
+                    <li><a class="toctree-l4" href="#using-vector-functions">Using Vector Functions</a></li>
+                
+                    <li><a class="toctree-l4" href="#currying">Currying</a></li>
+                
+                    <li><a class="toctree-l4" href="#partial-application">Partial Application</a></li>
+                
+                    <li><a class="toctree-l4" href="#composition">Composition</a></li>
+                
+                    <li><a class="toctree-l4" href="#lifting">Lifting</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../capsule/">The Function Capsule</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>API Reference</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>Data</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api-reference/maybe/">Maybe</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../api-reference/either/">Either</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>Lib</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Lib/ArrayList/">ArrayList</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Lib/Lambda/">Lambda</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Lib/Math/">Math</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Lib/Maybe/">Maybe</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Lib/Object/">Object</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Lib/Strings/">Strings</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>Control</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Control/Applicative/">Applicative</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Control/Functor/">Functor</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Control/Lens/">Lens</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Control/Monad/">Monad</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Vector</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>User Guide &raquo;</li>
+        
+      
+    
+    <li>Functional Basics</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="functional-basics">Functional Basics</h1>
+<p>First of all, what is functional programming?</p>
+<blockquote>
+<p>In computer science, functional programming is a programming paradigm that treats computation
+as the evaluation of mathematical functions and avoids changing-state and mutable data.</p>
+</blockquote>
+<p>Vector is a functional programming library that follows this credo and implements helpers and utilities
+that allow you to do the same in your own code.</p>
+<p>Before we get started, here's some things to know:</p>
+<h3 id="function-declaration-vs-function-expression">Function Declaration vs. Function Expression</h3>
+<p>You're probably very familiar with functions in PHP. But what you might not know is that there are
+multiple ways to declare functions in PHP. The first is a declaration, where a function name is placed
+into a function table keyed to its name and accessible globally (so long as it's loaded). The second method is
+a function expression, where a function is placed into the PHP Closure object and stored in a scoped variable.</p>
+<pre><code class="php">// Function Declaration
+function add($a, $b) {
+    return $a + $b;
+}
+
+// Function Expression
+$add = function($a, $b) {
+    return $a + $b;
+}
+</code></pre>
+
+<p>We can use a function expression in the same way we use a regular function:</p>
+<pre><code class="php">$add(1, 2); // Returns 3
+</code></pre>
+
+<p>Vector makes exclusive use of function expressions, both for consistency when combining functions together
+and for their scoped nature.</p>
+<h3 id="using-vector-functions">Using Vector Functions</h3>
+<p>Functions in Vector are organized into modules, which each have some related functionality or 'theme.' We tell our code
+that we want to use a Vector functions using the <code>Using</code> static method on the module we want to pull functions in from.</p>
+<p>For instance, if we want to pull in the Vector wrapper function for <code>array_map</code> called <code>$map</code> from the List module, we would
+write:</p>
+<pre><code class="php">$map = Vector\Lib\List::Using('map');
+</code></pre>
+
+<p>This function expression places <code>$map</code> into the local scope for our use. We can load multiple functions using the built-in PHP syntax <code>list</code>:</p>
+<pre><code class="php">list($map, $filter, $fold) = Vector\Lib\List::Using('map', 'filter', 'list');
+</code></pre>
+
+<p>And if you need an entire module and aren't afraid of using <code>extract</code>:</p>
+<pre><code class="php">extract(Vector\Lib\List::UsingAll());
+</code></pre>
+
+<p>We'll go into more detail about how this is implemented, and more importantly, how you can implement your own modules in the 'Function Capsule' section.</p>
+<h2 id="currying">Currying</h2>
+<p>Currying is the act of modifying a function in such a way that it can accept its arguments in chunks. A curried function
+doesn't have to be supplied all of its arguments in order to have some effect.</p>
+<p>Say we have a function that adds two numbers together.</p>
+<pre><code class="php">$add = function($a, $b) {
+    return $a + $b;
+}
+</code></pre>
+
+<p>When we want to use add, we have to supply it two arguments, <code>$a</code> and <code>$b</code>. But say we want to give it is first argument,
+go do something else, then come back and give it its second argument. We can curry the <code>$add</code> function to allow us to do this.</p>
+<pre><code class="php">$addCurried = function($a) {
+    return function($b) use ($a) {
+        return $a + $b;
+    }
+}
+</code></pre>
+
+<p>Now we can use the <code>$add</code> function like this:</p>
+<pre><code class="php">$addNow = $addCurried(1); // $addNow = curried PHP closure
+$addLater = $addNow(2);   // $addLater = 3;
+</code></pre>
+
+<p>Why in the world would we ever want to do this? Currying in and of itself doesn't give us much,
+but it has a powerful consequence: Partial Application.</p>
+<h2 id="partial-application">Partial Application</h2>
+<p>Notice in the previous example how we stored the interim result of giving the first argument to our curried <code>$add</code> function in a local variable
+called <code>$addNow</code>. This variable is a function expression, and it can be used in the same way as any other function. The first argument we've given
+it has been closed over, and this is now a completely new function with different behaviors from <code>$add</code>. Let's rename it to <code>$increment</code> and see how it behaves:</p>
+<pre><code class="php">$increment = $addCurried(1);
+
+$increment(2); // 3
+$increment(0); // 1
+$increment(9); // 10
+</code></pre>
+
+<p>We've taken our <code>$add</code> function and created an increment function, without writing a single line of code aside from applying the first argument. We can create an infinite
+number of <code>$addX</code> functions in exactly the same way.</p>
+<p>All functions in Vector are curried by default, so they can all be partially applied.</p>
+<h2 id="composition">Composition</h2>
+<p>We've now seen how we can create functions from other functions by partially applying them. But there are other ways to create new functions from small components.
+We can also compose them together, which is like creating a chain of steps for a function to step through, from beginning to end.</p>
+<p>Vector provides a <code>$compose</code> function in the Lambda module which we can pull in and play around with. <code>$compose</code> takes its arguments and applies them sequentially from
+back to front - provided every argument is a function.</p>
+<p>Let's say we want to create a function that converts from celcius to fahrenheit, and that we've already implmented the basic mathematical functions like
+add, subtract, multiply, and divide. We can use <code>$compose</code> to chain all these calculations together to create a <code>$toFahrenheit</code> function:</p>
+<pre><code class="php">// Given that we have $add and $multiply, pull in compose:
+$compose = Vector\Lib\Lambda::Using('compose');
+
+// Then create our function
+$toFahrenheit = $compose(
+    $add(32),
+    $multiply(9/5)
+);
+
+$toFahrenheit(8); // Returns 46.4
+</code></pre>
+
+<p>Notice how <code>$compose</code> reads: We first perform the operation last in the list, then move backward to the front of the list. This is laid out to match the mathematical definition
+of compose: <code>(f ∘ g)(x) = f(g(x))</code>. If you can't wrap your head around the backwards nature, Vector also supplied a <code>$pipe</code> function on the Lambda module that acts as compose
+from front-to-back.</p>
+<p>Notice also how we used partial application to create helper functions from <code>$add</code> and <code>$multiply</code>. These two methods
+can be mixed and matched to create more complex functions from very simple components.</p>
+<h2 id="lifting">Lifting</h2>
+<p>Let's use our <code>$toFahrenheit</code> function from before, but imagine instead that we want to apply it to a list of temperatures. Instead of looping over the
+list in a procedural way, let's use <code>$map</code> from the List module.</p>
+<pre><code class="php">$map = Vector\Lib\List::Using('map');
+
+// Our list of temperatures
+$data = [50.0, 176.0, 212.0];
+
+$map($toFahrenheit, $data); // Returns [10, 80, 100]
+</code></pre>
+
+<p>If you've ever used PHP's <code>array_map</code> before, you should recognize what's going on. <code>$map</code> is taking a function with one input and one output, and sequentially
+applying it to every element in an array.</p>
+<p>However, <code>$map</code> is a function just like any other - it's curried, and it can be partially applied. If we partially apply <code>$map</code>, we've created a new function that now operates
+on a list as opposed to a single element. We've lifted it from one domain to another. Let's see how we can use this in conjunction with partial application and composition, putting
+it all together.</p>
+<p>Say we have a set of data from a temperature probe, but it's uncalibrated. Our task is to calculate the mean temperature from the probe's 10 samples after correcting the values by shifting
+them one degree higher.</p>
+<pre><code class="php">// Using the $mean function from the Math module and all the functions we've made so far
+$mean = Vector\Lib\Math::Using('mean');
+
+$correctedMeanTemp = $compose(
+    $mean,
+    $map(
+        $compose($toFahrenheit, $add(1))
+    )
+);
+</code></pre>
+
+<p>Notice how we have created a function to complete our task without even bothering to load our data in - we don't need it. Our function will first
+add one to every element in the dataset and then convert it to fahrenheit, then pass that mapped array to our mean function.</p>
+<p>Now we can take our <code>$correctedMeanTemp</code> and add it to our own Vector module and use it throughout our codebase whenever we need to work with sample data.</p>
+<p>In the next section, we'll go over the Vector function capsule - how it works, and how you can make your own.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../capsule/" class="btn btn-neutral float-right" title="The Function Capsule">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../.." class="btn btn-neutral" title="Introduction"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../capsule/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

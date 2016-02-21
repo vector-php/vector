@@ -1,5 +1,5 @@
 
-# concat
+## concat
 
 > [a] -> [a] -> [a]
 
@@ -16,7 +16,7 @@ $concat(['a' => 1, 'b' => 2], ['a' => 'foo', 'c' => 3]); // ['a' => 'foo', 'b' =
 
 ---
 
-# filter
+## filter
 
 > (a -> Bool) -> [a] -> [a]
 
@@ -33,7 +33,7 @@ $filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module
 
 ---
 
-# head
+## head
 
 > [a] -> a
 
@@ -51,7 +51,7 @@ $head([]); // Exception thrown
 
 ---
 
-# index
+## index
 
 > Int -> [a] -> a
 
@@ -68,7 +68,7 @@ $index('baz', [1, 2, 3]); // Exception thrown
 
 ---
 
-# init
+## init
 
 > [a] -> [a]
 
@@ -85,7 +85,7 @@ $init(['a' => 1, 'b' => 2]); // ['a' => 1];
 
 ---
 
-# keys
+## keys
 
 > [a] -> [b]
 
@@ -101,7 +101,7 @@ $keys([1, 2, 3]); // [0, 1, 2]
 
 ---
 
-# last
+## last
 
 > [a] -> a
 
@@ -118,7 +118,7 @@ $last([]); // Exception thrown
 
 ---
 
-# length
+## length
 
 > [a] -> a
 
@@ -133,7 +133,7 @@ $length(['a' => 1, 'b' => 2]); // 2
 
 ---
 
-# maybeIndex
+## maybeIndex
 
 > Int -> a -> Maybe a
 
@@ -151,7 +151,7 @@ $index('baz', [1, 2, 3]); // Nothing - (No exception thrown)
 
 ---
 
-# set
+## set
 
 > a -> [b] -> b -> [b]
 
@@ -167,7 +167,7 @@ $set('c', 3, ['a' => 1, 'b' => 2]); // ['a' => 1, 'b' => 2, 'c' => 3]
 
 ---
 
-# tail
+## tail
 
 > [a] -> [a]
 
@@ -184,7 +184,7 @@ $tail(['a' => 1, 'b' => 2]); // ['b' => 2];
 
 ---
 
-# values
+## values
 
 > [a] -> [a]
 

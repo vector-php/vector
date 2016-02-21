@@ -1,5 +1,5 @@
 
-# apply
+## apply
 
 > No Type Signature Provided
 
@@ -9,7 +9,7 @@ No Description Given
 
 ---
 
-# liftA2
+## liftA2
 
 > No Type Signature Provided
 
@@ -19,7 +19,7 @@ No Description Given
 
 ---
 
-# pure
+## pure
 
 > No Type Signature Provided
 

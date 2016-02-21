@@ -1,5 +1,5 @@
 
-# extract
+## extract
 
 > No Type Signature Provided
 
@@ -9,7 +9,7 @@ No Description Given
 
 ---
 
-# fmap
+## fmap
 
 > No Type Signature Provided
 

@@ -1,5 +1,5 @@
 
-# bind
+## bind
 
 > No Type Signature Provided
 
@@ -9,7 +9,7 @@ No Description Given
 
 ---
 
-# kleisliCompose
+## kleisliCompose
 
 > No Type Signature Provided
 

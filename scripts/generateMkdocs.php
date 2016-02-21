@@ -11,8 +11,14 @@ $docBuilder = new DocBuilder($loader, __DIR__ . '/../docs/');
 
 $mkdocsYaml = [
     'site_name' => 'Vector',
-    'theme' => 'readthedocs',
-    'extra_css' => ['extra.css'],
+    'site_description' => 'Functional primitives for PHP',
+    'site_author' => 'Joseph Walker',
+    'site_url' => 'https://packagist.org/packages/vector/core',
+    'repo_name' => 'GitHub',
+    'repo_url' => 'https://github.com/joseph-walker/vector',
+    'copyright' => 'Copyright (c) 2016 Joseph Walker',
+    'theme' => 'material',
+    'markdown_extensions' => ['admonition'],
     'pages' => [
         [
             'Introduction' => 'index.md'

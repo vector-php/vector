@@ -1,5 +1,5 @@
 
-# maybeGetPropertyOfObject
+## maybeGetPropertyOfObject
 
 > No Type Signature Provided
 
@@ -9,7 +9,7 @@ No Description Given
 
 ---
 
-# maybeGetValueAtIndex
+## maybeGetValueAtIndex
 
 > No Type Signature Provided
 

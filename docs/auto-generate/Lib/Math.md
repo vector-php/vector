@@ -1,5 +1,5 @@
 
-# add
+## add
 
 > No Type Signature Provided
 
@@ -9,7 +9,7 @@ No Description Given
 
 ---
 
-# divide
+## divide
 
 > No Type Signature Provided
 
@@ -19,7 +19,7 @@ No Description Given
 
 ---
 
-# mean
+## mean
 
 > No Type Signature Provided
 
@@ -34,7 +34,7 @@ $mean([]); // 0
 
 ---
 
-# mod
+## mod
 
 > No Type Signature Provided
 
@@ -44,7 +44,7 @@ No Description Given
 
 ---
 
-# multiply
+## multiply
 
 > No Type Signature Provided
 
@@ -54,7 +54,7 @@ No Description Given
 
 ---
 
-# pow
+## pow
 
 > No Type Signature Provided
 
@@ -70,7 +70,7 @@ $pow(3, 2); // 2 ^ 3 = 8
 
 ---
 
-# subtract
+## subtract
 
 > No Type Signature Provided
 

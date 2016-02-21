@@ -1,5 +1,5 @@
 
-# constant
+## constant
 
 > No Type Signature Provided
 
@@ -9,7 +9,7 @@ No Description Given
 
 ---
 
-# identity
+## identity
 
 > No Type Signature Provided
 
@@ -19,7 +19,7 @@ No Description Given
 
 ---
 
-# indexLens
+## indexLens
 
 > No Type Signature Provided
 
@@ -29,7 +29,7 @@ No Description Given
 
 ---
 
-# over
+## over
 
 > No Type Signature Provided
 
@@ -39,7 +39,7 @@ No Description Given
 
 ---
 
-# propLens
+## propLens
 
 > No Type Signature Provided
 
@@ -49,7 +49,7 @@ No Description Given
 
 ---
 
-# set
+## set
 
 > No Type Signature Provided
 
@@ -59,7 +59,7 @@ No Description Given
 
 ---
 
-# view
+## view
 
 > No Type Signature Provided
 

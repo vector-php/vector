@@ -76,7 +76,7 @@ class DocBuilder
 
 $buffer = <<<EOD
 
-# {$name}
+## {$name}
 
 > {$typeSignature}
 

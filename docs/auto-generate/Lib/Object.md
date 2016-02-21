@@ -1,5 +1,5 @@
 
-# get
+## get
 
 > No Type Signature Provided
 
@@ -9,7 +9,7 @@ No Description Given
 
 ---
 
-# invoke
+## invoke
 
 > No Type Signature Provided
 
@@ -19,7 +19,7 @@ No Description Given
 
 ---
 
-# isInstanceOf
+## isInstanceOf
 
 > No Type Signature Provided
 
@@ -29,7 +29,7 @@ No Description Given
 
 ---
 
-# set
+## set
 
 > No Type Signature Provided
 

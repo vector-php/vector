@@ -1,5 +1,5 @@
 
-# concat
+## concat
 
 > No Type Signature Provided
 
@@ -9,7 +9,7 @@ No Description Given
 
 ---
 
-# join
+## join
 
 > No Type Signature Provided
 
@@ -19,7 +19,7 @@ No Description Given
 
 ---
 
-# split
+## split
 
 > No Type Signature Provided
 
@@ -29,7 +29,7 @@ No Description Given
 
 ---
 
-# startsWith
+## startsWith
 
 > No Type Signature Provided
 
@@ -39,7 +39,7 @@ No Description Given
 
 ---
 
-# toLowercase
+## toLowercase
 
 > No Type Signature Provided
 

@@ -1,5 +1,5 @@
 
-# compose
+## compose
 
 > No Type Signature Provided
 
@@ -9,7 +9,7 @@ No Description Given
 
 ---
 
-# id
+## id
 
 > No Type Signature Provided
 
@@ -19,7 +19,7 @@ No Description Given
 
 ---
 
-# k
+## k
 
 > No Type Signature Provided
 
@@ -29,7 +29,7 @@ No Description Given
 
 ---
 
-# pipe
+## pipe
 
 > No Type Signature Provided
 

@@ -2,10 +2,10 @@
 
 namespace Vector\Control;
 
-use Vector\Core\FunctionCapsule;
+use Vector\Core\Module;
 use Vector\Typeclass\MonadInterface as TypeclassMonad;
 
-abstract class Monad extends FunctionCapsule
+abstract class Monad extends Module
 {
     protected static function bind($f, TypeclassMonad $container)
     {

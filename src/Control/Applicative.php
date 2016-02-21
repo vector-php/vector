@@ -2,10 +2,10 @@
 
 namespace Vector\Control;
 
-use Vector\Core\FunctionCapsule;
+use Vector\Core\Module;
 use Vector\Typeclass\ApplicativeInterface as TypeclassApplicative;
 
-abstract class Applicative extends FunctionCapsule
+abstract class Applicative extends Module
 {
     protected static function pure($context, $a)
     {

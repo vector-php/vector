@@ -2,9 +2,9 @@
 
 namespace Vector\Test\Lib\Stub;
 
-use Vector\Core\FunctionCapsule;
+use Vector\Core\Module;
 
-class TestFunctions extends FunctionCapsule
+class TestFunctions extends Module
 {
     protected static function plusTwo($a)
     {

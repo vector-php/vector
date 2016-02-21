@@ -2,10 +2,10 @@
 
 namespace Vector\Lib;
 
-use Vector\Core\FunctionCapsule;
+use Vector\Core\Module;
 use Vector\Data\Maybe;
 
-class ArrayList extends FunctionCapsule
+class ArrayList extends Module
 {
     /**
      * List Head

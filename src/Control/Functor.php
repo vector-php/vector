@@ -2,10 +2,10 @@
 
 namespace Vector\Control;
 
-use Vector\Core\FunctionCapsule;
+use Vector\Core\Module;
 use Vector\Typeclass\FunctorInterface as TypeclassFunctor;
 
-abstract class Functor extends FunctionCapsule
+abstract class Functor extends Module
 {
     protected static function fmap($f, $container)
     {

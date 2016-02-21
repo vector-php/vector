@@ -2,10 +2,10 @@
 
 namespace Vector\Lib;
 
-use Vector\Core\FunctionCapsule;
+use Vector\Core\Module;
 use Vector\Data\Maybe as MaybeMonad;
 
-class Maybe extends FunctionCapsule
+class Maybe extends Module
 {
     protected static function maybeGetValueAtIndex($index, $array) {
         return isset($array[$index])

@@ -2,9 +2,9 @@
 
 namespace Vector\Lib;
 
-use Vector\Core\FunctionCapsule;
+use Vector\Core\Module;
 
-abstract class Lambda extends FunctionCapsule
+abstract class Lambda extends Module
 {
     protected static function pipe(...$fs)
     {

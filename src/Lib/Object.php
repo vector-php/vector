@@ -2,9 +2,9 @@
 
 namespace Vector\Lib;
 
-use Vector\Core\FunctionCapsule;
+use Vector\Core\Module;
 
-class Object extends FunctionCapsule
+class Object extends Module
 {
     // Int -> Obj a -> a -> Obj a
     protected static function set($key, $obj, $val)

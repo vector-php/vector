@@ -2,9 +2,9 @@
 
 namespace Vector\Lib;
 
-use Vector\Core\FunctionCapsule;
+use Vector\Core\Module;
 
-class Strings extends FunctionCapsule
+class Strings extends Module
 {
     // String -> String -> String
     protected static function concat($addition, $original)

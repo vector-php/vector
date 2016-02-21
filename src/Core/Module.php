@@ -2,7 +2,7 @@
 
 namespace Vector\Core;
 
-abstract class FunctionCapsule
+abstract class Module
 {
     protected static $doNotCurry = ['curry'];
 

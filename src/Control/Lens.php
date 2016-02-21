@@ -2,7 +2,7 @@
 
 namespace Vector\Control;
 
-use Vector\Core\FunctionCapsule;
+use Vector\Core\Module;
 
 use Vector\Data\Identity;
 use Vector\Data\Constant;
@@ -11,7 +11,7 @@ use Vector\Lib\Lambda;
 use Vector\Lib\ArrayList;
 use Vector\Lib\Object;
 
-class Lens extends FunctionCapsule
+class Lens extends Module
 {
     protected static function constant($a)
     {
@@ -63,7 +63,7 @@ class Lens extends FunctionCapsule
 
     protected static function indexLens($index)
     {
-        $curry = FunctionCapsule::Using('curry');
+        $curry = Module::Using('curry');
 
         $indexLens = $curry(function($index, $f, $arr) {
             $fmap = Functor::Using('fmap');
@@ -78,7 +78,7 @@ class Lens extends FunctionCapsule
 
     protected static function propLens($prop)
     {
-        $curry = FunctionCapsule::Using('curry');
+        $curry = Module::Using('curry');
 
         $propLens = $curry(function($prop, $f, \stdClass $obj) {
             $fmap = Functor::Using('fmap');

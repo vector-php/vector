@@ -2,9 +2,9 @@
 
 namespace Vector\Lib;
 
-use Vector\Core\FunctionCapsule;
+use Vector\Core\Module;
 
-class Math extends FunctionCapsule
+class Math extends Module
 {
     // Num a => a -> a -> a
     protected static function add($a, $b)

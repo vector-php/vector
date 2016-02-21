@@ -2,9 +2,9 @@
 
 namespace Vector\Lib;
 
-use Vector\Core\FunctionCapsule;
+use Vector\Core\Module;
 
-class Logic extends FunctionCapsule
+class Logic extends Module
 {
     // (a -> Bool) -> (a -> Bool) -> a -> Bool
     protected static function logicalOr($f, $g)

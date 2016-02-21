@@ -2,7 +2,7 @@
 
 namespace Vector\Test\Core;
 
-use Vector\Core\FunctionCapsule;
+use Vector\Core\Module;
 
 class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
 {
@@ -140,7 +140,7 @@ class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
      */
     public function testCurryWorksStandalone()
     {
-        $curry = FunctionCapsule::Using('curry');
+        $curry = Module::Using('curry');
 
         $myInlineLambda = function($a, $b) {
             return $a + $b;

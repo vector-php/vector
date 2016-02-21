@@ -3,11 +3,11 @@
 use Symfony\Component\Yaml\Yaml;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
-$loader = require __DIR__ . '/../vendor/autoload.php';
+$loader = require __DIR__ . '/../../vendor/autoload.php';
 require __DIR__ . '/DocBuilder.php';
 
 Tag::registerTagHandler('type', '\SignatureTag');
-$docBuilder = new DocBuilder($loader, __DIR__ . '/../docs/');
+$docBuilder = new DocBuilder($loader, __DIR__ . '/../../docs/');
 
 $mkdocsYaml = [
     'site_name' => 'Vector',
@@ -44,4 +44,4 @@ $mkdocsYaml = [
     ]
 ];
 
-file_put_contents(__DIR__ . '/../mkdocs.yml', Yaml::dump($mkdocsYaml, 8));
+file_put_contents(__DIR__ . '/../../mkdocs.yml', Yaml::dump($mkdocsYaml, 8));

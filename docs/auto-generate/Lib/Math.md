@@ -1,7 +1,7 @@
 
 # add
 
-> 
+> No Type Signature Provided
 
 __No Summary Given__
 
@@ -11,7 +11,7 @@ No Description Given
 
 # divide
 
-> 
+> No Type Signature Provided
 
 __No Summary Given__
 
@@ -21,7 +21,7 @@ No Description Given
 
 # mean
 
-> [Num] -> Num
+> No Type Signature Provided
 
 __Arithemtic mean__
 
@@ -36,7 +36,7 @@ $mean([]); // 0
 
 # mod
 
-> 
+> No Type Signature Provided
 
 __No Summary Given__
 
@@ -46,7 +46,7 @@ No Description Given
 
 # multiply
 
-> 
+> No Type Signature Provided
 
 __No Summary Given__
 
@@ -56,7 +56,7 @@ No Description Given
 
 # pow
 
-> Num -> Num -> Num
+> No Type Signature Provided
 
 __Power function__
 
@@ -72,7 +72,7 @@ $pow(3, 2); // 2 ^ 3 = 8
 
 # subtract
 
-> 
+> No Type Signature Provided
 
 __No Summary Given__
 

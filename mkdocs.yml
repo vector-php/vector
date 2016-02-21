@@ -1,5 +1,7 @@
 site_name: Vector
 theme: readthedocs
+extra_css:
+    - extra.css
 pages:
     -
         Introduction: index.md

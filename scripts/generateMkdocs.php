@@ -1,15 +1,18 @@
 <?php
 
 use Symfony\Component\Yaml\Yaml;
+use phpDocumentor\Reflection\DocBlock\Tag;
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/DocBuilder.php';
 
+Tag::registerTagHandler('type', '\SignatureTag');
 $docBuilder = new DocBuilder($loader, __DIR__ . '/../docs/');
 
 $mkdocsYaml = [
     'site_name' => 'Vector',
     'theme' => 'readthedocs',
+    'extra_css' => ['extra.css'],
     'pages' => [
         [
             'Introduction' => 'index.md'

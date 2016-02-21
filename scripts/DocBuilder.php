@@ -15,7 +15,7 @@ class DocBuilder
 
     public function __construct($loader, $docsDir)
     {
-        $this->loader = $loader;
+        $this->loader  = $loader;
         $this->docsDir = $docsDir;
     }
 
@@ -23,7 +23,7 @@ class DocBuilder
     {
         // Dependencies
         list($filter, $keys, $values) = ArrayList::using('filter', 'keys', 'values');
-        $startsWith = Strings::using('startsWith');
+        $startsWith                   = Strings::using('startsWith');
 
         return $values(
             $filter(
@@ -36,9 +36,9 @@ class DocBuilder
     public function getModuleGroup($fullNamespace)
     {
         // Dependencies
-        $split = Strings::using('split');
         list($init, $last) = ArrayList::using('init', 'last');
-        $compose = Lambda::using('compose');
+        $split             = Strings::using('split');
+        $compose           = Lambda::using('compose');
 
         return $last($init($split('\\', $fullNamespace)));
     }
@@ -46,8 +46,8 @@ class DocBuilder
     public function getClassName($fullNamespace)
     {
         // Dependencies
-        $split = Strings::using('split');
-        $last = ArrayList::using('last');
+        $split   = Strings::using('split');
+        $last    = ArrayList::using('last');
         $compose = Lambda::using('compose');
 
         return $last($split('\\', $fullNamespace));
@@ -55,23 +55,12 @@ class DocBuilder
 
     public function generateTypeSignature($docBlock)
     {
-        // Dependencies
-        list($invoke, $instanceOf) = Object::using('invoke', 'isInstanceOf');
-        $join = Strings::using('join');
-        $filter = ArrayList::using('filter');
-        $map = Functor::using('fmap');
-        $compose = Lambda::using('compose');
-        $stripSlashes = function($str) {
-            return stripcslashes($str);
-        };
+        $filter  = ArrayList::using('filter');
+        $typeTag = $filter(function($tag) { return $tag->getName() == 'type'; }, $docBlock->getTags());
 
-        $tags = $docBlock->getTags();
-
-        // Get all the @param tags
-        // Because @param is an instance of ParamTag in phpDocumentor, we can just use this one
-        $paramTags = $filter($instanceOf('phpDocumentor\Reflection\DocBlock\Tag\ReturnTag'), $tags);
-
-        return $join(' -> ', $map($compose($stripSlashes, $invoke('getType')), $paramTags));
+        return $typeTag
+            ? $typeTag[0]->getContent()
+            : 'No Type Signature Provided';
     }
 
     public function generateFunctionDoc($f)
@@ -80,8 +69,8 @@ class DocBuilder
 
         $name = $f->getName();
         $shortDescription = $doc->getShortDescription() ?: 'No Summary Given';
-        $longDescription = $doc->getLongDescription()->getContents() ?: 'No Description Given';
-        $typeSignature = $this->generateTypeSignature($doc);
+        $longDescription  = $doc->getLongDescription()->getContents() ?: 'No Description Given';
+        $typeSignature    = $this->generateTypeSignature($doc);
 
         /* Begin Heredoc */
 
@@ -107,7 +96,7 @@ EOD;
     public function generateModuleDoc($module)
     {
         // Dependencies
-        $filter = ArrayList::using('filter');
+        $filter  = ArrayList::using('filter');
         $methods = $filter(function($f) use ($module) {
             return $f->class === $module;
         });
@@ -115,8 +104,8 @@ EOD;
             return strcmp($a->name, $b->name);
         };
 
-        $buffer = '';
-        $r = new \ReflectionClass($module);
+        $buffer        = '';
+        $r             = new \ReflectionClass($module);
         $moduleMethods = $methods($r->getMethods());
 
         usort($moduleMethods, $alphabetical);

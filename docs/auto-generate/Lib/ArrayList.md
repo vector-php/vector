@@ -5,6 +5,8 @@
 
 __Array Concatenation__
 
+
+
 Joins two arrays together, with the second argument being appended
 to the end of the first. Defers to php build-in function `array_merge`,
 so repeated keys will be overwritten.
@@ -22,6 +24,8 @@ $concat(['a' => 1, 'b' => 2], ['a' => 'foo', 'c' => 3]); // ['a' => 'foo', 'b' =
 
 __Filter a List__
 
+
+
 Returns a filtered list. Given a function that takes an element and returns
 either true or false, return a list of all the elements
 of the input list that pass the test.
@@ -38,6 +42,11 @@ $filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module
 > [a] -> a
 
 __List Head__
+
+
+!!! Warning
+    Throws Vector\Core\Exception\EmptyListException if argument is empty list
+
 
 Returns the first element of a list, the element at index 0. Also functions
 properly for key/value arrays, e.g. arrays whose first element may not necessarily
@@ -57,6 +66,8 @@ $head([]); // Exception thrown
 
 __List Index__
 
+
+
 Returns the element of a list at the given index. Throws an exception
 if the given index does not exist in the list.
 
@@ -73,6 +84,8 @@ $index('baz', [1, 2, 3]); // Exception thrown
 > [a] -> [a]
 
 __Initial List Values__
+
+
 
 Returns an array without its last element, e.g. the inverse of `tail`. Works on
 key/value arrays as well as 'regular' arrays. If an empty or single-value array is given,
@@ -91,6 +104,8 @@ $init(['a' => 1, 'b' => 2]); // ['a' => 1];
 
 __Array Keys__
 
+
+
 Returns the keys of an associative key/value array. Returns numerical indeces
 for non key/value arrays.
 
@@ -106,6 +121,11 @@ $keys([1, 2, 3]); // [0, 1, 2]
 > [a] -> a
 
 __Last List Value__
+
+
+!!! Warning
+    Throws Vector\Core\Exception\EmptyListException if argument is empty list
+
 
 Returns the last element of an array, e.g. the complement of `init`. Works on key/value
 arrays as well as 'regular' arrays. If an empty array is given, throws an exception.
@@ -124,6 +144,8 @@ $last([]); // Exception thrown
 
 __Array Length__
 
+
+
 Returns the length of a list or array. Wraps php `count` function.
 
 ```
@@ -138,6 +160,8 @@ $length(['a' => 1, 'b' => 2]); // 2
 > Int -> a -> Maybe a
 
 __Maybe List Index__
+
+
 
 Returns the element of a list at the given index, or nothing. Is safe to call
 if you don't know if an index exists. If the index does not exist, returns `Nothing`.
@@ -157,6 +181,8 @@ $index('baz', [1, 2, 3]); // Nothing - (No exception thrown)
 
 __Set Array Value__
 
+
+
 Sets the value of an array at the given index; works for non-numerical indeces.
 The value is set in an immutable way, so the original array is not modified.
 
@@ -172,6 +198,8 @@ $set('c', 3, ['a' => 1, 'b' => 2]); // ['a' => 1, 'b' => 2, 'c' => 3]
 > [a] -> [a]
 
 __List Tail__
+
+
 
 Returns an array without its first element, e.g. the complement of `head`. Works on
 key/value arrays as well as 'regular' arrays. If an empty array of an array of one element
@@ -189,6 +217,8 @@ $tail(['a' => 1, 'b' => 2]); // ['b' => 2];
 > [a] -> [a]
 
 __Array Values__
+
+
 
 Returns the values of an associative key/value array.
 

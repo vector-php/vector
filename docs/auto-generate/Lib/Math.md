@@ -5,6 +5,8 @@
 
 __No Summary Given__
 
+
+
 No Description Given
 
 ---
@@ -15,6 +17,8 @@ No Description Given
 
 __No Summary Given__
 
+
+
 No Description Given
 
 ---
@@ -24,6 +28,8 @@ No Description Given
 > No Type Signature Provided
 
 __Arithemtic mean__
+
+
 
 Returns the average of a list, or zero for an empty list.
 
@@ -40,6 +46,8 @@ $mean([]); // 0
 
 __No Summary Given__
 
+
+
 No Description Given
 
 ---
@@ -50,6 +58,8 @@ No Description Given
 
 __No Summary Given__
 
+
+
 No Description Given
 
 ---
@@ -59,6 +69,8 @@ No Description Given
 > No Type Signature Provided
 
 __Power function__
+
+
 
 Arithmetic exponentionation. Raises the second argument to the power
 of the first.
@@ -75,6 +87,8 @@ $pow(3, 2); // 2 ^ 3 = 8
 > No Type Signature Provided
 
 __No Summary Given__
+
+
 
 No Description Given
 

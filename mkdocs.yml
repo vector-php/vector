@@ -32,6 +32,8 @@ pages:
                     -
                         Lambda: auto-generate/Lib/Lambda.md
                     -
+                        Logic: auto-generate/Lib/Logic.md
+                    -
                         Math: auto-generate/Lib/Math.md
                     -
                         Maybe: auto-generate/Lib/Maybe.md

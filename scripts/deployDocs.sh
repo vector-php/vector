@@ -1,4 +1,4 @@
 #! bash
 
-php ./deps/generateMkdocs.php
+php ./scripts/deps/generateMkdocs.php
 mkdocs gh-deploy --clean

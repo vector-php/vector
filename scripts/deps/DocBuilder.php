@@ -53,14 +53,41 @@ class DocBuilder
         return $last($split('\\', $fullNamespace));
     }
 
+    public function filterTags($type)
+    {
+        $filter    = ArrayList::using('filter');
+        $tagFilter = $filter(function($tag) use ($type) { return $tag->getName() == $type; });
+
+        return $tagFilter;
+    }
+
     public function generateTypeSignature($docBlock)
     {
-        $filter  = ArrayList::using('filter');
-        $typeTag = $filter(function($tag) { return $tag->getName() == 'type'; }, $docBlock->getTags());
+        $typeTag = $this->filterTags('type');
+        $type = $typeTag($docBlock->getTags());
 
-        return $typeTag
-            ? $typeTag[0]->getContent()
+        return count($type)
+            ? $type[0]->getContent()
             : 'No Type Signature Provided';
+    }
+
+    public function generateExceptionWarning($docBlock)
+    {
+        $head = ArrayList::using('head');
+        $throwTag = $this->filterTags('throws');
+        $throw = $throwTag($docBlock->getTags());
+
+        return count($throw)
+            ?
+            /* Begin Heredoce */
+<<<EOD
+
+!!! Warning
+    Throws {$head($throw)->getContent()}
+
+EOD
+            /* End Heredoc */
+            : '';
     }
 
     public function generateFunctionDoc($f)
@@ -71,6 +98,7 @@ class DocBuilder
         $shortDescription = $doc->getShortDescription() ?: 'No Summary Given';
         $longDescription  = $doc->getLongDescription()->getContents() ?: 'No Description Given';
         $typeSignature    = $this->generateTypeSignature($doc);
+        $exceptionWarning = $this->generateExceptionWarning($doc);
 
         /* Begin Heredoc */
 
@@ -81,6 +109,8 @@ $buffer = <<<EOD
 > {$typeSignature}
 
 __{$shortDescription}__
+
+$exceptionWarning
 
 {$longDescription}
 

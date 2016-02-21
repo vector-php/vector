@@ -2,6 +2,7 @@
 
 namespace Vector\Test\Lib;
 
+use Vector\Core\Exception\EmptyListException;
 use Vector\Lib\ArrayList;
 
 class ArrayListTest extends \PHPUnit_Framework_TestCase
@@ -21,6 +22,17 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
         $head = ArrayList::Using('head');
 
         $this->assertEquals($head($this->testCase), 0);
+    }
+
+    /**
+     * Expect that an EmptyListException is thrown for head on empty lists
+     */
+    public function testHeadUndefinedOnEmptyList()
+    {
+        $head = ArrayList::Using('head');
+        $this->expectException(EmptyListException::class);
+
+        $head([]); // Throws Exception
     }
 
     /**
@@ -51,6 +63,17 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
         $last = ArrayList::Using('last');
 
         $this->assertEquals($last($this->testCase), 3);
+    }
+
+    /**
+     * Expect that an EmptyListException is thrown for last on empty lists
+     */
+    public function testLastUndefinedOnEmptyList()
+    {
+        $last = ArrayList::Using('last');
+        $this->expectException(EmptyListException::class);
+
+        $last([]); // Throws Exception
     }
 
     /**

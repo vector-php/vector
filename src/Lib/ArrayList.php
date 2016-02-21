@@ -2,6 +2,8 @@
 
 namespace Vector\Lib;
 
+use Vector\Core\Exception\EmptyListException;
+
 use Vector\Core\Module;
 use Vector\Data\Maybe;
 
@@ -22,13 +24,16 @@ class ArrayList extends Module
      *
      * @type [a] -> a
      *
-     * @throws Vector\Core\Exception\EmptyListException;
+     * @throws Vector\Core\Exception\EmptyListException if argument is empty list
      *
      * @param  [a] $list Key/Value array or List
      * @return a         First element of $list
      */
     protected static function head($list)
     {
+        if (count($list) === 0)
+            throw new EmptyListException("'head' function is undefined for empty lists.");
+
         return array_slice($list, 0, 1)[0];
     }
 
@@ -90,13 +95,16 @@ class ArrayList extends Module
      *
      * @type [a] -> a
      *
-     * @throws Vector\Core\Exception\EmptyListException;
+     * @throws Vector\Core\Exception\EmptyListException if argument is empty list
      *
      * @param  [a] $list Key/Value array or List
      * @return a         The last element of $list
      */
     protected static function last($list)
     {
+        if (count($list) === 0)
+            throw new EmptyListException("'last' function is undefined for empty lists.");
+
         return array_slice($list, -1, 1)[0];
     }
 

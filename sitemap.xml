@@ -3,8 +3,8 @@
 
     
     <url>
-     <loc>None/</loc>
-     <lastmod>2016-02-20</lastmod>
+     <loc>https://packagist.org/packages/vector/core/</loc>
+     <lastmod>2016-02-21</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,14 +12,14 @@
     
         
     <url>
-     <loc>None/user-guide/basics/</loc>
-     <lastmod>2016-02-20</lastmod>
+     <loc>https://packagist.org/packages/vector/core/user-guide/basics/</loc>
+     <lastmod>2016-02-21</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/user-guide/capsule/</loc>
-     <lastmod>2016-02-20</lastmod>
+     <loc>https://packagist.org/packages/vector/core/user-guide/capsule/</loc>
+     <lastmod>2016-02-21</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -28,19 +28,19 @@
     
         
     <url>
-     <loc>None</loc>
+     <loc>https://packagist.org/packages/vector/core</loc>
      <lastmod></lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None</loc>
+     <loc>https://packagist.org/packages/vector/core</loc>
      <lastmod></lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None</loc>
+     <loc>https://packagist.org/packages/vector/core</loc>
      <lastmod></lastmod>
      <changefreq>daily</changefreq>
     </url>

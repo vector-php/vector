@@ -185,8 +185,12 @@ class ArrayList extends Module
      * either true or false, return a list of all the elements
      * of the input list that pass the test.
      *
+     * !!! Note
+     *     'filter' preserves the keys of a key/value array - it only looks at values
+     *
      * ```
      * $filter(function($a) { return $a > 2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function
+     * $filter(function($a) { return $a > 2; }, ['foo' => 1, 'bar' => 3]); // ['foo' => 1]
      * $filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module
      * ```
      *

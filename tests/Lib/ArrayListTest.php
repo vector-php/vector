@@ -107,4 +107,40 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($set(2, $this->testCase, 0), [0, 1, 0, 3]);
         $this->assertEquals($this->testCase, [0, 1, 2, 3]);
     }
+
+    /**
+     * Test that keys returns the keys of a key/value array
+     */
+    public function testKeysReturnsMapKeys()
+    {
+        $keys = ArrayList::using('keys');
+
+        $this->assertEquals([0, 1, 2], $keys([5, 5, 5]));
+        $this->assertEquals(['foo', 'bar', 'baz'], $keys(['foo' => 1, 'bar' => 2, 'baz' => 3]));
+    }
+
+    /**
+     * Test that values returns key/value array values
+     */
+    public function testValuesReturnsMapValues()
+    {
+        $values = ArrayList::using('values');
+
+        $this->assertEquals([1, 2, 3], $values([1, 2, 3]));
+        $this->assertEquals([1, 2, 3], $values(['foo' => 1, 'bar' => 2, 'baz' => 3]));
+    }
+
+    /**
+     * Test that the filter function correctly filters an array of data
+     */
+    public function testFilterFunctionFiltersArrays()
+    {
+        $filter = ArrayList::using('filter');
+
+        $id = function($a) { return true; };
+        $gt = function($b) { return $b >= 2; };
+
+        $this->assertEquals([0, 1, 2, 3], $filter($id, $this->testCase));
+        $this->assertEquals([2 => 2, 3 => 3], $filter($gt, $this->testCase));
+    }
 }

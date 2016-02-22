@@ -23,6 +23,5 @@
         }
     },
     "require": {
-        "nette/tokenizer": "^2.2"
     }
 }

@@ -63,8 +63,6 @@
       </style>
     
     
-      <link rel="stylesheet" href="../../../extra.css">
-    
     
   </head>
   <body>
@@ -358,6 +356,15 @@
       
         
   <li>
+    <a class="" title="Logic" href="../Logic/">
+      Logic
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
     <a class="" title="Math" href="../Math/">
       Math
     </a>
@@ -480,7 +487,12 @@ $concat(['a' =&gt; 1, 'b' =&gt; 2], ['a' =&gt; 'foo', 'c' =&gt; 3]); // ['a' =&g
 <p>Returns a filtered list. Given a function that takes an element and returns
 either true or false, return a list of all the elements
 of the input list that pass the test.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>'filter' preserves the keys of a key/value array - it only looks at values</p>
+</div>
 <pre><code>$filter(function($a) { return $a &gt; 2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function
+$filter(function($a) { return $a &gt; 2; }, ['foo' =&gt; 1, 'bar' =&gt; 3]); // ['foo' =&gt; 1]
 $filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module
 </code></pre>
 
@@ -490,6 +502,10 @@ $filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module
 <p>[a] -&gt; a</p>
 </blockquote>
 <p><strong>List Head</strong></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Throws Vector\Core\Exception\EmptyListException if argument is empty list</p>
+</div>
 <p>Returns the first element of a list, the element at index 0. Also functions
 properly for key/value arrays, e.g. arrays whose first element may not necessarily
 be index 0. If an empty array is given, head throws an Exception.</p>
@@ -542,6 +558,10 @@ $keys([1, 2, 3]); // [0, 1, 2]
 <p>[a] -&gt; a</p>
 </blockquote>
 <p><strong>Last List Value</strong></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Throws Vector\Core\Exception\EmptyListException if argument is empty list</p>
+</div>
 <p>Returns the last element of an array, e.g. the complement of <code>init</code>. Works on key/value
 arrays as well as 'regular' arrays. If an empty array is given, throws an exception.</p>
 <pre><code>$last([1, 2, 3]); // 3

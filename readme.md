@@ -4,6 +4,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/joseph-walker/vector/badge.svg?branch=master)](https://coveralls.io/github/joseph-walker/vector?branch=master)
 [![Badge Status](https://img.shields.io/badge/badge%20status-dank-brightgreen.svg)](https://niceme.me/)
 
+[Read the Docs](http://joseph-walker.github.io/vector/)
+
 ## Purpose
 > Functional primitives for php
 

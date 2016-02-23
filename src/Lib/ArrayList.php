@@ -27,8 +27,8 @@ class ArrayList extends Module
      *
      * @throws Vector\Core\Exception\EmptyListException if argument is empty list
      *
-     * @param  [a] $list Key/Value array or List
-     * @return a         First element of $list
+     * @param  Array $list Key/Value array or List
+     * @return Mixed       First element of $list
      */
     protected static function head($list)
     {
@@ -52,8 +52,8 @@ class ArrayList extends Module
      *
      * @type [a] -> [a]
      *
-     * @param  [a] $list Key/Value array or List
-     * @return [a]       $list without the first element
+     * @param  Array $list Key/Value array or List
+     * @return Array       $list without the first element
      */
     protected static function tail($list)
     {
@@ -74,8 +74,8 @@ class ArrayList extends Module
      *
      * @type [a] -> [a]
      *
-     * @param  [a] $list Key/Value array or List
-     * @return [a]       $list without the last element
+     * @param  Array $list Key/Value array or List
+     * @return Array       $list without the last element
      */
     protected static function init($list)
     {
@@ -98,8 +98,8 @@ class ArrayList extends Module
      *
      * @throws Vector\Core\Exception\EmptyListException if argument is empty list
      *
-     * @param  [a] $list Key/Value array or List
-     * @return a         The last element of $list
+     * @param  Array $list Key/Value array or List
+     * @return Mixed       The last element of $list
      */
     protected static function last($list)
     {
@@ -121,8 +121,8 @@ class ArrayList extends Module
      *
      * @type [a] -> a
      *
-     * @param  [a] $list Key/Value array or List
-     * @return Int       Length of $list
+     * @param  Array $list Key/Value array or List
+     * @return Int         Length of $list
      */
     protected static function length($list)
     {
@@ -145,9 +145,9 @@ class ArrayList extends Module
      *
      * @throws Vector\Core\Exception\IndexOutOfBoundsException if the requested index does not exist
      *
-     * @param  Int $i    Index to get
-     * @param  [a] $list List to get index from
-     * @return a         Item from $list and index $i
+     * @param  Int   $i    Index to get
+     * @param  Array $list List to get index from
+     * @return Mixed       Item from $list and index $i
      */
     protected static function index($i, $list)
     {
@@ -172,9 +172,9 @@ class ArrayList extends Module
      *
      * @type Int -> a -> Maybe a
      *
-     * @param  Int      $i    Index to get
-     * @param  [a]      $list List to get index from
-     * @return Maybe(a)       Item from $list and index $i
+     * @param  Int   $i    Index to get
+     * @param  Mixed $list List to get index from
+     * @return Maybe       Item from $list and index $i
      */
     protected static function maybeIndex($i, $list)
     {
@@ -202,9 +202,9 @@ class ArrayList extends Module
      *
      * @type (a -> Bool) -> [a] -> [a]
      *
-     * @param  (a -> Bool) $f   Test function - should take an `a` and return a Bool
-     * @param  [a]         $arr List to filter
-     * @return [a]              Result of filtering the list
+     * @param  Callable $f   Test function - should take an `a` and return a Bool
+     * @param  Array    $arr List to filter
+     * @return Array         Result of filtering the list
      */
     protected static function filter($f, $arr)
     {
@@ -224,8 +224,8 @@ class ArrayList extends Module
      *
      * @type [a] -> [b]
      *
-     * @param  [a] $arr List to get keys from
-     * @return [b]      The keys of $arr
+     * @param  Array $arr List to get keys from
+     * @return Array      The keys of $arr
      */
     protected static function keys($arr)
     {
@@ -244,8 +244,8 @@ class ArrayList extends Module
      *
      * @type [a] -> [a]
      *
-     * @param  [a] $arr Key/Value array
-     * @return [a]      Indexed array with values of $arr
+     * @param  Array $arr Key/Value array
+     * @return Array      Indexed array with values of $arr
      */
     protected static function values($arr)
     {
@@ -266,9 +266,9 @@ class ArrayList extends Module
      *
      * @type [a] -> [a] -> [a]
      *
-     * @param  [a] $a List to be appended to
-     * @param  [a] $b List to append
-     * @return [a]    Concatenated list of $a and $b
+     * @param  Array $a List to be appended to
+     * @param  Array $b List to append
+     * @return Array    Concatenated list of $a and $b
      */
     protected static function concat($a, $b)
     {
@@ -278,7 +278,7 @@ class ArrayList extends Module
     /**
      * Set Array Value
      *
-     * Sets the value of an array at the given index; works for non-numerical indeces.
+     * Sets the value of an array at the given index; works for non-numerical indexes.
      * The value is set in an immutable way, so the original array is not modified.
      *
      * ```
@@ -288,10 +288,10 @@ class ArrayList extends Module
      *
      * @type a -> [b] -> b -> [b]
      *
-     * @param  a   $key Element of index to modify
-     * @param  [b] $arr Array to modify
-     * @param  b   $val Value to set $arr[$key] to
-     * @return [b]      Result of setting $arr[$key] = $val
+     * @param  Mixed $key Element of index to modify
+     * @param  Array $arr Array to modify
+     * @param  Mixed $val Value to set $arr[$key] to
+     * @return Array      Result of setting $arr[$key] = $val
      */
     protected static function set($key, $arr, $val)
     {

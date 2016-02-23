@@ -3,8 +3,9 @@
 namespace Vector\Test\Core;
 
 use Vector\Core\Module;
+use Vector\Core\Exception\FunctionNotFoundException;
 
-class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
+class ModuleTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test to make sure we can pull functions off the capsule and they'll return closures
@@ -163,5 +164,12 @@ class FunctionCapsuleTest extends \PHPUnit_Framework_TestCase
 
         // Passing all the remaining arguments should be a result
         $this->assertEquals(2, $myCurriedLambda(1, 1));
+    }
+
+    public function testThatUsingReturnsExceptionForNonExistantFunction()
+    {
+        $this->expectException(FunctionNotFoundException::class);
+
+        Stub\TestFunctions::using('someFunctionThatDoesNotExist');
     }
 }

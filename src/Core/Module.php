@@ -2,6 +2,8 @@
 
 namespace Vector\Core;
 
+use Vector\Core\Exception\FunctionNotFoundException;
+
 abstract class Module
 {
     protected static $doNotCurry = ['curry'];
@@ -35,6 +37,9 @@ abstract class Module
         $context = get_called_class();
 
         $fulfilledRequest = array_map(function($f) use ($context) {
+            if (!method_exists($context, $f))
+                throw new FunctionNotFoundException("Function $f not found in module $context");
+
             if ($context::$doNotCurry === true || (is_array($context::$doNotCurry) && in_array($f, $context::$doNotCurry))) {
                 return function(...$args) use ($context, $f) {
                     return call_user_func_array([$context, $f], $args);

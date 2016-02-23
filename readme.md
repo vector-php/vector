@@ -27,13 +27,11 @@
 - `all :: (a -> Bool) -> [a] -> Bool`<br>Returns true if every element of [a] passes the given test
 - `any :: (a -> Bool) -> [a] -> Bool`<br>Returns true if any element of [a] passes the given test
 - `append :: a -> [a] -> [a]`<br>Append a to [a]
-- `concat :: [a] -> [a] -> [a]`<br>Concat two lists together
 - `contains :: a -> [a] -> Bool`<br>Returns true if [a] contains a
 - `drop :: Int -> [a] -> [a]`<br>Returns the given list sans the first n elements
 - `dropLast :: Int -> [a] -> [a]`<br>Returns the given list sans the last n elements
 - `dropWhile :: (a -> Bool) -> [a] -> [a]`<br>Returns the list sans the first elements that pass the given test
 - `dropLastWhile :: (a -> Bool) -> [a] -> [a]`<br>Returns the list sans the last elements that pass the given test
-- `filter :: (a -> Bool) -> [a] -> [a]`<br>Array filter
 - `find :: (a -> Bool) -> [a] -> Maybe a`<br>Attempts to find an element by using a given test
 - `findIndex :: (a -> Bool) -> [a] -> Maybe Int`Attempts to find an element's index by using a given test
 - `findAll :: (a -> Bool) -> [a] -> [a]`<br>Attempts to find all the elements that pass the given test
@@ -58,7 +56,6 @@
 - `not :: Bool -> Bool`<br>Logical not
 
 ## String
-- `toLower :: String -> String`<br>Returns a string in lowercase
 - `toUpper :: String -> String`<br>Returns a string in uppercase
 - `trim :: String -> String`<br>Returns a string with leading and trailing whitespace removed
 

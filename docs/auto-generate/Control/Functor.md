@@ -1,24 +1,24 @@
 
 ## extract
 
-> No Type Signature Provided
-
-__No Summary Given__
+__No Summary Given__ :: No Type Signature Provided
 
 
 
 No Description Given
+
+
 
 ---
 
 ## fmap
 
-> No Type Signature Provided
-
-__No Summary Given__
+__No Summary Given__ :: No Type Signature Provided
 
 
 
 No Description Given
+
+
 
 ---

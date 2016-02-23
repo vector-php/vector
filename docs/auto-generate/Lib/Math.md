@@ -1,33 +1,31 @@
 
 ## add
 
-> No Type Signature Provided
-
-__No Summary Given__
+__No Summary Given__ :: No Type Signature Provided
 
 
 
 No Description Given
+
+
 
 ---
 
 ## divide
 
-> No Type Signature Provided
-
-__No Summary Given__
+__No Summary Given__ :: No Type Signature Provided
 
 
 
 No Description Given
 
+
+
 ---
 
 ## mean
 
-> No Type Signature Provided
-
-__Arithemtic mean__
+__Arithemtic mean__ :: No Type Signature Provided
 
 
 
@@ -38,37 +36,41 @@ $mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2
 $mean([]); // 0
 ```
 
+Parameter | Type | Description
+-|-|-
+$arr | \[Num] | [Num] $arr List of numbers
+return | \Num | Num        Mean of input list
+
+
 ---
 
 ## mod
 
-> No Type Signature Provided
-
-__No Summary Given__
+__No Summary Given__ :: No Type Signature Provided
 
 
 
 No Description Given
+
+
 
 ---
 
 ## multiply
 
-> No Type Signature Provided
-
-__No Summary Given__
+__No Summary Given__ :: No Type Signature Provided
 
 
 
 No Description Given
 
+
+
 ---
 
 ## pow
 
-> No Type Signature Provided
-
-__Power function__
+__Power function__ :: No Type Signature Provided
 
 
 
@@ -80,16 +82,23 @@ $pow(2, 3); // 3 ^ 2 = 9
 $pow(3, 2); // 2 ^ 3 = 8
 ```
 
+Parameter | Type | Description
+-|-|-
+$a | \Num | Num $a The power exponent
+$b | \Num | Num $b The power base
+return | \Num | Num    The base raised to the exponent's power
+
+
 ---
 
 ## subtract
 
-> No Type Signature Provided
-
-__No Summary Given__
+__No Summary Given__ :: No Type Signature Provided
 
 
 
 No Description Given
+
+
 
 ---

@@ -19,6 +19,7 @@ $mkdocsYaml = [
     'copyright' => 'Copyright (c) 2016 Joseph Walker',
     'theme' => 'material',
     'markdown_extensions' => ['admonition'],
+    'extra_css' => ['extra.css'],
     'pages' => [
         [
             'Introduction' => 'index.md'

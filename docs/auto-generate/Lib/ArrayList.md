@@ -1,9 +1,7 @@
 
 ## concat
 
-> [a] -> [a] -> [a]
-
-__Array Concatenation__
+__Array Concatenation__ :: [a] -> [a] -> [a]
 
 
 
@@ -16,13 +14,18 @@ $concat([1, 2], [2, 3]); // [1, 2, 2, 3]
 $concat(['a' => 1, 'b' => 2], ['a' => 'foo', 'c' => 3]); // ['a' => 'foo', 'b' => 2, 'c' => 3]
 ```
 
+Parameter | Type | Description
+-|-|-
+$a | Array | Array $a List to be appended to
+$b | Array | Array $b List to append
+return | Array | Array    Concatenated list of $a and $b
+
+
 ---
 
 ## filter
 
-> (a -> Bool) -> [a] -> [a]
-
-__Filter a List__
+__Filter a List__ :: (a -> Bool) -> [a] -> [a]
 
 
 
@@ -39,13 +42,18 @@ $filter(function($a) { return $a > 2; }, ['foo' => 1, 'bar' => 3]); // ['foo' =>
 $filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module
 ```
 
+Parameter | Type | Description
+-|-|-
+$f | Callable | Callable $f   Test function - should take an `a` and return a Bool
+$arr | Array | Array    $arr List to filter
+return | Array | Array         Result of filtering the list
+
+
 ---
 
 ## head
 
-> [a] -> a
-
-__List Head__
+__List Head__ :: [a] -> a
 
 
 !!! Warning
@@ -62,13 +70,17 @@ $head(['a' => 1, 'b' => 2]); // 1
 $head([]); // Exception thrown
 ```
 
+Parameter | Type | Description
+-|-|-
+$list | Array | Array $list Key/Value array or List
+return | Mixed | Mixed       First element of $list
+
+
 ---
 
 ## index
 
-> Int -> [a] -> a
-
-__List Index__
+__List Index__ :: Int -> [a] -> a
 
 
 !!! Warning
@@ -84,13 +96,18 @@ $index('foo', ['bar' => 1, 'foo' => 2]); // 2
 $index('baz', [1, 2, 3]); // Exception thrown
 ```
 
+Parameter | Type | Description
+-|-|-
+$i | Int | Int   $i    Index to get
+$list | Array | Array $list List to get index from
+return | Mixed | Mixed       Item from $list and index $i
+
+
 ---
 
 ## init
 
-> [a] -> [a]
-
-__Initial List Values__
+__Initial List Values__ :: [a] -> [a]
 
 
 
@@ -103,13 +120,17 @@ $init([1, 2, 3]); // [1, 2]
 $init(['a' => 1, 'b' => 2]); // ['a' => 1];
 ```
 
+Parameter | Type | Description
+-|-|-
+$list | Array | Array $list Key/Value array or List
+return | Array | Array       $list without the last element
+
+
 ---
 
 ## keys
 
-> [a] -> [b]
-
-__Array Keys__
+__Array Keys__ :: [a] -> [b]
 
 
 
@@ -121,13 +142,17 @@ $keys(['a' => 1, 'b' => 2]); // ['a', 'b']
 $keys([1, 2, 3]); // [0, 1, 2]
 ```
 
+Parameter | Type | Description
+-|-|-
+$arr | Array | Array $arr List to get keys from
+return | Array | Array      The keys of $arr
+
+
 ---
 
 ## last
 
-> [a] -> a
-
-__Last List Value__
+__Last List Value__ :: [a] -> a
 
 
 !!! Warning
@@ -143,13 +168,17 @@ $last(['a' => 1, 'b' => 2]); // 2
 $last([]); // Exception thrown
 ```
 
+Parameter | Type | Description
+-|-|-
+$list | Array | Array $list Key/Value array or List
+return | Mixed | Mixed       The last element of $list
+
+
 ---
 
 ## length
 
-> [a] -> a
-
-__Array Length__
+__Array Length__ :: [a] -> a
 
 
 
@@ -160,13 +189,17 @@ $length([1, 2, 3]); // 3
 $length(['a' => 1, 'b' => 2]); // 2
 ```
 
+Parameter | Type | Description
+-|-|-
+$list | Array | Array $list Key/Value array or List
+return | Int | Int         Length of $list
+
+
 ---
 
 ## maybeIndex
 
-> Int -> a -> Maybe a
-
-__Maybe List Index__
+__Maybe List Index__ :: Int -> a -> Maybe a
 
 
 
@@ -180,17 +213,22 @@ $index('foo', ['bar' => 1, 'foo' => 2]); // Just 2
 $index('baz', [1, 2, 3]); // Nothing - (No exception thrown)
 ```
 
+Parameter | Type | Description
+-|-|-
+$i | Int | Int   $i    Index to get
+$list | Mixed | Mixed $list List to get index from
+return | \Maybe | Maybe       Item from $list and index $i
+
+
 ---
 
 ## set
 
-> a -> [b] -> b -> [b]
-
-__Set Array Value__
+__Set Array Value__ :: a -> [b] -> b -> [b]
 
 
 
-Sets the value of an array at the given index; works for non-numerical indeces.
+Sets the value of an array at the given index; works for non-numerical indexes.
 The value is set in an immutable way, so the original array is not modified.
 
 ```
@@ -198,13 +236,19 @@ $set(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]
 $set('c', 3, ['a' => 1, 'b' => 2]); // ['a' => 1, 'b' => 2, 'c' => 3]
 ```
 
+Parameter | Type | Description
+-|-|-
+$key | Mixed | Mixed $key Element of index to modify
+$arr | Array | Array $arr Array to modify
+$val | Mixed | Mixed $val Value to set $arr[$key] to
+return | Array | Array      Result of setting $arr[$key] = $val
+
+
 ---
 
 ## tail
 
-> [a] -> [a]
-
-__List Tail__
+__List Tail__ :: [a] -> [a]
 
 
 
@@ -217,13 +261,17 @@ $tail([1, 2, 3]); // [2, 3]
 $tail(['a' => 1, 'b' => 2]); // ['b' => 2];
 ```
 
+Parameter | Type | Description
+-|-|-
+$list | Array | Array $list Key/Value array or List
+return | Array | Array       $list without the first element
+
+
 ---
 
 ## values
 
-> [a] -> [a]
-
-__Array Values__
+__Array Values__ :: [a] -> [a]
 
 
 
@@ -233,5 +281,11 @@ Returns the values of an associative key/value array.
 $values(['a' => 1, 'b' => 2]); // [1, 2]
 $values([1, 2, 3]); // [1, 2, 3]
 ```
+
+Parameter | Type | Description
+-|-|-
+$arr | Array | Array $arr Key/Value array
+return | Array | Array      Indexed array with values of $arr
+
 
 ---

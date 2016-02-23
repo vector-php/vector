@@ -71,6 +71,48 @@ class DocBuilder
             : 'No Type Signature Provided';
     }
 
+    public function makeArgTable($docBlock)
+    {
+        $head = ArrayList::using('head');
+        $tags = $docBlock->getTags();
+
+        $paramTag   = $this->filterTags('param');
+        $returnTag = $this->filterTags('return');
+
+        $params = $paramTag($tags);
+        $return = $returnTag($tags);
+
+        $buffer = false;
+
+        if (count($params) || count($return)) {
+            $buffer  = 'Parameter | Type | Description' . PHP_EOL;
+            $buffer .= '-|-|-' . PHP_EOL;
+        }
+
+        if (count($params)) {
+            foreach ($params as $param) {
+                $buffer .= $param->getVariableName();
+                $buffer .= ' | ';
+                $buffer .= $param->getType();
+                $buffer .= ' | ';
+                $buffer .= $param->getContent();
+                $buffer .= PHP_EOL;
+            }
+        }
+
+        if (count($return)) {
+            $return = $head($return);
+
+            $buffer .= 'return | ';
+            $buffer .= $return->getType();
+            $buffer .= ' | ';
+            $buffer .= $return->getContent();
+            $buffer .= PHP_EOL;
+        }
+
+        return $buffer;
+    }
+
     public function generateExceptionWarning($docBlock)
     {
         $head = ArrayList::using('head');
@@ -99,6 +141,7 @@ EOD
         $longDescription  = $doc->getLongDescription()->getContents() ?: 'No Description Given';
         $typeSignature    = $this->generateTypeSignature($doc);
         $exceptionWarning = $this->generateExceptionWarning($doc);
+        $argTable         = $this->makeArgTable($doc);
 
         /* Begin Heredoc */
 
@@ -106,13 +149,13 @@ $buffer = <<<EOD
 
 ## {$name}
 
-> {$typeSignature}
-
-__{$shortDescription}__
+__{$shortDescription}__ :: {$typeSignature}
 
 $exceptionWarning
 
 {$longDescription}
+
+{$argTable}
 
 ---
 

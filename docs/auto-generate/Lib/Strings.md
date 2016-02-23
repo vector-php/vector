@@ -1,9 +1,7 @@
 
 ## concat
 
-> String -> String -> String
-
-__String Concatenation__
+__String Concatenation__ :: String -> String -> String
 
 
 
@@ -15,13 +13,18 @@ $concat('as', 'df'); // 'dfas'
 $concat('World', $concat('ello', 'H')); // 'HelloWorld'
 ```
 
+Parameter | Type | Description
+-|-|-
+$addition | String | String $addition Thing to append
+$original | String | String $original Thing to append to
+return | String | String           Concatenated strings
+
+
 ---
 
 ## join
 
-> String -> [String] -> String
-
-__String Joining__
+__String Joining__ :: String -> [String] -> String
 
 
 
@@ -33,13 +36,18 @@ $join(' ', ['Hello', 'World']); // 'Hello World'
 $join('', ['a', 's', 'd', 'f']); // 'asdf'
 ```
 
+Parameter | Type | Description
+-|-|-
+$on | String | String $on     Delimeter to join on
+$string | Array | Array  $string List of strings to join together
+return | String | String         Joined string based on delimeter
+
+
 ---
 
 ## split
 
-> String -> String -> [String]
-
-__String Splitting__
+__String Splitting__ :: String -> String -> [String]
 
 
 
@@ -53,13 +61,18 @@ $split('', 'asdf'); // ['a', 's', 'd', 'f']
 $split('-', 'foo-bar-'); ['foo', 'bar']
 ```
 
+Parameter | Type | Description
+-|-|-
+$on | String | String $on     Split delimeter
+$string | String | String $string Thing to split into pieces
+return | Array | Array          List of chunks from splitting the string
+
+
 ---
 
 ## startsWith
 
-> String -> String -> Bool
-
-__Substring Match__
+__Substring Match__ :: String -> String -> Bool
 
 
 
@@ -71,13 +84,18 @@ $startsWith('as', 'asdf'); true
 $startsWith('foo', 'barfoo'); false
 ```
 
+Parameter | Type | Description
+-|-|-
+$subStr | String | String $subStr Substring to test
+$str | String | String $str    String to run test on
+return | Bool | Bool           Whether or not the string starts with the substring
+
+
 ---
 
 ## toLowercase
 
-> String -> String
-
-__Lowercase Conversion__
+__Lowercase Conversion__ :: String -> String
 
 
 
@@ -86,5 +104,11 @@ Converts a string to lowercase.
 ```
 $toLowercase('ASdf'); // 'asdf'
 ```
+
+Parameter | Type | Description
+-|-|-
+$str | String | String $str Original string
+return | String | String      Lowercase string
+
 
 ---

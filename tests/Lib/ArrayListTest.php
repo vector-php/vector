@@ -3,7 +3,10 @@
 namespace Vector\Test\Lib;
 
 use Vector\Core\Exception\EmptyListException;
+use Vector\Core\Exception\IndexOutOfBoundsException;
+
 use Vector\Lib\ArrayList;
+use Vector\Data\Maybe;
 
 class ArrayListTest extends \PHPUnit_Framework_TestCase
 {
@@ -94,6 +97,40 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
         $index = ArrayList::Using('index');
 
         $this->assertEquals($index(2, $this->testCase), 2);
+    }
+
+    /**
+     * Test that index throws an exception when requesting a non-existant index
+     */
+    public function testIndexThrowsExceptionForNoKey()
+    {
+        $index = ArrayList::Using('index');
+        $this->expectException(IndexOutOfBoundsException::class);
+
+        $index(17, [1, 2, 3]);
+    }
+
+    /**
+     * Tests that maybeIndex returns maybe values
+     */
+    public function testMaybeIndexReturnsMaybeValues()
+    {
+        $maybeIndex = ArrayList::Using('maybeIndex');
+
+        $this->assertEquals(Maybe::Just(2), $maybeIndex(2, $this->testCase));
+        $this->assertEquals(Maybe::Nothing(), $maybeIndex(17, $this->testCase));
+    }
+
+    /**
+     * Test that concat handles normal arrays, and key/value arrays properly
+     */
+    public function testConcatAppendsTwoArrays()
+    {
+        $concat = ArrayList::Using('concat');
+
+        $this->assertEquals([0, 1, 2, 3, 0, 1, 2, 3], $concat($this->testCase, $this->testCase));
+        $this->assertEquals(['foo' => 1, 'bar' => 2], $concat(['foo' => 1], ['bar' => 2]));
+        $this->assertEquals(['foo' => 'baz', 'bar' => 2], $concat(['foo' => 1, 'bar' => 2], ['foo' => 'baz']));
     }
 
     /**

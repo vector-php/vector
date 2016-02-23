@@ -3,6 +3,7 @@
 namespace Vector\Lib;
 
 use Vector\Core\Exception\EmptyListException;
+use Vector\Core\Exception\IndexOutOfBoundsException;
 
 use Vector\Core\Module;
 use Vector\Data\Maybe;
@@ -142,12 +143,17 @@ class ArrayList extends Module
      *
      * @type Int -> [a] -> a
      *
+     * @throws Vector\Core\Exception\IndexOutOfBoundsException if the requested index does not exist
+     *
      * @param  Int $i    Index to get
      * @param  [a] $list List to get index from
      * @return a         Item from $list and index $i
      */
     protected static function index($i, $list)
     {
+        if (!array_key_exists($i, $list))
+            throw new IndexOutOfBoundsException("'index' function tried to access non-existant index '$i'");
+
         return $list[$i];
     }
 

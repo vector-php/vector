@@ -1,0 +1,67 @@
+<?php
+
+namespace Vector\Test\Lib;
+
+use Vector\Lib\Strings;
+
+class StringsTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * Tests that strings are concatenated like the PHP '.' operation
+     */
+    public function testStringConcatenation()
+    {
+        $concat = Strings::using('concat');
+
+        $this->assertEquals('foobar', $concat('bar', 'foo'));
+        $this->assertEquals('barbazfoo', $concat('foo', $concat('baz', 'bar')));
+    }
+
+    /**
+     * Tests that split deferes to PHP explode
+     */
+    public function testSplitExplodesStrings()
+    {
+        $split = Strings::using('split');
+
+        $this->assertEquals(['Hello', 'World'], $split(' ', 'Hello World '));
+        $this->assertEquals(['foo', 'bar'], $split(' ', 'foo bar'));
+        $this->assertEquals(['1', '2', '3'], $split('', '123'));
+        $this->assertEquals([], $split(',', ''));
+    }
+
+    /**
+     * Test that join defers to PHP implode
+     */
+    public function testJoinImplodesStrings()
+    {
+        $join = Strings::using('join');
+
+        $this->assertEquals('foo-bar', $join('-', ['foo', 'bar']));
+        $this->assertEquals('1234', $join('', ['1', '2', '3', '4']));
+        $this->assertEquals('', $join('_', []));
+    }
+
+    /**
+     * Tests that startsWith handles substrings properly
+     */
+    public function testStartsWithOnStrings()
+    {
+        $startsWith = Strings::using('startsWith');
+
+        $this->assertEquals(true, $startsWith('foo', 'foobar'));
+        $this->assertEquals(true, $startsWith('1', '12345'));
+        $this->assertEquals(false, $startsWith('baz', 'abazfoo'));
+    }
+
+    /**
+     * Test that toLowercase defers to strtolower
+     */
+    public function testToLowerCaseOnStrings()
+    {
+        $toLowercase = Strings::using('toLowercase');
+
+        $this->assertEquals('123', $toLowercase('123'));
+        $this->assertEquals('asdf', $toLowercase('ASDf'));
+    }
+}

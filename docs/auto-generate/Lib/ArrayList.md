@@ -71,6 +71,9 @@ $head([]); // Exception thrown
 __List Index__
 
 
+!!! Warning
+    Throws Vector\Core\Exception\IndexOutOfBoundsException if the requested index does not exist
+
 
 Returns the element of a list at the given index. Throws an exception
 if the given index does not exist in the list.

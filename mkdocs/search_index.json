@@ -107,302 +107,302 @@
         }, 
         {
             "location": "/auto-generate/Lib/ArrayList/", 
-            "text": "concat\n\n\n\n\n[a] -\n [a] -\n [a]\n\n\n\n\nArray Concatenation\n\n\nJoins two arrays together, with the second argument being appended\nto the end of the first. Defers to php build-in function \narray_merge\n,\nso repeated keys will be overwritten.\n\n\n$concat([1, 2], [2, 3]); // [1, 2, 2, 3]\n$concat(['a' =\n 1, 'b' =\n 2], ['a' =\n 'foo', 'c' =\n 3]); // ['a' =\n 'foo', 'b' =\n 2, 'c' =\n 3]\n\n\n\n\n\n\nfilter\n\n\n\n\n(a -\n Bool) -\n [a] -\n [a]\n\n\n\n\nFilter a List\n\n\nReturns a filtered list. Given a function that takes an element and returns\neither true or false, return a list of all the elements\nof the input list that pass the test.\n\n\n\n\nNote\n\n\n'filter' preserves the keys of a key/value array - it only looks at values\n\n\n\n\n$filter(function($a) { return $a \n 2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function\n$filter(function($a) { return $a \n 2; }, ['foo' =\n 1, 'bar' =\n 3]); // ['foo' =\n 1]\n$filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module\n\n\n\n\n\n\nhead\n\n\n\n\n[a] -\n a\n\n\n\n\nList Head\n\n\n\n\nWarning\n\n\nThrows Vector\\Core\\Exception\\EmptyListException if argument is empty list\n\n\n\n\nReturns the first element of a list, the element at index 0. Also functions\nproperly for key/value arrays, e.g. arrays whose first element may not necessarily\nbe index 0. If an empty array is given, head throws an Exception.\n\n\n$head([1, 2, 3]); // 1\n$head(['a' =\n 1, 'b' =\n 2]); // 1\n$head([]); // Exception thrown\n\n\n\n\n\n\nindex\n\n\n\n\nInt -\n [a] -\n a\n\n\n\n\nList Index\n\n\nReturns the element of a list at the given index. Throws an exception\nif the given index does not exist in the list.\n\n\n$index(0, [1, 2, 3]); // 1\n$index('foo', ['bar' =\n 1, 'foo' =\n 2]); // 2\n$index('baz', [1, 2, 3]); // Exception thrown\n\n\n\n\n\n\ninit\n\n\n\n\n[a] -\n [a]\n\n\n\n\nInitial List Values\n\n\nReturns an array without its last element, e.g. the inverse of \ntail\n. Works on\nkey/value arrays as well as 'regular' arrays. If an empty or single-value array is given,\nreturns an empty array.\n\n\n$init([1, 2, 3]); // [1, 2]\n$init(['a' =\n 1, 'b' =\n 2]); // ['a' =\n 1];\n\n\n\n\n\n\nkeys\n\n\n\n\n[a] -\n [b]\n\n\n\n\nArray Keys\n\n\nReturns the keys of an associative key/value array. Returns numerical indeces\nfor non key/value arrays.\n\n\n$keys(['a' =\n 1, 'b' =\n 2]); // ['a', 'b']\n$keys([1, 2, 3]); // [0, 1, 2]\n\n\n\n\n\n\nlast\n\n\n\n\n[a] -\n a\n\n\n\n\nLast List Value\n\n\n\n\nWarning\n\n\nThrows Vector\\Core\\Exception\\EmptyListException if argument is empty list\n\n\n\n\nReturns the last element of an array, e.g. the complement of \ninit\n. Works on key/value\narrays as well as 'regular' arrays. If an empty array is given, throws an exception.\n\n\n$last([1, 2, 3]); // 3\n$last(['a' =\n 1, 'b' =\n 2]); // 2\n$last([]); // Exception thrown\n\n\n\n\n\n\nlength\n\n\n\n\n[a] -\n a\n\n\n\n\nArray Length\n\n\nReturns the length of a list or array. Wraps php \ncount\n function.\n\n\n$length([1, 2, 3]); // 3\n$length(['a' =\n 1, 'b' =\n 2]); // 2\n\n\n\n\n\n\nmaybeIndex\n\n\n\n\nInt -\n a -\n Maybe a\n\n\n\n\nMaybe List Index\n\n\nReturns the element of a list at the given index, or nothing. Is safe to call\nif you don't know if an index exists. If the index does not exist, returns \nNothing\n.\nOtherwise returns \nJust a\n.\n\n\n$index(0, [1, 2, 3]); // Just 1\n$index('foo', ['bar' =\n 1, 'foo' =\n 2]); // Just 2\n$index('baz', [1, 2, 3]); // Nothing - (No exception thrown)\n\n\n\n\n\n\nset\n\n\n\n\na -\n [b] -\n b -\n [b]\n\n\n\n\nSet Array Value\n\n\nSets the value of an array at the given index; works for non-numerical indeces.\nThe value is set in an immutable way, so the original array is not modified.\n\n\n$set(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]\n$set('c', 3, ['a' =\n 1, 'b' =\n 2]); // ['a' =\n 1, 'b' =\n 2, 'c' =\n 3]\n\n\n\n\n\n\ntail\n\n\n\n\n[a] -\n [a]\n\n\n\n\nList Tail\n\n\nReturns an array without its first element, e.g. the complement of \nhead\n. Works on\nkey/value arrays as well as 'regular' arrays. If an empty array of an array of one element\nis given, returns an empty array.\n\n\n$tail([1, 2, 3]); // [2, 3]\n$tail(['a' =\n 1, 'b' =\n 2]); // ['b' =\n 2];\n\n\n\n\n\n\nvalues\n\n\n\n\n[a] -\n [a]\n\n\n\n\nArray Values\n\n\nReturns the values of an associative key/value array.\n\n\n$values(['a' =\n 1, 'b' =\n 2]); // [1, 2]\n$values([1, 2, 3]); // [1, 2, 3]", 
+            "text": "concat\n\n\nArray Concatenation\n :: [a] -\n [a] -\n [a]\n\n\nJoins two arrays together, with the second argument being appended\nto the end of the first. Defers to php build-in function \narray_merge\n,\nso repeated keys will be overwritten.\n\n\n$concat([1, 2], [2, 3]); // [1, 2, 2, 3]\n$concat(['a' =\n 1, 'b' =\n 2], ['a' =\n 'foo', 'c' =\n 3]); // ['a' =\n 'foo', 'b' =\n 2, 'c' =\n 3]\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$a\n\n\nArray\n\n\nArray $a List to be appended to\n\n\n\n\n\n\n$b\n\n\nArray\n\n\nArray $b List to append\n\n\n\n\n\n\nreturn\n\n\nArray\n\n\nArray    Concatenated list of $a and $b\n\n\n\n\n\n\n\n\n\n\nfilter\n\n\nFilter a List\n :: (a -\n Bool) -\n [a] -\n [a]\n\n\nReturns a filtered list. Given a function that takes an element and returns\neither true or false, return a list of all the elements\nof the input list that pass the test.\n\n\n\n\nNote\n\n\n'filter' preserves the keys of a key/value array - it only looks at values\n\n\n\n\n$filter(function($a) { return $a \n 2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function\n$filter(function($a) { return $a \n 2; }, ['foo' =\n 1, 'bar' =\n 3]); // ['foo' =\n 1]\n$filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$f\n\n\nCallable\n\n\nCallable $f   Test function - should take an \na\n and return a Bool\n\n\n\n\n\n\n$arr\n\n\nArray\n\n\nArray    $arr List to filter\n\n\n\n\n\n\nreturn\n\n\nArray\n\n\nArray         Result of filtering the list\n\n\n\n\n\n\n\n\n\n\nhead\n\n\nList Head\n :: [a] -\n a\n\n\n\n\nWarning\n\n\nThrows Vector\\Core\\Exception\\EmptyListException if argument is empty list\n\n\n\n\nReturns the first element of a list, the element at index 0. Also functions\nproperly for key/value arrays, e.g. arrays whose first element may not necessarily\nbe index 0. If an empty array is given, head throws an Exception.\n\n\n$head([1, 2, 3]); // 1\n$head(['a' =\n 1, 'b' =\n 2]); // 1\n$head([]); // Exception thrown\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$list\n\n\nArray\n\n\nArray $list Key/Value array or List\n\n\n\n\n\n\nreturn\n\n\nMixed\n\n\nMixed       First element of $list\n\n\n\n\n\n\n\n\n\n\nindex\n\n\nList Index\n :: Int -\n [a] -\n a\n\n\n\n\nWarning\n\n\nThrows Vector\\Core\\Exception\\IndexOutOfBoundsException if the requested index does not exist\n\n\n\n\nReturns the element of a list at the given index. Throws an exception\nif the given index does not exist in the list.\n\n\n$index(0, [1, 2, 3]); // 1\n$index('foo', ['bar' =\n 1, 'foo' =\n 2]); // 2\n$index('baz', [1, 2, 3]); // Exception thrown\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$i\n\n\nInt\n\n\nInt   $i    Index to get\n\n\n\n\n\n\n$list\n\n\nArray\n\n\nArray $list List to get index from\n\n\n\n\n\n\nreturn\n\n\nMixed\n\n\nMixed       Item from $list and index $i\n\n\n\n\n\n\n\n\n\n\ninit\n\n\nInitial List Values\n :: [a] -\n [a]\n\n\nReturns an array without its last element, e.g. the inverse of \ntail\n. Works on\nkey/value arrays as well as 'regular' arrays. If an empty or single-value array is given,\nreturns an empty array.\n\n\n$init([1, 2, 3]); // [1, 2]\n$init(['a' =\n 1, 'b' =\n 2]); // ['a' =\n 1];\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$list\n\n\nArray\n\n\nArray $list Key/Value array or List\n\n\n\n\n\n\nreturn\n\n\nArray\n\n\nArray       $list without the last element\n\n\n\n\n\n\n\n\n\n\nkeys\n\n\nArray Keys\n :: [a] -\n [b]\n\n\nReturns the keys of an associative key/value array. Returns numerical indeces\nfor non key/value arrays.\n\n\n$keys(['a' =\n 1, 'b' =\n 2]); // ['a', 'b']\n$keys([1, 2, 3]); // [0, 1, 2]\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$arr\n\n\nArray\n\n\nArray $arr List to get keys from\n\n\n\n\n\n\nreturn\n\n\nArray\n\n\nArray      The keys of $arr\n\n\n\n\n\n\n\n\n\n\nlast\n\n\nLast List Value\n :: [a] -\n a\n\n\n\n\nWarning\n\n\nThrows Vector\\Core\\Exception\\EmptyListException if argument is empty list\n\n\n\n\nReturns the last element of an array, e.g. the complement of \ninit\n. Works on key/value\narrays as well as 'regular' arrays. If an empty array is given, throws an exception.\n\n\n$last([1, 2, 3]); // 3\n$last(['a' =\n 1, 'b' =\n 2]); // 2\n$last([]); // Exception thrown\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$list\n\n\nArray\n\n\nArray $list Key/Value array or List\n\n\n\n\n\n\nreturn\n\n\nMixed\n\n\nMixed       The last element of $list\n\n\n\n\n\n\n\n\n\n\nlength\n\n\nArray Length\n :: [a] -\n a\n\n\nReturns the length of a list or array. Wraps php \ncount\n function.\n\n\n$length([1, 2, 3]); // 3\n$length(['a' =\n 1, 'b' =\n 2]); // 2\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$list\n\n\nArray\n\n\nArray $list Key/Value array or List\n\n\n\n\n\n\nreturn\n\n\nInt\n\n\nInt         Length of $list\n\n\n\n\n\n\n\n\n\n\nmaybeIndex\n\n\nMaybe List Index\n :: Int -\n a -\n Maybe a\n\n\nReturns the element of a list at the given index, or nothing. Is safe to call\nif you don't know if an index exists. If the index does not exist, returns \nNothing\n.\nOtherwise returns \nJust a\n.\n\n\n$index(0, [1, 2, 3]); // Just 1\n$index('foo', ['bar' =\n 1, 'foo' =\n 2]); // Just 2\n$index('baz', [1, 2, 3]); // Nothing - (No exception thrown)\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$i\n\n\nInt\n\n\nInt   $i    Index to get\n\n\n\n\n\n\n$list\n\n\nMixed\n\n\nMixed $list List to get index from\n\n\n\n\n\n\nreturn\n\n\n\\Maybe\n\n\nMaybe       Item from $list and index $i\n\n\n\n\n\n\n\n\n\n\nset\n\n\nSet Array Value\n :: a -\n [b] -\n b -\n [b]\n\n\nSets the value of an array at the given index; works for non-numerical indexes.\nThe value is set in an immutable way, so the original array is not modified.\n\n\n$set(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]\n$set('c', 3, ['a' =\n 1, 'b' =\n 2]); // ['a' =\n 1, 'b' =\n 2, 'c' =\n 3]\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$key\n\n\nMixed\n\n\nMixed $key Element of index to modify\n\n\n\n\n\n\n$arr\n\n\nArray\n\n\nArray $arr Array to modify\n\n\n\n\n\n\n$val\n\n\nMixed\n\n\nMixed $val Value to set $arr[$key] to\n\n\n\n\n\n\nreturn\n\n\nArray\n\n\nArray      Result of setting $arr[$key] = $val\n\n\n\n\n\n\n\n\n\n\ntail\n\n\nList Tail\n :: [a] -\n [a]\n\n\nReturns an array without its first element, e.g. the complement of \nhead\n. Works on\nkey/value arrays as well as 'regular' arrays. If an empty array of an array of one element\nis given, returns an empty array.\n\n\n$tail([1, 2, 3]); // [2, 3]\n$tail(['a' =\n 1, 'b' =\n 2]); // ['b' =\n 2];\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$list\n\n\nArray\n\n\nArray $list Key/Value array or List\n\n\n\n\n\n\nreturn\n\n\nArray\n\n\nArray       $list without the first element\n\n\n\n\n\n\n\n\n\n\nvalues\n\n\nArray Values\n :: [a] -\n [a]\n\n\nReturns the values of an associative key/value array.\n\n\n$values(['a' =\n 1, 'b' =\n 2]); // [1, 2]\n$values([1, 2, 3]); // [1, 2, 3]\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$arr\n\n\nArray\n\n\nArray $arr Key/Value array\n\n\n\n\n\n\nreturn\n\n\nArray\n\n\nArray      Indexed array with values of $arr", 
             "title": "ArrayList"
         }, 
         {
             "location": "/auto-generate/Lib/ArrayList/#concat", 
-            "text": "[a] -  [a] -  [a]   Array Concatenation  Joins two arrays together, with the second argument being appended\nto the end of the first. Defers to php build-in function  array_merge ,\nso repeated keys will be overwritten.  $concat([1, 2], [2, 3]); // [1, 2, 2, 3]\n$concat(['a' =  1, 'b' =  2], ['a' =  'foo', 'c' =  3]); // ['a' =  'foo', 'b' =  2, 'c' =  3]", 
+            "text": "Array Concatenation  :: [a] -  [a] -  [a]  Joins two arrays together, with the second argument being appended\nto the end of the first. Defers to php build-in function  array_merge ,\nso repeated keys will be overwritten.  $concat([1, 2], [2, 3]); // [1, 2, 2, 3]\n$concat(['a' =  1, 'b' =  2], ['a' =  'foo', 'c' =  3]); // ['a' =  'foo', 'b' =  2, 'c' =  3]     Parameter  Type  Description      $a  Array  Array $a List to be appended to    $b  Array  Array $b List to append    return  Array  Array    Concatenated list of $a and $b", 
             "title": "concat"
         }, 
         {
             "location": "/auto-generate/Lib/ArrayList/#filter", 
-            "text": "(a -  Bool) -  [a] -  [a]   Filter a List  Returns a filtered list. Given a function that takes an element and returns\neither true or false, return a list of all the elements\nof the input list that pass the test.   Note  'filter' preserves the keys of a key/value array - it only looks at values   $filter(function($a) { return $a   2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function\n$filter(function($a) { return $a   2; }, ['foo' =  1, 'bar' =  3]); // ['foo' =  1]\n$filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module", 
+            "text": "Filter a List  :: (a -  Bool) -  [a] -  [a]  Returns a filtered list. Given a function that takes an element and returns\neither true or false, return a list of all the elements\nof the input list that pass the test.   Note  'filter' preserves the keys of a key/value array - it only looks at values   $filter(function($a) { return $a   2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function\n$filter(function($a) { return $a   2; }, ['foo' =  1, 'bar' =  3]); // ['foo' =  1]\n$filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module     Parameter  Type  Description      $f  Callable  Callable $f   Test function - should take an  a  and return a Bool    $arr  Array  Array    $arr List to filter    return  Array  Array         Result of filtering the list", 
             "title": "filter"
         }, 
         {
             "location": "/auto-generate/Lib/ArrayList/#head", 
-            "text": "[a] -  a   List Head   Warning  Throws Vector\\Core\\Exception\\EmptyListException if argument is empty list   Returns the first element of a list, the element at index 0. Also functions\nproperly for key/value arrays, e.g. arrays whose first element may not necessarily\nbe index 0. If an empty array is given, head throws an Exception.  $head([1, 2, 3]); // 1\n$head(['a' =  1, 'b' =  2]); // 1\n$head([]); // Exception thrown", 
+            "text": "List Head  :: [a] -  a   Warning  Throws Vector\\Core\\Exception\\EmptyListException if argument is empty list   Returns the first element of a list, the element at index 0. Also functions\nproperly for key/value arrays, e.g. arrays whose first element may not necessarily\nbe index 0. If an empty array is given, head throws an Exception.  $head([1, 2, 3]); // 1\n$head(['a' =  1, 'b' =  2]); // 1\n$head([]); // Exception thrown     Parameter  Type  Description      $list  Array  Array $list Key/Value array or List    return  Mixed  Mixed       First element of $list", 
             "title": "head"
         }, 
         {
             "location": "/auto-generate/Lib/ArrayList/#index", 
-            "text": "Int -  [a] -  a   List Index  Returns the element of a list at the given index. Throws an exception\nif the given index does not exist in the list.  $index(0, [1, 2, 3]); // 1\n$index('foo', ['bar' =  1, 'foo' =  2]); // 2\n$index('baz', [1, 2, 3]); // Exception thrown", 
+            "text": "List Index  :: Int -  [a] -  a   Warning  Throws Vector\\Core\\Exception\\IndexOutOfBoundsException if the requested index does not exist   Returns the element of a list at the given index. Throws an exception\nif the given index does not exist in the list.  $index(0, [1, 2, 3]); // 1\n$index('foo', ['bar' =  1, 'foo' =  2]); // 2\n$index('baz', [1, 2, 3]); // Exception thrown     Parameter  Type  Description      $i  Int  Int   $i    Index to get    $list  Array  Array $list List to get index from    return  Mixed  Mixed       Item from $list and index $i", 
             "title": "index"
         }, 
         {
             "location": "/auto-generate/Lib/ArrayList/#init", 
-            "text": "[a] -  [a]   Initial List Values  Returns an array without its last element, e.g. the inverse of  tail . Works on\nkey/value arrays as well as 'regular' arrays. If an empty or single-value array is given,\nreturns an empty array.  $init([1, 2, 3]); // [1, 2]\n$init(['a' =  1, 'b' =  2]); // ['a' =  1];", 
+            "text": "Initial List Values  :: [a] -  [a]  Returns an array without its last element, e.g. the inverse of  tail . Works on\nkey/value arrays as well as 'regular' arrays. If an empty or single-value array is given,\nreturns an empty array.  $init([1, 2, 3]); // [1, 2]\n$init(['a' =  1, 'b' =  2]); // ['a' =  1];     Parameter  Type  Description      $list  Array  Array $list Key/Value array or List    return  Array  Array       $list without the last element", 
             "title": "init"
         }, 
         {
             "location": "/auto-generate/Lib/ArrayList/#keys", 
-            "text": "[a] -  [b]   Array Keys  Returns the keys of an associative key/value array. Returns numerical indeces\nfor non key/value arrays.  $keys(['a' =  1, 'b' =  2]); // ['a', 'b']\n$keys([1, 2, 3]); // [0, 1, 2]", 
+            "text": "Array Keys  :: [a] -  [b]  Returns the keys of an associative key/value array. Returns numerical indeces\nfor non key/value arrays.  $keys(['a' =  1, 'b' =  2]); // ['a', 'b']\n$keys([1, 2, 3]); // [0, 1, 2]     Parameter  Type  Description      $arr  Array  Array $arr List to get keys from    return  Array  Array      The keys of $arr", 
             "title": "keys"
         }, 
         {
             "location": "/auto-generate/Lib/ArrayList/#last", 
-            "text": "[a] -  a   Last List Value   Warning  Throws Vector\\Core\\Exception\\EmptyListException if argument is empty list   Returns the last element of an array, e.g. the complement of  init . Works on key/value\narrays as well as 'regular' arrays. If an empty array is given, throws an exception.  $last([1, 2, 3]); // 3\n$last(['a' =  1, 'b' =  2]); // 2\n$last([]); // Exception thrown", 
+            "text": "Last List Value  :: [a] -  a   Warning  Throws Vector\\Core\\Exception\\EmptyListException if argument is empty list   Returns the last element of an array, e.g. the complement of  init . Works on key/value\narrays as well as 'regular' arrays. If an empty array is given, throws an exception.  $last([1, 2, 3]); // 3\n$last(['a' =  1, 'b' =  2]); // 2\n$last([]); // Exception thrown     Parameter  Type  Description      $list  Array  Array $list Key/Value array or List    return  Mixed  Mixed       The last element of $list", 
             "title": "last"
         }, 
         {
             "location": "/auto-generate/Lib/ArrayList/#length", 
-            "text": "[a] -  a   Array Length  Returns the length of a list or array. Wraps php  count  function.  $length([1, 2, 3]); // 3\n$length(['a' =  1, 'b' =  2]); // 2", 
+            "text": "Array Length  :: [a] -  a  Returns the length of a list or array. Wraps php  count  function.  $length([1, 2, 3]); // 3\n$length(['a' =  1, 'b' =  2]); // 2     Parameter  Type  Description      $list  Array  Array $list Key/Value array or List    return  Int  Int         Length of $list", 
             "title": "length"
         }, 
         {
             "location": "/auto-generate/Lib/ArrayList/#maybeindex", 
-            "text": "Int -  a -  Maybe a   Maybe List Index  Returns the element of a list at the given index, or nothing. Is safe to call\nif you don't know if an index exists. If the index does not exist, returns  Nothing .\nOtherwise returns  Just a .  $index(0, [1, 2, 3]); // Just 1\n$index('foo', ['bar' =  1, 'foo' =  2]); // Just 2\n$index('baz', [1, 2, 3]); // Nothing - (No exception thrown)", 
+            "text": "Maybe List Index  :: Int -  a -  Maybe a  Returns the element of a list at the given index, or nothing. Is safe to call\nif you don't know if an index exists. If the index does not exist, returns  Nothing .\nOtherwise returns  Just a .  $index(0, [1, 2, 3]); // Just 1\n$index('foo', ['bar' =  1, 'foo' =  2]); // Just 2\n$index('baz', [1, 2, 3]); // Nothing - (No exception thrown)     Parameter  Type  Description      $i  Int  Int   $i    Index to get    $list  Mixed  Mixed $list List to get index from    return  \\Maybe  Maybe       Item from $list and index $i", 
             "title": "maybeIndex"
         }, 
         {
             "location": "/auto-generate/Lib/ArrayList/#set", 
-            "text": "a -  [b] -  b -  [b]   Set Array Value  Sets the value of an array at the given index; works for non-numerical indeces.\nThe value is set in an immutable way, so the original array is not modified.  $set(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]\n$set('c', 3, ['a' =  1, 'b' =  2]); // ['a' =  1, 'b' =  2, 'c' =  3]", 
+            "text": "Set Array Value  :: a -  [b] -  b -  [b]  Sets the value of an array at the given index; works for non-numerical indexes.\nThe value is set in an immutable way, so the original array is not modified.  $set(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]\n$set('c', 3, ['a' =  1, 'b' =  2]); // ['a' =  1, 'b' =  2, 'c' =  3]     Parameter  Type  Description      $key  Mixed  Mixed $key Element of index to modify    $arr  Array  Array $arr Array to modify    $val  Mixed  Mixed $val Value to set $arr[$key] to    return  Array  Array      Result of setting $arr[$key] = $val", 
             "title": "set"
         }, 
         {
             "location": "/auto-generate/Lib/ArrayList/#tail", 
-            "text": "[a] -  [a]   List Tail  Returns an array without its first element, e.g. the complement of  head . Works on\nkey/value arrays as well as 'regular' arrays. If an empty array of an array of one element\nis given, returns an empty array.  $tail([1, 2, 3]); // [2, 3]\n$tail(['a' =  1, 'b' =  2]); // ['b' =  2];", 
+            "text": "List Tail  :: [a] -  [a]  Returns an array without its first element, e.g. the complement of  head . Works on\nkey/value arrays as well as 'regular' arrays. If an empty array of an array of one element\nis given, returns an empty array.  $tail([1, 2, 3]); // [2, 3]\n$tail(['a' =  1, 'b' =  2]); // ['b' =  2];     Parameter  Type  Description      $list  Array  Array $list Key/Value array or List    return  Array  Array       $list without the first element", 
             "title": "tail"
         }, 
         {
             "location": "/auto-generate/Lib/ArrayList/#values", 
-            "text": "[a] -  [a]   Array Values  Returns the values of an associative key/value array.  $values(['a' =  1, 'b' =  2]); // [1, 2]\n$values([1, 2, 3]); // [1, 2, 3]", 
+            "text": "Array Values  :: [a] -  [a]  Returns the values of an associative key/value array.  $values(['a' =  1, 'b' =  2]); // [1, 2]\n$values([1, 2, 3]); // [1, 2, 3]     Parameter  Type  Description      $arr  Array  Array $arr Key/Value array    return  Array  Array      Indexed array with values of $arr", 
             "title": "values"
         }, 
         {
             "location": "/auto-generate/Lib/Lambda/", 
-            "text": "compose\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nid\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nk\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\npipe\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "text": "compose\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\nid\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\nk\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\npipe\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given", 
             "title": "Lambda"
         }, 
         {
             "location": "/auto-generate/Lib/Lambda/#compose", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "compose"
         }, 
         {
             "location": "/auto-generate/Lib/Lambda/#id", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "id"
         }, 
         {
             "location": "/auto-generate/Lib/Lambda/#k", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "k"
         }, 
         {
             "location": "/auto-generate/Lib/Lambda/#pipe", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "pipe"
         }, 
         {
             "location": "/auto-generate/Lib/Logic/", 
-            "text": "logicalOr\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "text": "logicalOr\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given", 
             "title": "Logic"
         }, 
         {
             "location": "/auto-generate/Lib/Logic/#logicalor", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "logicalOr"
         }, 
         {
             "location": "/auto-generate/Lib/Math/", 
-            "text": "add\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\ndivide\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nmean\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nArithemtic mean\n\n\nReturns the average of a list, or zero for an empty list.\n\n\n$mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2\n$mean([]); // 0\n\n\n\n\n\n\nmod\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nmultiply\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\npow\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nPower function\n\n\nArithmetic exponentionation. Raises the second argument to the power\nof the first.\n\n\n$pow(2, 3); // 3 ^ 2 = 9\n$pow(3, 2); // 2 ^ 3 = 8\n\n\n\n\n\n\nsubtract\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "text": "add\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\ndivide\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\nmean\n\n\nArithemtic mean\n :: No Type Signature Provided\n\n\nReturns the average of a list, or zero for an empty list.\n\n\n$mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2\n$mean([]); // 0\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$arr\n\n\n[Num]\n\n\n[Num] $arr List of numbers\n\n\n\n\n\n\nreturn\n\n\n\\Num\n\n\nNum        Mean of input list\n\n\n\n\n\n\n\n\n\n\nmod\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\nmultiply\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\npow\n\n\nPower function\n :: No Type Signature Provided\n\n\nArithmetic exponentionation. Raises the second argument to the power\nof the first.\n\n\n$pow(2, 3); // 3 ^ 2 = 9\n$pow(3, 2); // 2 ^ 3 = 8\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$a\n\n\n\\Num\n\n\nNum $a The power exponent\n\n\n\n\n\n\n$b\n\n\n\\Num\n\n\nNum $b The power base\n\n\n\n\n\n\nreturn\n\n\n\\Num\n\n\nNum    The base raised to the exponent's power\n\n\n\n\n\n\n\n\n\n\nsubtract\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given", 
             "title": "Math"
         }, 
         {
             "location": "/auto-generate/Lib/Math/#add", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "add"
         }, 
         {
             "location": "/auto-generate/Lib/Math/#divide", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "divide"
         }, 
         {
             "location": "/auto-generate/Lib/Math/#mean", 
-            "text": "No Type Signature Provided   Arithemtic mean  Returns the average of a list, or zero for an empty list.  $mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2\n$mean([]); // 0", 
+            "text": "Arithemtic mean  :: No Type Signature Provided  Returns the average of a list, or zero for an empty list.  $mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2\n$mean([]); // 0     Parameter  Type  Description      $arr  [Num]  [Num] $arr List of numbers    return  \\Num  Num        Mean of input list", 
             "title": "mean"
         }, 
         {
             "location": "/auto-generate/Lib/Math/#mod", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "mod"
         }, 
         {
             "location": "/auto-generate/Lib/Math/#multiply", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "multiply"
         }, 
         {
             "location": "/auto-generate/Lib/Math/#pow", 
-            "text": "No Type Signature Provided   Power function  Arithmetic exponentionation. Raises the second argument to the power\nof the first.  $pow(2, 3); // 3 ^ 2 = 9\n$pow(3, 2); // 2 ^ 3 = 8", 
+            "text": "Power function  :: No Type Signature Provided  Arithmetic exponentionation. Raises the second argument to the power\nof the first.  $pow(2, 3); // 3 ^ 2 = 9\n$pow(3, 2); // 2 ^ 3 = 8     Parameter  Type  Description      $a  \\Num  Num $a The power exponent    $b  \\Num  Num $b The power base    return  \\Num  Num    The base raised to the exponent's power", 
             "title": "pow"
         }, 
         {
             "location": "/auto-generate/Lib/Math/#subtract", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "subtract"
         }, 
         {
             "location": "/auto-generate/Lib/Maybe/", 
-            "text": "maybeGetPropertyOfObject\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nmaybeGetValueAtIndex\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "text": "maybeGetPropertyOfObject\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\nmaybeGetValueAtIndex\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given", 
             "title": "Maybe"
         }, 
         {
             "location": "/auto-generate/Lib/Maybe/#maybegetpropertyofobject", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "maybeGetPropertyOfObject"
         }, 
         {
             "location": "/auto-generate/Lib/Maybe/#maybegetvalueatindex", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "maybeGetValueAtIndex"
         }, 
         {
             "location": "/auto-generate/Lib/Object/", 
-            "text": "get\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\ninvoke\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nisInstanceOf\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nset\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "text": "get\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\ninvoke\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\nisInstanceOf\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\nset\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given", 
             "title": "Object"
         }, 
         {
             "location": "/auto-generate/Lib/Object/#get", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "get"
         }, 
         {
             "location": "/auto-generate/Lib/Object/#invoke", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "invoke"
         }, 
         {
             "location": "/auto-generate/Lib/Object/#isinstanceof", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "isInstanceOf"
         }, 
         {
             "location": "/auto-generate/Lib/Object/#set", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "set"
         }, 
         {
             "location": "/auto-generate/Lib/Strings/", 
-            "text": "concat\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\njoin\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nsplit\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nstartsWith\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\ntoLowercase\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "text": "concat\n\n\nString Concatenation\n :: String -\n String -\n String\n\n\nConcatenates the first argument to the second argument, provided both arguments\nare strings. Defers to the PHP built-in concatenation.\n\n\n$concat('as', 'df'); // 'dfas'\n$concat('World', $concat('ello', 'H')); // 'HelloWorld'\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$addition\n\n\nString\n\n\nString $addition Thing to append\n\n\n\n\n\n\n$original\n\n\nString\n\n\nString $original Thing to append to\n\n\n\n\n\n\nreturn\n\n\nString\n\n\nString           Concatenated strings\n\n\n\n\n\n\n\n\n\n\njoin\n\n\nString Joining\n :: String -\n [String] -\n String\n\n\nJoins an array of strings together with a given delimeter. Works similarly\nto PHP \nimplode\n. The inverse of \nsplit\n.\n\n\n$join(' ', ['Hello', 'World']); // 'Hello World'\n$join('', ['a', 's', 'd', 'f']); // 'asdf'\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$on\n\n\nString\n\n\nString $on     Delimeter to join on\n\n\n\n\n\n\n$string\n\n\nArray\n\n\nArray  $string List of strings to join together\n\n\n\n\n\n\nreturn\n\n\nString\n\n\nString         Joined string based on delimeter\n\n\n\n\n\n\n\n\n\n\nsplit\n\n\nString Splitting\n :: String -\n String -\n [String]\n\n\nSplit a string into parts based on a delimeter. Operates similar to php \nexplode\n,\nbut is more consistent. Can split on empty delimters, and trims out empty strings\nafter exploding.\n\n\n$split('-', 'Hello-World'); // ['Hello', 'World']\n$split('', 'asdf'); // ['a', 's', 'd', 'f']\n$split('-', 'foo-bar-'); ['foo', 'bar']\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$on\n\n\nString\n\n\nString $on     Split delimeter\n\n\n\n\n\n\n$string\n\n\nString\n\n\nString $string Thing to split into pieces\n\n\n\n\n\n\nreturn\n\n\nArray\n\n\nArray          List of chunks from splitting the string\n\n\n\n\n\n\n\n\n\n\nstartsWith\n\n\nSubstring Match\n :: String -\n String -\n Bool\n\n\nDetermines if a string starts with a specific substring. Returns true if the string\nmatches the substring at its start, otherwise false.\n\n\n$startsWith('as', 'asdf'); true\n$startsWith('foo', 'barfoo'); false\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$subStr\n\n\nString\n\n\nString $subStr Substring to test\n\n\n\n\n\n\n$str\n\n\nString\n\n\nString $str    String to run test on\n\n\n\n\n\n\nreturn\n\n\nBool\n\n\nBool           Whether or not the string starts with the substring\n\n\n\n\n\n\n\n\n\n\ntoLowercase\n\n\nLowercase Conversion\n :: String -\n String\n\n\nConverts a string to lowercase.\n\n\n$toLowercase('ASdf'); // 'asdf'\n\n\n\n\n\n\n\n\n\n\nParameter\n\n\nType\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n$str\n\n\nString\n\n\nString $str Original string\n\n\n\n\n\n\nreturn\n\n\nString\n\n\nString      Lowercase string", 
             "title": "Strings"
         }, 
         {
             "location": "/auto-generate/Lib/Strings/#concat", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "String Concatenation  :: String -  String -  String  Concatenates the first argument to the second argument, provided both arguments\nare strings. Defers to the PHP built-in concatenation.  $concat('as', 'df'); // 'dfas'\n$concat('World', $concat('ello', 'H')); // 'HelloWorld'     Parameter  Type  Description      $addition  String  String $addition Thing to append    $original  String  String $original Thing to append to    return  String  String           Concatenated strings", 
             "title": "concat"
         }, 
         {
             "location": "/auto-generate/Lib/Strings/#join", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "String Joining  :: String -  [String] -  String  Joins an array of strings together with a given delimeter. Works similarly\nto PHP  implode . The inverse of  split .  $join(' ', ['Hello', 'World']); // 'Hello World'\n$join('', ['a', 's', 'd', 'f']); // 'asdf'     Parameter  Type  Description      $on  String  String $on     Delimeter to join on    $string  Array  Array  $string List of strings to join together    return  String  String         Joined string based on delimeter", 
             "title": "join"
         }, 
         {
             "location": "/auto-generate/Lib/Strings/#split", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "String Splitting  :: String -  String -  [String]  Split a string into parts based on a delimeter. Operates similar to php  explode ,\nbut is more consistent. Can split on empty delimters, and trims out empty strings\nafter exploding.  $split('-', 'Hello-World'); // ['Hello', 'World']\n$split('', 'asdf'); // ['a', 's', 'd', 'f']\n$split('-', 'foo-bar-'); ['foo', 'bar']     Parameter  Type  Description      $on  String  String $on     Split delimeter    $string  String  String $string Thing to split into pieces    return  Array  Array          List of chunks from splitting the string", 
             "title": "split"
         }, 
         {
             "location": "/auto-generate/Lib/Strings/#startswith", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "Substring Match  :: String -  String -  Bool  Determines if a string starts with a specific substring. Returns true if the string\nmatches the substring at its start, otherwise false.  $startsWith('as', 'asdf'); true\n$startsWith('foo', 'barfoo'); false     Parameter  Type  Description      $subStr  String  String $subStr Substring to test    $str  String  String $str    String to run test on    return  Bool  Bool           Whether or not the string starts with the substring", 
             "title": "startsWith"
         }, 
         {
             "location": "/auto-generate/Lib/Strings/#tolowercase", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "Lowercase Conversion  :: String -  String  Converts a string to lowercase.  $toLowercase('ASdf'); // 'asdf'     Parameter  Type  Description      $str  String  String $str Original string    return  String  String      Lowercase string", 
             "title": "toLowercase"
         }, 
         {
             "location": "/auto-generate/Control/Applicative/", 
-            "text": "apply\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nliftA2\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\npure\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "text": "apply\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\nliftA2\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\npure\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given", 
             "title": "Applicative"
         }, 
         {
             "location": "/auto-generate/Control/Applicative/#apply", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "apply"
         }, 
         {
             "location": "/auto-generate/Control/Applicative/#lifta2", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "liftA2"
         }, 
         {
             "location": "/auto-generate/Control/Applicative/#pure", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "pure"
         }, 
         {
             "location": "/auto-generate/Control/Functor/", 
-            "text": "extract\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nfmap\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "text": "extract\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\nfmap\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given", 
             "title": "Functor"
         }, 
         {
             "location": "/auto-generate/Control/Functor/#extract", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "extract"
         }, 
         {
             "location": "/auto-generate/Control/Functor/#fmap", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "fmap"
         }, 
         {
             "location": "/auto-generate/Control/Lens/", 
-            "text": "constant\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nidentity\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nindexLens\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nover\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\npropLens\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nset\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nview\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "text": "constant\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\nidentity\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\nindexLens\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\nover\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\npropLens\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\nset\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\nview\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given", 
             "title": "Lens"
         }, 
         {
             "location": "/auto-generate/Control/Lens/#constant", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "constant"
         }, 
         {
             "location": "/auto-generate/Control/Lens/#identity", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "identity"
         }, 
         {
             "location": "/auto-generate/Control/Lens/#indexlens", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "indexLens"
         }, 
         {
             "location": "/auto-generate/Control/Lens/#over", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "over"
         }, 
         {
             "location": "/auto-generate/Control/Lens/#proplens", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "propLens"
         }, 
         {
             "location": "/auto-generate/Control/Lens/#set", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "set"
         }, 
         {
             "location": "/auto-generate/Control/Lens/#view", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "view"
         }, 
         {
             "location": "/auto-generate/Control/Monad/", 
-            "text": "bind\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given\n\n\n\n\nkleisliCompose\n\n\n\n\nNo Type Signature Provided\n\n\n\n\nNo Summary Given\n\n\nNo Description Given", 
+            "text": "bind\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given\n\n\n\n\nkleisliCompose\n\n\nNo Summary Given\n :: No Type Signature Provided\n\n\nNo Description Given", 
             "title": "Monad"
         }, 
         {
             "location": "/auto-generate/Control/Monad/#bind", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "bind"
         }, 
         {
             "location": "/auto-generate/Control/Monad/#kleislicompose", 
-            "text": "No Type Signature Provided   No Summary Given  No Description Given", 
+            "text": "No Summary Given  :: No Type Signature Provided  No Description Given", 
             "title": "kleisliCompose"
         }
     ]

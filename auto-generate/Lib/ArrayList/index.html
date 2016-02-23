@@ -63,6 +63,8 @@
       </style>
     
     
+      <link rel="stylesheet" href="../../../extra.css">
+    
     
   </head>
   <body>
@@ -467,10 +469,7 @@
             
           
           <h2 id="concat">concat</h2>
-<blockquote>
-<p>[a] -&gt; [a] -&gt; [a]</p>
-</blockquote>
-<p><strong>Array Concatenation</strong></p>
+<p><strong>Array Concatenation</strong> :: [a] -&gt; [a] -&gt; [a]</p>
 <p>Joins two arrays together, with the second argument being appended
 to the end of the first. Defers to php build-in function <code>array_merge</code>,
 so repeated keys will be overwritten.</p>
@@ -478,12 +477,35 @@ so repeated keys will be overwritten.</p>
 $concat(['a' =&gt; 1, 'b' =&gt; 2], ['a' =&gt; 'foo', 'c' =&gt; 3]); // ['a' =&gt; 'foo', 'b' =&gt; 2, 'c' =&gt; 3]
 </code></pre>
 
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$a</td>
+<td>Array</td>
+<td>Array $a List to be appended to</td>
+</tr>
+<tr>
+<td>$b</td>
+<td>Array</td>
+<td>Array $b List to append</td>
+</tr>
+<tr>
+<td>return</td>
+<td>Array</td>
+<td>Array    Concatenated list of $a and $b</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="filter">filter</h2>
-<blockquote>
-<p>(a -&gt; Bool) -&gt; [a] -&gt; [a]</p>
-</blockquote>
-<p><strong>Filter a List</strong></p>
+<p><strong>Filter a List</strong> :: (a -&gt; Bool) -&gt; [a] -&gt; [a]</p>
 <p>Returns a filtered list. Given a function that takes an element and returns
 either true or false, return a list of all the elements
 of the input list that pass the test.</p>
@@ -496,12 +518,35 @@ $filter(function($a) { return $a &gt; 2; }, ['foo' =&gt; 1, 'bar' =&gt; 3]); // 
 $filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module
 </code></pre>
 
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$f</td>
+<td>Callable</td>
+<td>Callable $f   Test function - should take an <code>a</code> and return a Bool</td>
+</tr>
+<tr>
+<td>$arr</td>
+<td>Array</td>
+<td>Array    $arr List to filter</td>
+</tr>
+<tr>
+<td>return</td>
+<td>Array</td>
+<td>Array         Result of filtering the list</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="head">head</h2>
-<blockquote>
-<p>[a] -&gt; a</p>
-</blockquote>
-<p><strong>List Head</strong></p>
+<p><strong>List Head</strong> :: [a] -&gt; a</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Throws Vector\Core\Exception\EmptyListException if argument is empty list</p>
@@ -514,12 +559,34 @@ $head(['a' =&gt; 1, 'b' =&gt; 2]); // 1
 $head([]); // Exception thrown
 </code></pre>
 
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$list</td>
+<td>Array</td>
+<td>Array $list Key/Value array or List</td>
+</tr>
+<tr>
+<td>return</td>
+<td>Mixed</td>
+<td>Mixed       First element of $list</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="index">index</h2>
-<blockquote>
-<p>Int -&gt; [a] -&gt; a</p>
-</blockquote>
-<p><strong>List Index</strong></p>
+<p><strong>List Index</strong> :: Int -&gt; [a] -&gt; a</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Throws Vector\Core\Exception\IndexOutOfBoundsException if the requested index does not exist</p>
+</div>
 <p>Returns the element of a list at the given index. Throws an exception
 if the given index does not exist in the list.</p>
 <pre><code>$index(0, [1, 2, 3]); // 1
@@ -527,12 +594,35 @@ $index('foo', ['bar' =&gt; 1, 'foo' =&gt; 2]); // 2
 $index('baz', [1, 2, 3]); // Exception thrown
 </code></pre>
 
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$i</td>
+<td>Int</td>
+<td>Int   $i    Index to get</td>
+</tr>
+<tr>
+<td>$list</td>
+<td>Array</td>
+<td>Array $list List to get index from</td>
+</tr>
+<tr>
+<td>return</td>
+<td>Mixed</td>
+<td>Mixed       Item from $list and index $i</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="init">init</h2>
-<blockquote>
-<p>[a] -&gt; [a]</p>
-</blockquote>
-<p><strong>Initial List Values</strong></p>
+<p><strong>Initial List Values</strong> :: [a] -&gt; [a]</p>
 <p>Returns an array without its last element, e.g. the inverse of <code>tail</code>. Works on
 key/value arrays as well as 'regular' arrays. If an empty or single-value array is given,
 returns an empty array.</p>
@@ -540,24 +630,60 @@ returns an empty array.</p>
 $init(['a' =&gt; 1, 'b' =&gt; 2]); // ['a' =&gt; 1];
 </code></pre>
 
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$list</td>
+<td>Array</td>
+<td>Array $list Key/Value array or List</td>
+</tr>
+<tr>
+<td>return</td>
+<td>Array</td>
+<td>Array       $list without the last element</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="keys">keys</h2>
-<blockquote>
-<p>[a] -&gt; [b]</p>
-</blockquote>
-<p><strong>Array Keys</strong></p>
+<p><strong>Array Keys</strong> :: [a] -&gt; [b]</p>
 <p>Returns the keys of an associative key/value array. Returns numerical indeces
 for non key/value arrays.</p>
 <pre><code>$keys(['a' =&gt; 1, 'b' =&gt; 2]); // ['a', 'b']
 $keys([1, 2, 3]); // [0, 1, 2]
 </code></pre>
 
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$arr</td>
+<td>Array</td>
+<td>Array $arr List to get keys from</td>
+</tr>
+<tr>
+<td>return</td>
+<td>Array</td>
+<td>Array      The keys of $arr</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="last">last</h2>
-<blockquote>
-<p>[a] -&gt; a</p>
-</blockquote>
-<p><strong>Last List Value</strong></p>
+<p><strong>Last List Value</strong> :: [a] -&gt; a</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Throws Vector\Core\Exception\EmptyListException if argument is empty list</p>
@@ -569,23 +695,59 @@ $last(['a' =&gt; 1, 'b' =&gt; 2]); // 2
 $last([]); // Exception thrown
 </code></pre>
 
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$list</td>
+<td>Array</td>
+<td>Array $list Key/Value array or List</td>
+</tr>
+<tr>
+<td>return</td>
+<td>Mixed</td>
+<td>Mixed       The last element of $list</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="length">length</h2>
-<blockquote>
-<p>[a] -&gt; a</p>
-</blockquote>
-<p><strong>Array Length</strong></p>
+<p><strong>Array Length</strong> :: [a] -&gt; a</p>
 <p>Returns the length of a list or array. Wraps php <code>count</code> function.</p>
 <pre><code>$length([1, 2, 3]); // 3
 $length(['a' =&gt; 1, 'b' =&gt; 2]); // 2
 </code></pre>
 
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$list</td>
+<td>Array</td>
+<td>Array $list Key/Value array or List</td>
+</tr>
+<tr>
+<td>return</td>
+<td>Int</td>
+<td>Int         Length of $list</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="maybeindex">maybeIndex</h2>
-<blockquote>
-<p>Int -&gt; a -&gt; Maybe a</p>
-</blockquote>
-<p><strong>Maybe List Index</strong></p>
+<p><strong>Maybe List Index</strong> :: Int -&gt; a -&gt; Maybe a</p>
 <p>Returns the element of a list at the given index, or nothing. Is safe to call
 if you don't know if an index exists. If the index does not exist, returns <code>Nothing</code>.
 Otherwise returns <code>Just a</code>.</p>
@@ -594,24 +756,75 @@ $index('foo', ['bar' =&gt; 1, 'foo' =&gt; 2]); // Just 2
 $index('baz', [1, 2, 3]); // Nothing - (No exception thrown)
 </code></pre>
 
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$i</td>
+<td>Int</td>
+<td>Int   $i    Index to get</td>
+</tr>
+<tr>
+<td>$list</td>
+<td>Mixed</td>
+<td>Mixed $list List to get index from</td>
+</tr>
+<tr>
+<td>return</td>
+<td>\Maybe</td>
+<td>Maybe       Item from $list and index $i</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="set">set</h2>
-<blockquote>
-<p>a -&gt; [b] -&gt; b -&gt; [b]</p>
-</blockquote>
-<p><strong>Set Array Value</strong></p>
-<p>Sets the value of an array at the given index; works for non-numerical indeces.
+<p><strong>Set Array Value</strong> :: a -&gt; [b] -&gt; b -&gt; [b]</p>
+<p>Sets the value of an array at the given index; works for non-numerical indexes.
 The value is set in an immutable way, so the original array is not modified.</p>
 <pre><code>$set(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]
 $set('c', 3, ['a' =&gt; 1, 'b' =&gt; 2]); // ['a' =&gt; 1, 'b' =&gt; 2, 'c' =&gt; 3]
 </code></pre>
 
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$key</td>
+<td>Mixed</td>
+<td>Mixed $key Element of index to modify</td>
+</tr>
+<tr>
+<td>$arr</td>
+<td>Array</td>
+<td>Array $arr Array to modify</td>
+</tr>
+<tr>
+<td>$val</td>
+<td>Mixed</td>
+<td>Mixed $val Value to set $arr[$key] to</td>
+</tr>
+<tr>
+<td>return</td>
+<td>Array</td>
+<td>Array      Result of setting $arr[$key] = $val</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="tail">tail</h2>
-<blockquote>
-<p>[a] -&gt; [a]</p>
-</blockquote>
-<p><strong>List Tail</strong></p>
+<p><strong>List Tail</strong> :: [a] -&gt; [a]</p>
 <p>Returns an array without its first element, e.g. the complement of <code>head</code>. Works on
 key/value arrays as well as 'regular' arrays. If an empty array of an array of one element
 is given, returns an empty array.</p>
@@ -619,17 +832,56 @@ is given, returns an empty array.</p>
 $tail(['a' =&gt; 1, 'b' =&gt; 2]); // ['b' =&gt; 2];
 </code></pre>
 
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$list</td>
+<td>Array</td>
+<td>Array $list Key/Value array or List</td>
+</tr>
+<tr>
+<td>return</td>
+<td>Array</td>
+<td>Array       $list without the first element</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="values">values</h2>
-<blockquote>
-<p>[a] -&gt; [a]</p>
-</blockquote>
-<p><strong>Array Values</strong></p>
+<p><strong>Array Values</strong> :: [a] -&gt; [a]</p>
 <p>Returns the values of an associative key/value array.</p>
 <pre><code>$values(['a' =&gt; 1, 'b' =&gt; 2]); // [1, 2]
 $values([1, 2, 3]); // [1, 2, 3]
 </code></pre>
 
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$arr</td>
+<td>Array</td>
+<td>Array $arr Key/Value array</td>
+</tr>
+<tr>
+<td>return</td>
+<td>Array</td>
+<td>Array      Indexed array with values of $arr</td>
+</tr>
+</tbody>
+</table>
 <hr />
           <aside class="copyright" role="note">
             

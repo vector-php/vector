@@ -63,6 +63,8 @@
       </style>
     
     
+      <link rel="stylesheet" href="../../../extra.css">
+    
     
   </head>
   <body>
@@ -411,39 +413,174 @@
             
           
           <h2 id="concat">concat</h2>
-<blockquote>
-<p>No Type Signature Provided</p>
-</blockquote>
-<p><strong>No Summary Given</strong></p>
-<p>No Description Given</p>
+<p><strong>String Concatenation</strong> :: String -&gt; String -&gt; String</p>
+<p>Concatenates the first argument to the second argument, provided both arguments
+are strings. Defers to the PHP built-in concatenation.</p>
+<pre><code>$concat('as', 'df'); // 'dfas'
+$concat('World', $concat('ello', 'H')); // 'HelloWorld'
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$addition</td>
+<td>String</td>
+<td>String $addition Thing to append</td>
+</tr>
+<tr>
+<td>$original</td>
+<td>String</td>
+<td>String $original Thing to append to</td>
+</tr>
+<tr>
+<td>return</td>
+<td>String</td>
+<td>String           Concatenated strings</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="join">join</h2>
-<blockquote>
-<p>No Type Signature Provided</p>
-</blockquote>
-<p><strong>No Summary Given</strong></p>
-<p>No Description Given</p>
+<p><strong>String Joining</strong> :: String -&gt; [String] -&gt; String</p>
+<p>Joins an array of strings together with a given delimeter. Works similarly
+to PHP <code>implode</code>. The inverse of <code>split</code>.</p>
+<pre><code>$join(' ', ['Hello', 'World']); // 'Hello World'
+$join('', ['a', 's', 'd', 'f']); // 'asdf'
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$on</td>
+<td>String</td>
+<td>String $on     Delimeter to join on</td>
+</tr>
+<tr>
+<td>$string</td>
+<td>Array</td>
+<td>Array  $string List of strings to join together</td>
+</tr>
+<tr>
+<td>return</td>
+<td>String</td>
+<td>String         Joined string based on delimeter</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="split">split</h2>
-<blockquote>
-<p>No Type Signature Provided</p>
-</blockquote>
-<p><strong>No Summary Given</strong></p>
-<p>No Description Given</p>
+<p><strong>String Splitting</strong> :: String -&gt; String -&gt; [String]</p>
+<p>Split a string into parts based on a delimeter. Operates similar to php <code>explode</code>,
+but is more consistent. Can split on empty delimters, and trims out empty strings
+after exploding.</p>
+<pre><code>$split('-', 'Hello-World'); // ['Hello', 'World']
+$split('', 'asdf'); // ['a', 's', 'd', 'f']
+$split('-', 'foo-bar-'); ['foo', 'bar']
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$on</td>
+<td>String</td>
+<td>String $on     Split delimeter</td>
+</tr>
+<tr>
+<td>$string</td>
+<td>String</td>
+<td>String $string Thing to split into pieces</td>
+</tr>
+<tr>
+<td>return</td>
+<td>Array</td>
+<td>Array          List of chunks from splitting the string</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="startswith">startsWith</h2>
-<blockquote>
-<p>No Type Signature Provided</p>
-</blockquote>
-<p><strong>No Summary Given</strong></p>
-<p>No Description Given</p>
+<p><strong>Substring Match</strong> :: String -&gt; String -&gt; Bool</p>
+<p>Determines if a string starts with a specific substring. Returns true if the string
+matches the substring at its start, otherwise false.</p>
+<pre><code>$startsWith('as', 'asdf'); true
+$startsWith('foo', 'barfoo'); false
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$subStr</td>
+<td>String</td>
+<td>String $subStr Substring to test</td>
+</tr>
+<tr>
+<td>$str</td>
+<td>String</td>
+<td>String $str    String to run test on</td>
+</tr>
+<tr>
+<td>return</td>
+<td>Bool</td>
+<td>Bool           Whether or not the string starts with the substring</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="tolowercase">toLowercase</h2>
-<blockquote>
-<p>No Type Signature Provided</p>
-</blockquote>
-<p><strong>No Summary Given</strong></p>
-<p>No Description Given</p>
+<p><strong>Lowercase Conversion</strong> :: String -&gt; String</p>
+<p>Converts a string to lowercase.</p>
+<pre><code>$toLowercase('ASdf'); // 'asdf'
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$str</td>
+<td>String</td>
+<td>String $str Original string</td>
+</tr>
+<tr>
+<td>return</td>
+<td>String</td>
+<td>String      Lowercase string</td>
+</tr>
+</tbody>
+</table>
 <hr />
           <aside class="copyright" role="note">
             

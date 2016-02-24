@@ -180,4 +180,23 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([0, 1, 2, 3], $filter($id, $this->testCase));
         $this->assertEquals([2 => 2, 3 => 3], $filter($gt, $this->testCase));
     }
+
+    /**
+     * Test that the zipWith function works properly, specifically the cases
+     * where it is given arrays of unequal length
+     */
+    public function testZipWithCombinesArraysProperly()
+    {
+        $zipWith = ArrayList::using('zipWith');
+
+        $combinator = function($a, $b) { return $a + $b; };
+
+        $this->assertEquals([1, 2, 3], $zipWith($combinator, [5, 5, 5], [-4, -3, -2]));
+        $this->assertequals([0], $zipWith($combinator, [5, 5, 5], [-5]));
+        $this->assertequals([5], $zipWith($combinator, [5], [0, 5, 5]));
+        $this->assertEquals([], $zipWith($combinator, [], [1, 2, 3]));
+
+        // Test that it ignore keys
+        $this->assertEquals([2, 4], $zipWith($combinator, ['foo' => 1, 'bar' => 2], [1 => 1, 5 => 2]));
+    }
 }

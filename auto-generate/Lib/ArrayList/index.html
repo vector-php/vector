@@ -342,6 +342,14 @@
           </li>
           
         
+          
+          <li class="anchor">
+            <a title="zipWith" href="#zipwith">
+              zipWith
+            </a>
+          </li>
+          
+        
       </ul>
     
   </li>
@@ -879,6 +887,48 @@ $values([1, 2, 3]); // [1, 2, 3]
 <td>return</td>
 <td>Array</td>
 <td>Array      Indexed array with values of $arr</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="zipwith">zipWith</h2>
+<p><strong>Custom Array Zip</strong> :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c]</p>
+<p>Given two arrays a and b, and some combinator f, combine the arrays using the combinator
+f(ai, bi) into a new array c. If a and b are not the same length, the resultant array will
+always be the same length as the shorter array, i.e. the zip stops when it runs out of pairs.</p>
+<pre><code>$combinator = function($a, $b) { return $a + $b; };
+$zipWith($combinator, [1, 2, 3], [0, 8, -1]); // [1, 10, 2]
+$zipWith($combinator, [0], [1, 2, 3]); // [1]
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$f</td>
+<td>Callable</td>
+<td>Callable $f The function used to combine $a and $b</td>
+</tr>
+<tr>
+<td>$a</td>
+<td>Array</td>
+<td>Array    $a The first array to use in the combinator</td>
+</tr>
+<tr>
+<td>$b</td>
+<td>Array</td>
+<td>Array    $b The second array to use in the combinator</td>
+</tr>
+<tr>
+<td>return</td>
+<td>Array</td>
+<td>Array       The result of calling f with each element of a and b in series</td>
 </tr>
 </tbody>
 </table>

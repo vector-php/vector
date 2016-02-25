@@ -289,3 +289,29 @@ return | Array | Array      Indexed array with values of $arr
 
 
 ---
+
+## zipWith
+
+__Custom Array Zip__ :: (a -> b -> c) -> [a] -> [b] -> [c]
+
+
+
+Given two arrays a and b, and some combinator f, combine the arrays using the combinator
+f(ai, bi) into a new array c. If a and b are not the same length, the resultant array will
+always be the same length as the shorter array, i.e. the zip stops when it runs out of pairs.
+
+```
+$combinator = function($a, $b) { return $a + $b; };
+$zipWith($combinator, [1, 2, 3], [0, 8, -1]); // [1, 10, 2]
+$zipWith($combinator, [0], [1, 2, 3]); // [1]
+```
+
+Parameter | Type | Description
+-|-|-
+$f | Callable | Callable $f The function used to combine $a and $b
+$a | Array | Array    $a The first array to use in the combinator
+$b | Array | Array    $b The second array to use in the combinator
+return | Array | Array       The result of calling f with each element of a and b in series
+
+
+---

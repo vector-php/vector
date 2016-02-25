@@ -25,6 +25,36 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that usingAll pulls ALL of the functions out of the given module.
+     * It defers to Using, so all we need to test is that it returns them in a k/v array
+     */
+    public function testUsingAllFunctions()
+    {
+        $all = Stub\TestFunctions::usingAll();
+
+        $this->assertEquals(array_keys($all), [
+            'noArgFunction',
+            'oneArgFunction',
+            'twoArgFunction',
+            'variadicFunction',
+            'complexVariadicFunction',
+            'nonCurriedFunction'
+        ]);
+    }
+
+    /**
+     * Test that caching on the Module core works by returning exact duplicates of the functions you request
+     */
+    public function testCachedFunctions()
+    {
+        $noArgFunctionA = Stub\TestFunctions::Using('noArgFunction');
+        $noArgFunctionB = Stub\TestFunctions::Using('noArgFunction');
+
+        $this->assertEquals($noArgFunctionA, $noArgFunctionB);
+        $this->assertEquals($noArgFunctionA(), $noArgFunctionB());
+    }
+
+    /**
      * Test to make sure that a function in the function capsule with no arguments is
      * curried properly
      */

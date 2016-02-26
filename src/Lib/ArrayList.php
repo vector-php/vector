@@ -330,4 +330,26 @@ class ArrayList extends Module
 
         return $result;
     }
+
+    /**
+     * Drop Elements
+     *
+     * Given some number n, drop n elements from an input array and return the rest of
+     * the elements. If n is greater than the length of the array, returns an empty array.
+     *
+     * ```
+     * $drop(2, [1, 2, 3, 4]); // [3, 4]
+     * $drop(4, [1, 2]); // []
+     * ```
+     *
+     * @type Int -> [a] -> [a]
+     *
+     * @param  Int   $n The number of elements to drop
+     * @param  Array $a List to drop elements from
+     * @return Array    Original list minus n elements from the front
+     */
+    protected static function drop($n, $list)
+    {
+        return array_slice($list, $n, count($list));
+    }
 }

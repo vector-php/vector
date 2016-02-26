@@ -199,4 +199,16 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
         // Test that it ignore keys
         $this->assertEquals([2, 4], $zipWith($combinator, ['foo' => 1, 'bar' => 2], [1 => 1, 5 => 2]));
     }
+
+    /**
+     * Tests that the drop function returns arrays without the leading elements
+     */
+    public function testDropReturnsModifiedArrays()
+    {
+        $drop = ArrayList::using('drop');
+
+        $this->assertequals([1, 2, 3], $drop(3, [0, 0, 0, 1, 2, 3]));
+        $this->assertequals([1, 2], $drop(0, [1, 2]));
+        $this->assertequals([], $drop(5, [1, 2, 3]));
+    }
 }

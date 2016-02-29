@@ -1,3 +1,5 @@
 /vendor
 /coverage-report
 /site
+/.idea
+/.DS_Store

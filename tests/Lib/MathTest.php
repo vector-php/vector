@@ -17,6 +17,26 @@ class MathTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that you can sum a list of numbers
+     */
+    public function testSum()
+    {
+        $sum = Math::using('sum');
+
+        $this->assertEquals(9, $sum([2, 3, 4]));
+    }
+
+    /**
+     * Test that you can negate a number
+     */
+    public function testNegate()
+    {
+        $negate = Math::using('negate');
+
+        $this->assertEquals(-1, $negate(1));
+    }
+
+    /**
      * Test that you can subtract two numbers. The second argument is subtracted
      * from the first argument.
      */
@@ -35,6 +55,16 @@ class MathTest extends \PHPUnit_Framework_TestCase
         $multiply = Math::using('multiply');
 
         $this->assertEquals(10, $multiply(5, 2));
+    }
+
+    /**
+     * Test that product works properly
+     */
+    public function testProduct()
+    {
+        $product = Math::using('product');
+
+        $this->assertEquals(6, $product([1, 2, 3]));
     }
 
     /**

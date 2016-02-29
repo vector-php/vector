@@ -6,40 +6,111 @@ use Vector\Core\Module;
 
 class Math extends Module
 {
-    // Num a => a -> a -> a
+    // number a => a -> a -> a
     protected static function add($a, $b)
     {
         return $a + $b;
     }
 
-    // Num a => a -> a -> a
+    // number a => a -> a -> a
     protected static function subtract($a, $b)
     {
         return $b - $a;
     }
 
-    // Num a => a -> a -> a
+    // number a => a -> a -> a
     protected static function multiply($a, $b)
     {
         return $a * $b;
     }
 
-    // Num a => a -> a -> a
+    // number a => a -> a -> a
     protected static function divide($a, $b)
     {
         return $b / $a;
     }
 
-    // Num a => a -> a -> a
+    // number a => a -> a -> a
     protected static function mod($a, $b)
     {
         return $b % $a;
     }
 
     /**
+     * Number Range
+     *
+     * Given two values m and n, return all values between m and n in an array, inclusive, with a
+     * step size of $step. The list of numbers will start at the first value and approach the second value.
+     *
+     * ```
+     * $range(1, 1, 5); // [1, 2, 3, 4, 5]
+     * $range(2, 0, -3); // [0, -2]
+     * $range(0, 0); // [0]
+     * $range(0.1, 0, 0.5); // [0, 0.1, 0.2, 0.3, 0.4, 0.5]
+     * ```
+     *
+     * @type Num a => a -> a -> a
+     *
+     * @param  number $step The step sizes to take when building the range
+     * @param  number $m    First value in the list
+     * @param  number $n    Last value in the list
+     * @return array        All the numbers between the first and last argument
+     */
+    protected static function range($step, $m, $n)
+    {
+        return range($m, $n, $step);
+    }
+
+    /**
+     * Minimum Value
+     *
+     * Returns the minimum of two arguments a and b.
+     * If a and be are equal, returns the first value. But since they're equal, that doesn't
+     * really matter now does it?
+     *
+     * ```
+     * $min(1, 2); // 1
+     * $min(-1, -6); // -6
+     * $min(5, 5); // 5
+     * ```
+     *
+     * @type Num a => a -> a -> a
+     *
+     * @param  number $a First number to compare
+     * @param  number $b Second number to compare
+     * @return number    The lesser of the two numbers
+     */
+    protected static function min($a, $b)
+    {
+        return min([$a, $b]);
+    }
+
+    /**
+     * Maximum Value
+     *
+     * Returns the maximum of two arguments a and b. If a and b are equal, just returns the value.
+     *
+     * ```
+     * $max(1, 2); // 2
+     * $max(-1, -6); // -1
+     * $max(5, 5); // 5
+     * ```
+     *
+     * @type Num a => a -> a -> a
+     *
+     * @param  number $a First number to compare
+     * @param  number $b Second number to compare
+     * @return number    The greater of the two numbers
+     */
+    protected static function max($a, $b)
+    {
+        return max([$a, $b]);
+    }
+
+    /**
      * Power function
      *
-     * Arithmetic exponentionation. Raises the second argument to the power
+     * Arithmetic exponentiation. Raises the second argument to the power
      * of the first.
      *
      * ```
@@ -47,9 +118,9 @@ class Math extends Module
      * $pow(3, 2); // 2 ^ 3 = 8
      * ```
      *
-     * @param  Num $a The power exponent
-     * @param  Num $b The power base
-     * @return Num    The base raised to the exponent's power
+     * @param  number $a The power exponent
+     * @param  number $b The power base
+     * @return number    The base raised to the exponent's power
      */
     protected static function pow($a, $b)
     {
@@ -57,7 +128,7 @@ class Math extends Module
     }
 
     /**
-     * Arithemtic mean
+     * Arithmetic mean
      *
      * Returns the average of a list, or zero for an empty list.
      *
@@ -66,8 +137,8 @@ class Math extends Module
      * $mean([]); // 0
      * ```
      *
-     * @param  [Num] $arr List of numbers
-     * @return Num        Mean of input list
+     * @param  array  $arr List of numbers
+     * @return number      Mean of input list
      */
     protected static function mean($arr)
     {

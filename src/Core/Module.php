@@ -85,16 +85,16 @@ abstract class Module
      *
      * @type String -> (* -> *)
      *
-     * @param  array $requestedFunctions Variadic list of strings, function names to request
-     * @return Mixed                     A single callable, or an array of callable representing
-     *                                   the fulfilled request for functions from the module
+     * @param  array    $requestedFunctions Variadic list of strings, function names to request
+     * @return callable                     A single callable, or an array of callable representing
+     *                                      the fulfilled request for functions from the module
      */
     public static function using(...$requestedFunctions)
     {
         $context = get_called_class();
 
         $fulfilledRequest = array_map(function($f) use ($context) {
-            // See if we've already fulfilled the request for this function. If so, just return that one.
+            // See if we've already fulfilled the request for this function. If so, just return the cached one.
             if (array_key_exists($context, self::$fulfillmentCache) && array_key_exists($f, self::$fulfillmentCache[$context]))
                 return self::$fulfillmentCache[$context][$f];
 
@@ -146,12 +146,12 @@ abstract class Module
     public static function usingAll()
     {
         $context     = get_called_class();
-        $isInContext = function($m) use ($context) {
+        $isInContext = function(\ReflectionMethod $m) use ($context) {
             return $m->getDeclaringClass()->getName() === $context;
         };
 
         // The names of the functions we're requesting, sans the inherited Module methods
-        $fNames = array_map(function($f) {
+        $fNames = array_map(function(\ReflectionMethod $f) {
             return $f->getName();
         }, array_filter((new \ReflectionClass($context))->getMethods(), $isInContext));
 

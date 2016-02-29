@@ -201,6 +201,18 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests foldl by reducing an array with an add function
+     */
+    public function testFoldLReducesAnArray()
+    {
+        $foldl = ArrayList::using('foldl');
+
+        $reducer = function($a, $b) { return $a + $b; };
+
+        $this->assertEquals(6, $foldl($reducer, 0, [1, 2, 3]));
+    }
+
+    /**
      * Tests that the drop function returns arrays without the leading elements
      */
     public function testDropReturnsModifiedArrays()

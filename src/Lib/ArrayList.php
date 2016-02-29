@@ -300,6 +300,34 @@ class ArrayList extends Module
     }
 
     /**
+     * List Fold - From Left
+     *
+     * Fold a list by iterating over the list from left to right. Pass each element, one by one, into
+     * the fold function $f, and carry its value over to the next iteration. Also referred to as array
+     * reduce.
+     *
+     * ```
+     * $add = function($a, $b) { return $a + $b; };
+     * $and = Logic::using('logicalAnd'); // Boolean And (Bool -> Bool -> Bool)
+     *
+     * $foldl($add, 0, [1, 2, 3]); // 6
+     * $foldl($and, True, [True, True]); // True
+     * $foldl($and, True, [True, True, False]); // False
+     * ```
+     *
+     * @type (a -> b -> b) -> b -> [a] -> b
+     *
+     * @param  callable $f    Function to use in each iteration if the fold
+     * @param  mixed    $seed The initial value to use in the  fold function along with the first element
+     * @param  array    $list The list to fold over
+     * @return mixed          The result of applying the fold function to each element one by one
+     */
+    protected static function foldl($f, $seed, $list)
+    {
+        return array_reduce($list, $f, $seed);
+    }
+
+    /**
      * Custom Array Zip
      *
      * Given two arrays a and b, and some combinator f, combine the arrays using the combinator

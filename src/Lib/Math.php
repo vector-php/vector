@@ -12,6 +12,30 @@ class Math extends Module
         return $a + $b;
     }
 
+    // sum :: [Num] -> Num
+    protected static function sum($a)
+    {
+        return array_reduce($a, function ($carry, $item) use ($a) {
+            $carry += $item;
+            return $carry;
+        }, 0);
+    }
+
+    /**
+     * Negate a number
+     *
+     * Returns the given number * -1
+     *
+     * @type number a -> number
+     *
+     * @param number $a
+     * @return number The negated number
+     */
+    protected static function negate($a)
+    {
+        return -$a;
+    }
+
     // number a => a -> a -> a
     protected static function subtract($a, $b)
     {
@@ -22,6 +46,15 @@ class Math extends Module
     protected static function multiply($a, $b)
     {
         return $a * $b;
+    }
+
+    // product :: [Num] -> Num
+    protected static function product($a)
+    {
+        return array_reduce($a, function ($carry, $item) use ($a) {
+            $carry *= $item;
+            return $carry;
+        }, 1);
     }
 
     // number a => a -> a -> a

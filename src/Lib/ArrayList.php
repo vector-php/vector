@@ -5,7 +5,6 @@ namespace Vector\Lib;
 use Vector\Core\Exception\EmptyListException;
 use Vector\Core\Exception\IndexOutOfBoundsException;
 
-use Vector\Control\Functor;
 use Vector\Core\Module;
 use Vector\Data\Maybe;
 
@@ -26,9 +25,9 @@ class ArrayList extends Module
      *
      * @type [a] -> a
      *
-     * @throws Vector\Core\Exception\EmptyListException if argument is empty list
+     * @throws \Vector\Core\Exception\EmptyListException if argument is empty list
      *
-     * @param  Array $list Key/Value array or List
+     * @param  array $list Key/Value array or List
      * @return Mixed       First element of $list
      */
     protected static function head($list)
@@ -53,8 +52,8 @@ class ArrayList extends Module
      *
      * @type [a] -> [a]
      *
-     * @param  Array $list Key/Value array or List
-     * @return Array       $list without the first element
+     * @param  array $list Key/Value array or List
+     * @return array       $list without the first element
      */
     protected static function tail($list)
     {
@@ -75,8 +74,8 @@ class ArrayList extends Module
      *
      * @type [a] -> [a]
      *
-     * @param  Array $list Key/Value array or List
-     * @return Array       $list without the last element
+     * @param  array $list Key/Value array or List
+     * @return array       $list without the last element
      */
     protected static function init($list)
     {
@@ -97,9 +96,9 @@ class ArrayList extends Module
      *
      * @type [a] -> a
      *
-     * @throws Vector\Core\Exception\EmptyListException if argument is empty list
+     * @throws \Vector\Core\Exception\EmptyListException if argument is empty list
      *
-     * @param  Array $list Key/Value array or List
+     * @param  array $list Key/Value array or List
      * @return Mixed       The last element of $list
      */
     protected static function last($list)
@@ -122,7 +121,7 @@ class ArrayList extends Module
      *
      * @type [a] -> a
      *
-     * @param  Array $list Key/Value array or List
+     * @param  array $list Key/Value array or List
      * @return Int         Length of $list
      */
     protected static function length($list)
@@ -144,16 +143,16 @@ class ArrayList extends Module
      *
      * @type Int -> [a] -> a
      *
-     * @throws Vector\Core\Exception\IndexOutOfBoundsException if the requested index does not exist
+     * @throws \Vector\Core\Exception\IndexOutOfBoundsException if the requested index does not exist
      *
      * @param  Int   $i    Index to get
-     * @param  Array $list List to get index from
+     * @param  array $list List to get index from
      * @return Mixed       Item from $list and index $i
      */
     protected static function index($i, $list)
     {
         if (!array_key_exists($i, $list))
-            throw new IndexOutOfBoundsException("'index' function tried to access non-existant index '$i'");
+            throw new IndexOutOfBoundsException("'index' function tried to access non-existent index '$i'");
 
         return $list[$i];
     }
@@ -204,8 +203,8 @@ class ArrayList extends Module
      * @type (a -> Bool) -> [a] -> [a]
      *
      * @param  Callable $f   Test function - should take an `a` and return a Bool
-     * @param  Array    $arr List to filter
-     * @return Array         Result of filtering the list
+     * @param  array    $arr List to filter
+     * @return array         Result of filtering the list
      */
     protected static function filter($f, $arr)
     {
@@ -215,7 +214,7 @@ class ArrayList extends Module
     /**
      * Array Keys
      *
-     * Returns the keys of an associative key/value array. Returns numerical indeces
+     * Returns the keys of an associative key/value array. Returns numerical indexes
      * for non key/value arrays.
      *
      * ```
@@ -225,8 +224,8 @@ class ArrayList extends Module
      *
      * @type [a] -> [b]
      *
-     * @param  Array $arr List to get keys from
-     * @return Array      The keys of $arr
+     * @param  array $arr List to get keys from
+     * @return array      The keys of $arr
      */
     protected static function keys($arr)
     {
@@ -245,8 +244,8 @@ class ArrayList extends Module
      *
      * @type [a] -> [a]
      *
-     * @param  Array $arr Key/Value array
-     * @return Array      Indexed array with values of $arr
+     * @param  array $arr Key/Value array
+     * @return array      Indexed array with values of $arr
      */
     protected static function values($arr)
     {
@@ -267,9 +266,9 @@ class ArrayList extends Module
      *
      * @type [a] -> [a] -> [a]
      *
-     * @param  Array $a List to be appended to
-     * @param  Array $b List to append
-     * @return Array    Concatenated list of $a and $b
+     * @param  array $a List to be appended to
+     * @param  array $b List to append
+     * @return array    Concatenated list of $a and $b
      */
     protected static function concat($a, $b)
     {
@@ -290,9 +289,9 @@ class ArrayList extends Module
      * @type a -> [b] -> b -> [b]
      *
      * @param  Mixed $key Element of index to modify
-     * @param  Array $arr Array to modify
+     * @param  array $arr Array to modify
      * @param  Mixed $val Value to set $arr[$key] to
-     * @return Array      Result of setting $arr[$key] = $val
+     * @return array      Result of setting $arr[$key] = $val
      */
     protected static function set($key, $arr, $val)
     {
@@ -316,9 +315,9 @@ class ArrayList extends Module
      * @type (a -> b -> c) -> [a] -> [b] -> [c]
      *
      * @param  Callable $f The function used to combine $a and $b
-     * @param  Array    $a The first array to use in the combinator
-     * @param  Array    $b The second array to use in the combinator
-     * @return Array       The result of calling f with each element of a and b in series
+     * @param  array    $a The first array to use in the combinator
+     * @param  array    $b The second array to use in the combinator
+     * @return array       The result of calling f with each element of a and b in series
      */
     protected static function zipWith($f, $a, $b)
     {
@@ -344,9 +343,9 @@ class ArrayList extends Module
      *
      * @type Int -> [a] -> [a]
      *
-     * @param  Int   $n The number of elements to drop
-     * @param  Array $a List to drop elements from
-     * @return Array    Original list minus n elements from the front
+     * @param  Int   $n    The number of elements to drop
+     * @param  array $list List to drop elements from
+     * @return array       Original list minus n elements from the front
      */
     protected static function drop($n, $list)
     {

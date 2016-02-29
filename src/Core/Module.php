@@ -8,13 +8,13 @@ abstract class Module
 {
     /**
      * A memoized cache of all the function requests fulfilled by this module
-     * @var Array
+     * @var array
      */
     protected static $fulfillmentCache = [];
 
     /**
      * An array of function names to NOT curry when being fulfilled from the 'using' method
-     * @var Array
+     * @var array
      */
     protected static $doNotCurry = ['curry'];
 
@@ -39,7 +39,7 @@ abstract class Module
      * @type (* -> *) -> (* -> *)
      *
      * @param  Callable $f           Function to curry
-     * @param  Array    $appliedArgs The arguments already applied to the curried function. This
+     * @param  array    $appliedArgs The arguments already applied to the curried function. This
      *                               argument is for internal use only.
      * @return Callable              The result of currying the original function.
      */
@@ -73,7 +73,7 @@ abstract class Module
     /**
      * Module Loading
      *
-     * Provided some function name, load that function into a callable from the defition.
+     * Provided some function name, load that function into a callable from the definition.
      * The function is automatically curried unless it is listed in that module's doNotCurry list.
      * If `using` is passed multiple function names, they are returned in an array so they can be
      * split apart using PHP's internal `list` function.
@@ -85,9 +85,9 @@ abstract class Module
      *
      * @type String -> (* -> *)
      *
-     * @param  String $requestedFunctions Variadic list of strings, function names to request
-     * @return Mixed                      A single callable, or an array of callables representing
-     *                                    the fulfilled request for functions from the module
+     * @param  array $requestedFunctions Variadic list of strings, function names to request
+     * @return Mixed                     A single callable, or an array of callable representing
+     *                                   the fulfilled request for functions from the module
      */
     public static function using(...$requestedFunctions)
     {
@@ -141,7 +141,7 @@ abstract class Module
      *
      * @type [(* -> *)]
      *
-     * @return Array A key/value array of function names and actual curried callables
+     * @return array A key/value array of function names and actual curried callable
      */
     public static function usingAll()
     {

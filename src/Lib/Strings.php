@@ -31,8 +31,8 @@ class Strings extends Module
     /**
      * String Splitting
      *
-     * Split a string into parts based on a delimeter. Operates similar to php `explode`,
-     * but is more consistent. Can split on empty delimters, and trims out empty strings
+     * Split a string into parts based on a delimiter. Operates similar to php `explode`,
+     * but is more consistent. Can split on empty delimiters, and trims out empty strings
      * after exploding.
      *
      * ```
@@ -43,9 +43,9 @@ class Strings extends Module
      *
      * @type String -> String -> [String]
      *
-     * @param  String $on     Split delimeter
+     * @param  String $on     Split delimiter
      * @param  String $string Thing to split into pieces
-     * @return Array          List of chunks from splitting the string
+     * @return array          List of chunks from splitting the string
      */
     protected static function split($on, $string)
     {
@@ -99,7 +99,7 @@ class Strings extends Module
     /**
      * String Joining
      *
-     * Joins an array of strings together with a given delimeter. Works similarly
+     * Joins an array of strings together with a given delimiter. Works similarly
      * to PHP `implode`. The inverse of `split`.
      *
      * ```
@@ -109,9 +109,9 @@ class Strings extends Module
      *
      * @type String -> [String] -> String
      *
-     * @param  String $on     Delimeter to join on
-     * @param  Array  $string List of strings to join together
-     * @return String         Joined string based on delimeter
+     * @param  String $on     Delimiter to join on
+     * @param  array  $string List of strings to join together
+     * @return String         Joined string based on delimiter
      */
     protected static function join($on, $string)
     {

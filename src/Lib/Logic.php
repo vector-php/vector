@@ -16,7 +16,7 @@ class Logic extends Module
      * $funcF = function($x) { return $x >= 5; };
      * $funcG = function($x) { return $x == 0; };
      *
-     * $combinator = $logicalOr($funcF, $funcG);
+     * $combinator = $orCombinator($funcF, $funcG);
      *
      * $combinator(9); // True
      * $combinator(0); // True

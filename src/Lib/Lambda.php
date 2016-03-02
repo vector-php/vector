@@ -26,14 +26,48 @@ abstract class Lambda extends Module
         return self::pipe(...array_reverse($fs));
     }
 
-    protected static function k($a)
+    /**
+     * K Combinator
+     *
+     * Given some value k, return a lambda expression which always evaluates to k, regardless
+     * of any arguments it is given.
+     *
+     * ```
+     * $alwaysFour = $k(4);
+     *
+     * $alwaysFour('foo'); // 4
+     * $alwaysFour(1, 2, 3); // 4
+     * $alwaysFour(); // 4
+     * ```
+     *
+     * @type a -> (b -> a)
+     *
+     * @param  mixed    $k Value to express in the combinator
+     * @return \Closure    Expression which always returns $k
+     */
+    protected static function k($k)
     {
-        return function(...$null) use ($a)
+        return function(...$null) use ($k)
         {
-            return $a;
+            return $k;
         };
     }
 
+    /**
+     * Identity Function
+     *
+     * Given some value a, return a unchanged
+     *
+     * ```
+     * $id(4); // 4
+     * $id('foo'); // 'foo'
+     * ```
+     *
+     * @type a -> a
+     *
+     * @param  mixed $a Value to return
+     * @return mixed    The given value, unchanged
+     */
     protected static function id($a)
     {
         return $a;

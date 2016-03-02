@@ -6,13 +6,43 @@ use Vector\Core\Module;
 
 class Math extends Module
 {
-    // number a => a -> a -> a
+    /**
+     * Arithmetic Addition
+     *
+     * Add two numbers together
+     *
+     * ```
+     * $add(2, 2); // 4
+     * $add(-1, 2); // 1
+     * ```
+     *
+     * @type Num a => a -> a -> a
+     *
+     * @param  number $a First number to add
+     * @param  number $b Second number to add
+     * @return number    Addition of $a + $b
+     */
     protected static function add($a, $b)
     {
         return $a + $b;
     }
 
-    // sum :: [Num] -> Num
+    /**
+     * Array Sum
+     *
+     * Add all the numbers of a list together and return their sum. If the given
+     * list is empty, returns 0.
+     *
+     * ```
+     * $sum([1, 2, 3]); // 6
+     * $sum([]); // 0
+     * ```
+     *
+     * @type Num a => [a] -> a
+     *
+     * @param  array  $a List of numbers to add
+     * @return number    Sum of all the elements of the list
+     */
     protected static function sum($a)
     {
         return array_reduce($a, function ($carry, $item) use ($a) {
@@ -24,31 +54,81 @@ class Math extends Module
     /**
      * Negate a number
      *
-     * Returns the given number * -1
+     * Returns a given number * -1
      *
-     * @type number a -> number
+     * ```
+     * $negate(4); // -4
+     * $negate(0); // 0
+     * ```
      *
-     * @param number $a
-     * @return number The negated number
+     * @type Num a => a -> a
+     *
+     * @param  number $a Number to make negative
+     * @return number    The negated number
      */
     protected static function negate($a)
     {
         return -$a;
     }
 
-    // number a => a -> a -> a
+    /**
+     * Arithmetic Subtraction
+     *
+     * Subtracts two numbers, with the first argument being subtracted from the second.
+     *
+     * ```
+     * $subtract(4, 9); // 5
+     * $subtract(-1, 3); // 4
+     * ```
+     *
+     * @type Num a => a -> a -> a
+     *
+     * @param  number $a Number to subtract
+     * @param  number $b Number to subtract from
+     * @return number    Subtraction of $b - $a
+     */
     protected static function subtract($a, $b)
     {
         return $b - $a;
     }
 
-    // number a => a -> a -> a
+    /**
+     * Arithmetic Multiplication
+     *
+     * Multiply two numbers together
+     *
+     * ```
+     * $multiply(2, 4); // 8
+     * $multiply(0, 4); // 0
+     * ```
+     *
+     * @type Num a => a -> a -> a
+     *
+     * @param  number $a First number to multiply
+     * @param  number $b Second number to multiply
+     * @return number    Multiplication of $a * $b
+     */
     protected static function multiply($a, $b)
     {
         return $a * $b;
     }
 
-    // product :: [Num] -> Num
+    /**
+     * Array Product
+     *
+     * Returns the product of a list of numbers, i.e. the result of multiplying
+     * every element of a list together. Returns 1 for an empty list.
+     *
+     * ```
+     * $product([2, 2, 3]); // 12
+     * $product([]); // 1
+     * ```
+     *
+     * @type Num a => [a] -> a
+     *
+     * @param  array $a List of values to multiply
+     * @return mixed    Product of every value in the list
+     */
     protected static function product($a)
     {
         return array_reduce($a, function ($carry, $item) use ($a) {
@@ -57,13 +137,45 @@ class Math extends Module
         }, 1);
     }
 
-    // number a => a -> a -> a
+    /**
+     * Arithmetic Division
+     *
+     * Divide two numbers, with the first argument being the divisor
+     *
+     * ```
+     * $divide(2, 8); // 4
+     * $divide(4, 12); // 3
+     * ```
+     *
+     * @type Num a => a -> a -> a
+     *
+     * @param  number $a Denominator
+     * @param  number $b Numerator
+     * @return float     Result of $b divided by $a
+     */
     protected static function divide($a, $b)
     {
         return $b / $a;
     }
 
-    // number a => a -> a -> a
+    /**
+     * Modulus Operator
+     *
+     * Take the modulus of two integers, with the first argument being the divisor.
+     * Returns the remainder of $b / $a.
+     *
+     * ```
+     * $mod(2, 5); // 1
+     * $mod(5, 12); // 2
+     * $mod(3, 3); // 0
+     * ```
+     *
+     * @type Int -> Int -> Int
+     *
+     * @param  int $a Divisor
+     * @param  int $b Numerator
+     * @return int    Remainder of $b / $a
+     */
     protected static function mod($a, $b)
     {
         return $b % $a;
@@ -151,6 +263,8 @@ class Math extends Module
      * $pow(3, 2); // 2 ^ 3 = 8
      * ```
      *
+     * @type Num a => a -> a -> a
+     *
      * @param  number $a The power exponent
      * @param  number $b The power base
      * @return number    The base raised to the exponent's power
@@ -169,6 +283,8 @@ class Math extends Module
      * $mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2
      * $mean([]); // 0
      * ```
+     *
+     * @type Num a => [a] -> a
      *
      * @param  array  $arr List of numbers
      * @return number      Mean of input list

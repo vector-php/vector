@@ -28,7 +28,7 @@ __String Joining__ :: String -> [String] -> String
 
 
 
-Joins an array of strings together with a given delimeter. Works similarly
+Joins an array of strings together with a given delimiter. Works similarly
 to PHP `implode`. The inverse of `split`.
 
 ```
@@ -38,9 +38,9 @@ $join('', ['a', 's', 'd', 'f']); // 'asdf'
 
 Parameter | Type | Description
 -|-|-
-$on | String | String $on     Delimeter to join on
-$string | Array | Array  $string List of strings to join together
-return | String | String         Joined string based on delimeter
+$on | String | String $on     Delimiter to join on
+$string | array | array  $string List of strings to join together
+return | String | String         Joined string based on delimiter
 
 
 ---
@@ -51,8 +51,8 @@ __String Splitting__ :: String -> String -> [String]
 
 
 
-Split a string into parts based on a delimeter. Operates similar to php `explode`,
-but is more consistent. Can split on empty delimters, and trims out empty strings
+Split a string into parts based on a delimiter. Operates similar to php `explode`,
+but is more consistent. Can split on empty delimiters, and trims out empty strings
 after exploding.
 
 ```
@@ -63,9 +63,9 @@ $split('-', 'foo-bar-'); ['foo', 'bar']
 
 Parameter | Type | Description
 -|-|-
-$on | String | String $on     Split delimeter
+$on | String | String $on     Split delimiter
 $string | String | String $string Thing to split into pieces
-return | Array | Array          List of chunks from splitting the string
+return | array | array          List of chunks from splitting the string
 
 
 ---

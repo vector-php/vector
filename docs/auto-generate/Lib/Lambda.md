@@ -13,24 +13,46 @@ No Description Given
 
 ## id
 
-__No Summary Given__ :: No Type Signature Provided
+__Identity Function__ :: a -> a
 
 
 
-No Description Given
+Given some value a, return a unchanged
 
+```
+$id(4); // 4
+$id('foo'); // 'foo'
+```
+
+Parameter | Type | Description
+-|-|-
+$a | mixed | mixed $a Value to return
+return | mixed | mixed    The given value, unchanged
 
 
 ---
 
 ## k
 
-__No Summary Given__ :: No Type Signature Provided
+__K Combinator__ :: a -> (b -> a)
 
 
 
-No Description Given
+Given some value k, return a lambda expression which always evaluates to k, regardless
+of any arguments it is given.
 
+```
+$alwaysFour = $k(4);
+
+$alwaysFour('foo'); // 4
+$alwaysFour(1, 2, 3); // 4
+$alwaysFour(); // 4
+```
+
+Parameter | Type | Description
+-|-|-
+$k | mixed | mixed    $k Value to express in the combinator
+return | \Closure | \Closure    Expression which always returns $k
 
 
 ---

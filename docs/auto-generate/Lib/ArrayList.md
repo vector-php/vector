@@ -16,9 +16,32 @@ $concat(['a' => 1, 'b' => 2], ['a' => 'foo', 'c' => 3]); // ['a' => 'foo', 'b' =
 
 Parameter | Type | Description
 -|-|-
-$a | Array | Array $a List to be appended to
-$b | Array | Array $b List to append
-return | Array | Array    Concatenated list of $a and $b
+$a | array | array $a List to be appended to
+$b | array | array $b List to append
+return | array | array    Concatenated list of $a and $b
+
+
+---
+
+## drop
+
+__Drop Elements__ :: Int -> [a] -> [a]
+
+
+
+Given some number n, drop n elements from an input array and return the rest of
+the elements. If n is greater than the length of the array, returns an empty array.
+
+```
+$drop(2, [1, 2, 3, 4]); // [3, 4]
+$drop(4, [1, 2]); // []
+```
+
+Parameter | Type | Description
+-|-|-
+$n | Int | Int   $n    The number of elements to drop
+$list | array | array $list List to drop elements from
+return | array | array       Original list minus n elements from the front
 
 
 ---
@@ -45,8 +68,37 @@ $filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module
 Parameter | Type | Description
 -|-|-
 $f | Callable | Callable $f   Test function - should take an `a` and return a Bool
-$arr | Array | Array    $arr List to filter
-return | Array | Array         Result of filtering the list
+$arr | array | array    $arr List to filter
+return | array | array         Result of filtering the list
+
+
+---
+
+## foldl
+
+__List Fold - From Left__ :: (a -> b -> b) -> b -> [a] -> b
+
+
+
+Fold a list by iterating over the list from left to right. Pass each element, one by one, into
+the fold function $f, and carry its value over to the next iteration. Also referred to as array
+reduce.
+
+```
+$add = function($a, $b) { return $a + $b; };
+$and = Logic::using('logicalAnd'); // Boolean And (Bool -> Bool -> Bool)
+
+$foldl($add, 0, [1, 2, 3]); // 6
+$foldl($and, True, [True, True]); // True
+$foldl($and, True, [True, True, False]); // False
+```
+
+Parameter | Type | Description
+-|-|-
+$f | callable | callable $f    Function to use in each iteration if the fold
+$seed | mixed | mixed    $seed The initial value to use in the  fold function along with the first element
+$list | array | array    $list The list to fold over
+return | mixed | mixed          The result of applying the fold function to each element one by one
 
 
 ---
@@ -57,7 +109,7 @@ __List Head__ :: [a] -> a
 
 
 !!! Warning
-    Throws Vector\Core\Exception\EmptyListException if argument is empty list
+    Throws \Vector\Core\Exception\EmptyListException if argument is empty list
 
 
 Returns the first element of a list, the element at index 0. Also functions
@@ -72,7 +124,7 @@ $head([]); // Exception thrown
 
 Parameter | Type | Description
 -|-|-
-$list | Array | Array $list Key/Value array or List
+$list | array | array $list Key/Value array or List
 return | Mixed | Mixed       First element of $list
 
 
@@ -84,7 +136,7 @@ __List Index__ :: Int -> [a] -> a
 
 
 !!! Warning
-    Throws Vector\Core\Exception\IndexOutOfBoundsException if the requested index does not exist
+    Throws \Vector\Core\Exception\IndexOutOfBoundsException if the requested index does not exist
 
 
 Returns the element of a list at the given index. Throws an exception
@@ -99,7 +151,7 @@ $index('baz', [1, 2, 3]); // Exception thrown
 Parameter | Type | Description
 -|-|-
 $i | Int | Int   $i    Index to get
-$list | Array | Array $list List to get index from
+$list | array | array $list List to get index from
 return | Mixed | Mixed       Item from $list and index $i
 
 
@@ -122,8 +174,8 @@ $init(['a' => 1, 'b' => 2]); // ['a' => 1];
 
 Parameter | Type | Description
 -|-|-
-$list | Array | Array $list Key/Value array or List
-return | Array | Array       $list without the last element
+$list | array | array $list Key/Value array or List
+return | array | array       $list without the last element
 
 
 ---
@@ -134,7 +186,7 @@ __Array Keys__ :: [a] -> [b]
 
 
 
-Returns the keys of an associative key/value array. Returns numerical indeces
+Returns the keys of an associative key/value array. Returns numerical indexes
 for non key/value arrays.
 
 ```
@@ -144,8 +196,8 @@ $keys([1, 2, 3]); // [0, 1, 2]
 
 Parameter | Type | Description
 -|-|-
-$arr | Array | Array $arr List to get keys from
-return | Array | Array      The keys of $arr
+$arr | array | array $arr List to get keys from
+return | array | array      The keys of $arr
 
 
 ---
@@ -156,7 +208,7 @@ __Last List Value__ :: [a] -> a
 
 
 !!! Warning
-    Throws Vector\Core\Exception\EmptyListException if argument is empty list
+    Throws \Vector\Core\Exception\EmptyListException if argument is empty list
 
 
 Returns the last element of an array, e.g. the complement of `init`. Works on key/value
@@ -170,7 +222,7 @@ $last([]); // Exception thrown
 
 Parameter | Type | Description
 -|-|-
-$list | Array | Array $list Key/Value array or List
+$list | array | array $list Key/Value array or List
 return | Mixed | Mixed       The last element of $list
 
 
@@ -191,7 +243,7 @@ $length(['a' => 1, 'b' => 2]); // 2
 
 Parameter | Type | Description
 -|-|-
-$list | Array | Array $list Key/Value array or List
+$list | array | array $list Key/Value array or List
 return | Int | Int         Length of $list
 
 
@@ -239,9 +291,9 @@ $set('c', 3, ['a' => 1, 'b' => 2]); // ['a' => 1, 'b' => 2, 'c' => 3]
 Parameter | Type | Description
 -|-|-
 $key | Mixed | Mixed $key Element of index to modify
-$arr | Array | Array $arr Array to modify
+$arr | array | array $arr Array to modify
 $val | Mixed | Mixed $val Value to set $arr[$key] to
-return | Array | Array      Result of setting $arr[$key] = $val
+return | array | array      Result of setting $arr[$key] = $val
 
 
 ---
@@ -263,8 +315,8 @@ $tail(['a' => 1, 'b' => 2]); // ['b' => 2];
 
 Parameter | Type | Description
 -|-|-
-$list | Array | Array $list Key/Value array or List
-return | Array | Array       $list without the first element
+$list | array | array $list Key/Value array or List
+return | array | array       $list without the first element
 
 
 ---
@@ -284,8 +336,8 @@ $values([1, 2, 3]); // [1, 2, 3]
 
 Parameter | Type | Description
 -|-|-
-$arr | Array | Array $arr Key/Value array
-return | Array | Array      Indexed array with values of $arr
+$arr | array | array $arr Key/Value array
+return | array | array      Indexed array with values of $arr
 
 
 ---
@@ -309,9 +361,9 @@ $zipWith($combinator, [0], [1, 2, 3]); // [1]
 Parameter | Type | Description
 -|-|-
 $f | Callable | Callable $f The function used to combine $a and $b
-$a | Array | Array    $a The first array to use in the combinator
-$b | Array | Array    $b The second array to use in the combinator
-return | Array | Array       The result of calling f with each element of a and b in series
+$a | array | array    $a The first array to use in the combinator
+$b | array | array    $b The second array to use in the combinator
+return | array | array       The result of calling f with each element of a and b in series
 
 
 ---

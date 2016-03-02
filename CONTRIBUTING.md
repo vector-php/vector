@@ -15,10 +15,10 @@ Your docblocks should follow this style, since they're used in generating the do
  * -- Blank Line --
  * <Function Description in Plain English, multi-line okay>
  * -- Blank Line --
- * ```\
+ * ```
  * Example Code here.
  * You can assume your function is in scope already
- * ```\
+ * ```
  * -- Blank Line --
  * @type <Type Annotation>
  * -- Blank Line --
@@ -29,5 +29,5 @@ Your docblocks should follow this style, since they're used in generating the do
 ```
 
 ## Generating documentation
-### __ This only applied to Github users with contributor access! __
+__ This only applied to Github users with contributor access! __
 Documentation for Lib-namespaced functions are auto-generated from doc-blocks. To preview the documentation, run `sh ./sripts/previewDocs.sh` from the project root. Once you're happy with it after proofreading it, you can deploy the docs using `sh ./scripts/deployDocs.sh`.

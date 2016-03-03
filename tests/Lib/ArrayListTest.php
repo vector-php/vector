@@ -20,7 +20,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests that head returns the first element of a list
      */
-    public function testHeadReturnsFirstElement()
+    public function testHead_returnsFirstElement()
     {
         $head = ArrayList::Using('head');
 
@@ -30,7 +30,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Expect that an EmptyListException is thrown for head on empty lists
      */
-    public function testHeadUndefinedOnEmptyList()
+    public function testHead_undefinedOnEmptyList()
     {
         $head = ArrayList::Using('head');
         $this->expectException(EmptyListException::class);
@@ -41,7 +41,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that tail returns the rest of a list sans first element
      */
-    public function testTailReturnsAllButFirstElement()
+    public function testTail()
     {
         $tail = ArrayList::Using('tail');
 
@@ -51,7 +51,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that init returns the first chunk of an array
      */
-    public function testInitReturnsAllButLastElement()
+    public function testInit()
     {
         $init = ArrayList::Using('init');
 
@@ -61,7 +61,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that last returns the last element of a list
      */
-    public function testLastReturnsLastElement()
+    public function testLast_returnsLastElement()
     {
         $last = ArrayList::Using('last');
 
@@ -71,7 +71,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Expect that an EmptyListException is thrown for last on empty lists
      */
-    public function testLastUndefinedOnEmptyList()
+    public function testLast_undefinedOnEmptyList()
     {
         $last = ArrayList::Using('last');
         $this->expectException(EmptyListException::class);
@@ -82,7 +82,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that length returns the length of a list
      */
-    public function testLengthReturnsLength()
+    public function testLength()
     {
         $length = ArrayList::Using('length');
 
@@ -92,7 +92,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that index returns the element of a list at the given index
      */
-    public function testIndexReturnsElementAtIndex()
+    public function testIndex_returnsElementAtIndex()
     {
         $index = ArrayList::Using('index');
 
@@ -102,7 +102,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that index throws an exception when requesting a non-existant index
      */
-    public function testIndexThrowsExceptionForNoKey()
+    public function testIndex_throwsExceptionForNoKey()
     {
         $index = ArrayList::Using('index');
         $this->expectException(IndexOutOfBoundsException::class);
@@ -113,7 +113,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests that maybeIndex returns maybe values
      */
-    public function testMaybeIndexReturnsMaybeValues()
+    public function testMaybe()
     {
         $maybeIndex = ArrayList::Using('maybeIndex');
 
@@ -124,7 +124,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that concat handles normal arrays, and key/value arrays properly
      */
-    public function testConcatAppendsTwoArrays()
+    public function testConcat()
     {
         $concat = ArrayList::Using('concat');
 
@@ -137,7 +137,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      * Test that set properly sets the value of an array at the index in an
      * immutable way
      */
-    public function testSetSetsArrayValueAtIndex()
+    public function testSet()
     {
         $set = ArrayList::Using('set');
 
@@ -148,7 +148,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that keys returns the keys of a key/value array
      */
-    public function testKeysReturnsMapKeys()
+    public function testKeys()
     {
         $keys = ArrayList::using('keys');
 
@@ -159,7 +159,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that values returns key/value array values
      */
-    public function testValuesReturnsMapValues()
+    public function testValues()
     {
         $values = ArrayList::using('values');
 
@@ -170,7 +170,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Test that the filter function correctly filters an array of data
      */
-    public function testFilterFunctionFiltersArrays()
+    public function testFilter()
     {
         $filter = ArrayList::using('filter');
 
@@ -185,7 +185,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      * Test that the zipWith function works properly, specifically the cases
      * where it is given arrays of unequal length
      */
-    public function testZipWithCombinesArraysProperly()
+    public function testZipWith()
     {
         $zipWith = ArrayList::using('zipWith');
 
@@ -203,7 +203,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests foldl by reducing an array with an add function
      */
-    public function testFoldLReducesAnArray()
+    public function testFoldL()
     {
         $foldl = ArrayList::using('foldl');
 
@@ -215,12 +215,95 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests that the drop function returns arrays without the leading elements
      */
-    public function testDropReturnsModifiedArrays()
+    public function testDrop()
     {
         $drop = ArrayList::using('drop');
 
         $this->assertequals([1, 2, 3], $drop(3, [0, 0, 0, 1, 2, 3]));
         $this->assertequals([1, 2], $drop(0, [1, 2]));
         $this->assertequals([], $drop(5, [1, 2, 3]));
+    }
+
+    /**
+     * Dropwhile should return every element after the first element in a list
+     * returns false for the predicate
+     */
+    public function testDropWhile()
+    {
+        $dropWhile = ArrayList::using('dropWhile');
+
+        $lteThree = function($n) { return $n <= 3; };
+        $divByTwo = function($n) { return $n % 2 == 0; };
+
+        $this->assertEquals([4, 5], $dropWhile($lteThree, [1, 2, 3, 4, 5]));
+        $this->assertEquals([1, 2, 3], $dropWhile($divByTwo, [0, 2, 4, 6, 1, 2, 3]));
+        $this->assertEquals([], $dropWhile($divByTwo, [2, 4, 6]));
+        $this->assertEquals([1, 3, 5], $dropWhile($divByTwo, [1, 3, 5]));
+    }
+
+    /**
+     * Take should return the first n elements of an array
+     */
+    public function testTake()
+    {
+        $take = ArrayList::using('take');
+
+        $this->assertEquals([1, 2, 3], $take(3, [1, 2, 3, 4, 5]));
+        $this->assertEquals([], $take(0, [1, 2, 3, 4, 5]));
+        $this->assertEquals([1, 2, 3], $take(10, [1, 2, 3]));
+    }
+
+    /**
+     * TakeWhile should return the first elements of the array until the predicate returns
+     * false
+     */
+    public function testTakeWhile()
+    {
+        $takeWhile = ArrayList::using('takeWhile');
+
+        $lteThree = function($n) { return $n <= 3; };
+        $divByTwo = function($n) { return $n % 2 == 0; };
+
+        $this->assertEquals([1, 2, 3], $takeWhile($lteThree, [1, 2, 3, 4, 5]));
+        $this->assertEquals([], $takeWhile($divByTwo, [1, 2, 4, 6]));
+    }
+
+    /**
+     * Reverse should flip an array and not modify the original array
+     */
+    public function testReverse()
+    {
+        $reverse = ArrayList::using('reverse');
+
+        $arr = [1, 2, 3];
+
+        $this->assertEquals([3, 2, 1], $reverse($arr));
+        $this->assertEquals([1, 2, 3], $arr);
+    }
+
+    /**
+     * Flatten should take a multidimensional array and turn it into a single
+     * dimensional array
+     */
+    public function testFlatten()
+    {
+        $flatten = ArrayList::using('flatten');
+
+        $testCase1 = [1, [2], [[3, 4]], [5, [6]], 7];
+        $testCase2 = [1, 2, 3, [[[[[[[]]]]]]]];
+
+        $this->assertEquals([1, 2, 3, 4, 5, 6, 7], $flatten($testCase1));
+        $this->assertEquals([1, 2, 3], $flatten($testCase2));
+    }
+
+    /**
+     * Contains should return true if the given list contains the given value
+     */
+    public function testContains()
+    {
+        $contains = ArrayList::using('contains');
+
+        $this->assertEquals(true, $contains(1, [1, 2, 3]));
+        $this->assertEquals(false, $contains(5, [1, 2, 3]));
     }
 }

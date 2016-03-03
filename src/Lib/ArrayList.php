@@ -379,4 +379,160 @@ class ArrayList extends Module
     {
         return array_slice($list, $n, count($list));
     }
+
+    /**
+     * Drop Elements with Predicate
+     *
+     * Given some function that returns true or false, drop elements from an array starting
+     * at the front, testing each element along the way, until that function returns false.
+     * Return the array without all of those elements.
+     *
+     * ```
+     * $greaterThanOne = function($n) { return $n > 1; };
+     *
+     * $dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]
+     * ```
+     *
+     * @type (a -> Bool) -> [a] -> [a]
+     *
+     * @param  callable $predicate Function to use for testing
+     * @param  array    $list      List to drop from
+     * @return array               List with elements removed from the front
+     */
+    protected static function dropWhile($predicate, $list)
+    {
+        foreach ($list as $item) {
+            if ($predicate($item)) {
+                array_shift($list);
+            }
+            else {
+                break;
+            }
+        }
+
+        return $list;
+    }
+
+    /**
+     * Take Elements
+     *
+     * Given some number n, return the first n elements of a given array. Returns the whole
+     * array if n is greater than the array length.
+     *
+     * ```
+     * $take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]
+     * ```
+     *
+     * @type Int -> [a] -> [a]
+     *
+     * @param  int   $n    Number of elements to take
+     * @param  array $list Array to take elements from
+     * @return array       First n elements of the array
+     */
+    protected static function take($n, $list)
+    {
+        return array_slice($list, 0, $n);
+    }
+
+    /**
+     * Take Elements with Predicate
+     *
+     * Given some function that returns true or false, return the first elements of the array
+     * that all pass the test, until the test fails.
+     *
+     * ```
+     * $greaterThanOne = function($n) { return $n > 1; };
+     *
+     * $takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]
+     * ```
+     *
+     * @type (a -> Bool) -> [a] -> [a]
+     *
+     * @param  callable $predicate Function to use for testing each element
+     * @param  array    $list      List to take elements from
+     * @return array               First elements of list that all pass the $predicate
+     */
+    protected static function takeWhile($predicate, $list)
+    {
+        $result = [];
+
+        foreach ($list as $item) {
+            if ($predicate($item)) {
+                $result[] = $item;
+            }
+            else {
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Array Reverse
+     *
+     * Flip the order of a given array. Does not modify the original array.
+     *
+     * ```
+     * $reverse([1, 2, 3]); // [3, 2, 1]
+     * ```
+     *
+     * @type [a] -> [a]
+     *
+     * @param  array $list Array to flip
+     * @return array       Array in the reverse order
+     */
+    protected static function reverse($list)
+    {
+        return array_reverse($list);
+    }
+
+    /**
+     * Array Flatten
+     *
+     * Flattens a nested array structure into a single-dimensional array. Can handle
+     * arrays of arbitrary dimension.
+     *
+     * ```
+     * $flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]
+     * ```
+     *
+     * @type [a] -> [b]
+     *
+     * @param  array $list Nested array to flatten
+     * @return array       Result of flattening $list into a 1-dimensional list
+     */
+    protected static function flatten($list)
+    {
+        $iter = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($list));
+        $flat = [];
+
+        foreach ($iter as $item) {
+            $flat[] = $item;
+        }
+
+        return $flat;
+    }
+
+    /**
+     * Array Contains Element
+     *
+     * Returns true if a given array contains the item to test, or false if
+     * it does not.
+     *
+     * ```
+     * $contains(1, [1, 2, 3]); // true
+     * $contains('a', ['b', 'c', 'd']); // false
+     * ```
+     *
+     * @type a -> [a] -> Bool
+     *
+     * @param  mixed $item Item to test for
+     * @param  array $list Array to test for the existence of $item in
+     * @return bool        Whether or not $item is in $list
+     */
+    protected static function contains($item, $list)
+    {
+        return in_array($item, $list);
+    }
 }

@@ -266,8 +266,32 @@
         
           
           <li class="anchor">
+            <a title="logicalAnd" href="#logicaland">
+              logicalAnd
+            </a>
+          </li>
+          
+        
+          
+          <li class="anchor">
+            <a title="logicalNot" href="#logicalnot">
+              logicalNot
+            </a>
+          </li>
+          
+        
+          
+          <li class="anchor">
             <a title="logicalOr" href="#logicalor">
               logicalOr
+            </a>
+          </li>
+          
+        
+          
+          <li class="anchor">
+            <a title="orCombinator" href="#orcombinator">
+              orCombinator
             </a>
           </li>
           
@@ -380,9 +404,58 @@
               <h1>Logic</h1>
             
           
-          <h2 id="logicalor">logicalOr</h2>
+          <h2 id="logicaland">logicalAnd</h2>
 <p><strong>No Summary Given</strong> :: No Type Signature Provided</p>
 <p>No Description Given</p>
+<hr />
+<h2 id="logicalnot">logicalNot</h2>
+<p><strong>No Summary Given</strong> :: No Type Signature Provided</p>
+<p>No Description Given</p>
+<hr />
+<h2 id="logicalor">logicalOr</h2>
+<p><strong>No Summary Given</strong> :: No Type Signature Provided</p>
+<p>No Description Given</p>
+<hr />
+<h2 id="orcombinator">orCombinator</h2>
+<p><strong>Logical Or Combinator</strong> :: (a -&gt; Bool) -&gt; (a -&gt; Bool) -&gt; (a -&gt; Bool)</p>
+<p>Given two functions f and g, combine them in such a way to produce a new
+function h that returns true given f(x) OR g(x) returns true.</p>
+<pre><code>$funcF = function($x) { return $x &gt;= 5; };
+$funcG = function($x) { return $x == 0; };
+
+$combinator = $orCombinator($funcF, $funcG);
+
+$combinator(9); // True
+$combinator(0); // True
+$combinator(2); // False
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$f</td>
+<td>callable</td>
+<td>callable $f First function to combine</td>
+</tr>
+<tr>
+<td>$g</td>
+<td>callable</td>
+<td>callable $g Second function to combine</td>
+</tr>
+<tr>
+<td>return</td>
+<td>\Closure</td>
+<td>\Closure    Result of f(x) or g(x)</td>
+</tr>
+</tbody>
+</table>
 <hr />
           <aside class="copyright" role="note">
             

@@ -409,12 +409,66 @@
 <p>No Description Given</p>
 <hr />
 <h2 id="id">id</h2>
-<p><strong>No Summary Given</strong> :: No Type Signature Provided</p>
-<p>No Description Given</p>
+<p><strong>Identity Function</strong> :: a -&gt; a</p>
+<p>Given some value a, return a unchanged</p>
+<pre><code>$id(4); // 4
+$id('foo'); // 'foo'
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$a</td>
+<td>mixed</td>
+<td>mixed $a Value to return</td>
+</tr>
+<tr>
+<td>return</td>
+<td>mixed</td>
+<td>mixed    The given value, unchanged</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="k">k</h2>
-<p><strong>No Summary Given</strong> :: No Type Signature Provided</p>
-<p>No Description Given</p>
+<p><strong>K Combinator</strong> :: a -&gt; (b -&gt; a)</p>
+<p>Given some value k, return a lambda expression which always evaluates to k, regardless
+of any arguments it is given.</p>
+<pre><code>$alwaysFour = $k(4);
+
+$alwaysFour('foo'); // 4
+$alwaysFour(1, 2, 3); // 4
+$alwaysFour(); // 4
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$k</td>
+<td>mixed</td>
+<td>mixed    $k Value to express in the combinator</td>
+</tr>
+<tr>
+<td>return</td>
+<td>\Closure</td>
+<td>\Closure    Expression which always returns $k</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="pipe">pipe</h2>
 <p><strong>No Summary Given</strong> :: No Type Signature Provided</p>

@@ -449,7 +449,7 @@ $concat('World', $concat('ello', 'H')); // 'HelloWorld'
 <hr />
 <h2 id="join">join</h2>
 <p><strong>String Joining</strong> :: String -&gt; [String] -&gt; String</p>
-<p>Joins an array of strings together with a given delimeter. Works similarly
+<p>Joins an array of strings together with a given delimiter. Works similarly
 to PHP <code>implode</code>. The inverse of <code>split</code>.</p>
 <pre><code>$join(' ', ['Hello', 'World']); // 'Hello World'
 $join('', ['a', 's', 'd', 'f']); // 'asdf'
@@ -467,25 +467,25 @@ $join('', ['a', 's', 'd', 'f']); // 'asdf'
 <tr>
 <td>$on</td>
 <td>String</td>
-<td>String $on     Delimeter to join on</td>
+<td>String $on     Delimiter to join on</td>
 </tr>
 <tr>
 <td>$string</td>
-<td>Array</td>
-<td>Array  $string List of strings to join together</td>
+<td>array</td>
+<td>array  $string List of strings to join together</td>
 </tr>
 <tr>
 <td>return</td>
 <td>String</td>
-<td>String         Joined string based on delimeter</td>
+<td>String         Joined string based on delimiter</td>
 </tr>
 </tbody>
 </table>
 <hr />
 <h2 id="split">split</h2>
 <p><strong>String Splitting</strong> :: String -&gt; String -&gt; [String]</p>
-<p>Split a string into parts based on a delimeter. Operates similar to php <code>explode</code>,
-but is more consistent. Can split on empty delimters, and trims out empty strings
+<p>Split a string into parts based on a delimiter. Operates similar to php <code>explode</code>,
+but is more consistent. Can split on empty delimiters, and trims out empty strings
 after exploding.</p>
 <pre><code>$split('-', 'Hello-World'); // ['Hello', 'World']
 $split('', 'asdf'); // ['a', 's', 'd', 'f']
@@ -504,7 +504,7 @@ $split('-', 'foo-bar-'); ['foo', 'bar']
 <tr>
 <td>$on</td>
 <td>String</td>
-<td>String $on     Split delimeter</td>
+<td>String $on     Split delimiter</td>
 </tr>
 <tr>
 <td>$string</td>
@@ -513,8 +513,8 @@ $split('-', 'foo-bar-'); ['foo', 'bar']
 </tr>
 <tr>
 <td>return</td>
-<td>Array</td>
-<td>Array          List of chunks from splitting the string</td>
+<td>array</td>
+<td>array          List of chunks from splitting the string</td>
 </tr>
 </tbody>
 </table>

@@ -256,8 +256,48 @@
         
           
           <li class="anchor">
+            <a title="contains" href="#contains">
+              contains
+            </a>
+          </li>
+          
+        
+          
+          <li class="anchor">
+            <a title="drop" href="#drop">
+              drop
+            </a>
+          </li>
+          
+        
+          
+          <li class="anchor">
+            <a title="dropWhile" href="#dropwhile">
+              dropWhile
+            </a>
+          </li>
+          
+        
+          
+          <li class="anchor">
             <a title="filter" href="#filter">
               filter
+            </a>
+          </li>
+          
+        
+          
+          <li class="anchor">
+            <a title="flatten" href="#flatten">
+              flatten
+            </a>
+          </li>
+          
+        
+          
+          <li class="anchor">
+            <a title="foldl" href="#foldl">
+              foldl
             </a>
           </li>
           
@@ -320,6 +360,14 @@
         
           
           <li class="anchor">
+            <a title="reverse" href="#reverse">
+              reverse
+            </a>
+          </li>
+          
+        
+          
+          <li class="anchor">
             <a title="set" href="#set">
               set
             </a>
@@ -330,6 +378,22 @@
           <li class="anchor">
             <a title="tail" href="#tail">
               tail
+            </a>
+          </li>
+          
+        
+          
+          <li class="anchor">
+            <a title="take" href="#take">
+              take
+            </a>
+          </li>
+          
+        
+          
+          <li class="anchor">
+            <a title="takeWhile" href="#takewhile">
+              takeWhile
             </a>
           </li>
           
@@ -496,18 +560,125 @@ $concat(['a' =&gt; 1, 'b' =&gt; 2], ['a' =&gt; 'foo', 'c' =&gt; 3]); // ['a' =&g
 <tbody>
 <tr>
 <td>$a</td>
-<td>Array</td>
-<td>Array $a List to be appended to</td>
+<td>array</td>
+<td>array $a List to be appended to</td>
 </tr>
 <tr>
 <td>$b</td>
-<td>Array</td>
-<td>Array $b List to append</td>
+<td>array</td>
+<td>array $b List to append</td>
 </tr>
 <tr>
 <td>return</td>
-<td>Array</td>
-<td>Array    Concatenated list of $a and $b</td>
+<td>array</td>
+<td>array    Concatenated list of $a and $b</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="contains">contains</h2>
+<p><strong>Array Contains Element</strong> :: a -&gt; [a] -&gt; Bool</p>
+<p>Returns true if a given array contains the item to test, or false if
+it does not.</p>
+<pre><code>$contains(1, [1, 2, 3]); // true
+$contains('a', ['b', 'c', 'd']); // false
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$item</td>
+<td>mixed</td>
+<td>mixed $item Item to test for</td>
+</tr>
+<tr>
+<td>$list</td>
+<td>array</td>
+<td>array $list Array to test for the existence of $item in</td>
+</tr>
+<tr>
+<td>return</td>
+<td>bool</td>
+<td>bool        Whether or not $item is in $list</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="drop">drop</h2>
+<p><strong>Drop Elements</strong> :: Int -&gt; [a] -&gt; [a]</p>
+<p>Given some number n, drop n elements from an input array and return the rest of
+the elements. If n is greater than the length of the array, returns an empty array.</p>
+<pre><code>$drop(2, [1, 2, 3, 4]); // [3, 4]
+$drop(4, [1, 2]); // []
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$n</td>
+<td>Int</td>
+<td>Int   $n    The number of elements to drop</td>
+</tr>
+<tr>
+<td>$list</td>
+<td>array</td>
+<td>array $list List to drop elements from</td>
+</tr>
+<tr>
+<td>return</td>
+<td>array</td>
+<td>array       Original list minus n elements from the front</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="dropwhile">dropWhile</h2>
+<p><strong>Drop Elements with Predicate</strong> :: (a -&gt; Bool) -&gt; [a] -&gt; [a]</p>
+<p>Given some function that returns true or false, drop elements from an array starting
+at the front, testing each element along the way, until that function returns false.
+Return the array without all of those elements.</p>
+<pre><code>$greaterThanOne = function($n) { return $n &gt; 1; };
+
+$dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$predicate</td>
+<td>callable</td>
+<td>callable $predicate Function to use for testing</td>
+</tr>
+<tr>
+<td>$list</td>
+<td>array</td>
+<td>array    $list      List to drop from</td>
+</tr>
+<tr>
+<td>return</td>
+<td>array</td>
+<td>array               List with elements removed from the front</td>
 </tr>
 </tbody>
 </table>
@@ -542,13 +713,87 @@ $filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module
 </tr>
 <tr>
 <td>$arr</td>
-<td>Array</td>
-<td>Array    $arr List to filter</td>
+<td>array</td>
+<td>array    $arr List to filter</td>
 </tr>
 <tr>
 <td>return</td>
-<td>Array</td>
-<td>Array         Result of filtering the list</td>
+<td>array</td>
+<td>array         Result of filtering the list</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="flatten">flatten</h2>
+<p><strong>Array Flatten</strong> :: [a] -&gt; [b]</p>
+<p>Flattens a nested array structure into a single-dimensional array. Can handle
+arrays of arbitrary dimension.</p>
+<pre><code>$flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$list</td>
+<td>array</td>
+<td>array $list Nested array to flatten</td>
+</tr>
+<tr>
+<td>return</td>
+<td>array</td>
+<td>array       Result of flattening $list into a 1-dimensional list</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="foldl">foldl</h2>
+<p><strong>List Fold - From Left</strong> :: (a -&gt; b -&gt; b) -&gt; b -&gt; [a] -&gt; b</p>
+<p>Fold a list by iterating over the list from left to right. Pass each element, one by one, into
+the fold function $f, and carry its value over to the next iteration. Also referred to as array
+reduce.</p>
+<pre><code>$add = function($a, $b) { return $a + $b; };
+$and = Logic::using('logicalAnd'); // Boolean And (Bool -&gt; Bool -&gt; Bool)
+
+$foldl($add, 0, [1, 2, 3]); // 6
+$foldl($and, True, [True, True]); // True
+$foldl($and, True, [True, True, False]); // False
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$f</td>
+<td>callable</td>
+<td>callable $f    Function to use in each iteration if the fold</td>
+</tr>
+<tr>
+<td>$seed</td>
+<td>mixed</td>
+<td>mixed    $seed The initial value to use in the  fold function along with the first element</td>
+</tr>
+<tr>
+<td>$list</td>
+<td>array</td>
+<td>array    $list The list to fold over</td>
+</tr>
+<tr>
+<td>return</td>
+<td>mixed</td>
+<td>mixed          The result of applying the fold function to each element one by one</td>
 </tr>
 </tbody>
 </table>
@@ -557,7 +802,7 @@ $filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module
 <p><strong>List Head</strong> :: [a] -&gt; a</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Throws Vector\Core\Exception\EmptyListException if argument is empty list</p>
+<p>Throws \Vector\Core\Exception\EmptyListException if argument is empty list</p>
 </div>
 <p>Returns the first element of a list, the element at index 0. Also functions
 properly for key/value arrays, e.g. arrays whose first element may not necessarily
@@ -578,8 +823,8 @@ $head([]); // Exception thrown
 <tbody>
 <tr>
 <td>$list</td>
-<td>Array</td>
-<td>Array $list Key/Value array or List</td>
+<td>array</td>
+<td>array $list Key/Value array or List</td>
 </tr>
 <tr>
 <td>return</td>
@@ -593,7 +838,7 @@ $head([]); // Exception thrown
 <p><strong>List Index</strong> :: Int -&gt; [a] -&gt; a</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Throws Vector\Core\Exception\IndexOutOfBoundsException if the requested index does not exist</p>
+<p>Throws \Vector\Core\Exception\IndexOutOfBoundsException if the requested index does not exist</p>
 </div>
 <p>Returns the element of a list at the given index. Throws an exception
 if the given index does not exist in the list.</p>
@@ -618,8 +863,8 @@ $index('baz', [1, 2, 3]); // Exception thrown
 </tr>
 <tr>
 <td>$list</td>
-<td>Array</td>
-<td>Array $list List to get index from</td>
+<td>array</td>
+<td>array $list List to get index from</td>
 </tr>
 <tr>
 <td>return</td>
@@ -649,20 +894,20 @@ $init(['a' =&gt; 1, 'b' =&gt; 2]); // ['a' =&gt; 1];
 <tbody>
 <tr>
 <td>$list</td>
-<td>Array</td>
-<td>Array $list Key/Value array or List</td>
+<td>array</td>
+<td>array $list Key/Value array or List</td>
 </tr>
 <tr>
 <td>return</td>
-<td>Array</td>
-<td>Array       $list without the last element</td>
+<td>array</td>
+<td>array       $list without the last element</td>
 </tr>
 </tbody>
 </table>
 <hr />
 <h2 id="keys">keys</h2>
 <p><strong>Array Keys</strong> :: [a] -&gt; [b]</p>
-<p>Returns the keys of an associative key/value array. Returns numerical indeces
+<p>Returns the keys of an associative key/value array. Returns numerical indexes
 for non key/value arrays.</p>
 <pre><code>$keys(['a' =&gt; 1, 'b' =&gt; 2]); // ['a', 'b']
 $keys([1, 2, 3]); // [0, 1, 2]
@@ -679,13 +924,13 @@ $keys([1, 2, 3]); // [0, 1, 2]
 <tbody>
 <tr>
 <td>$arr</td>
-<td>Array</td>
-<td>Array $arr List to get keys from</td>
+<td>array</td>
+<td>array $arr List to get keys from</td>
 </tr>
 <tr>
 <td>return</td>
-<td>Array</td>
-<td>Array      The keys of $arr</td>
+<td>array</td>
+<td>array      The keys of $arr</td>
 </tr>
 </tbody>
 </table>
@@ -694,7 +939,7 @@ $keys([1, 2, 3]); // [0, 1, 2]
 <p><strong>Last List Value</strong> :: [a] -&gt; a</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Throws Vector\Core\Exception\EmptyListException if argument is empty list</p>
+<p>Throws \Vector\Core\Exception\EmptyListException if argument is empty list</p>
 </div>
 <p>Returns the last element of an array, e.g. the complement of <code>init</code>. Works on key/value
 arrays as well as 'regular' arrays. If an empty array is given, throws an exception.</p>
@@ -714,8 +959,8 @@ $last([]); // Exception thrown
 <tbody>
 <tr>
 <td>$list</td>
-<td>Array</td>
-<td>Array $list Key/Value array or List</td>
+<td>array</td>
+<td>array $list Key/Value array or List</td>
 </tr>
 <tr>
 <td>return</td>
@@ -743,8 +988,8 @@ $length(['a' =&gt; 1, 'b' =&gt; 2]); // 2
 <tbody>
 <tr>
 <td>$list</td>
-<td>Array</td>
-<td>Array $list Key/Value array or List</td>
+<td>array</td>
+<td>array $list Key/Value array or List</td>
 </tr>
 <tr>
 <td>return</td>
@@ -791,6 +1036,34 @@ $index('baz', [1, 2, 3]); // Nothing - (No exception thrown)
 </tbody>
 </table>
 <hr />
+<h2 id="reverse">reverse</h2>
+<p><strong>Array Reverse</strong> :: [a] -&gt; [a]</p>
+<p>Flip the order of a given array. Does not modify the original array.</p>
+<pre><code>$reverse([1, 2, 3]); // [3, 2, 1]
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$list</td>
+<td>array</td>
+<td>array $list Array to flip</td>
+</tr>
+<tr>
+<td>return</td>
+<td>array</td>
+<td>array       Array in the reverse order</td>
+</tr>
+</tbody>
+</table>
+<hr />
 <h2 id="set">set</h2>
 <p><strong>Set Array Value</strong> :: a -&gt; [b] -&gt; b -&gt; [b]</p>
 <p>Sets the value of an array at the given index; works for non-numerical indexes.
@@ -815,8 +1088,8 @@ $set('c', 3, ['a' =&gt; 1, 'b' =&gt; 2]); // ['a' =&gt; 1, 'b' =&gt; 2, 'c' =&gt
 </tr>
 <tr>
 <td>$arr</td>
-<td>Array</td>
-<td>Array $arr Array to modify</td>
+<td>array</td>
+<td>array $arr Array to modify</td>
 </tr>
 <tr>
 <td>$val</td>
@@ -825,8 +1098,8 @@ $set('c', 3, ['a' =&gt; 1, 'b' =&gt; 2]); // ['a' =&gt; 1, 'b' =&gt; 2, 'c' =&gt
 </tr>
 <tr>
 <td>return</td>
-<td>Array</td>
-<td>Array      Result of setting $arr[$key] = $val</td>
+<td>array</td>
+<td>array      Result of setting $arr[$key] = $val</td>
 </tr>
 </tbody>
 </table>
@@ -851,13 +1124,83 @@ $tail(['a' =&gt; 1, 'b' =&gt; 2]); // ['b' =&gt; 2];
 <tbody>
 <tr>
 <td>$list</td>
-<td>Array</td>
-<td>Array $list Key/Value array or List</td>
+<td>array</td>
+<td>array $list Key/Value array or List</td>
 </tr>
 <tr>
 <td>return</td>
-<td>Array</td>
-<td>Array       $list without the first element</td>
+<td>array</td>
+<td>array       $list without the first element</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="take">take</h2>
+<p><strong>Take Elements</strong> :: Int -&gt; [a] -&gt; [a]</p>
+<p>Given some number n, return the first n elements of a given array. Returns the whole
+array if n is greater than the array length.</p>
+<pre><code>$take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$n</td>
+<td>int</td>
+<td>int   $n    Number of elements to take</td>
+</tr>
+<tr>
+<td>$list</td>
+<td>array</td>
+<td>array $list Array to take elements from</td>
+</tr>
+<tr>
+<td>return</td>
+<td>array</td>
+<td>array       First n elements of the array</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="takewhile">takeWhile</h2>
+<p><strong>Take Elements with Predicate</strong> :: (a -&gt; Bool) -&gt; [a] -&gt; [a]</p>
+<p>Given some function that returns true or false, return the first elements of the array
+that all pass the test, until the test fails.</p>
+<pre><code>$greaterThanOne = function($n) { return $n &gt; 1; };
+
+$takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$predicate</td>
+<td>callable</td>
+<td>callable $predicate Function to use for testing each element</td>
+</tr>
+<tr>
+<td>$list</td>
+<td>array</td>
+<td>array    $list      List to take elements from</td>
+</tr>
+<tr>
+<td>return</td>
+<td>array</td>
+<td>array               First elements of list that all pass the $predicate</td>
 </tr>
 </tbody>
 </table>
@@ -880,13 +1223,13 @@ $values([1, 2, 3]); // [1, 2, 3]
 <tbody>
 <tr>
 <td>$arr</td>
-<td>Array</td>
-<td>Array $arr Key/Value array</td>
+<td>array</td>
+<td>array $arr Key/Value array</td>
 </tr>
 <tr>
 <td>return</td>
-<td>Array</td>
-<td>Array      Indexed array with values of $arr</td>
+<td>array</td>
+<td>array      Indexed array with values of $arr</td>
 </tr>
 </tbody>
 </table>
@@ -917,18 +1260,18 @@ $zipWith($combinator, [0], [1, 2, 3]); // [1]
 </tr>
 <tr>
 <td>$a</td>
-<td>Array</td>
-<td>Array    $a The first array to use in the combinator</td>
+<td>array</td>
+<td>array    $a The first array to use in the combinator</td>
 </tr>
 <tr>
 <td>$b</td>
-<td>Array</td>
-<td>Array    $b The second array to use in the combinator</td>
+<td>array</td>
+<td>array    $b The second array to use in the combinator</td>
 </tr>
 <tr>
 <td>return</td>
-<td>Array</td>
-<td>Array       The result of calling f with each element of a and b in series</td>
+<td>array</td>
+<td>array       The result of calling f with each element of a and b in series</td>
 </tr>
 </tbody>
 </table>

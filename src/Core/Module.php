@@ -19,6 +19,34 @@ abstract class Module
     protected static $doNotCurry = ['curry'];
 
     /**
+     * Alternative Module Loading
+     *
+     * By utilizing the __callStatic magic method to intercept static method calls, we can
+     * proxy those calls off to the ::using() method of the module to make the functions in the
+     * module act like standard static PHP methods. The result is a more natural way of calling
+     * Vector functions that is more akin to native PHP.
+     *
+     * Invoking the function with no arguments results in a closure that is identical to
+     * requesting the function through a ::using() call.
+     *
+     * ```
+     * $increment = Math::add(1);
+     * $increment(5); // 6
+     *
+     * $head = ArrayList::head();
+     * $head([1, 2, 3]); // 1
+     * ```
+     *
+     * @param  string $name Name of the function to call
+     * @param  mixed  $args Arguments to pass to the function
+     * @return mixed        Result of proxying off to the requested function
+     */
+    public static function __callStatic($name, $args)
+    {
+        return call_user_func_array(self::using($name), $args);
+    }
+
+    /**
      * Function Curry
      *
      * Given some callable f, curry it so that its arguments can be applied in chunks.

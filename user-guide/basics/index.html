@@ -192,8 +192,8 @@
               </li>
             
               <li class="anchor">
-                <a title="Using Vector Functions" href="#using-vector-functions">
-                  Using Vector Functions
+                <a title="using Vector Functions" href="#using-vector-functions">
+                  using Vector Functions
                 </a>
               </li>
             
@@ -435,23 +435,23 @@ $add = function($a, $b) {
 
 <p>Vector makes exclusive use of function expressions, both for consistency when combining functions together
 and for their scoped nature.</p>
-<h3 id="using-vector-functions">Using Vector Functions</h3>
+<h3 id="using-vector-functions">using Vector Functions</h3>
 <p>Functions in Vector are organized into modules, which each have some related functionality or 'theme.' We tell our code
-that we want to use a Vector functions using the <code>Using</code> static method on the module we want to pull functions in from.</p>
-<p>For instance, if we want to pull in the Vector wrapper function for <code>array_map</code> called <code>$map</code> from the List module, we would
+that we want to use a Vector functions using the <code>using</code> static method on the module we want to pull functions in from.</p>
+<p>For instance, if we want to pull in the Vector wrapper function for <code>array_map</code> called <code>$map</code> from the <code>ArrayList</code> module, we would
 write:</p>
-<pre><code class="php">$map = Vector\Lib\List::Using('map');
+<pre><code class="php">$map = Vector\Lib\ArrayList::using('map');
 </code></pre>
 
 <p>This function expression places <code>$map</code> into the local scope for our use. We can load multiple functions using the built-in PHP syntax <code>list</code>:</p>
-<pre><code class="php">list($map, $filter, $fold) = Vector\Lib\List::Using('map', 'filter', 'list');
+<pre><code class="php">list($map, $filter, $foldl) = Vector\Lib\ArrayList::using('map', 'filter', 'foldl');
 </code></pre>
 
 <p>And if you need an entire module and aren't afraid of using <code>extract</code>:</p>
-<pre><code class="php">extract(Vector\Lib\List::UsingAll());
+<pre><code class="php">extract(Vector\Lib\ArrayList::usingAll());
 </code></pre>
 
-<p>We'll go into more detail about how this is implemented, and more importantly, how you can implement your own modules in the 'Function Capsule' section.</p>
+<p>We'll go into more detail about how this is implemented, and more importantly, how you can implement your own modules in the 'Module' section.</p>
 <h2 id="currying">Currying</h2>
 <p>Currying is the act of modifying a function in such a way that it can accept its arguments in chunks. A curried function
 doesn't have to be supplied all of its arguments in order to have some effect.</p>
@@ -499,7 +499,7 @@ back to front - provided every argument is a function.</p>
 <p>Let's say we want to create a function that converts from celcius to fahrenheit, and that we've already implmented the basic mathematical functions like
 add, subtract, multiply, and divide. We can use <code>$compose</code> to chain all these calculations together to create a <code>$toFahrenheit</code> function:</p>
 <pre><code class="php">// Given that we have $add and $multiply, pull in compose:
-$compose = Vector\Lib\Lambda::Using('compose');
+$compose = Vector\Lib\Lambda::using('compose');
 
 // Then create our function
 $toFahrenheit = $compose(
@@ -518,7 +518,7 @@ can be mixed and matched to create more complex functions from very simple compo
 <h2 id="lifting">Lifting</h2>
 <p>Let's use our <code>$toFahrenheit</code> function from before, but imagine instead that we want to apply it to a list of temperatures. Instead of looping over the
 list in a procedural way, let's use <code>$map</code> from the List module.</p>
-<pre><code class="php">$map = Vector\Lib\List::Using('map');
+<pre><code class="php">$map = Vector\Lib\ArrayList::using('map');
 
 // Our list of temperatures
 $data = [50.0, 176.0, 212.0];
@@ -533,8 +533,8 @@ on a list as opposed to a single element. We've lifted it from one domain to ano
 it all together.</p>
 <p>Say we have a set of data from a temperature probe, but it's uncalibrated. Our task is to calculate the mean temperature from the probe's 10 samples after correcting the values by shifting
 them one degree higher.</p>
-<pre><code class="php">// Using the $mean function from the Math module and all the functions we've made so far
-$mean = Vector\Lib\Math::Using('mean');
+<pre><code class="php">// using the $mean function from the Math module and all the functions we've made so far
+$mean = Vector\Lib\Math::using('mean');
 
 $correctedMeanTemp = $compose(
     $mean,

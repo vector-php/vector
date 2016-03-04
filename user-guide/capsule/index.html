@@ -195,14 +195,14 @@
           
             
               <li class="anchor">
-                <a title="Implementing Your Own Capsule" href="#implementing-your-own-capsule">
-                  Implementing Your Own Capsule
+                <a title="What it Does" href="#what-it-does">
+                  What it Does
                 </a>
               </li>
             
               <li class="anchor">
-                <a title="How it Works" href="#how-it-works">
-                  How it Works
+                <a title="Implementing Your Own Module" href="#implementing-your-own-module">
+                  Implementing Your Own Module
                 </a>
               </li>
             
@@ -380,9 +380,61 @@
       <article class="article">
         <div class="wrapper">
           
-          <h1 id="the-function-capsule">The Function Capsule</h1>
-<h2 id="implementing-your-own-capsule">Implementing Your Own Capsule</h2>
-<h2 id="how-it-works">How it Works</h2>
+          <h1 id="the-vector-module">The Vector Module</h1>
+<p>The Vector Module exists in the <code>Vector\Core</code> namespace, and every Vector module
+exists as a subclass of the Module. <code>Module</code> provides loads of benefits, and
+strives to be as simple as possible to implement.</p>
+<h2 id="what-it-does">What it Does</h2>
+<p>The primary benefit of <code>Module</code> is that it will automatically curry the functions placed
+inside of it. This allows you to write your functions without worrying about manually
+adding the breakpoints for currying, or worrying about closing over curried arguments -- You can
+simply write your function as through it receives all of its arguments at once, and let <code>Module</code>
+handle the rest.</p>
+<p>A side benefit of <code>Module</code> is that it allows you to autoload your functions with Composer.
+While later versions of PHP have namespaced functions, there is currently no way to autoload
+them in Composer aside from using the <code>autoload.files</code> field in the <code>composer.json</code> file, which
+loads the file on every request regardless of whether or not it's needed.</p>
+<h2 id="implementing-your-own-module">Implementing Your Own Module</h2>
+<h3 id="creating-the-module">Creating the Module</h3>
+<p>To implement your own <code>Module</code>, simply create a new class and extend <code>Vector\Core\Module</code>:</p>
+<pre><code class="php">class MyModule extends Vector\Core\Module
+{
+}
+</code></pre>
+
+<h3 id="adding-functions">Adding Functions</h3>
+<p>To add functions to your new module, declare them as <code>protected static</code>:</p>
+<pre><code>class MyModule extends Vector\Core\Module
+{
+    protected static myFunction($a, $b)
+    {
+        return $a . ' foo ' . $b;
+    }
+}
+</code></pre>
+
+<p>Note that the functions in your module <em>MUST</em> be declared as <code>protected</code> if you want
+to use the alternative function invocation pattern - When you call
+to the methods on the module using <code>MyModule::myFunction()</code>, the <code>__callStatic</code> magic method
+intercepts the call in order to provide currying by proxying your request. If your function is not <code>protected</code>, the magic
+method is not called as the request is deferred to the public method definition, and <code>Module</code>
+<em>CANNOT</em> curry your function for you.</p>
+<h3 id="disabling-currying">Disabling Currying</h3>
+<p>If you for some reason don't want your function to be curried, you can override the
+<code>$doNotCurry</code> field on your module:</p>
+<pre><code>class MyModule extends Vector\Core\Module
+{
+    protected static $doNotCurry = ['myFunction'];
+
+    protected static myFunction($a, $b)
+    {
+        return $a . ' foo ' . $b;
+    }
+}
+</code></pre>
+
+<p>Generally speaking you should never need to do this. This exists as a side effect of the internal
+curry implementation and is exposed only for any edge cases where you might need it.</p>
           <aside class="copyright" role="note">
             
               Copyright (c) 2016 Joseph Walker &ndash;

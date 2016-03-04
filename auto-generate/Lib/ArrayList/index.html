@@ -352,8 +352,24 @@
         
           
           <li class="anchor">
+            <a title="map" href="#map">
+              map
+            </a>
+          </li>
+          
+        
+          
+          <li class="anchor">
             <a title="maybeIndex" href="#maybeindex">
               maybeIndex
+            </a>
+          </li>
+          
+        
+          
+          <li class="anchor">
+            <a title="replicate" href="#replicate">
+              replicate
             </a>
           </li>
           
@@ -999,6 +1015,40 @@ $length(['a' =&gt; 1, 'b' =&gt; 2]); // 2
 </tbody>
 </table>
 <hr />
+<h2 id="map">map</h2>
+<p><strong>Array Map</strong> :: (a -&gt; b) -&gt; [a] -&gt; [b]</p>
+<p>Given some function and a list of arbitrary length, return a new array that is the
+result of calling the given function on each element of the original list.</p>
+<pre><code>$map($add(1), [1, 2, 3]); // [2, 3, 4]
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$f</td>
+<td>callable</td>
+<td>callable $f    Function to call for each element</td>
+</tr>
+<tr>
+<td>$list</td>
+<td>array</td>
+<td>array    $list List to call function on</td>
+</tr>
+<tr>
+<td>return</td>
+<td>array</td>
+<td>array          New list of elements after calling $f for the original list elements</td>
+</tr>
+</tbody>
+</table>
+<hr />
 <h2 id="maybeindex">maybeIndex</h2>
 <p><strong>Maybe List Index</strong> :: Int -&gt; a -&gt; Maybe a</p>
 <p>Returns the element of a list at the given index, or nothing. Is safe to call
@@ -1032,6 +1082,40 @@ $index('baz', [1, 2, 3]); // Nothing - (No exception thrown)
 <td>return</td>
 <td>\Maybe</td>
 <td>Maybe       Item from $list and index $i</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="replicate">replicate</h2>
+<p><strong>Replicate Item</strong> :: Int -&gt; a -&gt; [a]</p>
+<p>Given some integer n and an item to repeat, repeat that item and place
+the results into an array of length n.</p>
+<pre><code>$replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$n</td>
+<td>int</td>
+<td>int   $n    Times to repeat some item</td>
+</tr>
+<tr>
+<td>$item</td>
+<td>mixed</td>
+<td>mixed $item Item to repeat</td>
+</tr>
+<tr>
+<td>return</td>
+<td>array</td>
+<td>array       Array with $n items</td>
 </tr>
 </tbody>
 </table>

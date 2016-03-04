@@ -23,6 +23,29 @@ return | array | array    Concatenated list of $a and $b
 
 ---
 
+## contains
+
+__Array Contains Element__ :: a -> [a] -> Bool
+
+
+
+Returns true if a given array contains the item to test, or false if
+it does not.
+
+```
+$contains(1, [1, 2, 3]); // true
+$contains('a', ['b', 'c', 'd']); // false
+```
+
+Parameter | Type | Description
+-|-|-
+$item | mixed | mixed $item Item to test for
+$list | array | array $list Array to test for the existence of $item in
+return | bool | bool        Whether or not $item is in $list
+
+
+---
+
 ## drop
 
 __Drop Elements__ :: Int -> [a] -> [a]
@@ -42,6 +65,31 @@ Parameter | Type | Description
 $n | Int | Int   $n    The number of elements to drop
 $list | array | array $list List to drop elements from
 return | array | array       Original list minus n elements from the front
+
+
+---
+
+## dropWhile
+
+__Drop Elements with Predicate__ :: (a -> Bool) -> [a] -> [a]
+
+
+
+Given some function that returns true or false, drop elements from an array starting
+at the front, testing each element along the way, until that function returns false.
+Return the array without all of those elements.
+
+```
+$greaterThanOne = function($n) { return $n > 1; };
+
+$dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]
+```
+
+Parameter | Type | Description
+-|-|-
+$predicate | callable | callable $predicate Function to use for testing
+$list | array | array    $list      List to drop from
+return | array | array               List with elements removed from the front
 
 
 ---
@@ -70,6 +118,27 @@ Parameter | Type | Description
 $f | Callable | Callable $f   Test function - should take an `a` and return a Bool
 $arr | array | array    $arr List to filter
 return | array | array         Result of filtering the list
+
+
+---
+
+## flatten
+
+__Array Flatten__ :: [a] -> [b]
+
+
+
+Flattens a nested array structure into a single-dimensional array. Can handle
+arrays of arbitrary dimension.
+
+```
+$flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]
+```
+
+Parameter | Type | Description
+-|-|-
+$list | array | array $list Nested array to flatten
+return | array | array       Result of flattening $list into a 1-dimensional list
 
 
 ---
@@ -274,6 +343,26 @@ return | \Maybe | Maybe       Item from $list and index $i
 
 ---
 
+## reverse
+
+__Array Reverse__ :: [a] -> [a]
+
+
+
+Flip the order of a given array. Does not modify the original array.
+
+```
+$reverse([1, 2, 3]); // [3, 2, 1]
+```
+
+Parameter | Type | Description
+-|-|-
+$list | array | array $list Array to flip
+return | array | array       Array in the reverse order
+
+
+---
+
 ## set
 
 __Set Array Value__ :: a -> [b] -> b -> [b]
@@ -317,6 +406,52 @@ Parameter | Type | Description
 -|-|-
 $list | array | array $list Key/Value array or List
 return | array | array       $list without the first element
+
+
+---
+
+## take
+
+__Take Elements__ :: Int -> [a] -> [a]
+
+
+
+Given some number n, return the first n elements of a given array. Returns the whole
+array if n is greater than the array length.
+
+```
+$take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]
+```
+
+Parameter | Type | Description
+-|-|-
+$n | int | int   $n    Number of elements to take
+$list | array | array $list Array to take elements from
+return | array | array       First n elements of the array
+
+
+---
+
+## takeWhile
+
+__Take Elements with Predicate__ :: (a -> Bool) -> [a] -> [a]
+
+
+
+Given some function that returns true or false, return the first elements of the array
+that all pass the test, until the test fails.
+
+```
+$greaterThanOne = function($n) { return $n > 1; };
+
+$takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]
+```
+
+Parameter | Type | Description
+-|-|-
+$predicate | callable | callable $predicate Function to use for testing each element
+$list | array | array    $list      List to take elements from
+return | array | array               First elements of list that all pass the $predicate
 
 
 ---

@@ -3,17 +3,32 @@
 namespace Vector\Control;
 
 use Vector\Core\Module;
-use Vector\Typeclass\ApplicativeInterface as TypeclassApplicative;
 
 abstract class Applicative extends Module
 {
     protected static function pure($context, $a)
     {
+        if (is_array($context)) {
+            return [$a];
+        }
+        
         return call_user_func_array([$context, 'pure'], [$a]);
     }
 
-    protected static function apply(TypeclassApplicative $f, TypeclassApplicative $a)
+    protected static function apply($f, $a)
     {
+        if (is_array($f) && is_array($a)) {
+            $crossProduct = [];
+
+            foreach ($f as $fs) {
+                foreach ($a as $as) {
+                    $crossProduct[] = $fs($as);
+                }
+            }
+
+            return $crossProduct;
+        }
+
         return $f->apply($a);
     }
 

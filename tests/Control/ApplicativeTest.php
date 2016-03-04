@@ -6,7 +6,7 @@ use Vector\Control\Applicative;
 use Vector\Control\Functor;
 use Vector\Lib\Math;
 
-class ApplicativeTst extends \PHPUnit_Framework_TestCase
+class ApplicativeTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Apply should operator on arrays as well as applicative instances

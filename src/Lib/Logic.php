@@ -38,7 +38,7 @@ class Logic extends Module
 
     protected static function logicalOr($a, $b)
     {
-
+        return $a || $b;
     }
 
     protected static function logicalNot($a)
@@ -49,5 +49,15 @@ class Logic extends Module
     protected static function logicalAnd($a, $b)
     {
 
+    }
+
+    protected static function gt($a, $b)
+    {
+        return $b > $a;
+    }
+
+    protected static function eq($a, $b)
+    {
+        return $a == $b;
     }
 }

@@ -306,4 +306,15 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(true, $contains(1, [1, 2, 3]));
         $this->assertEquals(false, $contains(5, [1, 2, 3]));
     }
+
+    /**
+     * Replicate should repeat an item n times
+     */
+    public function testReplicate()
+    {
+        $replicate = ArrayList::using('replicate');
+
+        $this->assertEquals([1, 1, 1], $replicate(3, 1));
+        $this->assertEquals([], $replicate(0, 'foo'));
+    }
 }

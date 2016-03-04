@@ -3,12 +3,23 @@
 namespace Vector\Control;
 
 use Vector\Core\Module;
-use Vector\Typeclass\MonadInterface as TypeclassMonad;
+use Vector\Lib\ArrayList;
 
 abstract class Monad extends Module
 {
-    protected static function bind($f, TypeclassMonad $container)
+    protected static function bind($f, $container)
     {
+        if (is_array($container)) {
+            $result = [];
+            $concat = ArrayList::using('concat');
+
+            foreach ($container as $x) {
+                $result = $concat($result, $f($x));
+            }
+
+            return $result;
+        }
+
         return $container->bind($f);
     }
 

@@ -2,27 +2,27 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use Vector\Lib\ArrayList;
-use Vector\Control\Functor;
-use Vector\Lib\Math;
+use Vector\Control\Monad;
+use Vector\Control\Applicative;
 use Vector\Lib\Lambda;
+use Vector\Lib\Logic;
+use Vector\Lib\ArrayList;
 
-class Foo {
-    public static function bar() {
-        return 4;
-    }
-}
-
-$a = [1, 2, 3];
-
-$b = Functor::fmap(
-    Math::add(1),
-    $a
+// Returns true if any element in the list is greater than 2 or equal to 0
+// foldl (||) False . (<*>) [(> 2), (== 0)]
+$any = Lambda::compose(
+    ArrayList::foldl(
+        Logic::logicalOr(),
+        false
+    ),
+    Applicative::apply(
+        [Logic::gt(2), Logic::eq(0)]
+    )
 );
 
-$f = Lambda::compose(
-    Functor::fmap(Math::add(1)),
-    ArrayList::head()
-);
+var_dump($any([1, 2])); // False
+var_dump($any([1, 2, 3])); // True
 
-$c = $f([[1, 2, 3], [2, 3, 4]]);
+$res = Monad::bind(ArrayList::replicate(2), [1, 2, 3]);
+
+print_r($res);

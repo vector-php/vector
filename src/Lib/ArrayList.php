@@ -535,4 +535,31 @@ class ArrayList extends Module
     {
         return in_array($item, $list);
     }
+
+    /**
+     * Replicate Item
+     *
+     * Given some integer n and an item to repeat, repeat that item and place
+     * the results into an array of length n.
+     *
+     * ```
+     * $replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']
+     * ```
+     *
+     * @type Int -> a -> [a]
+     *
+     * @param  int   $n    Times to repeat some item
+     * @param  mixed $item Item to repeat
+     * @return array       Array with $n items
+     */
+    protected static function replicate($n, $item)
+    {
+        $result = [];
+
+        for ($i = 0; $i < $n; $i++) {
+            $result[] = $item;
+        }
+
+        return $result;
+    }
 }

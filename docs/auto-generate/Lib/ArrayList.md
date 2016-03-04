@@ -318,6 +318,28 @@ return | Int | Int         Length of $list
 
 ---
 
+## map
+
+__Array Map__ :: (a -> b) -> [a] -> [b]
+
+
+
+Given some function and a list of arbitrary length, return a new array that is the
+result of calling the given function on each element of the original list.
+
+```
+$map($add(1), [1, 2, 3]); // [2, 3, 4]
+```
+
+Parameter | Type | Description
+-|-|-
+$f | callable | callable $f    Function to call for each element
+$list | array | array    $list List to call function on
+return | array | array          New list of elements after calling $f for the original list elements
+
+
+---
+
 ## maybeIndex
 
 __Maybe List Index__ :: Int -> a -> Maybe a
@@ -339,6 +361,28 @@ Parameter | Type | Description
 $i | Int | Int   $i    Index to get
 $list | Mixed | Mixed $list List to get index from
 return | \Maybe | Maybe       Item from $list and index $i
+
+
+---
+
+## replicate
+
+__Replicate Item__ :: Int -> a -> [a]
+
+
+
+Given some integer n and an item to repeat, repeat that item and place
+the results into an array of length n.
+
+```
+$replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']
+```
+
+Parameter | Type | Description
+-|-|-
+$n | int | int   $n    Times to repeat some item
+$item | mixed | mixed $item Item to repeat
+return | array | array       Array with $n items
 
 
 ---

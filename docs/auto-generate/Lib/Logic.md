@@ -1,4 +1,28 @@
 
+## eq
+
+__No Summary Given__ :: No Type Signature Provided
+
+
+
+No Description Given
+
+
+
+---
+
+## gt
+
+__No Summary Given__ :: No Type Signature Provided
+
+
+
+No Description Given
+
+
+
+---
+
 ## logicalAnd
 
 __No Summary Given__ :: No Type Signature Provided

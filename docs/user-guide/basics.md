@@ -38,31 +38,31 @@ $add(1, 2); // Returns 3
 Vector makes exclusive use of function expressions, both for consistency when combining functions together
 and for their scoped nature.
 
-### Using Vector Functions
+### using Vector Functions
 
 Functions in Vector are organized into modules, which each have some related functionality or 'theme.' We tell our code
-that we want to use a Vector functions using the `Using` static method on the module we want to pull functions in from.
+that we want to use a Vector functions using the `using` static method on the module we want to pull functions in from.
 
-For instance, if we want to pull in the Vector wrapper function for `array_map` called `$map` from the List module, we would
+For instance, if we want to pull in the Vector wrapper function for `array_map` called `$map` from the `ArrayList` module, we would
 write:
 
 ```php
-$map = Vector\Lib\List::Using('map');
+$map = Vector\Lib\ArrayList::using('map');
 ```
 
 This function expression places `$map` into the local scope for our use. We can load multiple functions using the built-in PHP syntax `list`:
 
 ```php
-list($map, $filter, $fold) = Vector\Lib\List::Using('map', 'filter', 'list');
+list($map, $filter, $foldl) = Vector\Lib\ArrayList::using('map', 'filter', 'foldl');
 ```
 
 And if you need an entire module and aren't afraid of using `extract`:
 
 ```php
-extract(Vector\Lib\List::UsingAll());
+extract(Vector\Lib\ArrayList::usingAll());
 ```
 
-We'll go into more detail about how this is implemented, and more importantly, how you can implement your own modules in the 'Function Capsule' section.
+We'll go into more detail about how this is implemented, and more importantly, how you can implement your own modules in the 'Module' section.
 
 ## Currying
 
@@ -130,7 +130,7 @@ add, subtract, multiply, and divide. We can use `$compose` to chain all these ca
 
 ```php
 // Given that we have $add and $multiply, pull in compose:
-$compose = Vector\Lib\Lambda::Using('compose');
+$compose = Vector\Lib\Lambda::using('compose');
 
 // Then create our function
 $toFahrenheit = $compose(
@@ -154,7 +154,7 @@ Let's use our `$toFahrenheit` function from before, but imagine instead that we 
 list in a procedural way, let's use `$map` from the List module.
 
 ```php
-$map = Vector\Lib\List::Using('map');
+$map = Vector\Lib\ArrayList::using('map');
 
 // Our list of temperatures
 $data = [50.0, 176.0, 212.0];
@@ -173,8 +173,8 @@ Say we have a set of data from a temperature probe, but it's uncalibrated. Our t
 them one degree higher.
 
 ```php
-// Using the $mean function from the Math module and all the functions we've made so far
-$mean = Vector\Lib\Math::Using('mean');
+// using the $mean function from the Math module and all the functions we've made so far
+$mean = Vector\Lib\Math::using('mean');
 
 $correctedMeanTemp = $compose(
     $mean,

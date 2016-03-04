@@ -6,6 +6,7 @@ use Vector\Core\Exception\EmptyListException;
 use Vector\Core\Exception\IndexOutOfBoundsException;
 
 use Vector\Core\Module;
+use Vector\Control\Functor;
 use Vector\Data\Maybe;
 
 class ArrayList extends Module
@@ -36,6 +37,28 @@ class ArrayList extends Module
             throw new EmptyListException("'head' function is undefined for empty lists.");
 
         return array_slice($list, 0, 1)[0];
+    }
+
+    /**
+     * Array Map
+     *
+     * Given some function and a list of arbitrary length, return a new array that is the
+     * result of calling the given function on each element of the original list.
+     *
+     * ```
+     * $map($add(1), [1, 2, 3]); // [2, 3, 4]
+     * ```
+     *
+     * @type (a -> b) -> [a] -> [b]
+     *
+     * @param  callable $f    Function to call for each element
+     * @param  array    $list List to call function on
+     * @return array          New list of elements after calling $f for the original list elements
+     */
+    protected static function map($f, $list)
+    {
+        $map = Functor::using('fmap');
+        return $map($f, $list);
     }
 
     /**

@@ -107,4 +107,32 @@ class MathTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(8, $pow(3, 2));
     }
+
+    public function testRange()
+    {
+        $range = Math::using('range');
+
+        $this->assertEquals([1, 2, 3, 4, 5], $range(1, 1, 5));
+    }
+
+    public function testRangeNegativeLast()
+    {
+        $range = Math::using('range');
+
+        $this->assertEquals([0, -2], $range(2, 0, -3));
+    }
+
+    public function testRangeStep0Start0Last0()
+    {
+        $range = Math::using('range');
+
+        $this->assertEquals([0], $range(0, 0, 0));
+    }
+
+    public function testRangeDecimal()
+    {
+        $range = Math::using('range');
+
+        $this->assertEquals([0, 0.1, 0.2, 0.3, 0.4, 0.5], $range(0.1, 0, 0.5));
+    }
 }

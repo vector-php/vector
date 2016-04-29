@@ -192,20 +192,20 @@ class Math extends Module
      * ```
      * $range(1, 1, 5); // [1, 2, 3, 4, 5]
      * $range(2, 0, -3); // [0, -2]
-     * $range(0, 0); // [0]
+     * $range(0, 0, 0); // [0]
      * $range(0.1, 0, 0.5); // [0, 0.1, 0.2, 0.3, 0.4, 0.5]
      * ```
      *
      * @type Num a => a -> a -> a
      *
      * @param  number $step The step sizes to take when building the range
-     * @param  number $m    First value in the list
-     * @param  number $n    Last value in the list
+     * @param  number $first    First value in the list
+     * @param  number $last    Last value in the list
      * @return array        All the numbers between the first and last argument
      */
-    protected static function range($step, $m, $n)
+    protected static function range($step, $first, $last)
     {
-        return range($m, $n, $step);
+        return range($first, $last, $step);
     }
 
     /**

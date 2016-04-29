@@ -131,7 +131,9 @@ class Math extends Module
      */
     protected static function product($a)
     {
-        return array_reduce($a, function ($carry, $item) use ($a) {
+        return empty($a)
+            ? 0
+            : array_reduce($a, function ($carry, $item) use ($a) {
             $carry *= $item;
             return $carry;
         }, 1);

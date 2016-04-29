@@ -68,6 +68,16 @@ class MathTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that product of empty list is 0
+     */
+    public function testProductEmptyIs0()
+    {
+        $product = Math::using('product');
+
+        $this->assertEquals(0, $product([]));
+    }
+
+    /**
      * Test that two numbers are divided. The first argument is the divisor, e.g.
      * the denominator.
      */

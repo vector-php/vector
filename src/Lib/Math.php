@@ -205,7 +205,9 @@ class Math extends Module
      */
     protected static function range($step, $first, $last)
     {
-        return range($first, $last, $step);
+        return ($step + $first >= $last)
+            ? [$first]
+            : range($first, $last, $step);
     }
 
     /**

@@ -95,24 +95,6 @@ class Strings extends Module
     {
         return strtolower($str);
     }
-    
-    /**
-     * Uppercase Conversion
-     *
-     * Converts a string to uppercase.
-     *
-     * ```
-     * $toLowercase('asDf'); // 'ASDF'
-     * ```
-     * @type String -> String
-     * 
-     * @param  String $str Original string
-     * @return String      Uppercase string
-     */
-    protected static function toUppercase($str)
-    {
-        return strtoupper($str);
-    }
 
     /**
      * Uppercase Conversion
@@ -144,7 +126,7 @@ class Strings extends Module
      */
     protected static function trim()
     {
-        
+
     }
 
     /**

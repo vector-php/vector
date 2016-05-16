@@ -9,6 +9,9 @@ use Vector\Core\Module;
 use Vector\Control\Functor;
 use Vector\Data\Maybe;
 
+/**
+ * @method mixed head() head(array $list)
+ */
 class ArrayList extends Module
 {
     /**

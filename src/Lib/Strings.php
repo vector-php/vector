@@ -97,6 +97,39 @@ class Strings extends Module
     }
 
     /**
+     * Uppercase Conversion
+     *
+     * Converts a string to uppercase.
+     *
+     * ```
+     * $toUppercase('asdf'); // 'ASDF'
+     * ```
+     *
+     * @type String -> String
+     *
+     * @param  String $str Original string
+     * @return String      Uppercase string
+     */
+    protected static function toUppercase($str)
+    {
+        return strtoupper($str);
+    }
+
+    /**
+     * Trim Whitespace
+     *
+     * Removes all leading and trailing whitespace from a string. Defers to
+     * PHP trim.
+     *
+     *
+     * @return [type] [description]
+     */
+    protected static function trim()
+    {
+        
+    }
+
+    /**
      * String Joining
      *
      * Joins an array of strings together with a given delimiter. Works similarly

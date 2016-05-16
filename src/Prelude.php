@@ -6,14 +6,7 @@ use Vector\Core\PreludeModule;
 
 class Prelude extends PreludeModule
 {
-    private $export = [
-        'Vector\Lib\ArrayList' => [
-            'head',
-            'tail',
-            'init',
-            'last',
-            'map',
-            'filter'
-        ]
+    private static $export = [
+        'head' => ['Vector\Lib\ArrayList\Head', 'head']
     ];
 }

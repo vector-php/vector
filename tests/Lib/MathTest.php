@@ -68,6 +68,16 @@ class MathTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that product of empty list is 0
+     */
+    public function testProductEmptyIs0()
+    {
+        $product = Math::using('product');
+
+        $this->assertEquals(0, $product([]));
+    }
+
+    /**
      * Test that two numbers are divided. The first argument is the divisor, e.g.
      * the denominator.
      */
@@ -96,5 +106,19 @@ class MathTest extends \PHPUnit_Framework_TestCase
         $pow = Math::using('pow');
 
         $this->assertEquals(8, $pow(3, 2));
+    }
+
+    public function testRange()
+    {
+        $range = Math::using('range');
+
+        $this->assertEquals([1, 2, 3, 4, 5], $range(1, 1, 5));
+    }
+
+    public function testRangeDoesntBreakOnExceedingSpecifiedRange()
+    {
+        $range = Math::using('range');
+
+        $this->assertEquals([0], $range(5, 0, 0));
     }
 }

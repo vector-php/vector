@@ -14,9 +14,9 @@ $add(-1, 2); // 1
 
 Parameter | Type | Description
 -|-|-
-$a | \number | number $a First number to add
-$b | \number | number $b Second number to add
-return | \number | number    Addition of $a + $b
+$a | \number | First number to add
+$b | \number | Second number to add
+return | \number | Addition of $a + $b
 
 
 ---
@@ -36,9 +36,9 @@ $divide(4, 12); // 3
 
 Parameter | Type | Description
 -|-|-
-$a | \number | number $a Denominator
-$b | \number | number $b Numerator
-return | float | float     Result of $b divided by $a
+$a | \number | Denominator
+$b | \number | Numerator
+return | float | Result of $b divided by $a
 
 
 ---
@@ -59,9 +59,9 @@ $max(5, 5); // 5
 
 Parameter | Type | Description
 -|-|-
-$a | \number | number $a First number to compare
-$b | \number | number $b Second number to compare
-return | \number | number    The greater of the two numbers
+$a | \number | First number to compare
+$b | \number | Second number to compare
+return | \number | The greater of the two numbers
 
 
 ---
@@ -81,8 +81,8 @@ $mean([]); // 0
 
 Parameter | Type | Description
 -|-|-
-$arr | array | array  $arr List of numbers
-return | \number | number      Mean of input list
+$arr | array | List of numbers
+return | \number | Mean of input list
 
 
 ---
@@ -105,9 +105,9 @@ $min(5, 5); // 5
 
 Parameter | Type | Description
 -|-|-
-$a | \number | number $a First number to compare
-$b | \number | number $b Second number to compare
-return | \number | number    The lesser of the two numbers
+$a | \number | First number to compare
+$b | \number | Second number to compare
+return | \number | The lesser of the two numbers
 
 
 ---
@@ -129,9 +129,9 @@ $mod(3, 3); // 0
 
 Parameter | Type | Description
 -|-|-
-$a | int | int $a Divisor
-$b | int | int $b Numerator
-return | int | int    Remainder of $b / $a
+$a | int | Divisor
+$b | int | Numerator
+return | int | Remainder of $b / $a
 
 
 ---
@@ -151,9 +151,9 @@ $multiply(0, 4); // 0
 
 Parameter | Type | Description
 -|-|-
-$a | \number | number $a First number to multiply
-$b | \number | number $b Second number to multiply
-return | \number | number    Multiplication of $a * $b
+$a | \number | First number to multiply
+$b | \number | Second number to multiply
+return | \number | Multiplication of $a * $b
 
 
 ---
@@ -173,8 +173,8 @@ $negate(0); // 0
 
 Parameter | Type | Description
 -|-|-
-$a | \number | number $a Number to make negative
-return | \number | number    The negated number
+$a | \number | Number to make negative
+return | \number | The negated number
 
 
 ---
@@ -195,9 +195,9 @@ $pow(3, 2); // 2 ^ 3 = 8
 
 Parameter | Type | Description
 -|-|-
-$a | \number | number $a The power exponent
-$b | \number | number $b The power base
-return | \number | number    The base raised to the exponent's power
+$a | \number | The power exponent
+$b | \number | The power base
+return | \number | The base raised to the exponent's power
 
 
 ---
@@ -218,8 +218,8 @@ $product([]); // 1
 
 Parameter | Type | Description
 -|-|-
-$a | array | array $a List of values to multiply
-return | mixed | mixed    Product of every value in the list
+$a | array | List of values to multiply
+return | mixed | Product of every value in the list
 
 
 ---
@@ -236,16 +236,16 @@ step size of $step. The list of numbers will start at the first value and approa
 ```
 $range(1, 1, 5); // [1, 2, 3, 4, 5]
 $range(2, 0, -3); // [0, -2]
-$range(0, 0); // [0]
+$range(0, 0, 0); // [0]
 $range(0.1, 0, 0.5); // [0, 0.1, 0.2, 0.3, 0.4, 0.5]
 ```
 
 Parameter | Type | Description
 -|-|-
-$step | \number | number $step The step sizes to take when building the range
-$m | \number | number $m    First value in the list
-$n | \number | number $n    Last value in the list
-return | array | array        All the numbers between the first and last argument
+$step | \number | The step sizes to take when building the range
+$first | \number | First value in the list
+$last | \number | Last value in the list
+return | array | All the numbers between the first and last argument
 
 
 ---
@@ -265,9 +265,9 @@ $subtract(-1, 3); // 4
 
 Parameter | Type | Description
 -|-|-
-$a | \number | number $a Number to subtract
-$b | \number | number $b Number to subtract from
-return | \number | number    Subtraction of $b - $a
+$a | \number | Number to subtract
+$b | \number | Number to subtract from
+return | \number | Subtraction of $b - $a
 
 
 ---
@@ -288,8 +288,8 @@ $sum([]); // 0
 
 Parameter | Type | Description
 -|-|-
-$a | array | array  $a List of numbers to add
-return | \number | number    Sum of all the elements of the list
+$a | array | List of numbers to add
+return | \number | Sum of all the elements of the list
 
 
 ---

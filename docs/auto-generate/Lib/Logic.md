@@ -5,7 +5,8 @@ __No Summary Given__ :: No Type Signature Provided
 
 
 
-No Description Given
+No Description Given. Make an issue referencing this function's lack of
+                documentation on <a href="https://github.com/joseph-walker/vector">Github</a>.
 
 
 
@@ -17,7 +18,8 @@ __No Summary Given__ :: No Type Signature Provided
 
 
 
-No Description Given
+No Description Given. Make an issue referencing this function's lack of
+                documentation on <a href="https://github.com/joseph-walker/vector">Github</a>.
 
 
 
@@ -29,7 +31,8 @@ __No Summary Given__ :: No Type Signature Provided
 
 
 
-No Description Given
+No Description Given. Make an issue referencing this function's lack of
+                documentation on <a href="https://github.com/joseph-walker/vector">Github</a>.
 
 
 
@@ -41,7 +44,8 @@ __No Summary Given__ :: No Type Signature Provided
 
 
 
-No Description Given
+No Description Given. Make an issue referencing this function's lack of
+                documentation on <a href="https://github.com/joseph-walker/vector">Github</a>.
 
 
 
@@ -53,7 +57,8 @@ __No Summary Given__ :: No Type Signature Provided
 
 
 
-No Description Given
+No Description Given. Make an issue referencing this function's lack of
+                documentation on <a href="https://github.com/joseph-walker/vector">Github</a>.
 
 
 
@@ -81,9 +86,9 @@ $combinator(2); // False
 
 Parameter | Type | Description
 -|-|-
-$f | callable | callable $f First function to combine
-$g | callable | callable $g Second function to combine
-return | \Closure | \Closure    Result of f(x) or g(x)
+$f | callable | First function to combine
+$g | callable | Second function to combine
+return | \Closure | Result of f(x) or g(x)
 
 
 ---

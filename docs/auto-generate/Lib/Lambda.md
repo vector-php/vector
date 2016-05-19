@@ -5,7 +5,8 @@ __No Summary Given__ :: No Type Signature Provided
 
 
 
-No Description Given
+No Description Given. Make an issue referencing this function's lack of
+                documentation on <a href="https://github.com/joseph-walker/vector">Github</a>.
 
 
 
@@ -26,8 +27,8 @@ $id('foo'); // 'foo'
 
 Parameter | Type | Description
 -|-|-
-$a | mixed | mixed $a Value to return
-return | mixed | mixed    The given value, unchanged
+$a | mixed | Value to return
+return | mixed | The given value, unchanged
 
 
 ---
@@ -51,8 +52,8 @@ $alwaysFour(); // 4
 
 Parameter | Type | Description
 -|-|-
-$k | mixed | mixed    $k Value to express in the combinator
-return | \Closure | \Closure    Expression which always returns $k
+$k | mixed | Value to express in the combinator
+return | \Closure | Expression which always returns $k
 
 
 ---
@@ -63,7 +64,8 @@ __No Summary Given__ :: No Type Signature Provided
 
 
 
-No Description Given
+No Description Given. Make an issue referencing this function's lack of
+                documentation on <a href="https://github.com/joseph-walker/vector">Github</a>.
 
 
 

@@ -16,9 +16,9 @@ $concat(['a' => 1, 'b' => 2], ['a' => 'foo', 'c' => 3]); // ['a' => 'foo', 'b' =
 
 Parameter | Type | Description
 -|-|-
-$a | array | array $a List to be appended to
-$b | array | array $b List to append
-return | array | array    Concatenated list of $a and $b
+$a | array | List to be appended to
+$b | array | List to append
+return | array | Concatenated list of $a and $b
 
 
 ---
@@ -39,9 +39,9 @@ $contains('a', ['b', 'c', 'd']); // false
 
 Parameter | Type | Description
 -|-|-
-$item | mixed | mixed $item Item to test for
-$list | array | array $list Array to test for the existence of $item in
-return | bool | bool        Whether or not $item is in $list
+$item | mixed | Item to test for
+$list | array | Array to test for the existence of $item in
+return | bool | Whether or not $item is in $list
 
 
 ---
@@ -62,9 +62,9 @@ $drop(4, [1, 2]); // []
 
 Parameter | Type | Description
 -|-|-
-$n | Int | Int   $n    The number of elements to drop
-$list | array | array $list List to drop elements from
-return | array | array       Original list minus n elements from the front
+$n | Int | The number of elements to drop
+$list | array | List to drop elements from
+return | array | Original list minus n elements from the front
 
 
 ---
@@ -87,9 +87,9 @@ $dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]
 
 Parameter | Type | Description
 -|-|-
-$predicate | callable | callable $predicate Function to use for testing
-$list | array | array    $list      List to drop from
-return | array | array               List with elements removed from the front
+$predicate | callable | Function to use for testing
+$list | array | List to drop from
+return | array | List with elements removed from the front
 
 
 ---
@@ -108,6 +108,7 @@ of the input list that pass the test.
     'filter' preserves the keys of a key/value array - it only looks at values
 
 ```
+
 $filter(function($a) { return $a > 2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function
 $filter(function($a) { return $a > 2; }, ['foo' => 1, 'bar' => 3]); // ['foo' => 1]
 $filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module
@@ -115,9 +116,9 @@ $filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module
 
 Parameter | Type | Description
 -|-|-
-$f | Callable | Callable $f   Test function - should take an `a` and return a Bool
-$arr | array | array    $arr List to filter
-return | array | array         Result of filtering the list
+$f | Callable | Test function - should take an `a` and return a Bool
+$arr | array | List to filter
+return | array | Result of filtering the list
 
 
 ---
@@ -137,8 +138,8 @@ $flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]
 
 Parameter | Type | Description
 -|-|-
-$list | array | array $list Nested array to flatten
-return | array | array       Result of flattening $list into a 1-dimensional list
+$list | array | Nested array to flatten
+return | array | Result of flattening $list into a 1-dimensional list
 
 
 ---
@@ -164,10 +165,10 @@ $foldl($and, True, [True, True, False]); // False
 
 Parameter | Type | Description
 -|-|-
-$f | callable | callable $f    Function to use in each iteration if the fold
-$seed | mixed | mixed    $seed The initial value to use in the  fold function along with the first element
-$list | array | array    $list The list to fold over
-return | mixed | mixed          The result of applying the fold function to each element one by one
+$f | callable | Function to use in each iteration if the fold
+$seed | mixed | The initial value to use in the  fold function along with the first element
+$list | array | The list to fold over
+return | mixed | The result of applying the fold function to each element one by one
 
 
 ---
@@ -193,8 +194,8 @@ $head([]); // Exception thrown
 
 Parameter | Type | Description
 -|-|-
-$list | array | array $list Key/Value array or List
-return | Mixed | Mixed       First element of $list
+$list | array | Key/Value array or List
+return | Mixed | First element of $list
 
 
 ---
@@ -219,9 +220,9 @@ $index('baz', [1, 2, 3]); // Exception thrown
 
 Parameter | Type | Description
 -|-|-
-$i | Int | Int   $i    Index to get
-$list | array | array $list List to get index from
-return | Mixed | Mixed       Item from $list and index $i
+$i | Int | Index to get
+$list | array | List to get index from
+return | Mixed | Item from $list and index $i
 
 
 ---
@@ -243,8 +244,8 @@ $init(['a' => 1, 'b' => 2]); // ['a' => 1];
 
 Parameter | Type | Description
 -|-|-
-$list | array | array $list Key/Value array or List
-return | array | array       $list without the last element
+$list | array | Key/Value array or List
+return | array | $list without the last element
 
 
 ---
@@ -265,8 +266,8 @@ $keys([1, 2, 3]); // [0, 1, 2]
 
 Parameter | Type | Description
 -|-|-
-$arr | array | array $arr List to get keys from
-return | array | array      The keys of $arr
+$arr | array | List to get keys from
+return | array | The keys of $arr
 
 
 ---
@@ -291,8 +292,8 @@ $last([]); // Exception thrown
 
 Parameter | Type | Description
 -|-|-
-$list | array | array $list Key/Value array or List
-return | Mixed | Mixed       The last element of $list
+$list | array | Key/Value array or List
+return | Mixed | The last element of $list
 
 
 ---
@@ -312,8 +313,8 @@ $length(['a' => 1, 'b' => 2]); // 2
 
 Parameter | Type | Description
 -|-|-
-$list | array | array $list Key/Value array or List
-return | Int | Int         Length of $list
+$list | array | Key/Value array or List
+return | Int | Length of $list
 
 
 ---
@@ -333,9 +334,9 @@ $map($add(1), [1, 2, 3]); // [2, 3, 4]
 
 Parameter | Type | Description
 -|-|-
-$f | callable | callable $f    Function to call for each element
-$list | array | array    $list List to call function on
-return | array | array          New list of elements after calling $f for the original list elements
+$f | callable | Function to call for each element
+$list | array | List to call function on
+return | array | New list of elements after calling $f for the original list elements
 
 
 ---
@@ -358,9 +359,9 @@ $index('baz', [1, 2, 3]); // Nothing - (No exception thrown)
 
 Parameter | Type | Description
 -|-|-
-$i | Int | Int   $i    Index to get
-$list | Mixed | Mixed $list List to get index from
-return | \Maybe | Maybe       Item from $list and index $i
+$i | Int | Index to get
+$list | Mixed | List to get index from
+return | \Maybe | Item from $list and index $i
 
 
 ---
@@ -380,9 +381,9 @@ $replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']
 
 Parameter | Type | Description
 -|-|-
-$n | int | int   $n    Times to repeat some item
-$item | mixed | mixed $item Item to repeat
-return | array | array       Array with $n items
+$n | int | Times to repeat some item
+$item | mixed | Item to repeat
+return | array | Array with $n items
 
 
 ---
@@ -401,8 +402,8 @@ $reverse([1, 2, 3]); // [3, 2, 1]
 
 Parameter | Type | Description
 -|-|-
-$list | array | array $list Array to flip
-return | array | array       Array in the reverse order
+$list | array | Array to flip
+return | array | Array in the reverse order
 
 
 ---
@@ -423,10 +424,10 @@ $set('c', 3, ['a' => 1, 'b' => 2]); // ['a' => 1, 'b' => 2, 'c' => 3]
 
 Parameter | Type | Description
 -|-|-
-$key | Mixed | Mixed $key Element of index to modify
-$arr | array | array $arr Array to modify
-$val | Mixed | Mixed $val Value to set $arr[$key] to
-return | array | array      Result of setting $arr[$key] = $val
+$key | Mixed | Element of index to modify
+$arr | array | Array to modify
+$val | Mixed | Value to set $arr[$key] to
+return | array | Result of setting $arr[$key] = $val
 
 
 ---
@@ -448,8 +449,8 @@ $tail(['a' => 1, 'b' => 2]); // ['b' => 2];
 
 Parameter | Type | Description
 -|-|-
-$list | array | array $list Key/Value array or List
-return | array | array       $list without the first element
+$list | array | Key/Value array or List
+return | array | $list without the first element
 
 
 ---
@@ -469,9 +470,9 @@ $take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]
 
 Parameter | Type | Description
 -|-|-
-$n | int | int   $n    Number of elements to take
-$list | array | array $list Array to take elements from
-return | array | array       First n elements of the array
+$n | int | Number of elements to take
+$list | array | Array to take elements from
+return | array | First n elements of the array
 
 
 ---
@@ -493,9 +494,9 @@ $takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]
 
 Parameter | Type | Description
 -|-|-
-$predicate | callable | callable $predicate Function to use for testing each element
-$list | array | array    $list      List to take elements from
-return | array | array               First elements of list that all pass the $predicate
+$predicate | callable | Function to use for testing each element
+$list | array | List to take elements from
+return | array | First elements of list that all pass the $predicate
 
 
 ---
@@ -515,8 +516,8 @@ $values([1, 2, 3]); // [1, 2, 3]
 
 Parameter | Type | Description
 -|-|-
-$arr | array | array $arr Key/Value array
-return | array | array      Indexed array with values of $arr
+$arr | array | Key/Value array
+return | array | Indexed array with values of $arr
 
 
 ---
@@ -539,10 +540,10 @@ $zipWith($combinator, [0], [1, 2, 3]); // [1]
 
 Parameter | Type | Description
 -|-|-
-$f | Callable | Callable $f The function used to combine $a and $b
-$a | array | array    $a The first array to use in the combinator
-$b | array | array    $b The second array to use in the combinator
-return | array | array       The result of calling f with each element of a and b in series
+$f | Callable | The function used to combine $a and $b
+$a | array | The first array to use in the combinator
+$b | array | The second array to use in the combinator
+return | array | The result of calling f with each element of a and b in series
 
 
 ---

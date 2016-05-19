@@ -15,9 +15,9 @@ $concat('World', $concat('ello', 'H')); // 'HelloWorld'
 
 Parameter | Type | Description
 -|-|-
-$addition | String | String $addition Thing to append
-$original | String | String $original Thing to append to
-return | String | String           Concatenated strings
+$addition | String | Thing to append
+$original | String | Thing to append to
+return | String | Concatenated strings
 
 
 ---
@@ -38,9 +38,9 @@ $join('', ['a', 's', 'd', 'f']); // 'asdf'
 
 Parameter | Type | Description
 -|-|-
-$on | String | String $on     Delimiter to join on
-$string | array | array  $string List of strings to join together
-return | String | String         Joined string based on delimiter
+$on | String | Delimiter to join on
+$string | array | List of strings to join together
+return | String | Joined string based on delimiter
 
 
 ---
@@ -63,9 +63,9 @@ $split('-', 'foo-bar-'); ['foo', 'bar']
 
 Parameter | Type | Description
 -|-|-
-$on | String | String $on     Split delimiter
-$string | String | String $string Thing to split into pieces
-return | array | array          List of chunks from splitting the string
+$on | String | Split delimiter
+$string | String | Thing to split into pieces
+return | array | List of chunks from splitting the string
 
 
 ---
@@ -86,9 +86,9 @@ $startsWith('foo', 'barfoo'); false
 
 Parameter | Type | Description
 -|-|-
-$subStr | String | String $subStr Substring to test
-$str | String | String $str    String to run test on
-return | Bool | Bool           Whether or not the string starts with the substring
+$subStr | String | Substring to test
+$str | String | String to run test on
+return | Bool | Whether or not the string starts with the substring
 
 
 ---
@@ -107,8 +107,44 @@ $toLowercase('ASdf'); // 'asdf'
 
 Parameter | Type | Description
 -|-|-
-$str | String | String $str Original string
-return | String | String      Lowercase string
+$str | String | Original string
+return | String | Lowercase string
+
+
+---
+
+## toUppercase
+
+__Uppercase Conversion__ :: String -> String
+
+
+
+Converts a string to uppercase.
+
+```
+$toUppercase('asdf'); // 'ASDF'
+```
+
+Parameter | Type | Description
+-|-|-
+$str | String | Original string
+return | String | Uppercase string
+
+
+---
+
+## trim
+
+__Trim Whitespace__ :: No Type Signature Provided
+
+
+
+Removes all leading and trailing whitespace from a string. Defers to
+PHP trim.
+
+Parameter | Type | Description
+-|-|-
+return | \[type] | [description]
 
 
 ---

@@ -76,7 +76,7 @@ class DocBuilder
         $head = ArrayList::using('head');
         $tags = $docBlock->getTags();
 
-        $paramTag   = $this->filterTags('param');
+        $paramTag  = $this->filterTags('param');
         $returnTag = $this->filterTags('return');
 
         $params = $paramTag($tags);
@@ -95,7 +95,7 @@ class DocBuilder
                 $buffer .= ' | ';
                 $buffer .= $param->getType();
                 $buffer .= ' | ';
-                $buffer .= $param->getContent();
+                $buffer .= $param->getDescription();
                 $buffer .= PHP_EOL;
             }
         }
@@ -106,7 +106,7 @@ class DocBuilder
             $buffer .= 'return | ';
             $buffer .= $return->getType();
             $buffer .= ' | ';
-            $buffer .= $return->getContent();
+            $buffer .= $return->getDescription();
             $buffer .= PHP_EOL;
         }
 
@@ -138,7 +138,9 @@ EOD
 
         $name = $f->getName();
         $shortDescription = $doc->getShortDescription() ?: 'No Summary Given';
-        $longDescription  = $doc->getLongDescription()->getContents() ?: 'No Description Given';
+        $longDescription  = $doc->getLongDescription()->getContents()
+            ?: 'No Description Given. Make an issue referencing this function\'s lack of
+                documentation on <a href="https://github.com/joseph-walker/vector">Github</a>.';
         $typeSignature    = $this->generateTypeSignature($doc);
         $exceptionWarning = $this->generateExceptionWarning($doc);
         $argTable         = $this->makeArgTable($doc);

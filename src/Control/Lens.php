@@ -23,6 +23,26 @@ class Lens extends Module
         return Identity::Identity($a);
     }
 
+    /**
+     * View
+     *
+     * View an object or array through a lens. Simply applies your lens - the
+     * behavior of this function will vary slightly depending on the particular
+     * lens that you're using.
+     *
+     * ```
+     * $myLens = $indexLens('a');
+     * $view($myLens, ['a' => 'b']); // b
+     * ```
+     *
+     * !!! Note
+     *     Depending on which lens you use, this method might throw an exception.
+     *     Refer to the indivual lenses to see if they're safe to use or not.
+     *
+     * @param  Lens  $lens Lens to use when viewing an object
+     * @param  Mixed $x    Object or array to view
+     * @return Mixed       The property that the lens focused on
+     */
     protected static function view($lens, $x)
     {
         $compose   = Lambda::Using('compose');

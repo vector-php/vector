@@ -2,19 +2,22 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
+use Vector\Lib\Logic;
+use Vector\Lib\Object;
 use Vector\Lib\Lambda;
+use Vector\Lib\ArrayList;
 use Vector\Control\Lens;
 
-$testArray = ['foo' => [], 'bar' => ['bing' => 9]];
+class TestClass
+{
+    public function __construct()
+    {
+        //
+    }
+}
 
-var_dump(
-    Lens::set(Lens::pathLensSafe(['foo', 'bar', 'baz']), 7, $testArray)
-);
+$testArray = [new TestClass(), new TestClass(), new TestClass(), 7];
 
-var_dump(
-    Lens::view(Lens::pathLensSafe(['foo', 'bar']), $testArray)
-);
+$allTests = Lambda::compose(Logic::all(), ArrayList::map(Object::isInstanceOf(TestClass::class)));
 
-var_dump(
-    Lens::view(Lens::pathLensSafe(['bar', 'bing']), $testArray)
-);
+var_dump($allTests($testArray));

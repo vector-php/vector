@@ -4,6 +4,8 @@ namespace Vector\Lib;
 
 use Vector\Core\Module;
 
+use Vector\Lib\ArrayList;
+
 class Logic extends Module
 {
     /**
@@ -43,12 +45,12 @@ class Logic extends Module
 
     protected static function logicalNot($a)
     {
-
+        return !$a;
     }
 
     protected static function logicalAnd($a, $b)
     {
-
+        return $a && $b;
     }
 
     protected static function gt($a, $b)
@@ -60,4 +62,15 @@ class Logic extends Module
     {
         return $a == $b;
     }
+
+    protected static function all($arr)
+    {
+        return ArrayList::foldl(self::using('logicalAnd'), true, $arr);
+    }
+
+    protected static function any($arr)
+    {
+        return ArrayList::foldl(self::using('logicalOr'), false, $arr);
+    }
+
 }

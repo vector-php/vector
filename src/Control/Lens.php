@@ -63,30 +63,49 @@ class Lens extends Module
 
     protected static function indexLens($index)
     {
-        $curry = Module::Using('curry');
-
-        $indexLens = $curry(function($index, $f, $arr) {
-            $fmap = Functor::Using('fmap');
-            $get  = ArrayList::using('index');
-            $set  = ArrayList::Using('set');
-
-            return $fmap($set($index, $arr), $f($get($index, $arr)));
-        });
+        $indexLens = self::makeLens(ArrayList::index(), ArrayList::set());
 
         return $indexLens($index);
     }
 
     protected static function propLens($prop)
     {
-        $curry = Module::Using('curry');
-
-        $propLens = $curry(function($prop, $f, \stdClass $obj) {
-            $fmap = Functor::Using('fmap');
-            $set  = Object::Using('set');
-
-            return $fmap($set($prop, $obj), $f($obj->$prop));
-        });
+        $propLens = self::makeLens(Object::get(), Object::set());
 
         return $propLens($prop);
+    }
+
+    protected static function indexLensSafe($index)
+    {
+        $safeGetter = function($index, $arr) {
+            if ($arr === null)
+                return null;
+            else if (isset($arr[$index])) {
+                return $arr[$index];
+            }
+            else
+                return null;
+        };
+
+        $indexLens = self::makeLens($safeGetter, ArrayList::set());
+
+        return $indexLens($index);
+    }
+
+    protected static function pathLens($path)
+    {
+        return Lambda::compose(...Functor::fmap(function($index) { return self::indexLens($index); }, $path));
+    }
+
+    protected static function pathLensSafe($path)
+    {
+        return Lambda::compose(...Functor::fmap(function($index) { return self::indexLensSafe($index); }, $path));
+    }
+
+    private static function makeLens($getter, $setter)
+    {
+        return Module::curry(function($key, $f, $inv) use ($getter, $setter) {
+            return Functor::fmap($setter($key, $inv), $f($getter($key, $inv)));
+        });
     }
 }

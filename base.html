@@ -34,9 +34,9 @@
     {% if config.extra.logo %}
       <link rel="apple-touch-icon" href="{{ base_url }}/{{ config.extra.logo }}">
     {% endif %}
-    {% set icon = icon | default('assets/images/favicon-e565ddfa3b.ico') %}
-    <link rel="shortcut icon" type="image/x-icon" href="{{ base_url }}/{{ icon }}">
-    <link rel="icon" type="image/x-icon" href="{{ base_url }}/{{ icon }}">
+    {% set favicon = favicon | default("assets/images/favicon-e565ddfa3b.ico") %}
+    <link rel="shortcut icon" type="image/x-icon" href="{{ base_url }}/{{ favicon }}">
+    <link rel="icon" type="image/x-icon" href="{{ base_url }}/{{ favicon }}">
     <style>
       @font-face {
       	font-family: 'Icon';
@@ -53,17 +53,14 @@
       	font-style: normal;
       }
     </style>
-    <link rel="stylesheet" href="{{ base_url }}/assets/stylesheets/application-f5ffeca01e.css">
-    {% if config.extra.font != 'none' %}
-      {% set text = 'Ubuntu' %}
-      {% if config.extra.font and config.extra.font.text %}
-        {% set text = config.extra.font.text %}
-      {% endif %}
-      {% set code = 'Ubuntu Mono' %}
-      {% if config.extra.font and config.extra.font.code %}
-        {% set code = config.extra.font.code %}
-      {% endif %}
-      {% set font = text + ':400,700|' + code | replace('+', ' ') %}
+    <link rel="stylesheet" href="{{ base_url }}/assets/stylesheets/application-0dac3e5884.css">
+    {% if config.extra.palette %}
+      <link rel="stylesheet" href="{{ base_url }}/assets/stylesheets/palettes-05ab2406df.css">
+    {% endif %}
+    {% if config.extra.font != "none" %}
+      {% set text = config.extra.get("font", {}).text | default("Ubuntu") %}
+      {% set code = config.extra.get("font", {}).code | default("Ubuntu Mono") %}
+      {% set font = text + ':400,700|' + code | replace(' ', '+') %}
       <link rel="stylesheet" href="//fonts.googleapis.com/css?family={{ font }}">
       <style>
         body, input {
@@ -77,12 +74,16 @@
     {% for path in extra_css %}
       <link rel="stylesheet" href="{{ path }}">
     {% endfor %}
+    <script src="{{ base_url }}/assets/javascripts/modernizr-4ab42b99fd.js"></script>
     {% block extrahead %}{% endblock %}
   </head>
-  <body>
-    {% if repo_name == 'GitHub' %}
-      {% set repo_id = repo_url | replace('https://github.com/', '') %}
-      {% if repo_id[-1:] == '/' %}
+  {% set palette = config.extra.get("palette", {}) %}
+  {% set primary = palette.primary | replace(' ', '-') | lower %}
+  {% set accent  = palette.accent  | replace(' ', '-') | lower %}
+  <body class="{% if primary %}palette-primary-{{ primary }}{% endif %} {% if accent %}palette-accent-{{ accent }}{% endif %}">
+    {% if repo_name == "GitHub" and repo_url %}
+      {% set repo_id = repo_url | replace("https://github.com/", "") %}
+      {% if repo_id[-1:] == "/" %}
         {% set repo_id = repo_id[:-1] %}
       {% endif %}
     {% endif %}
@@ -103,11 +104,7 @@
       <article class="article">
         <div class="wrapper">
           {% if not h1 %}
-            {% if page_title %}
-              <h1>{{ page_title }}</h1>
-            {% else %}
-              <h1>{{ site_name }}</h1>
-            {% endif %}
+            <h1>{{ page_title | default(site_name, true)}}</h1>
           {% endif %}
           {{ content }}
           <aside class="copyright" role="note">
@@ -127,7 +124,8 @@
               {% include "footer.html" %}
             </footer>
           {% endblock %}
-        </div></article>
+        </div>
+      </article>
       <div class="results" role="status" aria-live="polite">
         <div class="scrollable">
           <div class="wrapper">
@@ -137,12 +135,11 @@
         </div>
       </div>
     </main>
-    <script src="{{ base_url }}/assets/javascripts/modernizr-4ab42b99fd.js"></script>
     <script>
       var base_url = '{{ base_url }}';
       var repo_id  = '{{ repo_id }}';
     </script>
-    <script src="{{ base_url }}/assets/javascripts/application-c6d2e828bd.js"></script>
+    <script src="{{ base_url }}/assets/javascripts/application-997097ee0c.js"></script>
     {% for path in extra_javascript %}
       <script src="{{ path }}"></script>
     {% endfor %}
@@ -162,11 +159,19 @@
         /* Track outbound links */
         var buttons = document.querySelectorAll('a');
         Array.prototype.map.call(buttons, function(item) {
-          if (item.host != window.location.host) {
+          if (item.host != document.location.host) {
             item.addEventListener('click', function() {
               var action = item.getAttribute('data-action') || 'follow';
               ga('send', 'event', 'outbound', action, item.href);
             });
+          }
+        });
+        /* Register handler to log search on blur */
+        var query = document.querySelector('.query');
+        query.addEventListener('blur', function() {
+          if (this.value) {
+            var path = document.location.pathname;
+            ga('send', 'pageview', path + '?q=' + this.value);
           }
         });
       </script>

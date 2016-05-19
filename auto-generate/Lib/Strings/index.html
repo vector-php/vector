@@ -27,8 +27,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
     
-    <link rel="shortcut icon" type="image/x-icon" href="../../../assets/images/favicon-e565ddfa3b.ico">
-    <link rel="icon" type="image/x-icon" href="../../../assets/images/favicon-e565ddfa3b.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../None">
+    <link rel="icon" type="image/x-icon" href="../../../None">
     <style>
       @font-face {
       	font-family: 'Icon';
@@ -45,14 +45,13 @@
       	font-style: normal;
       }
     </style>
-    <link rel="stylesheet" href="../../../assets/stylesheets/application-f5ffeca01e.css">
+    <link rel="stylesheet" href="../../../assets/stylesheets/application-0dac3e5884.css">
+    
     
       
       
       
-      
-      
-      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu Mono">
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu+Mono">
       <style>
         body, input {
           font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
@@ -65,9 +64,13 @@
     
       <link rel="stylesheet" href="../../../extra.css">
     
+    <script src="../../../assets/javascripts/modernizr-4ab42b99fd.js"></script>
     
   </head>
-  <body>
+  
+  
+  
+  <body class=" ">
     
       
       
@@ -101,9 +104,7 @@
             
           </span>
         
-        
-          Strings
-        
+        Strings
       </div>
     </div>
     
@@ -131,11 +132,17 @@
       
       <div class="drawer">
         <nav aria-label="Navigation">
+  
   <a href="https://github.com/joseph-walker/vector" class="project">
     <div class="banner">
       
       <div class="name">
-        <strong>Vector </strong>
+        <strong>
+          Vector
+          <span class="version">
+            
+          </span>
+        </strong>
         
           <br>
           joseph-walker/vector
@@ -149,13 +156,13 @@
         <ul class="repo">
           <li class="repo-download">
             
-            <a href="https://github.com/joseph-walker/vector/archive/master.zip" target="_blank" title="Download Vector from GitHub" data-action="download">
+            <a href="https://github.com/joseph-walker/vector/archive/master.zip" target="_blank" title="Download" data-action="download">
               <i class="icon icon-download"></i> Download
             </a>
           </li>
           <li class="repo-stars">
-            <a href="https://github.com/joseph-walker/vector" target="_blank" title="Star Vector on GitHub" data-action="star">
-              <i class="icon icon-star"></i> Star
+            <a href="https://github.com/joseph-walker/vector/stargazers" target="_blank" title="Stargazers" data-action="star">
+              <i class="icon icon-star"></i> Stars
               <span class="count">&ndash;</span>
             </a>
           </li>
@@ -298,49 +305,54 @@
       Strings
     </a>
     
-      <ul>
-        
+      
+      
+        <ul>
           
-          <li class="anchor">
-            <a title="concat" href="#concat">
-              concat
-            </a>
-          </li>
+            <li class="anchor">
+              <a title="concat" href="#concat">
+                concat
+              </a>
+            </li>
           
-        
+            <li class="anchor">
+              <a title="join" href="#join">
+                join
+              </a>
+            </li>
           
-          <li class="anchor">
-            <a title="join" href="#join">
-              join
-            </a>
-          </li>
+            <li class="anchor">
+              <a title="split" href="#split">
+                split
+              </a>
+            </li>
           
-        
+            <li class="anchor">
+              <a title="startsWith" href="#startswith">
+                startsWith
+              </a>
+            </li>
           
-          <li class="anchor">
-            <a title="split" href="#split">
-              split
-            </a>
-          </li>
+            <li class="anchor">
+              <a title="toLowercase" href="#tolowercase">
+                toLowercase
+              </a>
+            </li>
           
-        
+            <li class="anchor">
+              <a title="toUppercase" href="#touppercase">
+                toUppercase
+              </a>
+            </li>
           
-          <li class="anchor">
-            <a title="startsWith" href="#startswith">
-              startsWith
-            </a>
-          </li>
+            <li class="anchor">
+              <a title="trim" href="#trim">
+                trim
+              </a>
+            </li>
           
-        
-          
-          <li class="anchor">
-            <a title="toLowercase" href="#tolowercase">
-              toLowercase
-            </a>
-          </li>
-          
-        
-      </ul>
+        </ul>
+      
     
   </li>
 
@@ -408,9 +420,7 @@
       <article class="article">
         <div class="wrapper">
           
-            
-              <h1>Strings</h1>
-            
+            <h1>Strings</h1>
           
           <h2 id="concat">concat</h2>
 <p><strong>String Concatenation</strong> :: String -&gt; String -&gt; String</p>
@@ -432,17 +442,17 @@ $concat('World', $concat('ello', 'H')); // 'HelloWorld'
 <tr>
 <td>$addition</td>
 <td>String</td>
-<td>String $addition Thing to append</td>
+<td>Thing to append</td>
 </tr>
 <tr>
 <td>$original</td>
 <td>String</td>
-<td>String $original Thing to append to</td>
+<td>Thing to append to</td>
 </tr>
 <tr>
 <td>return</td>
 <td>String</td>
-<td>String           Concatenated strings</td>
+<td>Concatenated strings</td>
 </tr>
 </tbody>
 </table>
@@ -467,17 +477,17 @@ $join('', ['a', 's', 'd', 'f']); // 'asdf'
 <tr>
 <td>$on</td>
 <td>String</td>
-<td>String $on     Delimiter to join on</td>
+<td>Delimiter to join on</td>
 </tr>
 <tr>
 <td>$string</td>
 <td>array</td>
-<td>array  $string List of strings to join together</td>
+<td>List of strings to join together</td>
 </tr>
 <tr>
 <td>return</td>
 <td>String</td>
-<td>String         Joined string based on delimiter</td>
+<td>Joined string based on delimiter</td>
 </tr>
 </tbody>
 </table>
@@ -504,17 +514,17 @@ $split('-', 'foo-bar-'); ['foo', 'bar']
 <tr>
 <td>$on</td>
 <td>String</td>
-<td>String $on     Split delimiter</td>
+<td>Split delimiter</td>
 </tr>
 <tr>
 <td>$string</td>
 <td>String</td>
-<td>String $string Thing to split into pieces</td>
+<td>Thing to split into pieces</td>
 </tr>
 <tr>
 <td>return</td>
 <td>array</td>
-<td>array          List of chunks from splitting the string</td>
+<td>List of chunks from splitting the string</td>
 </tr>
 </tbody>
 </table>
@@ -539,17 +549,17 @@ $startsWith('foo', 'barfoo'); false
 <tr>
 <td>$subStr</td>
 <td>String</td>
-<td>String $subStr Substring to test</td>
+<td>Substring to test</td>
 </tr>
 <tr>
 <td>$str</td>
 <td>String</td>
-<td>String $str    String to run test on</td>
+<td>String to run test on</td>
 </tr>
 <tr>
 <td>return</td>
 <td>Bool</td>
-<td>Bool           Whether or not the string starts with the substring</td>
+<td>Whether or not the string starts with the substring</td>
 </tr>
 </tbody>
 </table>
@@ -572,12 +582,61 @@ $startsWith('foo', 'barfoo'); false
 <tr>
 <td>$str</td>
 <td>String</td>
-<td>String $str Original string</td>
+<td>Original string</td>
 </tr>
 <tr>
 <td>return</td>
 <td>String</td>
-<td>String      Lowercase string</td>
+<td>Lowercase string</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="touppercase">toUppercase</h2>
+<p><strong>Uppercase Conversion</strong> :: String -&gt; String</p>
+<p>Converts a string to uppercase.</p>
+<pre><code>$toUppercase('asdf'); // 'ASDF'
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$str</td>
+<td>String</td>
+<td>Original string</td>
+</tr>
+<tr>
+<td>return</td>
+<td>String</td>
+<td>Uppercase string</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="trim">trim</h2>
+<p><strong>Trim Whitespace</strong> :: No Type Signature Provided</p>
+<p>Removes all leading and trailing whitespace from a string. Defers to
+PHP trim.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>return</td>
+<td>[type]</td>
+<td>[description]</td>
 </tr>
 </tbody>
 </table>
@@ -601,7 +660,9 @@ $startsWith('foo', 'barfoo'); false
     <div class="previous">
       
         <a href="../Object/" title="Object">
-          <span class="direction">Previous</span>
+          <span class="direction">
+            Previous
+          </span>
           <div class="page">
             <div class="button button-previous" role="button" aria-label="Previous">
               <i class="icon icon-back"></i>
@@ -618,7 +679,9 @@ $startsWith('foo', 'barfoo'); false
     <div class="next">
       
         <a href="../../Control/Applicative/" title="Applicative">
-          <span class="direction">Next</span>
+          <span class="direction">
+            Next
+          </span>
           <div class="page">
             <div class="stretch">
               <div class="title">
@@ -636,7 +699,8 @@ $startsWith('foo', 'barfoo'); false
 
             </footer>
           
-        </div></article>
+        </div>
+      </article>
       <div class="results" role="status" aria-live="polite">
         <div class="scrollable">
           <div class="wrapper">
@@ -646,12 +710,11 @@ $startsWith('foo', 'barfoo'); false
         </div>
       </div>
     </main>
-    <script src="../../../assets/javascripts/modernizr-4ab42b99fd.js"></script>
     <script>
       var base_url = '../../..';
       var repo_id  = 'joseph-walker/vector';
     </script>
-    <script src="../../../assets/javascripts/application-c6d2e828bd.js"></script>
+    <script src="../../../assets/javascripts/application-997097ee0c.js"></script>
     
     
   </body>

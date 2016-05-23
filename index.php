@@ -20,6 +20,4 @@ $testArray = [new TestClass(), new TestClass(), new TestClass(), 7];
 
 $allTests = Lambda::compose(Logic::all(), ArrayList::map(Object::isInstanceOf(TestClass::class)));
 
-ArrayList::
-
 var_dump($allTests($testArray));

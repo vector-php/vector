@@ -12,7 +12,7 @@ class TestClass
 {
     public function __construct()
     {
-        //
+        // Touch
     }
 }
 

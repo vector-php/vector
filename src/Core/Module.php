@@ -7,6 +7,21 @@ use Vector\Core\Exception\FunctionNotFoundException;
 abstract class Module
 {
     /**
+     * This flag globally sets a module to append an underscore when it proxies a function
+     * call through the __callStatic magic method. This is so that dumb PHP IDEs can keep up with
+     * what we're throwing down and allow us to override @method tags in a class doc.
+     *
+     * When this flag is enabled, you MUST append an underscore (_) to every function you declare
+     * on your module, or else it will not be found when accessing it through the magic __callStatic method.
+     *
+     * This flag only affects the internal naming of your functions. You still access your functions through
+     * their un-appended name. E.g. you will still use Lambda::compose() or Lambda::using('compose').
+     *
+     * @var boolean
+     */
+    protected static $dirtyHackToEnableIDEAutocompletion = false;
+
+    /**
      * A memoized cache of all the function requests fulfilled by this module
      * @var array
      */
@@ -122,6 +137,10 @@ abstract class Module
         $context = get_called_class();
 
         $fulfilledRequest = array_map(function($f) use ($context) {
+            // If we're using the dirty hack for IDE autocomplete, append an '_' to the name we're looking for
+            if ($context::$dirtyHackToEnableIDEAutocompletion === true)
+                $f = '_' . $f;
+
             // See if we've already fulfilled the request for this function. If so, just return the cached one.
             if (array_key_exists($context, self::$fulfillmentCache) && array_key_exists($f, self::$fulfillmentCache[$context]))
                 return self::$fulfillmentCache[$context][$f];
@@ -137,9 +156,8 @@ abstract class Module
                 };
             }
             // Otherwise, curry it
-            else {
+            else
                 $fulfillment = self::curry([$context, $f]);
-            }
 
             // Then store it in our cache so we can short circuit this process in the future
             self::$fulfillmentCache[$context][$f] = $fulfillment;
@@ -179,8 +197,14 @@ abstract class Module
         };
 
         // The names of the functions we're requesting, sans the inherited Module methods
-        $fNames = array_map(function(\ReflectionMethod $f) {
-            return $f->getName();
+        $fNames = array_map(function(\ReflectionMethod $f) use ($context) {
+            $fName = $f->getName();
+
+            // Check for the dirty hack
+            if ($context::$dirtyHackToEnableIDEAutocompletion === true)
+                $fName = substr($fName, 1);
+
+            return $fName;
         }, array_filter((new \ReflectionClass($context))->getMethods(), $isInContext));
 
         // The actual functions we're using pulled from the module

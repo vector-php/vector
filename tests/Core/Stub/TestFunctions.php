@@ -6,34 +6,36 @@ use Vector\Core\Module;
 
 class TestFunctions extends Module
 {
+    protected static $dirtyHackToEnableIDEAutocompletion = true;
+
     protected static $doNotCurry = ['nonCurriedFunction'];
 
-    protected static function noArgFunction()
+    protected static function _noArgFunction()
     {
         return true;
     }
 
-    protected static function oneArgFunction($a)
+    protected static function _oneArgFunction($a)
     {
         return true;
     }
 
-    protected static function twoArgFunction($a, $b)
+    protected static function _twoArgFunction($a, $b)
     {
         return true;
     }
 
-    protected static function variadicFunction(...$a)
+    protected static function _variadicFunction(...$a)
     {
         return $a;
     }
 
-    protected static function complexVariadicFunction($a, ...$b)
+    protected static function _complexVariadicFunction($a, ...$b)
     {
         return $b;
     }
 
-    protected static function nonCurriedFunction($a, $b)
+    protected static function _nonCurriedFunction($a, $b)
     {
         return true;
     }

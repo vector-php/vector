@@ -10,10 +10,34 @@ use Vector\Control\Functor;
 use Vector\Data\Maybe;
 
 /**
- * @method mixed head() head(array $list)
+ * @method static mixed head() head(array $list) Return the first element of a list.
+ * @method static array map() map(Callable $f, array $list) Return a transformed list.
+ * @method static tail($list) Return a list sans first element.
+ * @method static init($list) Return a list sans last element.
+ * @method static last($list) Return the last element of a list.
+ * @method static length($list) Return the length of a list.
+ * @method static index($i, $list) Return the element of a list at index 'i'.
+ * @method static maybeIndex($i, $list) Return Just the element of a list at index 'i', or Nothing, as a Maybe instance.
+ * @method static filter($f, $arr) Return a filtered array with every element passing tesst 'f'.
+ * @method static keys($arr) Return the keys of a list.
+ * @method static values($arr) Return the values of a list.
+ * @method static concat($a, $b) Return two lists concatenated together.
+ * @method static set($key, $arr, $val) Return a list with the element at index 'key' set to 'val'.
+ * @method static foldl($f, $seed, $list) Return the result of folding 'f' over a list with initial value 'seed', from the left.
+ * @method static zipWith($f, $a, $b) Return two lists combined by combinator 'f'.
+ * @method static drop($n, $list) Return a list with 'n' elements removed from the front.
+ * @method static dropWhile($predicate, $list) Return a list with elements removed so long as they pass 'predicate'.
+ * @method static take($n, $list) Return the first 'n' elements of a list.
+ * @method static takeWhile($predicate, $list) Return the first elements of a list that all pass 'predicate'.
+ * @method static reverse($list) Return a list in the reverse order.
+ * @method static flatten($list) Return a flattened list.
+ * @method static contains($item, $list) Return whether or not a list contains 'item'.
+ * @method static replicate($n, $item) Return 'item' repeated 'n' times into a list.
  */
 class ArrayList extends Module
 {
+    protected static $dirtyHackToEnableIDEAutocompletion = true;
+
     /**
      * List Head
      *
@@ -34,7 +58,7 @@ class ArrayList extends Module
      * @param  array $list Key/Value array or List
      * @return Mixed       First element of $list
      */
-    protected static function head($list)
+    protected static function _head($list)
     {
         if (count($list) === 0)
             throw new EmptyListException("'head' function is undefined for empty lists.");
@@ -58,7 +82,7 @@ class ArrayList extends Module
      * @param  array    $list List to call function on
      * @return array          New list of elements after calling $f for the original list elements
      */
-    protected static function map($f, $list)
+    protected static function _map($f, $list)
     {
         $map = Functor::using('fmap');
         return $map($f, $list);
@@ -81,7 +105,7 @@ class ArrayList extends Module
      * @param  array $list Key/Value array or List
      * @return array       $list without the first element
      */
-    protected static function tail($list)
+    protected static function _tail($list)
     {
         return array_slice($list, 1, count($list));
     }
@@ -103,7 +127,7 @@ class ArrayList extends Module
      * @param  array $list Key/Value array or List
      * @return array       $list without the last element
      */
-    protected static function init($list)
+    protected static function _init($list)
     {
         return array_slice($list, 0, count($list) - 1);
     }
@@ -127,7 +151,7 @@ class ArrayList extends Module
      * @param  array $list Key/Value array or List
      * @return Mixed       The last element of $list
      */
-    protected static function last($list)
+    protected static function _last($list)
     {
         if (count($list) === 0)
             throw new EmptyListException("'last' function is undefined for empty lists.");
@@ -150,7 +174,7 @@ class ArrayList extends Module
      * @param  array $list Key/Value array or List
      * @return Int         Length of $list
      */
-    protected static function length($list)
+    protected static function _length($list)
     {
         return count($list);
     }
@@ -175,7 +199,7 @@ class ArrayList extends Module
      * @param  array $list List to get index from
      * @return Mixed       Item from $list and index $i
      */
-    protected static function index($i, $list)
+    protected static function _index($i, $list)
     {
         if (!array_key_exists($i, $list))
             throw new IndexOutOfBoundsException("'index' function tried to access non-existent index '$i'");
@@ -202,7 +226,7 @@ class ArrayList extends Module
      * @param  Mixed $list List to get index from
      * @return Maybe       Item from $list and index $i
      */
-    protected static function maybeIndex($i, $list)
+    protected static function _maybeIndex($i, $list)
     {
         if (array_key_exists($i, $list))
             return Maybe::Just($list[$i]);
@@ -221,7 +245,7 @@ class ArrayList extends Module
      *     'filter' preserves the keys of a key/value array - it only looks at values
      *
      * ```
-     * 
+     *
      * $filter(function($a) { return $a > 2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function
      * $filter(function($a) { return $a > 2; }, ['foo' => 1, 'bar' => 3]); // ['foo' => 1]
      * $filter($lte(2), [1, 2, 3, 4, 5]); // [1, 2], using $lte from the Math module
@@ -233,7 +257,7 @@ class ArrayList extends Module
      * @param  array    $arr List to filter
      * @return array         Result of filtering the list
      */
-    protected static function filter($f, $arr)
+    protected static function _filter($f, $arr)
     {
         return array_filter($arr, $f);
     }
@@ -254,7 +278,7 @@ class ArrayList extends Module
      * @param  array $arr List to get keys from
      * @return array      The keys of $arr
      */
-    protected static function keys($arr)
+    protected static function _keys($arr)
     {
         return array_keys($arr);
     }
@@ -274,7 +298,7 @@ class ArrayList extends Module
      * @param  array $arr Key/Value array
      * @return array      Indexed array with values of $arr
      */
-    protected static function values($arr)
+    protected static function _values($arr)
     {
         return array_values($arr);
     }
@@ -297,7 +321,7 @@ class ArrayList extends Module
      * @param  array $b List to append
      * @return array    Concatenated list of $a and $b
      */
-    protected static function concat($a, $b)
+    protected static function _concat($a, $b)
     {
         return array_merge($a, $b);
     }
@@ -320,7 +344,7 @@ class ArrayList extends Module
      * @param  Mixed $val Value to set $arr[$key] to
      * @return array      Result of setting $arr[$key] = $val
      */
-    protected static function set($key, $arr, $val)
+    protected static function _set($key, $arr, $val)
     {
         $arr[$key] = $val;
         return $arr;
@@ -349,7 +373,7 @@ class ArrayList extends Module
      * @param  array    $list The list to fold over
      * @return mixed          The result of applying the fold function to each element one by one
      */
-    protected static function foldl($f, $seed, $list)
+    protected static function _foldl($f, $seed, $list)
     {
         return array_reduce($list, $f, $seed);
     }
@@ -374,7 +398,7 @@ class ArrayList extends Module
      * @param  array    $b The second array to use in the combinator
      * @return array       The result of calling f with each element of a and b in series
      */
-    protected static function zipWith($f, $a, $b)
+    protected static function _zipWith($f, $a, $b)
     {
         $result = [];
 
@@ -402,7 +426,7 @@ class ArrayList extends Module
      * @param  array $list List to drop elements from
      * @return array       Original list minus n elements from the front
      */
-    protected static function drop($n, $list)
+    protected static function _drop($n, $list)
     {
         return array_slice($list, $n, count($list));
     }
@@ -426,7 +450,7 @@ class ArrayList extends Module
      * @param  array    $list      List to drop from
      * @return array               List with elements removed from the front
      */
-    protected static function dropWhile($predicate, $list)
+    protected static function _dropWhile($predicate, $list)
     {
         foreach ($list as $item) {
             if ($predicate($item)) {
@@ -456,7 +480,7 @@ class ArrayList extends Module
      * @param  array $list Array to take elements from
      * @return array       First n elements of the array
      */
-    protected static function take($n, $list)
+    protected static function _take($n, $list)
     {
         return array_slice($list, 0, $n);
     }
@@ -479,7 +503,7 @@ class ArrayList extends Module
      * @param  array    $list      List to take elements from
      * @return array               First elements of list that all pass the $predicate
      */
-    protected static function takeWhile($predicate, $list)
+    protected static function _takeWhile($predicate, $list)
     {
         $result = [];
 
@@ -509,7 +533,7 @@ class ArrayList extends Module
      * @param  array $list Array to flip
      * @return array       Array in the reverse order
      */
-    protected static function reverse($list)
+    protected static function _reverse($list)
     {
         return array_reverse($list);
     }
@@ -529,7 +553,7 @@ class ArrayList extends Module
      * @param  array $list Nested array to flatten
      * @return array       Result of flattening $list into a 1-dimensional list
      */
-    protected static function flatten($list)
+    protected static function _flatten($list)
     {
         $iter = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($list));
         $flat = [];
@@ -558,7 +582,7 @@ class ArrayList extends Module
      * @param  array $list Array to test for the existence of $item in
      * @return bool        Whether or not $item is in $list
      */
-    protected static function contains($item, $list)
+    protected static function _contains($item, $list)
     {
         return in_array($item, $list);
     }
@@ -579,7 +603,7 @@ class ArrayList extends Module
      * @param  mixed $item Item to repeat
      * @return array       Array with $n items
      */
-    protected static function replicate($n, $item)
+    protected static function _replicate($n, $item)
     {
         $result = [];
 

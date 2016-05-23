@@ -25,6 +25,14 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test alternative function calling scheme
+     */
+    public function testAlternativeFunctionPattern()
+    {
+        $this->assertInstanceOf('\\Closure', Stub\TestFunctions::oneArgFunction());
+    }
+
+    /**
      * Test that usingAll pulls ALL of the functions out of the given module.
      * It defers to Using, so all we need to test is that it returns them in a k/v array
      */

@@ -11,7 +11,7 @@ abstract class Applicative extends Module
         if (is_array($context)) {
             return [$a];
         }
-        
+
         return call_user_func_array([$context, 'pure'], [$a]);
     }
 
@@ -42,6 +42,22 @@ abstract class Applicative extends Module
                 $a1
             ),
             $a2
+        );
+    }
+
+    protected static function liftA3($instance, $f, $a1, $a2, $a3)
+    {
+        list($pure, $apply) = self::using('pure', 'apply');
+
+        return $apply(
+            $apply(
+                $apply(
+                    $pure($instance, $f),
+                    $a1
+                ),
+                $a2
+            ),
+            $a3
         );
     }
 }

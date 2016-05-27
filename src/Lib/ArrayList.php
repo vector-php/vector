@@ -427,7 +427,7 @@ class ArrayList extends Module
      */
     protected static function _zip($a, $b)
     {
-        return self::zipWith(function($a, $b) { return [$a, $b]; });
+        return self::zipWith(function($a, $b) { return [$a, $b]; }, $a, $b);
     }
 
     /**

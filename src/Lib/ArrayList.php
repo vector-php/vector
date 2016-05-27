@@ -448,9 +448,19 @@ class ArrayList extends Module
      * @return array          An array with two elements; the first is the list that passed the test,
      *                        and the second element is the list that failed the test
      */
-    protected static function bifurcate($test, $arr)
+    protected static function _bifurcate($test, $arr)
     {
+        $resPass = [];
+        $resFail = [];
 
+        foreach ($arr as $element) {
+            if ($test($element))
+                $resPass[] = $element;
+            else
+                $resFail[] = $element;
+        }
+
+        return [$resPass, $resFail];
     }
 
     /**

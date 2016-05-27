@@ -410,6 +410,50 @@ class ArrayList extends Module
     }
 
     /**
+     * Array Zip
+     *
+     * Given two arrays a and b, return a new array where each element is a tuple of a and b. If a and b
+     * are not the same length, the resultant array will always be the same length as the shorter array.
+     *
+     * ```
+     * $zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]
+     * ```
+     *
+     * @type [a] -> [b] -> [(a, b)]
+     *
+     * @param  array $a The first array to use when zipping
+     * @param  array $b The second array to use when zipping
+     * @return array    Array of tuples from a and b combined
+     */
+    protected static function _zip($a, $b)
+    {
+        return self::zipWith(function($a, $b) { return [$a, $b]; });
+    }
+
+    /**
+     * Array Bifurcation
+     *
+     * Given an array and some filtering test that returns a boolean, return two arrays - one array
+     * of elements that pass the test, and another array of elements that don't. Similar to filter,
+     * but returns the elements that fail as well.
+     *
+     * ```
+     * $bifurcate($isEven, [1, 2, 3, 4, 5]); // [[2, 4], [1, 3, 5]]
+     * ```
+     *
+     * @type (a -> Bool) -> [a] -> ([a], [a])
+     *
+     * @param  callable $test Test to use when bifurcating the array
+     * @param  array    $arr  Array to split apart
+     * @return array          An array with two elements; the first is the list that passed the test,
+     *                        and the second element is the list that failed the test
+     */
+    protected static function bifurcate($test, $arr)
+    {
+
+    }
+
+    /**
      * Drop Elements
      *
      * Given some number n, drop n elements from an input array and return the rest of

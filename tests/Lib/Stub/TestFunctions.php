@@ -15,4 +15,19 @@ class TestFunctions extends Module
     {
         return $a * 2;
     }
+
+    protected static function returnsTrue($a)
+    {
+        return true;
+    }
+
+    protected static function invertsBool($a)
+    {
+        return !$a;
+    }
+
+    protected static function expectsNotNull($a)
+    {
+        return $a !== null;
+    }
 }

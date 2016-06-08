@@ -8,16 +8,10 @@ abstract class Lambda extends Module
 {
     protected static function pipe(...$fs)
     {
-        return function(...$args) use ($fs) {
-            $carry = null;
-
-            foreach ($fs as $f) {
-                $carry = $carry
-                    ? $f($carry)
-                    : $f(...$args);
-            }
-
-            return $carry;
+        return function($inputArg) use ($fs) {
+            return array_reduce($fs, function($carry, $f) {
+                return $f($carry);
+            }, $inputArg);
         };
     }
 

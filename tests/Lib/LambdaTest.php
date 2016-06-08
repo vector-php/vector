@@ -25,6 +25,27 @@ class LambdaTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test any edge cases that might pop up in Compose - things
+     * like returning null values
+     */
+    public function testComposeEdgeCases()
+    {
+        $compose = Lambda::using('compose');
+        list($returnsTrue, $invertsBool, $expectsNotNull) = Stub\TestFunctions::using('returnsTrue', 'invertsBool', 'expectsNotNull');
+
+        $shouldBeFalse = $compose($invertsBool, $returnsTrue);
+        $shouldBeTrue = $compose($invertsBool, $invertsBool, $returnsTrue);
+
+        $this->assertEquals(false, $shouldBeFalse(null));
+        $this->assertEquals(true, $shouldBeTrue(null));
+
+        $shouldBeNull = $compose($invertsBool, $expectsNotNull);
+
+        $this->assertEquals(false, $shouldBeNull('foo'));
+        $this->assertEquals(true, $shouldBeNull(null));
+    }
+
+    /**
      * Test that pipe works - pipe goes front to back
      */
     public function testPipe()

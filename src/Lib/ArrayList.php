@@ -201,7 +201,7 @@ class ArrayList extends Module
      */
     protected static function _index($i, $list)
     {
-        if (!array_key_exists($i, $list))
+        if (!isset($list[$i]))
             throw new IndexOutOfBoundsException("'index' function tried to access non-existent index '$i'");
 
         return $list[$i];
@@ -228,7 +228,7 @@ class ArrayList extends Module
      */
     protected static function _maybeIndex($i, $list)
     {
-        if (array_key_exists($i, $list))
+        if (isset($list[$i]))
             return Maybe::Just($list[$i]);
 
         return Maybe::Nothing();

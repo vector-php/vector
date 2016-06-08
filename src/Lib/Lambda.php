@@ -4,9 +4,17 @@ namespace Vector\Lib;
 
 use Vector\Core\Module;
 
+/**
+ * @method static callable pipe() pipe(...$fs)
+ * @method static callable compose() compose(...$fs)
+ * @method static callable k() k($k)
+ * @method static mixed id() id($a)
+ */
 abstract class Lambda extends Module
 {
-    protected static function pipe(...$fs)
+    protected static $dirtyHackToEnableIDEAutocompletion = true;
+
+    protected static function _pipe(...$fs)
     {
         return function($inputArg) use ($fs) {
             return array_reduce($fs, function($carry, $f) {
@@ -15,9 +23,9 @@ abstract class Lambda extends Module
         };
     }
 
-    protected static function compose(...$fs)
+    protected static function _compose(...$fs)
     {
-        return self::pipe(...array_reverse($fs));
+        return self::_pipe(...array_reverse($fs));
     }
 
     /**
@@ -39,7 +47,7 @@ abstract class Lambda extends Module
      * @param  mixed    $k Value to express in the combinator
      * @return \Closure    Expression which always returns $k
      */
-    protected static function k($k)
+    protected static function _k($k)
     {
         return function(...$null) use ($k)
         {
@@ -62,7 +70,7 @@ abstract class Lambda extends Module
      * @param  mixed $a Value to return
      * @return mixed    The given value, unchanged
      */
-    protected static function id($a)
+    protected static function _id($a)
     {
         return $a;
     }

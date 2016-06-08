@@ -4,8 +4,19 @@ namespace Vector\Lib;
 
 use Vector\Core\Module;
 
+/**
+ * @method static string concat() contact(string $a, string $b) Concatenates the first argument to the second argument.
+ * @method static array split() split(string $delimiter, string $string) Split a string into parts based on a delimiter. Operates similar to php `explode`.
+ * @method static string startsWith() startsWith(string $substring, string $string) Determines if a string starts with a specific substring.
+ * @method static string toLowercase() toLowercase(string $string) Converts a string to lowercase.
+ * @method static string toUppercase() toUppercase(string $string) Converts a string to uppercase.
+ * @method static string trim() trim(string $string) Removes all leading and trailing whitespace from a string.
+ * @method static string join() join(string $string) Joins an array of strings together with a given delimiter.
+ */
 class Strings extends Module
 {
+    protected static $dirtyHackToEnableIDEAutocompletion = true;
+
     /**
      * String Concatenation
      *
@@ -23,7 +34,7 @@ class Strings extends Module
      * @param  String $original Thing to append to
      * @return String           Concatenated strings
      */
-    protected static function concat($addition, $original)
+    protected static function _concat($addition, $original)
     {
         return $original . $addition;
     }
@@ -47,7 +58,7 @@ class Strings extends Module
      * @param  String $string Thing to split into pieces
      * @return array          List of chunks from splitting the string
      */
-    protected static function split($on, $string)
+    protected static function _split($on, $string)
     {
         if ($on === '')
             return str_split($string);
@@ -72,7 +83,7 @@ class Strings extends Module
      * @param  String $str    String to run test on
      * @return Bool           Whether or not the string starts with the substring
      */
-    protected static function startsWith($subStr, $str)
+    protected static function _startsWith($subStr, $str)
     {
         return substr($str, 0, strlen($subStr)) === $subStr;
     }
@@ -91,7 +102,7 @@ class Strings extends Module
      * @param  String $str Original string
      * @return String      Lowercase string
      */
-    protected static function toLowercase($str)
+    protected static function _toLowercase($str)
     {
         return strtolower($str);
     }
@@ -110,7 +121,7 @@ class Strings extends Module
      * @param  String $str Original string
      * @return String      Uppercase string
      */
-    protected static function toUppercase($str)
+    protected static function _toUppercase($str)
     {
         return strtoupper($str);
     }
@@ -121,12 +132,18 @@ class Strings extends Module
      * Removes all leading and trailing whitespace from a string. Defers to
      * PHP trim.
      *
+     * ```
+     * $trim(' asdf '); // 'asdf'
+     * ```
      *
-     * @return [type] [description]
+     * @type String -> String
+     *
+     * @param  String $str string to trim
+     * @return string
      */
-    protected static function trim()
+    protected static function _trim($str)
     {
-
+        return trim($str);
     }
 
     /**
@@ -146,7 +163,7 @@ class Strings extends Module
      * @param  array  $string List of strings to join together
      * @return String         Joined string based on delimiter
      */
-    protected static function join($on, $string)
+    protected static function _join($on, $string)
     {
         return implode($on, $string);
     }

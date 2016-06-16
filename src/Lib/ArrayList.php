@@ -366,7 +366,7 @@ class ArrayList extends Module
      * $foldl($and, True, [True, True, False]); // False
      * ```
      *
-     * @type (a -> b -> b) -> b -> [a] -> b
+     * @type (b -> a -> b) -> b -> [a] -> b
      *
      * @param  callable $f    Function to use in each iteration if the fold
      * @param  mixed    $seed The initial value to use in the  fold function along with the first element

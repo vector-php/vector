@@ -2,6 +2,7 @@
 
 namespace Vector\Test\Lib;
 
+use Vector\Core\Module;
 use Vector\Lib\Lambda;
 
 class LambdaTest extends \PHPUnit_Framework_TestCase
@@ -85,5 +86,22 @@ class LambdaTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(4, $id(4));
         $this->assertEquals('foo', $id('foo'));
+    }
+
+    /**
+     * Test the function flipper
+     */
+    public function testFlip()
+    {
+        $flip = Lambda::using('flip');
+
+        $subtract = function($a, $b) {
+            return $b - $a;
+        };
+
+        $flippedSubtract = $flip($subtract);
+
+        $this->assertEquals(4, $subtract(2, 6)); // 6 - 2
+        $this->assertEquals(-4, $flippedSubtract(2, 6)); // 2 - 6
     }
 }

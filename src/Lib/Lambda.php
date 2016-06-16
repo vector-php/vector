@@ -9,6 +9,7 @@ use Vector\Core\Module;
  * @method static callable compose() compose(...$fs)
  * @method static callable k() k($k)
  * @method static mixed id() id($a)
+ * @method static mixed flip() flip($f)
  */
 abstract class Lambda extends Module
 {
@@ -26,6 +27,29 @@ abstract class Lambda extends Module
     protected static function _compose(...$fs)
     {
         return self::_pipe(...array_reverse($fs));
+    }
+
+    /**
+     * Flip Combinator
+     *
+     * Given a function that takes two arguments, return a new function that
+     * takes those two arguments with their order reversed.
+     *
+     * ```
+     * $subtract(2, 6); // 4
+     * $flip($subtract)(2, 6); // -4
+     * ```
+     *
+     * @type (a -> b -> c) -> b -> a -> c
+     *
+     * @param  \Closure $f Function to flip
+     * @return \Closure    Flipped function
+     */
+    protected static function _flip($f)
+    {
+        return function($a, $b) use ($f) {
+            return $f($b, $a);
+        };
     }
 
     /**

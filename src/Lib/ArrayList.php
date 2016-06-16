@@ -9,6 +9,8 @@ use Vector\Core\Module;
 use Vector\Control\Functor;
 use Vector\Data\Maybe;
 
+use Vector\Lib\Lambda;
+
 /**
  * @method static mixed head() head(array $list) Return the first element of a list.
  * @method static array map() map(Callable $f, array $list) Return a transformed list.
@@ -375,7 +377,7 @@ class ArrayList extends Module
      */
     protected static function _foldl($f, $seed, $list)
     {
-        return array_reduce($list, $f, $seed);
+        return array_reduce($list, Lambda::flip($f), $seed);
     }
 
     /**

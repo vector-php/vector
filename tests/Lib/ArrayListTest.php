@@ -208,8 +208,10 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
         $foldl = ArrayList::using('foldl');
 
         $reducer = function($a, $b) { return $a + $b; };
+        $reducerNonAssociative = function($a, $b) { return $b - $a; };
 
         $this->assertEquals(6, $foldl($reducer, 0, [1, 2, 3]));
+        $this->assertEquals(-6, $foldl($reducerNonAssociative, 0, [1, 2, 3]));
     }
 
     /**

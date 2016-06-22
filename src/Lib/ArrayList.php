@@ -10,6 +10,8 @@ use Vector\Control\Functor;
 use Vector\Data\Maybe;
 
 /**
+ * @method static array groupBy(callable $keyGen, array $list) Return a grouping of $list elements grouped by the $keyGen function.
+ * @method static array cons() cons($a, array $arr) Return $arr with $a appended to the end.
  * @method static mixed head() head(array $list) Return the first element of a list.
  * @method static array map() map(Callable $f, array $list) Return a transformed list.
  * @method static tail($list) Return a list sans first element.
@@ -18,7 +20,7 @@ use Vector\Data\Maybe;
  * @method static length($list) Return the length of a list.
  * @method static index($i, $list) Return the element of a list at index 'i'.
  * @method static maybeIndex($i, $list) Return Just the element of a list at index 'i', or Nothing, as a Maybe instance.
- * @method static filter($f, $arr) Return a filtered array with every element passing tesst 'f'.
+ * @method static filter($f, $arr) Return a filtered array with every element passing test 'f'.
  * @method static keys($arr) Return the keys of a list.
  * @method static values($arr) Return the values of a list.
  * @method static concat($a, $b) Return two lists concatenated together.
@@ -37,6 +39,58 @@ use Vector\Data\Maybe;
 class ArrayList extends Module
 {
     protected static $dirtyHackToEnableIDEAutocompletion = true;
+
+    /**
+     * Cons Operator
+     *
+     * Given a value and an array, append that value to the end of the array.
+     *
+     * ```
+     * $cons(3, [1, 2]); [1, 2, 3]
+     * $cons(1, []); [1]
+     * ```
+     *
+     * @type a -> [a] -> [a]
+     *
+     * @param  mixed $a   Value to add to array
+     * @param  array $arr Array to add value to
+     * @return array      Array with value added
+     */
+    protected static function _cons($a, $arr)
+    {
+        $arr[] = $a;
+        return $arr;
+    }
+
+    /**
+     * Group By
+     *
+     * Given a function that turns an element into a string, map over a list of elements
+     * and return a multi-dimensional array with elements grouped together by their key
+     * generator.
+     *
+     * ```
+     * $testCase = [1, 2, 3, 4, 5, 6, 7];
+     * $keyGen = function($a) {
+     *     return ($a % 2 == 0) ? 'even' : 'odd';
+     * };
+     *
+     * $groupBy($keyGen, $testCase); // ['even' => [2, 4, 6], 'odd' => [1, 3, 5, 7]]
+     * ```
+     *
+     * @type (a -> String) -> [a] -> [[a]]
+     *
+     * @param  \Closure $keyGen Key generating function
+     * @param  array    $list   List to group
+     * @return array            Multidimensional array of grouped elements
+     */
+    protected static function _groupBy($keyGen, $list)
+    {
+        return self::foldl(function($group, $element) use ($keyGen) {
+            $group[$keyGen($element)][] = $element;
+            return $group;
+        }, [], $list);
+    }
 
     /**
      * List Head

@@ -18,6 +18,18 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that cons appends to array and is immutable
+     */
+    public function testConsOperator()
+    {
+        $cons = ArrayList::using('cons');
+
+        $this->assertEquals($cons(4, $this->testCase), [0, 1, 2, 3, 4]);
+        $this->assertEquals($cons(1, []), [1]);
+        $this->assertEquals([0, 1, 2, 3], $this->testCase);
+    }
+
+    /**
      * Tests that head returns the first element of a list
      */
     public function testHead_returnsFirstElement()
@@ -316,5 +328,29 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals([1, 1, 1], $replicate(3, 1));
         $this->assertEquals([], $replicate(0, 'foo'));
+    }
+
+    /**
+     * Group By should create groups from lists
+     */
+    public function testGroupBy()
+    {
+        // Test a simple keygen
+        $groupBy = ArrayList::using('groupBy');
+
+        $testCase = [1, 2, 3, 4, 5, 6, 7];
+        $correctAnswer = ['even' => [2, 4, 6], 'odd' => [1, 3, 5, 7]];
+
+        $keyGen = function($a) {
+            return ($a % 2 == 0) ? 'even' : 'odd';
+        };
+
+        $this->assertEquals($groupBy($keyGen, $testCase), $correctAnswer);
+
+        // Test an object keygen
+        $testCase = [['foo' => 'bar', 'value' => 1], ['foo' => 'bar', 'value' => 2], ['foo' => 'baz', 'value' => 3]];
+        $correctAnswer = ['bar' => [['foo' => 'bar', 'value' => 1], ['foo' => 'bar', 'value' => 2]], 'baz' => [['foo' => 'baz', 'value' => 3]]];
+
+        $this->assertEquals($groupBy(ArrayList::index('foo'), $testCase), $correctAnswer);
     }
 }

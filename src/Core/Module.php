@@ -100,7 +100,7 @@ abstract class Module
 
     protected static function curryWithArity(Callable $f, $arity, $appliedArgs = [])
     {
-        // Then return a new function where we use the arguments already closed over,
+        // Return a new function where we use the arguments already closed over,
         // and merge them with the arguments we get from the new function.
         return function(...$suppliedArgs) use ($f, $appliedArgs, $arity) {
             $args = array_merge($appliedArgs, $suppliedArgs);
@@ -112,7 +112,14 @@ abstract class Module
             // Otherwise, recursively call curry again, passing in the arguments supplied
             // from this call
             else
-                return self::curry($f, $args);
+                return self::curryWithArity($f, $arity, $args);
+        };
+    }
+
+    protected static function memoize(Callable $f)
+    {
+        return function(...$args) use ($f) {
+            return call_user_func_array($f, $args);
         };
     }
 
@@ -164,15 +171,19 @@ abstract class Module
             if (!method_exists($context, $f))
                 throw new FunctionNotFoundException("Function $f not found in module $context");
 
+            $arity = self::getArity([$context, $f]);
+
+            $functionInContext = self::memoize([$context, $f]);
+
             // If it does, then see if we're supposed to curry it. If not, just return it in a closure.
             if ($context::$doNotCurry === true || (is_array($context::$doNotCurry) && in_array($f, $context::$doNotCurry))) {
-                $fulfillment = function(...$args) use ($context, $f) {
-                    return call_user_func_array([$context, $f], $args);
+                $fulfillment = function(...$args) use ($functionInContext, $f) {
+                    return call_user_func_array($functionInContext, $args);
                 };
             }
             // Otherwise, curry it
             else
-                $fulfillment = self::curry([$context, $f]);
+                $fulfillment = self::curryWithArity($functionInContext, $arity);
 
             // Then store it in our cache so we can short circuit this process in the future
             self::$fulfillmentCache[$context][$f] = $fulfillment;

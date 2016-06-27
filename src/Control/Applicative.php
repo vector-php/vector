@@ -4,6 +4,9 @@ namespace Vector\Control;
 
 use Vector\Core\Module;
 
+use Vector\Lib\ArrayList;
+use Vector\Control\Functor;
+
 abstract class Applicative extends Module
 {
     protected static function pure($context, $a)
@@ -27,9 +30,9 @@ abstract class Applicative extends Module
             }
 
             return $crossProduct;
+        } else {
+            return $f->apply($a);
         }
-
-        return $f->apply($a);
     }
 
     protected static function liftA2($instance, $f, $a1, $a2)

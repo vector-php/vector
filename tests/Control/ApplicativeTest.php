@@ -22,7 +22,7 @@ class ApplicativeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($ap($fmap($add, [1, 2, 3]), [1]), [2, 3, 4]);
         $this->assertEquals($ap($fmap($mult, [1, 2, 3]), [1, 2, 3]), [1, 2, 3, 2, 4, 6, 3, 6, 9]);
     }
-
+    
     /**
      * LiftA2 calls off to pure and apply for array arguments - test
      * that it hands arrays off properly

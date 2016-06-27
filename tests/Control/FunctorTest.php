@@ -39,4 +39,19 @@ class FunctorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals([2, 3, 4], $fmap($addOne, [1, 2, 3]));
     }
+
+    /**
+     * FMap should behave as if it were compose when invoked on a closure
+     */
+    public function testThatFmapHandlesClosures()
+    {
+        $fmap = Functor::using('fmap');
+
+        $addOne = Stub\TestFunctions::using('addOne');
+        $mulTwo = function($a) { return $a * 2; };
+
+        $fmappedFunction = $fmap($mulTwo, $addOne);
+
+        $this->assertEquals($fmappedFunction(5), 12);
+    }
 }

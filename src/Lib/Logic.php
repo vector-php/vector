@@ -36,24 +36,22 @@ class Logic extends Module
      * $funcF = function($x) { return $x >= 5; };
      * $funcG = function($x) { return $x == 0; };
      *
-     * $combinator = $orCombinator($funcF, $funcG);
+     * $combinator = $orCombinator([$funcF, $funcG]);
      *
      * $combinator(9); // True
      * $combinator(0); // True
      * $combinator(2); // False
      * ```
      *
-     * @type (a -> Bool) -> (a -> Bool) -> (a -> Bool)
+     * @type [(a -> Bool)] -> a -> Bool
      *
      * @param  callable $f First function to combine
      * @param  callable $g Second function to combine
      * @return \Closure    Result of f(x) or g(x)
      */
-    protected static function _orCombinator(Callable $f, Callable $g)
+    protected static function _orCombinator($fs)
     {
-        return function ($x) use ($f, $g) {
-            return $f($x) || $g($x);
-        };
+
     }
 
     /**
@@ -243,6 +241,25 @@ class Logic extends Module
     protected static function _eqStrict($a, $b)
     {
         return $a === $b;
+    }
+
+    /**
+     * Logical Not
+     *
+     * Returns the inverse of $a
+     *
+     * ```
+     * $not(false); // true
+     * ```
+     *
+     * @type Bool -> Bool
+     *
+     * @param  bool $a Value to invert
+     * @return bool    Inverted value
+     */
+    protected static function _not($a)
+    {
+        return !$a;
     }
 
     /**

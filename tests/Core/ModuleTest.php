@@ -33,6 +33,28 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests that memoization works on the module
+     */
+    public function testMemoization()
+    {
+        $memoizedFunction = Stub\TestFunctions::using('memoizedFunction');
+
+        // On the first run we expect side effects
+        ob_start();
+        $this->assertEquals($memoizedFunction(1, 2, 3), 6);
+        $sideEffects = ob_get_clean();
+
+        $this->assertEquals($sideEffects, "I'm a side effect.");
+
+        // But on the second run we don't
+        ob_start();
+        $this->assertEquals($memoizedFunction(1, 2, 3), 6);
+        $sideEffects = ob_get_clean();
+
+        $this->assertEquals($sideEffects, "");
+    }
+
+    /**
      * Test that usingAll pulls ALL of the functions out of the given module.
      * It defers to Using, so all we need to test is that it returns them in a k/v array
      */
@@ -46,7 +68,8 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
             'twoArgFunction',
             'variadicFunction',
             'complexVariadicFunction',
-            'nonCurriedFunction'
+            'nonCurriedFunction',
+            'memoizedFunction'
         ]);
     }
 

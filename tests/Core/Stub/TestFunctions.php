@@ -10,6 +10,8 @@ class TestFunctions extends Module
 
     protected static $doNotCurry = ['nonCurriedFunction'];
 
+    protected static $memoize = true;
+
     protected static function _noArgFunction()
     {
         return true;
@@ -38,5 +40,12 @@ class TestFunctions extends Module
     protected static function _nonCurriedFunction($a, $b)
     {
         return true;
+    }
+
+    protected static function _memoizedFunction($a, $b, $c)
+    {
+        echo "I'm a side effect.";
+
+        return $a + $b + $c;
     }
 }

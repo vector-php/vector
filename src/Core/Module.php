@@ -85,20 +85,28 @@ abstract class Module
      * $myCurriedFunction(1)(1); // 2, PHP7 Only
      * ```
      *
-     * @type (* -> *) -> (* -> *)
+     * @type (* -> *) -> * -> *
      *
-     * @param  Callable $f           Function to curry
-     * @param  array    $appliedArgs The arguments already applied to the curried function. This
-     *                               argument is for internal use only.
-     * @return Callable              The result of currying the original function.
+     * @param  Callable $f Function to curry
+     * @return Callable    The result of currying the original function.
      */
-    protected static function curry(Callable $f, $appliedArgs = [])
+    protected static function curry(Callable $f)
     {
         // Curry a function of unknown arity
         return self::curryWithArity($f, self::getArity($f));
     }
 
-    protected static function curryWithArity(Callable $f, $arity, $appliedArgs = [])
+    /**
+     * Curry a function with a specific arity. This is used internally
+     * to curry functions that accept variadic arguments, e.g. for memoized functions.
+     *
+     * @param  Callable $f           Function to curry
+     * @param  Int      $arity       Arity of $f
+     * @param  array    $appliedArgs The arguments already applied to the curried function. This
+     *                               argument is for internal use only.
+     * @return Callable              The result of currying the original function.
+     */
+    private static function curryWithArity(Callable $f, $arity, $appliedArgs = [])
     {
         // Return a new function where we use the arguments already closed over,
         // and merge them with the arguments we get from the new function.
@@ -116,14 +124,56 @@ abstract class Module
         };
     }
 
+    /**
+     * Memoize a Function
+     *
+     * Provided a function $f, return a new function that keeps track of all calls to
+     * $f and caches their responses. Good for functions that have long-running execution times.
+     * Bad for functions that have side effects. But you don't write those now do you?
+     *
+     * ```
+     * $myFastFunction = $memoize($myBigFunction);
+     *
+     * $myFastFunction(1, 2); // Really long wait
+     * $myFastFunction(1, 2); // Instantaneous response
+     * ```
+     *
+     * @type (* -> *) -> * -> *
+     *
+     * @param  Callable $f Function to memoize
+     * @return Callable    Memoized funciton $f
+     */
     protected static function memoize(Callable $f)
     {
         return function(...$args) use ($f) {
-            return call_user_func_array($f, $args);
+            static $cache;
+
+            if ($cache === null)
+                $cache = [];
+
+            $key = serialize($args);
+
+            if (array_key_exists($key, $cache)) {
+                return $cache[$key];
+            } else {
+                $result = call_user_func_array($f, $args);
+                $cache[$key] = $result;
+
+                return $result;
+            }
         };
     }
 
-    protected static function getArity(Callable $f)
+    /**
+     * Function Arity
+     *
+     * Returns the arity of a funciton, e.g. the number of arguments it
+     * expects to recieve before it returns a value.
+     *
+     * @param  Callable $f Function to get arity for
+     * @return Int         Number of arguments for $f
+     */
+    private static function getArity(Callable $f)
     {
         if ($f instanceof \Closure) {
             $reflector = (new \ReflectionFunction($f));
@@ -161,32 +211,37 @@ abstract class Module
         $fulfilledRequest = array_map(function($f) use ($context) {
             // If we're using the dirty hack for IDE autocomplete, append an '_' to the name we're looking for
             if ($context::$dirtyHackToEnableIDEAutocompletion === true)
-                $f = '_' . $f;
+                $internalName = '_' . $f;
+            else
+                $internalName = $f;
 
             // See if we've already fulfilled the request for this function. If so, just return the cached one.
             if (array_key_exists($context, self::$fulfillmentCache) && array_key_exists($f, self::$fulfillmentCache[$context]))
-                return self::$fulfillmentCache[$context][$f];
+                return self::$fulfillmentCache[$context][$internalName];
 
             // If we haven't fulfilled it already, check to see if it even exists
-            if (!method_exists($context, $f))
+            if (!method_exists($context, $internalName))
                 throw new FunctionNotFoundException("Function $f not found in module $context");
 
-            $arity = self::getArity([$context, $f]);
+            // Check to see if we're memoizing this function, or the whole module. Otherwise, carry on.
+            if ($context::$memoize === true || in_array($f, $context::$memoize)) {
+                $functionInContext = self::memoize([$context, $internalName]);
+            }
+            else
+                $functionInContext = [$context, $internalName];
 
-            $functionInContext = self::memoize([$context, $f]);
-
-            // If it does, then see if we're supposed to curry it. If not, just return it in a closure.
+            // If the function exists, then see if we're supposed to curry it. If not, just return it in a closure.
             if ($context::$doNotCurry === true || (is_array($context::$doNotCurry) && in_array($f, $context::$doNotCurry))) {
-                $fulfillment = function(...$args) use ($functionInContext, $f) {
+                $fulfillment = function(...$args) use ($functionInContext) {
                     return call_user_func_array($functionInContext, $args);
                 };
             }
             // Otherwise, curry it
             else
-                $fulfillment = self::curryWithArity($functionInContext, $arity);
+                $fulfillment = self::curryWithArity($functionInContext, self::getArity([$context, $internalName]));
 
             // Then store it in our cache so we can short circuit this process in the future
-            self::$fulfillmentCache[$context][$f] = $fulfillment;
+            self::$fulfillmentCache[$context][$internalName] = $fulfillment;
 
             // And return it
             return $fulfillment;

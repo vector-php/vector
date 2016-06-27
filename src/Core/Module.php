@@ -22,6 +22,12 @@ abstract class Module
     protected static $dirtyHackToEnableIDEAutocompletion = false;
 
     /**
+     * An array of functions on this module to memoize automatically
+     * @var array
+     */
+    protected static $memoize = [];
+
+    /**
      * A memoized cache of all the function requests fulfilled by this module
      * @var array
      */
@@ -88,15 +94,12 @@ abstract class Module
      */
     protected static function curry(Callable $f, $appliedArgs = [])
     {
-        if ($f instanceof \Closure) {
-            $reflector = (new \ReflectionFunction($f));
-        } else {
-            $reflector = (new \ReflectionMethod($f[0], $f[1]));
-        }
+        // Curry a function of unknown arity
+        return self::curryWithArity($f, self::getArity($f));
+    }
 
-        // Count the number of arguments the function is asking for
-        $arity = $reflector->getNumberOfParameters();
-
+    protected static function curryWithArity(Callable $f, $arity, $appliedArgs = [])
+    {
         // Then return a new function where we use the arguments already closed over,
         // and merge them with the arguments we get from the new function.
         return function(...$suppliedArgs) use ($f, $appliedArgs, $arity) {
@@ -111,6 +114,18 @@ abstract class Module
             else
                 return self::curry($f, $args);
         };
+    }
+
+    protected static function getArity(Callable $f)
+    {
+        if ($f instanceof \Closure) {
+            $reflector = (new \ReflectionFunction($f));
+        } else {
+            $reflector = (new \ReflectionMethod($f[0], $f[1]));
+        }
+
+        // Count the number of arguments the function is asking for
+        return $reflector->getNumberOfParameters();
     }
 
     /**

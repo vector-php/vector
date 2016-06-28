@@ -255,8 +255,14 @@ class ArrayList extends Module
      */
     protected static function _index($i, $list)
     {
-        if (!isset($list[$i]))
+        /**
+         * isset is much faster at the common case (non-null values)
+         * but it falls down when the value is null, so we fallback to
+         * array_key_exists (slower).
+         */
+        if (!isset($list[$i]) && !array_key_exists($i, $list)){
             throw new IndexOutOfBoundsException("'index' function tried to access non-existent index '$i'");
+        }
 
         return $list[$i];
     }

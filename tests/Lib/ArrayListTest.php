@@ -112,6 +112,16 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that index returns existant index, even if the value is null
+     */
+    public function testIndex_returnsNullValue()
+    {
+        $index = ArrayList::Using('index');
+
+        $this->assertEquals($index(0, [null]), null);
+    }
+
+    /**
      * Test that index throws an exception when requesting a non-existant index
      */
     public function testIndex_throwsExceptionForNoKey()

@@ -7,20 +7,21 @@ use Vector\Core\Module;
 use Vector\Lib\ArrayList;
 
 /**
- * @method static callable orCombinator() orCombinator($f, $g)
- * @method static callable logicalOr() logicalOr($f, $g)
- * @method static callable logicalNot() logicalNot($a)
- * @method static callable logicalAnd() logicalAnd($a, $b)
- * @method static callable gt() gt($a, $b)
- * @method static callable gte() gte($a, $b)
- * @method static callable lt() lt($a, $b)
- * @method static callable lte() lte($a, $b)
- * @method static callable eq() eq($a, $b)
- * @method static callable eqStrict() eqStrict($a, $b)
- * @method static callable notEq() notEq($a, $b)
- * @method static callable notEqStrict() notEqStrict($a, $b)
- * @method static callable all() all($arr)
- * @method static callable any() any($arr)
+ * @method static callable orCombinator() orCombinator($fs, $a)
+ * @method static callable andCombinator() andCombinator($fs, $a)
+ * @method bool logicalOr() logicalOr($f, $g)
+ * @method bool logicalNot() logicalNot($a)
+ * @method bool logicalAnd() logicalAnd($a, $b)
+ * @method bool gt() gt($a, $b)
+ * @method bool gte() gte($a, $b)
+ * @method bool lt() lt($a, $b)
+ * @method bool lte() lte($a, $b)
+ * @method bool eq() eq($a, $b)
+ * @method bool eqStrict() eqStrict($a, $b)
+ * @method bool notEq() notEq($a, $b)
+ * @method bool notEqStrict() notEqStrict($a, $b)
+ * @method bool all() all($arr)
+ * @method bool any() any($arr)
  */
 class Logic extends Module
 {
@@ -45,13 +46,45 @@ class Logic extends Module
      *
      * @type [(a -> Bool)] -> a -> Bool
      *
-     * @param  callable $f First function to combine
-     * @param  callable $g Second function to combine
-     * @return \Closure    Result of f(x) or g(x)
+     * @param array $fs array of functions to combine
+     * @param mixed $a value to test
+     * @return \Closure test for or using provided functions
      */
-    protected static function _orCombinator($fs)
+    protected static function _orCombinator(array $fs, $a)
     {
+        return self::any(ArrayList::map(function ($c) use ($a) {
+            return $c($a);
+        }, $fs));
+    }
 
+    /**
+     * Logical And Combinator
+     *
+     * Given two functions f and g, combine them in such a way to produce a new
+     * function h that returns true given f(x) AND g(x) returns true.
+     *
+     * ```
+     * $funcF = function($x) { return $x < 5; };
+     * $funcG = function($x) { return $x > 0; };
+     *
+     * $combinator = $orCombinator([$funcF, $funcG]);
+     *
+     * $combinator(4); // True
+     * $combinator(2); // True
+     * $combinator(7); // False
+     * ```
+     *
+     * @type [(a -> Bool)] -> a -> Bool
+     *
+     * @param array $fs array of functions to combine
+     * @param mixed $a value to test
+     * @return \Closure test for or using provided functions
+     */
+    protected static function _andCombinator(array $fs, $a)
+    {
+        return self::all(ArrayList::map(function ($c) use ($a) {
+            return $c($a);
+        }, $fs));
     }
 
     /**

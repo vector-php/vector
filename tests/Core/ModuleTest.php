@@ -190,6 +190,8 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
             $nonCurriedFunction('a');
         } catch (\Exception $e) {
             $this->assertRegExp('/missing argument 2|expects exactly 2|exactly 2 expected/i', $e->getMessage());
+        } catch (\Throwable $e) {
+            $this->assertRegExp('/missing argument 2|expects exactly 2|exactly 2 expected/i', $e->getMessage());
         }
 
         // Test that if we do apply m arguments that we get the right result

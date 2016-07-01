@@ -13,6 +13,7 @@ use Vector\Control\Functor;
  * @method static array cons() cons($a, array $arr) Return $arr with $a appended to the end.
  * @method static mixed head() head(array $list) Return the first element of a list.
  * @method static array map() map(Callable $f, array $list) Return a transformed list.
+ * @method static array mapIndexed() mapIndexed(Callable $f, array $list) Return a transformed list, receives indexes.
  * @method static tail($list) Return a list sans first element.
  * @method static init($list) Return a list sans last element.
  * @method static last($list) Return the last element of a list.

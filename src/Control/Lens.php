@@ -43,7 +43,7 @@ class Lens extends Module
      * @param  Mixed $x    Object or array to view
      * @return Mixed       The property that the lens focused on
      */
-    protected static function view($lens, $x)
+    protected static function view(callable $lens, $x)
     {
         $compose   = Lambda::Using('compose');
         $makeConst = self::Using('constant');

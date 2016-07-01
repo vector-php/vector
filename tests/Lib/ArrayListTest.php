@@ -133,14 +133,23 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests that maybeIndex returns maybe values
+     * Test that mapIndexed receives an index
      */
-    public function testMaybe()
+    public function test_mapIndexed()
     {
-        $maybeIndex = ArrayList::Using('maybeIndex');
+        $mapIndexed = ArrayList::Using('mapIndexed');
 
-        $this->assertEquals(Maybe::Just(2), $maybeIndex(2, $this->testCase));
-        $this->assertEquals(Maybe::Nothing(), $maybeIndex(17, $this->testCase));
+        $list = [1, 2, 3];
+
+        $result = $mapIndexed(function ($value, $index) {
+            return [$value, $index];
+        }, $list);
+
+        $this->assertEquals([
+            [1, 0],
+            [2, 1],
+            [3, 2]
+        ], $result);
     }
 
     /**

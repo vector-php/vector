@@ -7,7 +7,6 @@ use Vector\Core\Exception\IndexOutOfBoundsException;
 
 use Vector\Core\Module;
 use Vector\Control\Functor;
-use Vector\Data\Maybe;
 
 /**
  * @method static array groupBy(callable $keyGen, array $list) Return a grouping of $list elements grouped by the $keyGen function.
@@ -19,7 +18,6 @@ use Vector\Data\Maybe;
  * @method static last($list) Return the last element of a list.
  * @method static length($list) Return the length of a list.
  * @method static index($i, $list) Return the element of a list at index 'i'.
- * @method static maybeIndex($i, $list) Return Just the element of a list at index 'i', or Nothing, as a Maybe instance.
  * @method static filter($f, $arr) Return a filtered array with every element passing test 'f'.
  * @method static keys($arr) Return the keys of a list.
  * @method static values($arr) Return the values of a list.
@@ -140,6 +138,27 @@ class ArrayList extends Module
     {
         $map = Functor::using('fmap');
         return $map($f, $list);
+    }
+
+    /**
+     * Array Map Indexed
+     *
+     * Given some function and a list of arbitrary length, return a new array that is the
+     * result of calling the given function on each element of the original list.
+     *
+     * ```
+     * $mapIndexed($filterEvenIndexes, [1, 2, 3]); // [null, 2, null]
+     * ```
+     *
+     * @type (a -> b -> c) -> [a] -> [c]
+     *
+     * @param  callable $f    Function to call for each element
+     * @param  array    $list List to call function on
+     * @return array          New list of elements after calling $f for the original list elements
+     */
+    protected static function _mapIndexed($f, $list)
+    {
+        return array_map($f, $list, array_keys($list));
     }
 
     /**
@@ -265,33 +284,6 @@ class ArrayList extends Module
         }
 
         return $list[$i];
-    }
-
-    /**
-     * Maybe List Index
-     *
-     * Returns the element of a list at the given index, or nothing. Is safe to call
-     * if you don't know if an index exists. If the index does not exist, returns `Nothing`.
-     * Otherwise returns `Just a`.
-     *
-     * ```
-     * $index(0, [1, 2, 3]); // Just 1
-     * $index('foo', ['bar' => 1, 'foo' => 2]); // Just 2
-     * $index('baz', [1, 2, 3]); // Nothing - (No exception thrown)
-     * ```
-     *
-     * @type Int -> a -> Maybe a
-     *
-     * @param  Int   $i    Index to get
-     * @param  Mixed $list List to get index from
-     * @return Maybe       Item from $list and index $i
-     */
-    protected static function _maybeIndex($i, $list)
-    {
-        if (isset($list[$i]))
-            return Maybe::Just($list[$i]);
-
-        return Maybe::Nothing();
     }
 
     /**

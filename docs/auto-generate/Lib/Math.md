@@ -1,11 +1,11 @@
 
-## add
+## _add
 
-__Arithmetic Addition__ :: Num a => a -> a -> a
+__Arithmetic Addition__ :: Number a => a -> a -> a
 
 
 
-Add two numbers together
+Add two numbers together.
 
 ```
 $add(2, 2); // 4
@@ -21,13 +21,13 @@ return | \number | Addition of $a + $b
 
 ---
 
-## divide
+## _divide
 
-__Arithmetic Division__ :: Num a => a -> a -> a
+__Arithmetic Division__ :: Number a => a -> a -> a
 
 
 
-Divide two numbers, with the first argument being the divisor
+Divide two numbers, with the first argument being the divisor.
 
 ```
 $divide(2, 8); // 4
@@ -43,9 +43,9 @@ return | float | Result of $b divided by $a
 
 ---
 
-## max
+## _max
 
-__Maximum Value__ :: Num a => a -> a -> a
+__Maximum Value__ :: Number a => a -> a -> a
 
 
 
@@ -66,9 +66,9 @@ return | \number | The greater of the two numbers
 
 ---
 
-## mean
+## _mean
 
-__Arithmetic mean__ :: Num a => [a] -> a
+__Arithmetic mean__ :: Number a => [a] -> a
 
 
 
@@ -87,9 +87,9 @@ return | \number | Mean of input list
 
 ---
 
-## min
+## _min
 
-__Minimum Value__ :: Num a => a -> a -> a
+__Minimum Value__ :: Number a => a -> a -> a
 
 
 
@@ -112,7 +112,7 @@ return | \number | The lesser of the two numbers
 
 ---
 
-## mod
+## _mod
 
 __Modulus Operator__ :: Int -> Int -> Int
 
@@ -136,13 +136,13 @@ return | int | Remainder of $b / $a
 
 ---
 
-## multiply
+## _multiply
 
-__Arithmetic Multiplication__ :: Num a => a -> a -> a
+__Arithmetic Multiplication__ :: Number a => a -> a -> a
 
 
 
-Multiply two numbers together
+Multiply two numbers together.
 
 ```
 $multiply(2, 4); // 8
@@ -158,13 +158,13 @@ return | \number | Multiplication of $a * $b
 
 ---
 
-## negate
+## _negate
 
-__Negate a number__ :: Num a => a -> a
+__Negate a number.__ :: Number a => a -> a
 
 
 
-Returns a given number * -1
+Returns a given number * -1.
 
 ```
 $negate(4); // -4
@@ -179,9 +179,9 @@ return | \number | The negated number
 
 ---
 
-## pow
+## _pow
 
-__Power function__ :: Num a => a -> a -> a
+__Power function__ :: Number a => a -> a -> a
 
 
 
@@ -202,9 +202,9 @@ return | \number | The base raised to the exponent's power
 
 ---
 
-## product
+## _product
 
-__Array Product__ :: Num a => [a] -> a
+__Array Product__ :: Number a => [a] -> a
 
 
 
@@ -224,9 +224,9 @@ return | mixed | Product of every value in the list
 
 ---
 
-## range
+## _range
 
-__Number Range__ :: Num a => a -> a -> a
+__Number Range__ :: Number a => a -> a -> a
 
 
 
@@ -250,9 +250,9 @@ return | array | All the numbers between the first and last argument
 
 ---
 
-## subtract
+## _subtract
 
-__Arithmetic Subtraction__ :: Num a => a -> a -> a
+__Arithmetic Subtraction.__ :: Number a => a -> a -> a
 
 
 
@@ -272,9 +272,9 @@ return | \number | Subtraction of $b - $a
 
 ---
 
-## sum
+## _sum
 
-__Array Sum__ :: Num a => [a] -> a
+__Array Sum__ :: Number a => [a] -> a
 
 
 

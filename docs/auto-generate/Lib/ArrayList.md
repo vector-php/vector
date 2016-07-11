@@ -1,5 +1,29 @@
 
-## concat
+## _bifurcate
+
+__Array Bifurcation__ :: (a -> Bool) -> [a] -> ([a], [a])
+
+
+
+Given an array and some filtering test that returns a boolean, return two arrays - one array
+of elements that pass the test, and another array of elements that don't. Similar to filter,
+but returns the elements that fail as well.
+
+```
+$bifurcate($isEven, [1, 2, 3, 4, 5]); // [[2, 4], [1, 3, 5]]
+```
+
+Parameter | Type | Description
+-|-|-
+$test | callable | Test to use when bifurcating the array
+$arr | array | Array to split apart
+return | array | An array with two elements; the first is the list that passed the test,
+                       and the second element is the list that failed the test
+
+
+---
+
+## _concat
 
 __Array Concatenation__ :: [a] -> [a] -> [a]
 
@@ -23,7 +47,29 @@ return | array | Concatenated list of $a and $b
 
 ---
 
-## contains
+## _cons
+
+__Cons Operator__ :: a -> [a] -> [a]
+
+
+
+Given a value and an array, append that value to the end of the array.
+
+```
+$cons(3, [1, 2]); [1, 2, 3]
+$cons(1, []); [1]
+```
+
+Parameter | Type | Description
+-|-|-
+$a | mixed | Value to add to array
+$arr | array | Array to add value to
+return | array | Array with value added
+
+
+---
+
+## _contains
 
 __Array Contains Element__ :: a -> [a] -> Bool
 
@@ -46,7 +92,7 @@ return | bool | Whether or not $item is in $list
 
 ---
 
-## drop
+## _drop
 
 __Drop Elements__ :: Int -> [a] -> [a]
 
@@ -69,7 +115,7 @@ return | array | Original list minus n elements from the front
 
 ---
 
-## dropWhile
+## _dropWhile
 
 __Drop Elements with Predicate__ :: (a -> Bool) -> [a] -> [a]
 
@@ -94,7 +140,7 @@ return | array | List with elements removed from the front
 
 ---
 
-## filter
+## _filter
 
 __Filter a List__ :: (a -> Bool) -> [a] -> [a]
 
@@ -123,7 +169,7 @@ return | array | Result of filtering the list
 
 ---
 
-## flatten
+## _flatten
 
 __Array Flatten__ :: [a] -> [b]
 
@@ -144,9 +190,9 @@ return | array | Result of flattening $list into a 1-dimensional list
 
 ---
 
-## foldl
+## _foldl
 
-__List Fold - From Left__ :: (a -> b -> b) -> b -> [a] -> b
+__List Fold - From Left__ :: (b -> a -> b) -> b -> [a] -> b
 
 
 
@@ -173,7 +219,35 @@ return | mixed | The result of applying the fold function to each element one by
 
 ---
 
-## head
+## _groupBy
+
+__Group By__ :: (a -> String) -> [a] -> [[a]]
+
+
+
+Given a function that turns an element into a string, map over a list of elements
+and return a multi-dimensional array with elements grouped together by their key
+generator.
+
+```
+$testCase = [1, 2, 3, 4, 5, 6, 7];
+$keyGen = function($a) {
+    return ($a % 2 == 0) ? 'even' : 'odd';
+};
+
+$groupBy($keyGen, $testCase); // ['even' => [2, 4, 6], 'odd' => [1, 3, 5, 7]]
+```
+
+Parameter | Type | Description
+-|-|-
+$keyGen | \Closure | Key generating function
+$list | array | List to group
+return | array | Multidimensional array of grouped elements
+
+
+---
+
+## _head
 
 __List Head__ :: [a] -> a
 
@@ -200,7 +274,7 @@ return | Mixed | First element of $list
 
 ---
 
-## index
+## _index
 
 __List Index__ :: Int -> [a] -> a
 
@@ -227,7 +301,7 @@ return | Mixed | Item from $list and index $i
 
 ---
 
-## init
+## _init
 
 __Initial List Values__ :: [a] -> [a]
 
@@ -250,7 +324,7 @@ return | array | $list without the last element
 
 ---
 
-## keys
+## _keys
 
 __Array Keys__ :: [a] -> [b]
 
@@ -272,7 +346,7 @@ return | array | The keys of $arr
 
 ---
 
-## last
+## _last
 
 __Last List Value__ :: [a] -> a
 
@@ -298,7 +372,7 @@ return | Mixed | The last element of $list
 
 ---
 
-## length
+## _length
 
 __Array Length__ :: [a] -> a
 
@@ -319,7 +393,7 @@ return | Int | Length of $list
 
 ---
 
-## map
+## _map
 
 __Array Map__ :: (a -> b) -> [a] -> [b]
 
@@ -341,7 +415,7 @@ return | array | New list of elements after calling $f for the original list ele
 
 ---
 
-## maybeIndex
+## _maybeIndex
 
 __Maybe List Index__ :: Int -> a -> Maybe a
 
@@ -366,7 +440,7 @@ return | \Maybe | Item from $list and index $i
 
 ---
 
-## replicate
+## _replicate
 
 __Replicate Item__ :: Int -> a -> [a]
 
@@ -388,7 +462,7 @@ return | array | Array with $n items
 
 ---
 
-## reverse
+## _reverse
 
 __Array Reverse__ :: [a] -> [a]
 
@@ -408,7 +482,7 @@ return | array | Array in the reverse order
 
 ---
 
-## set
+## _set
 
 __Set Array Value__ :: a -> [b] -> b -> [b]
 
@@ -432,7 +506,7 @@ return | array | Result of setting $arr[$key] = $val
 
 ---
 
-## tail
+## _tail
 
 __List Tail__ :: [a] -> [a]
 
@@ -455,7 +529,7 @@ return | array | $list without the first element
 
 ---
 
-## take
+## _take
 
 __Take Elements__ :: Int -> [a] -> [a]
 
@@ -477,7 +551,7 @@ return | array | First n elements of the array
 
 ---
 
-## takeWhile
+## _takeWhile
 
 __Take Elements with Predicate__ :: (a -> Bool) -> [a] -> [a]
 
@@ -501,7 +575,7 @@ return | array | First elements of list that all pass the $predicate
 
 ---
 
-## values
+## _values
 
 __Array Values__ :: [a] -> [a]
 
@@ -522,7 +596,29 @@ return | array | Indexed array with values of $arr
 
 ---
 
-## zipWith
+## _zip
+
+__Array Zip__ :: [a] -> [b] -> [(a, b)]
+
+
+
+Given two arrays a and b, return a new array where each element is a tuple of a and b. If a and b
+are not the same length, the resultant array will always be the same length as the shorter array.
+
+```
+$zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]
+```
+
+Parameter | Type | Description
+-|-|-
+$a | array | The first array to use when zipping
+$b | array | The second array to use when zipping
+return | array | Array of tuples from a and b combined
+
+
+---
+
+## _zipWith
 
 __Custom Array Zip__ :: (a -> b -> c) -> [a] -> [b] -> [c]
 

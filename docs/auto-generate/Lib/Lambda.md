@@ -1,5 +1,5 @@
 
-## compose
+## _compose
 
 __No Summary Given__ :: No Type Signature Provided
 
@@ -12,7 +12,29 @@ No Description Given. Make an issue referencing this function's lack of
 
 ---
 
-## id
+## _flip
+
+__Flip Combinator__ :: (a -> b -> c) -> b -> a -> c
+
+
+
+Given a function that takes two arguments, return a new function that
+takes those two arguments with their order reversed.
+
+```
+$subtract(2, 6); // 4
+$flip($subtract)(2, 6); // -4
+```
+
+Parameter | Type | Description
+-|-|-
+$f | \Closure | Function to flip
+return | \Closure | Flipped function
+
+
+---
+
+## _id
 
 __Identity Function__ :: a -> a
 
@@ -33,7 +55,7 @@ return | mixed | The given value, unchanged
 
 ---
 
-## k
+## _k
 
 __K Combinator__ :: a -> (b -> a)
 
@@ -58,7 +80,7 @@ return | \Closure | Expression which always returns $k
 
 ---
 
-## pipe
+## _pipe
 
 __No Summary Given__ :: No Type Signature Provided
 

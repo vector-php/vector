@@ -1,5 +1,5 @@
 
-## concat
+## _concat
 
 __String Concatenation__ :: String -> String -> String
 
@@ -22,7 +22,7 @@ return | String | Concatenated strings
 
 ---
 
-## join
+## _join
 
 __String Joining__ :: String -> [String] -> String
 
@@ -45,7 +45,7 @@ return | String | Joined string based on delimiter
 
 ---
 
-## split
+## _split
 
 __String Splitting__ :: String -> String -> [String]
 
@@ -70,7 +70,7 @@ return | array | List of chunks from splitting the string
 
 ---
 
-## startsWith
+## _startsWith
 
 __Substring Match__ :: String -> String -> Bool
 
@@ -93,7 +93,7 @@ return | Bool | Whether or not the string starts with the substring
 
 ---
 
-## toLowercase
+## _toLowercase
 
 __Lowercase Conversion__ :: String -> String
 
@@ -113,7 +113,7 @@ return | String | Lowercase string
 
 ---
 
-## toUppercase
+## _toUppercase
 
 __Uppercase Conversion__ :: String -> String
 
@@ -133,18 +133,23 @@ return | String | Uppercase string
 
 ---
 
-## trim
+## _trim
 
-__Trim Whitespace__ :: No Type Signature Provided
+__Trim Whitespace__ :: String -> String
 
 
 
 Removes all leading and trailing whitespace from a string. Defers to
 PHP trim.
 
+```
+$trim(' asdf '); // 'asdf'
+```
+
 Parameter | Type | Description
 -|-|-
-return | \[type] | [description]
+$str | String | string to trim
+return | string | 
 
 
 ---

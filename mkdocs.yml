@@ -27,4 +27,29 @@ pages:
                         Maybe: api-reference/maybe.md
                     -
                         Either: api-reference/either.md
-
+            -
+                Lib:
+                    -
+                        ArrayList: auto-generate/Lib/ArrayList.md
+                    -
+                        Lambda: auto-generate/Lib/Lambda.md
+                    -
+                        Logic: auto-generate/Lib/Logic.md
+                    -
+                        Math: auto-generate/Lib/Math.md
+                    -
+                        Maybe: auto-generate/Lib/Maybe.md
+                    -
+                        Object: auto-generate/Lib/Object.md
+                    -
+                        Strings: auto-generate/Lib/Strings.md
+            -
+                Control:
+                    -
+                        Applicative: auto-generate/Control/Applicative.md
+                    -
+                        Functor: auto-generate/Control/Functor.md
+                    -
+                        Lens: auto-generate/Control/Lens.md
+                    -
+                        Monad: auto-generate/Control/Monad.md

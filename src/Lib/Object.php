@@ -5,15 +5,13 @@ namespace Vector\Lib;
 use Vector\Core\Module;
 
 /**
- * @method static callable set() set($key, $obj, $val)
- * @method static callable get() get($prop, $obj)
- * @method static callable invoke() invoke($method, $obj)
+ * @method static callable setValue() set($key, $obj, $val)
+ * @method static callable getValue() get($prop, $obj)
+ * @method static callable invokeMethod() invoke($method, $obj)
  * @method static callable isInstanceOf() isInstanceOf($expected, $given)
  */
 class Object extends Module
 {
-    protected static $dirtyHackToEnableIDEAutocompletion = true;
-
     /**
      * Set Property
      *
@@ -35,7 +33,7 @@ class Object extends Module
      *
      * @return Object $obj Object
      */
-    protected static function _set($key, $obj, $val)
+    protected static function __setValue($key, $obj, $val)
     {
         $newObj = clone $obj;
 
@@ -61,7 +59,7 @@ class Object extends Module
      *
      * @return mixed $val value
      */
-    protected static function _get($prop, $obj)
+    protected static function __getValue($prop, $obj)
     {
         return $obj->$prop;
     }
@@ -88,7 +86,7 @@ class Object extends Module
      *
      * @return mixed $val value
      */
-    protected static function _invoke($method, $obj)
+    protected static function __invokeMethod($method, $obj)
     {
         return call_user_func([$obj, $method]);
     }
@@ -109,7 +107,7 @@ class Object extends Module
      *
      * @return mixed $val value
      */
-    protected static function _isInstanceOf($expected, $given)
+    protected static function __isInstanceOf($expected, $given)
     {
         return $given instanceof $expected;
     }

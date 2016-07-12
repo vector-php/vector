@@ -21,8 +21,6 @@ use Vector\Core\Module;
  */
 class Math extends Module
 {
-    protected static $dirtyHackToEnableIDEAutocompletion = true;
-
     /**
      * Arithmetic Addition
      *
@@ -39,7 +37,7 @@ class Math extends Module
      * @param  number $b Second number to add
      * @return number    Addition of $a + $b
      */
-    protected static function _add($a, $b)
+    protected static function __add($a, $b)
     {
         return $a + $b;
     }
@@ -60,7 +58,7 @@ class Math extends Module
      * @param  array  $a List of numbers to add
      * @return number    Sum of all the elements of the list
      */
-    protected static function _sum($a)
+    protected static function __sum($a)
     {
         return array_reduce($a, function ($carry, $item) use ($a) {
             $carry += $item;
@@ -83,7 +81,7 @@ class Math extends Module
      * @param  number $a Number to make negative
      * @return number    The negated number
      */
-    protected static function _negate($a)
+    protected static function __negate($a)
     {
         return -$a;
     }
@@ -104,7 +102,7 @@ class Math extends Module
      * @param  number $b Number to subtract from
      * @return number    Subtraction of $b - $a
      */
-    protected static function _subtract($a, $b)
+    protected static function __subtract($a, $b)
     {
         return $b - $a;
     }
@@ -125,7 +123,7 @@ class Math extends Module
      * @param  number $b Second number to multiply
      * @return number    Multiplication of $a * $b
      */
-    protected static function _multiply($a, $b)
+    protected static function __multiply($a, $b)
     {
         return $a * $b;
     }
@@ -146,7 +144,7 @@ class Math extends Module
      * @param  array $a List of values to multiply
      * @return mixed    Product of every value in the list
      */
-    protected static function _product($a)
+    protected static function __product($a)
     {
         return empty($a)
             ? 0
@@ -172,7 +170,7 @@ class Math extends Module
      * @param  number $b Numerator
      * @return float     Result of $b divided by $a
      */
-    protected static function _divide($a, $b)
+    protected static function __divide($a, $b)
     {
         return $b / $a;
     }
@@ -195,7 +193,7 @@ class Math extends Module
      * @param  int $b Numerator
      * @return int    Remainder of $b / $a
      */
-    protected static function _mod($a, $b)
+    protected static function __mod($a, $b)
     {
         return $b % $a;
     }
@@ -220,7 +218,7 @@ class Math extends Module
      * @param  number $last    Last value in the list
      * @return array        All the numbers between the first and last argument
      */
-    protected static function _range($step, $first, $last)
+    protected static function __range($step, $first, $last)
     {
         return ($step + $first >= $last)
             ? [$first]
@@ -246,7 +244,7 @@ class Math extends Module
      * @param  number $b Second number to compare
      * @return number    The lesser of the two numbers
      */
-    protected static function _min($a, $b)
+    protected static function __min($a, $b)
     {
         return min([$a, $b]);
     }
@@ -268,7 +266,7 @@ class Math extends Module
      * @param  number $b Second number to compare
      * @return number    The greater of the two numbers
      */
-    protected static function _max($a, $b)
+    protected static function __max($a, $b)
     {
         return max([$a, $b]);
     }
@@ -290,7 +288,7 @@ class Math extends Module
      * @param  number $b The power base
      * @return number    The base raised to the exponent's power
      */
-    protected static function _pow($a, $b)
+    protected static function __pow($a, $b)
     {
         return pow($b, $a);
     }
@@ -310,7 +308,7 @@ class Math extends Module
      * @param  array  $arr List of numbers
      * @return number      Mean of input list
      */
-    protected static function _mean($arr)
+    protected static function __mean($arr)
     {
         return count($arr)
             ? array_sum($arr) / count($arr)

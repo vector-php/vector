@@ -13,9 +13,7 @@ use Vector\Core\Module;
  */
 abstract class Lambda extends Module
 {
-    protected static $dirtyHackToEnableIDEAutocompletion = true;
-
-    protected static function _pipe(...$fs)
+    protected static function __pipe(...$fs)
     {
         return function($inputArg) use ($fs) {
             return array_reduce($fs, function($carry, $f) {
@@ -24,9 +22,9 @@ abstract class Lambda extends Module
         };
     }
 
-    protected static function _compose(...$fs)
+    protected static function __compose(...$fs)
     {
-        return self::_pipe(...array_reverse($fs));
+        return self::pipe(...array_reverse($fs));
     }
 
     /**
@@ -45,7 +43,7 @@ abstract class Lambda extends Module
      * @param  \Closure $f Function to flip
      * @return \Closure    Flipped function
      */
-    protected static function _flip($f)
+    protected static function __flip($f)
     {
         return function($a, $b) use ($f) {
             return $f($b, $a);
@@ -71,7 +69,7 @@ abstract class Lambda extends Module
      * @param  mixed    $k Value to express in the combinator
      * @return \Closure    Expression which always returns $k
      */
-    protected static function _k($k)
+    protected static function __k($k)
     {
         return function(...$null) use ($k)
         {
@@ -94,7 +92,7 @@ abstract class Lambda extends Module
      * @param  mixed $a Value to return
      * @return mixed    The given value, unchanged
      */
-    protected static function _id($a)
+    protected static function __id($a)
     {
         return $a;
     }

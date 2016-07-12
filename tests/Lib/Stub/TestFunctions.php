@@ -6,27 +6,27 @@ use Vector\Core\Module;
 
 class TestFunctions extends Module
 {
-    protected static function plusTwo($a)
+    protected static function __plusTwo($a)
     {
         return $a + 2;
     }
 
-    protected static function timesTwo($a)
+    protected static function __timesTwo($a)
     {
         return $a * 2;
     }
 
-    protected static function returnsTrue($a)
+    protected static function __returnsTrue($a)
     {
         return true;
     }
 
-    protected static function invertsBool($a)
+    protected static function __invertsBool($a)
     {
         return !$a;
     }
 
-    protected static function expectsNotNull($a)
+    protected static function __expectsNotNull($a)
     {
         return $a !== null;
     }

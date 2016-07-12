@@ -25,8 +25,6 @@ use Vector\Lib\ArrayList;
  */
 class Logic extends Module
 {
-    protected static $dirtyHackToEnableIDEAutocompletion = true;
-
     /**
      * Logical Or Combinator
      *
@@ -50,7 +48,7 @@ class Logic extends Module
      * @param mixed $a value to test
      * @return \Closure test for or using provided functions
      */
-    protected static function _orCombinator(array $fs, $a)
+    protected static function __orCombinator(array $fs, $a)
     {
         return self::any(ArrayList::map(function ($c) use ($a) {
             return $c($a);
@@ -80,7 +78,7 @@ class Logic extends Module
      * @param mixed $a value to test
      * @return \Closure test for or using provided functions
      */
-    protected static function _andCombinator(array $fs, $a)
+    protected static function __andCombinator(array $fs, $a)
     {
         return self::all(ArrayList::map(function ($c) use ($a) {
             return $c($a);
@@ -103,7 +101,7 @@ class Logic extends Module
      * @param  mixed $b Second value
      * @return Bool Result of OR
      */
-    protected static function _logicalOr($a, $b)
+    protected static function __logicalOr($a, $b)
     {
         return $a || $b;
     }
@@ -124,7 +122,7 @@ class Logic extends Module
      * @param  mixed $a value
      * @return Bool Result of NOT
      */
-    protected static function _logicalNot($a)
+    protected static function __logicalNot($a)
     {
         return !$a;
     }
@@ -145,7 +143,7 @@ class Logic extends Module
      * @param  mixed $b Second value
      * @return Bool Result of AND
      */
-    protected static function _logicalAnd($a, $b)
+    protected static function __logicalAnd($a, $b)
     {
         return $a && $b;
     }
@@ -166,7 +164,7 @@ class Logic extends Module
      * @param  mixed $b Value to test
      * @return Bool is $b greater than $a
      */
-    protected static function _gt($a, $b)
+    protected static function __gt($a, $b)
     {
         return $b > $a;
     }
@@ -187,7 +185,7 @@ class Logic extends Module
      * @param  mixed $b Value to test
      * @return Bool is $b greater than or equal to $a
      */
-    protected static function _gte($a, $b)
+    protected static function __gte($a, $b)
     {
         return $b >= $a;
     }
@@ -208,7 +206,7 @@ class Logic extends Module
      * @param  mixed $b Value to test
      * @return Bool is $b less than $a
      */
-    protected static function _lt($a, $b)
+    protected static function __lt($a, $b)
     {
         return $b < $a;
     }
@@ -229,7 +227,7 @@ class Logic extends Module
      * @param  mixed $b Value to test
      * @return Bool is $b less than or equal to $a
      */
-    protected static function _lte($a, $b)
+    protected static function __lte($a, $b)
     {
         return $b <= $a;
     }
@@ -250,7 +248,7 @@ class Logic extends Module
      * @param  mixed $b Second value
      * @return Bool is $a equal to $b
      */
-    protected static function _eq($a, $b)
+    protected static function __eq($a, $b)
     {
         return $a == $b;
     }
@@ -271,7 +269,7 @@ class Logic extends Module
      * @param  mixed $b Second value
      * @return Bool is $a equal to $b
      */
-    protected static function _eqStrict($a, $b)
+    protected static function __eqStrict($a, $b)
     {
         return $a === $b;
     }
@@ -290,7 +288,7 @@ class Logic extends Module
      * @param  bool $a Value to invert
      * @return bool    Inverted value
      */
-    protected static function _not($a)
+    protected static function __not($a)
     {
         return !$a;
     }
@@ -311,7 +309,7 @@ class Logic extends Module
      * @param  mixed $b Second value
      * @return Bool is $a not equal to $b
      */
-    protected static function _notEq($a, $b)
+    protected static function __notEq($a, $b)
     {
         return $a != $b;
     }
@@ -332,7 +330,7 @@ class Logic extends Module
      * @param  mixed $b Second value
      * @return Bool is $a not equal to $b
      */
-    protected static function _notEqStrict($a, $b)
+    protected static function __notEqStrict($a, $b)
     {
         return $a !== $b;
     }
@@ -352,7 +350,7 @@ class Logic extends Module
      * @param  array $arr Values to test
      * @return Bool are all values truthy
      */
-    protected static function _all($arr)
+    protected static function __all($arr)
     {
         return ArrayList::foldl(self::using('logicalAnd'), true, $arr);
     }
@@ -372,7 +370,7 @@ class Logic extends Module
      * @param  array $arr Values to test
      * @return Bool are any values truthy
      */
-    protected static function _any($arr)
+    protected static function __any($arr)
     {
         return ArrayList::foldl(self::using('logicalOr'), false, $arr);
     }

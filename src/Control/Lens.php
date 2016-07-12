@@ -13,12 +13,12 @@ use Vector\Lib\Object;
 
 class Lens extends Module
 {
-    protected static function constant($a)
+    protected static function __constant($a)
     {
         return Constant::Constant($a);
     }
 
-    protected static function identity($a)
+    protected static function __identity($a)
     {
         return Identity::Identity($a);
     }
@@ -43,7 +43,7 @@ class Lens extends Module
      * @param  Mixed $x    Object or array to view
      * @return Mixed       The property that the lens focused on
      */
-    protected static function view(callable $lens, $x)
+    protected static function __viewL(callable $lens, $x)
     {
         $compose   = Lambda::Using('compose');
         $makeConst = self::Using('constant');
@@ -57,7 +57,7 @@ class Lens extends Module
         return $view($x);
     }
 
-    protected static function over($lens, $f, $x)
+    protected static function __overL($lens, $f, $x)
     {
         $compose   = Lambda::Using('compose');
         $makeIdent = self::Using('identity');
@@ -73,29 +73,29 @@ class Lens extends Module
         return $over($x);
     }
 
-    protected static function set($lens, $v, $x)
+    protected static function __setL($lens, $v, $x)
     {
         $k    = Lambda::Using('k');
-        $over = self::Using('over');
+        $over = self::Using('overL');
 
         return $over($lens, $k($v), $x);
     }
 
-    protected static function indexLens($index)
+    protected static function __indexLens($index)
     {
-        $indexLens = self::makeLens(ArrayList::index(), ArrayList::set());
+        $indexLens = self::makeLens(ArrayList::index(), ArrayList::setValue());
 
         return $indexLens($index);
     }
 
-    protected static function propLens($prop)
+    protected static function __propLens($prop)
     {
-        $propLens = self::makeLens(Object::get(), Object::set());
+        $propLens = self::makeLens(Object::getValue(), Object::setValue());
 
         return $propLens($prop);
     }
 
-    protected static function indexLensSafe($index)
+    protected static function __indexLensSafe($index)
     {
         $safeGetter = function($index, $arr) {
             if ($arr === null)
@@ -107,17 +107,17 @@ class Lens extends Module
                 return null;
         };
 
-        $indexLens = self::makeLens($safeGetter, ArrayList::set());
+        $indexLens = self::makeLens($safeGetter, ArrayList::setValue());
 
         return $indexLens($index);
     }
 
-    protected static function pathLens($path)
+    protected static function __pathLens($path)
     {
         return Lambda::compose(...Functor::fmap(function($index) { return self::indexLens($index); }, $path));
     }
 
-    protected static function pathLensSafe($path)
+    protected static function __pathLensSafe($path)
     {
         return Lambda::compose(...Functor::fmap(function($index) { return self::indexLensSafe($index); }, $path));
     }

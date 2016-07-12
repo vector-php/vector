@@ -7,7 +7,7 @@ use Vector\Lib\ArrayList;
 
 abstract class Monad extends Module
 {
-    protected static function bind($f, $container)
+    protected static function __bind($f, $container)
     {
         if (is_array($container)) {
             $result = [];
@@ -23,7 +23,7 @@ abstract class Monad extends Module
         return $container->bind($f);
     }
 
-    protected static function kleisliCompose($f, $g)
+    protected static function __kleisliCompose($f, $g)
     {
         return function($x) use ($f, $g) {
             $bind = self::Using('bind');

@@ -23,7 +23,7 @@ use Vector\Control\Functor;
  * @method static keys($arr) Return the keys of a list.
  * @method static values($arr) Return the values of a list.
  * @method static concat($a, $b) Return two lists concatenated together.
- * @method static set($key, $arr, $val) Return a list with the element at index 'key' set to 'val'.
+ * @method static setValue($key, $arr, $val) Return a list with the element at index 'key' set to 'val'.
  * @method static foldl($f, $seed, $list) Return the result of folding 'f' over a list with initial value 'seed', from the left.
  * @method static zipWith($f, $a, $b) Return two lists combined by combinator 'f'.
  * @method static drop($n, $list) Return a list with 'n' elements removed from the front.
@@ -37,8 +37,6 @@ use Vector\Control\Functor;
  */
 class ArrayList extends Module
 {
-    protected static $dirtyHackToEnableIDEAutocompletion = true;
-
     /**
      * Cons Operator
      *
@@ -55,7 +53,7 @@ class ArrayList extends Module
      * @param  array $arr Array to add value to
      * @return array      Array with value added
      */
-    protected static function _cons($a, $arr)
+    protected static function __cons($a, $arr)
     {
         $arr[] = $a;
         return $arr;
@@ -83,7 +81,7 @@ class ArrayList extends Module
      * @param  array    $list   List to group
      * @return array            Multidimensional array of grouped elements
      */
-    protected static function _groupBy($keyGen, $list)
+    protected static function __groupBy($keyGen, $list)
     {
         return self::foldl(function($group, $element) use ($keyGen) {
             $group[$keyGen($element)][] = $element;
@@ -111,7 +109,7 @@ class ArrayList extends Module
      * @param  array $list Key/Value array or List
      * @return Mixed       First element of $list
      */
-    protected static function _head($list)
+    protected static function __head($list)
     {
         if (count($list) === 0)
             throw new EmptyListException("'head' function is undefined for empty lists.");
@@ -135,7 +133,7 @@ class ArrayList extends Module
      * @param  array    $list List to call function on
      * @return array          New list of elements after calling $f for the original list elements
      */
-    protected static function _map($f, $list)
+    protected static function __map($f, $list)
     {
         $map = Functor::using('fmap');
         return $map($f, $list);
@@ -157,7 +155,7 @@ class ArrayList extends Module
      * @param  array    $list List to call function on
      * @return array          New list of elements after calling $f for the original list elements
      */
-    protected static function _mapIndexed($f, $list)
+    protected static function __mapIndexed($f, $list)
     {
         return array_map($f, $list, array_keys($list));
     }
@@ -179,7 +177,7 @@ class ArrayList extends Module
      * @param  array $list Key/Value array or List
      * @return array       $list without the first element
      */
-    protected static function _tail($list)
+    protected static function __tail($list)
     {
         return array_slice($list, 1, count($list));
     }
@@ -201,7 +199,7 @@ class ArrayList extends Module
      * @param  array $list Key/Value array or List
      * @return array       $list without the last element
      */
-    protected static function _init($list)
+    protected static function __init($list)
     {
         return array_slice($list, 0, count($list) - 1);
     }
@@ -225,7 +223,7 @@ class ArrayList extends Module
      * @param  array $list Key/Value array or List
      * @return Mixed       The last element of $list
      */
-    protected static function _last($list)
+    protected static function __last($list)
     {
         if (count($list) === 0)
             throw new EmptyListException("'last' function is undefined for empty lists.");
@@ -248,7 +246,7 @@ class ArrayList extends Module
      * @param  array $list Key/Value array or List
      * @return Int         Length of $list
      */
-    protected static function _length($list)
+    protected static function __length($list)
     {
         return count($list);
     }
@@ -273,7 +271,7 @@ class ArrayList extends Module
      * @param  array $list List to get index from
      * @return Mixed       Item from $list and index $i
      */
-    protected static function _index($i, $list)
+    protected static function __index($i, $list)
     {
         /**
          * isset is much faster at the common case (non-null values)
@@ -310,7 +308,7 @@ class ArrayList extends Module
      * @param  array    $arr List to filter
      * @return array         Result of filtering the list
      */
-    protected static function _filter($f, $arr)
+    protected static function __filter($f, $arr)
     {
         return array_filter($arr, $f);
     }
@@ -331,7 +329,7 @@ class ArrayList extends Module
      * @param  array $arr List to get keys from
      * @return array      The keys of $arr
      */
-    protected static function _keys($arr)
+    protected static function __keys($arr)
     {
         return array_keys($arr);
     }
@@ -351,7 +349,7 @@ class ArrayList extends Module
      * @param  array $arr Key/Value array
      * @return array      Indexed array with values of $arr
      */
-    protected static function _values($arr)
+    protected static function __values($arr)
     {
         return array_values($arr);
     }
@@ -374,7 +372,7 @@ class ArrayList extends Module
      * @param  array $b List to append
      * @return array    Concatenated list of $a and $b
      */
-    protected static function _concat($a, $b)
+    protected static function __concat($a, $b)
     {
         return array_merge($a, $b);
     }
@@ -397,7 +395,7 @@ class ArrayList extends Module
      * @param  Mixed $val Value to set $arr[$key] to
      * @return array      Result of setting $arr[$key] = $val
      */
-    protected static function _set($key, $arr, $val)
+    protected static function __setValue($key, $arr, $val)
     {
         $arr[$key] = $val;
         return $arr;
@@ -426,7 +424,7 @@ class ArrayList extends Module
      * @param  array    $list The list to fold over
      * @return mixed          The result of applying the fold function to each element one by one
      */
-    protected static function _foldl($f, $seed, $list)
+    protected static function __foldl($f, $seed, $list)
     {
         return array_reduce($list, $f, $seed);
     }
@@ -451,7 +449,7 @@ class ArrayList extends Module
      * @param  array    $b The second array to use in the combinator
      * @return array       The result of calling f with each element of a and b in series
      */
-    protected static function _zipWith($f, $a, $b)
+    protected static function __zipWith($f, $a, $b)
     {
         $result = [];
 
@@ -478,7 +476,7 @@ class ArrayList extends Module
      * @param  array $b The second array to use when zipping
      * @return array    Array of tuples from a and b combined
      */
-    protected static function _zip($a, $b)
+    protected static function __zip($a, $b)
     {
         return self::zipWith(function($a, $b) { return [$a, $b]; }, $a, $b);
     }
@@ -501,7 +499,7 @@ class ArrayList extends Module
      * @return array          An array with two elements; the first is the list that passed the test,
      *                        and the second element is the list that failed the test
      */
-    protected static function _bifurcate($test, $arr)
+    protected static function __bifurcate($test, $arr)
     {
         $resPass = [];
         $resFail = [];
@@ -533,7 +531,7 @@ class ArrayList extends Module
      * @param  array $list List to drop elements from
      * @return array       Original list minus n elements from the front
      */
-    protected static function _drop($n, $list)
+    protected static function __drop($n, $list)
     {
         return array_slice($list, $n, count($list));
     }
@@ -557,7 +555,7 @@ class ArrayList extends Module
      * @param  array    $list      List to drop from
      * @return array               List with elements removed from the front
      */
-    protected static function _dropWhile($predicate, $list)
+    protected static function __dropWhile($predicate, $list)
     {
         foreach ($list as $item) {
             if ($predicate($item)) {
@@ -587,7 +585,7 @@ class ArrayList extends Module
      * @param  array $list Array to take elements from
      * @return array       First n elements of the array
      */
-    protected static function _take($n, $list)
+    protected static function __take($n, $list)
     {
         return array_slice($list, 0, $n);
     }
@@ -610,7 +608,7 @@ class ArrayList extends Module
      * @param  array    $list      List to take elements from
      * @return array               First elements of list that all pass the $predicate
      */
-    protected static function _takeWhile($predicate, $list)
+    protected static function __takeWhile($predicate, $list)
     {
         $result = [];
 
@@ -640,7 +638,7 @@ class ArrayList extends Module
      * @param  array $list Array to flip
      * @return array       Array in the reverse order
      */
-    protected static function _reverse($list)
+    protected static function __reverse($list)
     {
         return array_reverse($list);
     }
@@ -660,7 +658,7 @@ class ArrayList extends Module
      * @param  array $list Nested array to flatten
      * @return array       Result of flattening $list into a 1-dimensional list
      */
-    protected static function _flatten($list)
+    protected static function __flatten($list)
     {
         $iter = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($list));
         $flat = [];
@@ -689,7 +687,7 @@ class ArrayList extends Module
      * @param  array $list Array to test for the existence of $item in
      * @return bool        Whether or not $item is in $list
      */
-    protected static function _contains($item, $list)
+    protected static function __contains($item, $list)
     {
         return in_array($item, $list);
     }
@@ -710,7 +708,7 @@ class ArrayList extends Module
      * @param  mixed $item Item to repeat
      * @return array       Array with $n items
      */
-    protected static function _replicate($n, $item)
+    protected static function __replicate($n, $item)
     {
         $result = [];
 

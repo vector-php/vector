@@ -9,7 +9,7 @@ use Vector\Control\Functor;
 
 abstract class Applicative extends Module
 {
-    protected static function pure($context, $a)
+    protected static function __pure($context, $a)
     {
         if (is_array($context)) {
             return [$a];
@@ -18,7 +18,7 @@ abstract class Applicative extends Module
         return call_user_func_array([$context, 'pure'], [$a]);
     }
 
-    protected static function apply($f, $a)
+    protected static function __apply($f, $a)
     {
         if (is_array($f) && is_array($a)) {
             $crossProduct = [];
@@ -35,7 +35,7 @@ abstract class Applicative extends Module
         }
     }
 
-    protected static function liftA2($instance, $f, $a1, $a2)
+    protected static function __liftA2($instance, $f, $a1, $a2)
     {
         list($pure, $apply) = self::using('pure', 'apply');
 
@@ -48,7 +48,7 @@ abstract class Applicative extends Module
         );
     }
 
-    protected static function liftA3($instance, $f, $a1, $a2, $a3)
+    protected static function __liftA3($instance, $f, $a1, $a2, $a3)
     {
         list($pure, $apply) = self::using('pure', 'apply');
 

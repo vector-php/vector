@@ -15,8 +15,6 @@ use Vector\Core\Module;
  */
 class Strings extends Module
 {
-    protected static $dirtyHackToEnableIDEAutocompletion = true;
-
     /**
      * String Concatenation
      *
@@ -34,7 +32,7 @@ class Strings extends Module
      * @param  String $original Thing to append to
      * @return String           Concatenated strings
      */
-    protected static function _concat($addition, $original)
+    protected static function __concat($addition, $original)
     {
         return $original . $addition;
     }
@@ -58,7 +56,7 @@ class Strings extends Module
      * @param  String $string Thing to split into pieces
      * @return array          List of chunks from splitting the string
      */
-    protected static function _split($on, $string)
+    protected static function __split($on, $string)
     {
         if ($on === '')
             return str_split($string);
@@ -83,7 +81,7 @@ class Strings extends Module
      * @param  String $str    String to run test on
      * @return Bool           Whether or not the string starts with the substring
      */
-    protected static function _startsWith($subStr, $str)
+    protected static function __startsWith($subStr, $str)
     {
         return substr($str, 0, strlen($subStr)) === $subStr;
     }
@@ -102,7 +100,7 @@ class Strings extends Module
      * @param  String $str Original string
      * @return String      Lowercase string
      */
-    protected static function _toLowercase($str)
+    protected static function __toLowercase($str)
     {
         return strtolower($str);
     }
@@ -121,7 +119,7 @@ class Strings extends Module
      * @param  String $str Original string
      * @return String      Uppercase string
      */
-    protected static function _toUppercase($str)
+    protected static function __toUppercase($str)
     {
         return strtoupper($str);
     }
@@ -141,7 +139,7 @@ class Strings extends Module
      * @param  String $str string to trim
      * @return string
      */
-    protected static function _trim($str)
+    protected static function __trim($str)
     {
         return trim($str);
     }
@@ -163,7 +161,7 @@ class Strings extends Module
      * @param  array  $string List of strings to join together
      * @return String         Joined string based on delimiter
      */
-    protected static function _join($on, $string)
+    protected static function __join($on, $string)
     {
         return implode($on, $string);
     }

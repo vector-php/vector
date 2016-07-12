@@ -47,7 +47,7 @@ class LensTest extends \PHPUnit_Framework_TestCase
      */
     public function testViewThroughArrayLens()
     {
-        list($view, $indexLens) = Lens::Using('view', 'indexLens');
+        list($view, $indexLens) = Lens::Using('viewL', 'indexLens');
 
         $arr = [1, 2, 3];
         $lens = $indexLens(1);
@@ -60,7 +60,7 @@ class LensTest extends \PHPUnit_Framework_TestCase
      */
     public function testViewThroughObjectLens()
     {
-        list($view, $propLens) = Lens::Using('view', 'propLens');
+        list($view, $propLens) = Lens::Using('viewL', 'propLens');
 
         $obj = new \StdClass();
         $obj->a = 'foo';
@@ -76,7 +76,7 @@ class LensTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetThroughArrayLens()
     {
-        list($set, $indexLens) = Lens::Using('set', 'indexLens');
+        list($set, $indexLens) = Lens::Using('setL', 'indexLens');
 
         $arr = [1, 2, 3];
         $lens = $indexLens(1);
@@ -94,7 +94,7 @@ class LensTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetThroughObjectLens()
     {
-        list($set, $propLens) = Lens::Using('set', 'propLens');
+        list($set, $propLens) = Lens::Using('setL', 'propLens');
 
         $obj = new \StdClass();
         $obj->a = 'foo';
@@ -120,7 +120,7 @@ class LensTest extends \PHPUnit_Framework_TestCase
      */
     public function testOverArrayLens()
     {
-        list($over, $indexLens) = Lens::Using('over', 'indexLens');
+        list($over, $indexLens) = Lens::Using('overL', 'indexLens');
 
         $arr = [1, 2, 3];
         $lens = $indexLens(1);
@@ -140,7 +140,7 @@ class LensTest extends \PHPUnit_Framework_TestCase
      */
     public function testOverObjectLens()
     {
-        list($over, $propLens) = Lens::Using('over', 'propLens');
+        list($over, $propLens) = Lens::Using('overL', 'propLens');
 
         $obj = new \StdClass();
         $obj->a = 'foo';
@@ -165,7 +165,7 @@ class LensTest extends \PHPUnit_Framework_TestCase
      */
     public function testLensComposition()
     {
-        list($view, $indexLens, $propLens) = Lens::Using('view', 'indexLens', 'propLens');
+        list($view, $indexLens, $propLens) = Lens::Using('viewL', 'indexLens', 'propLens');
         $compose = Lambda::Using('compose');
 
         $complexLens = $compose($propLens('a'), $indexLens(0));

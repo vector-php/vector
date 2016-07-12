@@ -7,21 +7,6 @@ use Vector\Core\Exception\FunctionNotFoundException;
 abstract class Module
 {
     /**
-     * This flag globally sets a module to append an underscore when it proxies a function
-     * call through the __callStatic magic method. This is so that dumb PHP IDEs can keep up with
-     * what we're throwing down and allow us to override @method tags in a class doc.
-     *
-     * When this flag is enabled, you MUST append an underscore (_) to every function you declare
-     * on your module, or else it will not be found when accessing it through the magic __callStatic method.
-     *
-     * This flag only affects the internal naming of your functions. You still access your functions through
-     * their un-appended name. E.g. you will still use Lambda::compose() or Lambda::using('compose').
-     *
-     * @var boolean
-     */
-    protected static $dirtyHackToEnableIDEAutocompletion = false;
-
-    /**
      * An array of functions on this module to memoize automatically
      * @var array
      */
@@ -90,7 +75,7 @@ abstract class Module
      * @param  Callable $f Function to curry
      * @return Callable    The result of currying the original function.
      */
-    protected static function curry(Callable $f)
+    protected static function __curry(Callable $f)
     {
         // Curry a function of unknown arity
         return self::curryWithArity($f, self::getArity($f));
@@ -106,7 +91,7 @@ abstract class Module
      *                               argument is for internal use only.
      * @return Callable              The result of currying the original function.
      */
-    protected static function curryWithArity(Callable $f, $arity, $appliedArgs = [])
+    private static function curryWithArity(Callable $f, $arity, $appliedArgs = [])
     {
         // Return a new function where we use the arguments already closed over,
         // and merge them with the arguments we get from the new function.
@@ -143,7 +128,7 @@ abstract class Module
      * @param  Callable $f Function to memoize
      * @return Callable    Memoized funciton $f
      */
-    protected static function memoize(Callable $f)
+    private static function memoize(Callable $f)
     {
         return function(...$args) use ($f) {
             static $cache;
@@ -173,7 +158,7 @@ abstract class Module
      * @param  Callable $f Function to get arity for
      * @return Int         Number of arguments for $f
      */
-    protected static function getArity(Callable $f)
+    private static function getArity(Callable $f)
     {
         if ($f instanceof \Closure) {
             $reflector = (new \ReflectionFunction($f));
@@ -209,11 +194,8 @@ abstract class Module
         $context = get_called_class();
 
         $fulfilledRequest = array_map(function($f) use ($context) {
-            // If we're using the dirty hack for IDE autocomplete, append an '_' to the name we're looking for
-            if ($context::$dirtyHackToEnableIDEAutocompletion === true)
-                $internalName = '_' . $f;
-            else
-                $internalName = $f;
+            // Append a '__' to the name we're looking for
+            $internalName = '__' . $f;
 
             // See if we've already fulfilled the request for this function. If so, just return the cached one.
             if (array_key_exists($context, self::$fulfillmentCache) && array_key_exists($f, self::$fulfillmentCache[$context]))
@@ -281,9 +263,8 @@ abstract class Module
         $fNames = array_map(function(\ReflectionMethod $f) use ($context) {
             $fName = $f->getName();
 
-            // Check for the dirty hack
-            if ($context::$dirtyHackToEnableIDEAutocompletion === true)
-                $fName = substr($fName, 1);
+            // Check for the full method name
+            $fName = substr($fName, 2);
 
             return $fName;
         }, array_filter((new \ReflectionClass($context))->getMethods(), $isInContext));

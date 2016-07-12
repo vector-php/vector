@@ -170,7 +170,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testSet()
     {
-        $set = ArrayList::Using('set');
+        $set = ArrayList::Using('setValue');
 
         $this->assertEquals($set(2, $this->testCase, 0), [0, 1, 0, 3]);
         $this->assertEquals($this->testCase, [0, 1, 2, 3]);

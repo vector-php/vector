@@ -6,43 +6,41 @@ use Vector\Core\Module;
 
 class TestFunctions extends Module
 {
-    protected static $dirtyHackToEnableIDEAutocompletion = true;
-
     protected static $doNotCurry = ['nonCurriedFunction'];
 
     protected static $memoize = true;
 
-    protected static function _noArgFunction()
+    protected static function __noArgFunction()
     {
         return true;
     }
 
-    protected static function _oneArgFunction($a)
+    protected static function __oneArgFunction($a)
     {
         return true;
     }
 
-    protected static function _twoArgFunction($a, $b)
+    protected static function __twoArgFunction($a, $b)
     {
         return true;
     }
 
-    protected static function _variadicFunction(...$a)
+    protected static function __variadicFunction(...$a)
     {
         return $a;
     }
 
-    protected static function _complexVariadicFunction($a, ...$b)
+    protected static function __complexVariadicFunction($a, ...$b)
     {
         return $b;
     }
 
-    protected static function _nonCurriedFunction($a, $b)
+    protected static function __nonCurriedFunction($a, $b)
     {
         return true;
     }
 
-    protected static function _memoizedFunction($a, $b, $c)
+    protected static function __memoizedFunction($a, $b, $c)
     {
         echo "I'm a side effect.";
 

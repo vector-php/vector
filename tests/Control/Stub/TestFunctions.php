@@ -6,12 +6,12 @@ use Vector\Core\Module;
 
 class TestFunctions extends Module
 {
-    protected static function noOp($a)
+    protected static function __noOp($a)
     {
         return $a;
     }
 
-    protected static function addOne($a)
+    protected static function __addOne($a)
     {
         return $a + 1;
     }

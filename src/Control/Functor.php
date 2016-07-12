@@ -8,7 +8,7 @@ use Vector\Typeclass\FunctorInterface as TypeclassFunctor;
 
 abstract class Functor extends Module
 {
-    protected static function fmap($f, $container)
+    protected static function __fmap($f, $container)
     {
         // If $container is a simple array, just defer to array_map
         if (is_array($container))
@@ -33,7 +33,7 @@ abstract class Functor extends Module
         return $container->fmap($f);
     }
 
-    protected static function extract(TypeclassFunctor $f)
+    protected static function __extract(TypeclassFunctor $f)
     {
         return $f->extract();
     }

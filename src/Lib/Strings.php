@@ -21,10 +21,11 @@ class Strings extends Module
      * Concatenates the first argument to the second argument, provided both arguments
      * are strings. Defers to the PHP built-in concatenation.
      *
-     * ```
-     * $concat('as', 'df'); // 'dfas'
-     * $concat('World', $concat('ello', 'H')); // 'HelloWorld'
-     * ```
+     * @example
+     * Strings::concat('as', 'df'); // 'dfas'
+     *
+     * @example
+     * Strings::concat('World', $concat('ello', 'H')); // 'HelloWorld'
      *
      * @type String -> String -> String
      *
@@ -44,11 +45,14 @@ class Strings extends Module
      * but is more consistent. Can split on empty delimiters, and trims out empty strings
      * after exploding.
      *
-     * ```
-     * $split('-', 'Hello-World'); // ['Hello', 'World']
-     * $split('', 'asdf'); // ['a', 's', 'd', 'f']
-     * $split('-', 'foo-bar-'); ['foo', 'bar']
-     * ```
+     * @example
+     * Strings::split('-', 'Hello-World'); // ['Hello', 'World']
+     *
+     * @example
+     * Strings::split('', 'asdf'); // ['a', 's', 'd', 'f']
+     *
+     * @example
+     * Strings::split('-', 'foo-bar-'); ['foo', 'bar']
      *
      * @type String -> String -> [String]
      *
@@ -70,10 +74,11 @@ class Strings extends Module
      * Determines if a string starts with a specific substring. Returns true if the string
      * matches the substring at its start, otherwise false.
      *
-     * ```
-     * $startsWith('as', 'asdf'); true
-     * $startsWith('foo', 'barfoo'); false
-     * ```
+     * @example
+     * Strings::startsWith('as', 'asdf'); true
+     *
+     * @example
+     * Strings::startsWith('foo', 'barfoo'); false
      *
      * @type String -> String -> Bool
      *
@@ -91,9 +96,8 @@ class Strings extends Module
      *
      * Converts a string to lowercase.
      *
-     * ```
-     * $toLowercase('ASdf'); // 'asdf'
-     * ```
+     * @example
+     * Strings::toLowercase('ASdf'); // 'asdf'
      *
      * @type String -> String
      *
@@ -110,9 +114,8 @@ class Strings extends Module
      *
      * Converts a string to uppercase.
      *
-     * ```
-     * $toUppercase('asdf'); // 'ASDF'
-     * ```
+     * @example
+     * Strings::toUppercase('asdf'); // 'ASDF'
      *
      * @type String -> String
      *
@@ -130,9 +133,8 @@ class Strings extends Module
      * Removes all leading and trailing whitespace from a string. Defers to
      * PHP trim.
      *
-     * ```
-     * $trim(' asdf '); // 'asdf'
-     * ```
+     * @example
+     * Strings::trim(' asdf '); // 'asdf'
      *
      * @type String -> String
      *
@@ -150,10 +152,11 @@ class Strings extends Module
      * Joins an array of strings together with a given delimiter. Works similarly
      * to PHP `implode`. The inverse of `split`.
      *
-     * ```
-     * $join(' ', ['Hello', 'World']); // 'Hello World'
-     * $join('', ['a', 's', 'd', 'f']); // 'asdf'
-     * ```
+     * @example
+     * Strings::join(' ', ['Hello', 'World']); // 'Hello World'
+     *
+     * @example
+     * Strings::join('', ['a', 's', 'd', 'f']); // 'asdf'
      *
      * @type String -> [String] -> String
      *

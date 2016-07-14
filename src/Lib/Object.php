@@ -17,13 +17,12 @@ class Object extends Module
      *
      * Sets a property on the object
      *
-     * ```
-     * $set('value', new stdClass(), 'hi!');
+     * @example
+     * Object::setValue('value', new stdClass(), 'hi!');
      * // object(stdClass)#1 (1) {
      * //   ["value"]=>
      * //   string(3) "hi!"
      * // }
-     * ```
      *
      * @type String -> Obj a -> Obj a
      *
@@ -46,11 +45,10 @@ class Object extends Module
      *
      * Gets a property on the object
      *
-     * ```
+     * @example
      * $obj = new stdClass();
      * $obj->value = 'hi!';
-     * $get('value', $obj); // 'hi!'
-     * ```
+     * Object::getValue('value', $obj); // 'hi!'
      *
      * @type String -> Obj a -> mixed
      *
@@ -69,15 +67,13 @@ class Object extends Module
      *
      * Invokes a method on the object
      *
-     * ```
+     * @example
      * $person = new stdObject(array(
      *  "sayHi" => function() {
      *      return "hi!";
      *  }
      * ));
-     *
-     * $invoke('sayHi', $person); // 'hi!'
-     * ```
+     * Object::invokeMethod('sayHi', $person); // 'hi!'
      *
      * @type String -> Obj a -> mixed
      *
@@ -96,9 +92,8 @@ class Object extends Module
      *
      * Checks if the object is an instance of the specified class
      *
-     * ```
-     * $isInstanceOf('stdClass', (new stdClass())); // true
-     * ```
+     * @example
+     * Object::isInstanceOf('stdClass', (new stdClass())); // true
      *
      * @type String -> Obj a -> mixed
      *

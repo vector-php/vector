@@ -26,10 +26,11 @@ class Math extends Module
      *
      * Add two numbers together.
      *
-     * ```
-     * $add(2, 2); // 4
-     * $add(-1, 2); // 1
-     * ```
+     * @example
+     * Math::add(2, 2); // 4
+     *
+     * @example
+     * Math::add(-1, 2); // 1
      *
      * @type Number a => a -> a -> a
      *
@@ -48,10 +49,11 @@ class Math extends Module
      * Add all the numbers of a list together and return their sum. If the given
      * list is empty, returns 0.
      *
-     * ```
-     * $sum([1, 2, 3]); // 6
-     * $sum([]); // 0
-     * ```
+     * @example
+     * Math::sum([1, 2, 3]); // 6
+     *
+     * @example
+     * Math::sum([]); // 0
      *
      * @type Number a => [a] -> a
      *
@@ -71,10 +73,11 @@ class Math extends Module
      *
      * Returns a given number * -1.
      *
-     * ```
-     * $negate(4); // -4
-     * $negate(0); // 0
-     * ```
+     * @example
+     * Math::negate(4); // -4
+     *
+     * @example
+     * Math::negate(0); // 0
      *
      * @type Number a => a -> a
      *
@@ -91,10 +94,11 @@ class Math extends Module
      *
      * Subtracts two numbers, with the first argument being subtracted from the second.
      *
-     * ```
-     * $subtract(4, 9); // 5
-     * $subtract(-1, 3); // 4
-     * ```
+     * @example
+     * Math::subtract(4, 9); // 5
+     *
+     * @example
+     * Math::subtract(-1, 3); // 4
      *
      * @type Number a => a -> a -> a
      *
@@ -112,10 +116,11 @@ class Math extends Module
      *
      * Multiply two numbers together.
      *
-     * ```
-     * $multiply(2, 4); // 8
-     * $multiply(0, 4); // 0
-     * ```
+     * @example
+     * Math::multiply(2, 4); // 8
+     *
+     * @example
+     * Math::multiply(0, 4); // 0
      *
      * @type Number a => a -> a -> a
      *
@@ -134,10 +139,11 @@ class Math extends Module
      * Returns the product of a list of numbers, i.e. the result of multiplying
      * every element of a list together. Returns 1 for an empty list.
      *
-     * ```
-     * $product([2, 2, 3]); // 12
-     * $product([]); // 1
-     * ```
+     * @example
+     * Math::product([2, 2, 3]); // 12
+     *
+     * @example
+     * Math::product([]); // 1
      *
      * @type Number a => [a] -> a
      *
@@ -159,10 +165,11 @@ class Math extends Module
      *
      * Divide two numbers, with the first argument being the divisor.
      *
-     * ```
-     * $divide(2, 8); // 4
-     * $divide(4, 12); // 3
-     * ```
+     * @example
+     * Math::divide(2, 8); // 4
+     *
+     * @example
+     * Math::divide(4, 12); // 3
      *
      * @type Number a => a -> a -> a
      *
@@ -181,11 +188,14 @@ class Math extends Module
      * Take the modulus of two integers, with the first argument being the divisor.
      * Returns the remainder of $b / $a.
      *
-     * ```
-     * $mod(2, 5); // 1
-     * $mod(5, 12); // 2
-     * $mod(3, 3); // 0
-     * ```
+     * @example
+     * Math::mod(2, 5); // 1
+     *
+     * @example
+     * Math::mod(5, 12); // 2
+     *
+     * @example
+     * Math::mod(3, 3); // 0
      *
      * @type Int -> Int -> Int
      *
@@ -204,12 +214,17 @@ class Math extends Module
      * Given two values m and n, return all values between m and n in an array, inclusive, with a
      * step size of $step. The list of numbers will start at the first value and approach the second value.
      *
-     * ```
-     * $range(1, 1, 5); // [1, 2, 3, 4, 5]
-     * $range(2, 0, -3); // [0, -2]
-     * $range(0, 0, 0); // [0]
-     * $range(0.1, 0, 0.5); // [0, 0.1, 0.2, 0.3, 0.4, 0.5]
-     * ```
+     * @example
+     * Math::range(1, 1, 5); // [1, 2, 3, 4, 5]
+     *
+     * @example
+     * Math::range(2, 0, -3); // [0, -2]
+     *
+     * @example
+     * Math::range(0, 0, 0); // [0]
+     *
+     * @example
+     * Math::range(0.1, 0, 0.5); // [0, 0.1, 0.2, 0.3, 0.4, 0.5]
      *
      * @type Number a => a -> a -> a
      *
@@ -232,11 +247,14 @@ class Math extends Module
      * If a and be are equal, returns the first value. But since they're equal, that doesn't
      * really matter now does it?
      *
-     * ```
-     * $min(1, 2); // 1
-     * $min(-1, -6); // -6
-     * $min(5, 5); // 5
-     * ```
+     * @example
+     * Math::min(1, 2); // 1
+     *
+     * @example
+     * Math::min(-1, -6); // -6
+     *
+     * @example
+     * Math::min(5, 5); // 5
      *
      * @type Number a => a -> a -> a
      *
@@ -254,11 +272,14 @@ class Math extends Module
      *
      * Returns the maximum of two arguments a and b. If a and b are equal, just returns the value.
      *
-     * ```
-     * $max(1, 2); // 2
-     * $max(-1, -6); // -1
-     * $max(5, 5); // 5
-     * ```
+     * @example
+     * Math::max(1, 2); // 2
+     *
+     * @example
+     * Math::max(-1, -6); // -1
+     *
+     * @example
+     * Math::max(5, 5); // 5
      *
      * @type Number a => a -> a -> a
      *
@@ -277,10 +298,11 @@ class Math extends Module
      * Arithmetic exponentiation. Raises the second argument to the power
      * of the first.
      *
-     * ```
-     * $pow(2, 3); // 3 ^ 2 = 9
-     * $pow(3, 2); // 2 ^ 3 = 8
-     * ```
+     * @example
+     * Math::pow(2, 3); // 3 ^ 2 = 9
+     *
+     * @example
+     * Math::pow(3, 2); // 2 ^ 3 = 8
      *
      * @type Number a => a -> a -> a
      *
@@ -298,10 +320,11 @@ class Math extends Module
      *
      * Returns the average of a list, or zero for an empty list.
      *
-     * ```
-     * $mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2
-     * $mean([]); // 0
-     * ```
+     * @example
+     * Math::mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2
+     *
+     * @example
+     * Math::mean([]); // 0
      *
      * @type Number a => [a] -> a
      *

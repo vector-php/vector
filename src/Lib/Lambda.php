@@ -33,10 +33,9 @@ abstract class Lambda extends Module
      * Given a function that takes two arguments, return a new function that
      * takes those two arguments with their order reversed.
      *
-     * ```
-     * $subtract(2, 6); // 4
-     * $flip($subtract)(2, 6); // -4
-     * ```
+     * @example
+     * Math::subtract(2, 6); // 4
+     * Lambda::flip(Math::subtract())(2, 6); // -4
      *
      * @type (a -> b -> c) -> b -> a -> c
      *
@@ -56,13 +55,11 @@ abstract class Lambda extends Module
      * Given some value k, return a lambda expression which always evaluates to k, regardless
      * of any arguments it is given.
      *
-     * ```
-     * $alwaysFour = $k(4);
-     *
+     * @example
+     * $alwaysFour = Lambda::k(4);
      * $alwaysFour('foo'); // 4
      * $alwaysFour(1, 2, 3); // 4
      * $alwaysFour(); // 4
-     * ```
      *
      * @type a -> (b -> a)
      *
@@ -82,10 +79,9 @@ abstract class Lambda extends Module
      *
      * Given some value a, return a unchanged
      *
-     * ```
-     * $id(4); // 4
-     * $id('foo'); // 'foo'
-     * ```
+     * @example
+     * Lambda::id(4); // 4
+     * Lambda::id('foo'); // 'foo'
      *
      * @type a -> a
      *

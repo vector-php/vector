@@ -31,16 +31,13 @@ class Logic extends Module
      * Given two functions f and g, combine them in such a way to produce a new
      * function h that returns true given f(x) OR g(x) returns true.
      *
-     * ```
+     * @example
      * $funcF = function($x) { return $x >= 5; };
      * $funcG = function($x) { return $x == 0; };
-     *
-     * $combinator = $orCombinator([$funcF, $funcG]);
-     *
+     * $combinator = Logic::orCombinator([$funcF, $funcG]);
      * $combinator(9); // True
      * $combinator(0); // True
      * $combinator(2); // False
-     * ```
      *
      * @type [(a -> Bool)] -> a -> Bool
      *
@@ -61,16 +58,13 @@ class Logic extends Module
      * Given two functions f and g, combine them in such a way to produce a new
      * function h that returns true given f(x) AND g(x) returns true.
      *
-     * ```
+     * @example
      * $funcF = function($x) { return $x < 5; };
      * $funcG = function($x) { return $x > 0; };
-     *
-     * $combinator = $orCombinator([$funcF, $funcG]);
-     *
+     * $combinator = Logic::andCombinator([$funcF, $funcG]);
      * $combinator(4); // True
      * $combinator(2); // True
      * $combinator(7); // False
-     * ```
      *
      * @type [(a -> Bool)] -> a -> Bool
      *
@@ -90,10 +84,11 @@ class Logic extends Module
      *
      * Returns true given $a OR $b returns true.
      *
-     * ```
-     * $logicalOr(true, false); // True
-     * $logicalOr(false, false); // False
-     * ```
+     * @example
+     * Logic::logicalOr(true, false); // True
+     *
+     * @example
+     * Logic::logicalOr(false, false); // False
      *
      * @type Bool -> Bool -> Bool
      *
@@ -112,10 +107,11 @@ class Logic extends Module
      * Returns true given $a is false.
      * Returns false given $a is true.
      *
-     * ```
-     * $logicalNot(true); // False
-     * $logicalNot(false); // True
-     * ```
+     * @example
+     * Logic::logicalNot(true); // False
+     *
+     * @example
+     * Logic::logicalNot(false); // True
      *
      * @type Bool -> Bool
      *
@@ -132,10 +128,11 @@ class Logic extends Module
      *
      * Returns true given $a AND $b are true.
      *
-     * ```
-     * $logicalAnd(true, true); // True
-     * $logicalAnd(true, false); // False
-     * ```
+     * @example
+     * Logic::logicalAnd(true, true); // True
+     *
+     * @example
+     * Logic::logicalAnd(true, false); // False
      *
      * @type Bool -> Bool -> Bool
      *
@@ -153,10 +150,11 @@ class Logic extends Module
      *
      * Returns true given $b is greater than $a.
      *
-     * ```
-     * $gt(2, 1); // False
-     * $gt(1, 2); // True
-     * ```
+     * @example
+     * Logic::gt(2, 1); // False
+     *
+     * @example
+     * Logic::gt(1, 2); // True
      *
      * @type mixed -> mixed -> Bool
      *
@@ -174,10 +172,11 @@ class Logic extends Module
      *
      * Returns true given $b is greater than or equal to $a.
      *
-     * ```
-     * $gte(1, 1); // True
-     * $gte(1, 2); // True
-     * ```
+     * @example
+     * Logic::gte(1, 1); // True
+     *
+     * @example
+     * Logic::gte(1, 2); // True
      *
      * @type mixed -> mixed -> Bool
      *
@@ -195,10 +194,11 @@ class Logic extends Module
      *
      * Returns true given $b is less than $a.
      *
-     * ```
-     * $lt(2, 1); // True
-     * $lt(1, 2); // False
-     * ```
+     * @example
+     * Logic::lt(2, 1); // True
+     *
+     * @example
+     * Logic::lt(1, 2); // False
      *
      * @type mixed -> mixed -> Bool
      *
@@ -216,10 +216,11 @@ class Logic extends Module
      *
      * Returns true given $b is less than or equal to $a.
      *
-     * ```
-     * $lte(1, 1); // True
-     * $lte(2, 1); // True
-     * ```
+     * @example
+     * Logic::lte(1, 1); // True
+     *
+     * @example
+     * Logic::lte(2, 1); // True
      *
      * @type mixed -> mixed -> Bool
      *
@@ -237,10 +238,11 @@ class Logic extends Module
      *
      * Returns true given $a equals $b
      *
-     * ```
-     * $eq(1, 1); // True
-     * $eq(1, 2); // False
-     * ```
+     * @example
+     * Logic::eq(1, 1); // True
+     *
+     * @example
+     * Logic::eq(1, 2); // False
      *
      * @type mixed -> mixed -> Bool
      *
@@ -258,10 +260,11 @@ class Logic extends Module
      *
      * Returns true given $a equals $b
      *
-     * ```
-     * $eq(1, 1); // True
-     * $eq(1, '1'); // False
-     * ```
+     * @example
+     * Logic::eqStrict(1, 1); // True
+     *
+     * @example
+     * Logic::eqStrict(1, '1'); // False
      *
      * @type mixed -> mixed -> Bool
      *
@@ -279,9 +282,8 @@ class Logic extends Module
      *
      * Returns the inverse of $a
      *
-     * ```
-     * $not(false); // true
-     * ```
+     * @example
+     * Logic::not(false); // true
      *
      * @type Bool -> Bool
      *
@@ -298,10 +300,11 @@ class Logic extends Module
      *
      * Returns true given $a does not equal $b
      *
-     * ```
-     * $notEq(1, 1); // False
-     * $notEq(1, 2); // True
-     * ```
+     * @example
+     * Logic::notEq(1, 1); // False
+     *
+     * @example
+     * Logic::notEq(1, 2); // True
      *
      * @type mixed -> mixed -> Bool
      *
@@ -319,10 +322,11 @@ class Logic extends Module
      *
      * Returns true given $a does not equal $b
      *
-     * ```
-     * $notEqStrict(1, 2); // True
-     * $notEqStrict(1, '1'); // False
-     * ```
+     * @example
+     * Logic::notEqStrict(1, 2); // True
+     *
+     * @example
+     * Logic::notEqStrict(1, '1'); // False
      *
      * @type mixed -> mixed -> Bool
      *
@@ -340,10 +344,11 @@ class Logic extends Module
      *
      * Returns true given all values are truthy
      *
-     * ```
-     * $all(1, 'asdf', true); // True
-     * $all(1, false); // False
-     * ```
+     * @example
+     * Logic::all(1, 'asdf', true); // True
+     *
+     * @example
+     * Logic::all(1, false); // False
      *
      * @type array -> Bool
      *
@@ -360,10 +365,11 @@ class Logic extends Module
      *
      * Returns true given any values are truthy
      *
-     * ```
-     * $any(true, false); // True
-     * $any(false, false); // False
-     * ```
+     * @example
+     * Logic::any(true, false); // True
+     *
+     * @example
+     * Logic::any(false, false); // False
      *
      * @type array -> Bool
      *

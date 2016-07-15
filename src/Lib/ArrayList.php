@@ -402,14 +402,14 @@ class ArrayList extends Module
      * @example
      * ArrayList::setValue('c', 3, ['a' => 1, 'b' => 2]); // ['a' => 1, 'b' => 2, 'c' => 3]
      *
-     * @type a -> [b] -> b -> [b]
+     * @type a -> b -> [b] -> [b]
      *
      * @param  Mixed $key Element of index to modify
-     * @param  array $arr Array to modify
      * @param  Mixed $val Value to set $arr[$key] to
+     * @param  array $arr Array to modify
      * @return array      Result of setting $arr[$key] = $val
      */
-    protected static function __setValue($key, $arr, $val)
+    protected static function __setIndex($key, $val, $arr)
     {
         $arr[$key] = $val;
         return $arr;

@@ -24,20 +24,29 @@ class Object extends Module
      * //   string(3) "hi!"
      * // }
      *
-     * @type String -> Obj a -> Obj a
+     * @type String -> a -> Obj a -> Obj a
      *
-     * @param String $key Property to set
-     * @param Object $obj Object
-     * @param mixed $val Value
-     *
+     * @param  String $key Property to set
+     * @param  mixed  $val Value
+     * @param  Object $obj Object
      * @return Object $obj Object
      */
-    protected static function __setValue($key, $obj, $val)
+    protected static function __setProp($key, $val, $obj)
     {
         $newObj = clone $obj;
 
         $newObj->$key = $val;
         return $newObj;
+    }
+
+    /**
+     * Assign Properties
+    */
+    protected static function __assign($props, $objOriginal)
+    {
+        $obj = clone $objOriginal;
+
+        return ArrayList::foldl(function($obj, $setter) { return $setter($obj); }, $obj, ArrayList::mapIndexed(Lambda::flip(self::setProp()), $props));
     }
 
     /**
@@ -57,7 +66,7 @@ class Object extends Module
      *
      * @return mixed $val value
      */
-    protected static function __getValue($prop, $obj)
+    protected static function __getProp($prop, $obj)
     {
         return $obj->$prop;
     }

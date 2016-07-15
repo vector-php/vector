@@ -83,20 +83,32 @@ class Lens extends Module
 
     protected static function __indexLens($index)
     {
-        $indexLens = self::makeLens(ArrayList::index(), ArrayList::setValue());
+        $arraySetter = Module::curry(function($i, $arr, $val) {
+            $arr[$i] = $val; return $arr;
+        });
+
+        $indexLens = self::makeLens(ArrayList::index(), $arraySetter);
 
         return $indexLens($index);
     }
 
     protected static function __propLens($prop)
     {
-        $propLens = self::makeLens(Object::getValue(), Object::setValue());
+        $objectSetter = Module::curry(function($k, $objO, $val) {
+            $obj = clone $objO; $obj->$k = $val; return $obj;
+        });
+
+        $propLens = self::makeLens(Object::getProp(), $objectSetter);
 
         return $propLens($prop);
     }
 
     protected static function __indexLensSafe($index)
     {
+        $arraySetter = Module::curry(function($i, $arr, $val) {
+            $arr[$i] = $val; return $arr;
+        });
+
         $safeGetter = function($index, $arr) {
             if ($arr === null)
                 return null;
@@ -107,7 +119,7 @@ class Lens extends Module
                 return null;
         };
 
-        $indexLens = self::makeLens($safeGetter, ArrayList::setValue());
+        $indexLens = self::makeLens($safeGetter, $arraySetter);
 
         return $indexLens($index);
     }

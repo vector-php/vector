@@ -161,6 +161,31 @@ class ArrayList extends Module
     }
 
     /**
+     * Array Sort
+     *
+     * Given a function that compares two values, sort an array. This function defers to usort
+     * but does not mutate the original array. The comparison function should return -1 if the
+     * first argument is ordered before the second, 0 if it's the same ordering, and 1 if
+     * first argument is ordered after the second.
+     *
+     * @example
+     * $comp = function($a, $b) { return $a <=> $b; };
+     * ArrayList::sort($comp, [3, 2, 1]);
+     *
+     * @type (a -> a -> Int) -> [a] -> [a]
+     *
+     * @param  callable $comp The comparison function
+     * @param  array    $list The list to sort
+     * @return array          The sorted list
+     */
+    protected static function __sort($comp, $list)
+    {
+        usort($list, $comp);
+
+        return $list;
+    }
+
+    /**
      * List Tail
      *
      * Returns an array without its first element, e.g. the complement of `head`. Works on

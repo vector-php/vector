@@ -17,6 +17,23 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
         $this->testCase = [0, 1, 2, 3];
     }
 
+    public function testSort()
+    {
+        $sort = ArrayList::using('sort');
+
+        $comp = function ($a, $b) {
+            if ($a == $b) {
+                return 0;
+            }
+            return ($a < $b) ? -1 : 1;
+        };
+
+        $arr = [3, 2, 1];
+
+        $this->assertEquals($sort($comp, $arr), [1, 2, 3]);
+        $this->assertEquals($arr, [3, 2, 1]);
+    }
+
     /**
      * Test that cons appends to array and is immutable
      */

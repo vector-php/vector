@@ -198,7 +198,7 @@ abstract class Module
             $internalName = '__' . $f;
 
             // See if we've already fulfilled the request for this function. If so, just return the cached one.
-            if (array_key_exists($context, self::$fulfillmentCache) && array_key_exists($f, self::$fulfillmentCache[$context]))
+            if (array_key_exists($context, self::$fulfillmentCache) && array_key_exists($internalName, self::$fulfillmentCache[$context]))
                 return self::$fulfillmentCache[$context][$internalName];
 
             // If we haven't fulfilled it already, check to see if it even exists

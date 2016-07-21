@@ -10,6 +10,16 @@ class TestFunctions extends Module
 
     protected static $memoize = true;
 
+    public static function getFulfillmentCache()
+    {
+        return static::$fulfillmentCache;
+    }
+
+    protected static function __notAPureFunction()
+    {
+        return true;
+    }
+
     protected static function __noArgFunction()
     {
         return true;

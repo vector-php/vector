@@ -198,8 +198,8 @@ abstract class Module
             $internalName = '__' . $f;
 
             // See if we've already fulfilled the request for this function. If so, just return the cached one.
-            if (array_key_exists($context, self::$fulfillmentCache) && array_key_exists($internalName, self::$fulfillmentCache[$context]))
-                return self::$fulfillmentCache[$context][$internalName];
+            if (array_key_exists($context, static::$fulfillmentCache) && array_key_exists($internalName, static::$fulfillmentCache[$context]))
+                return static::$fulfillmentCache[$context][$internalName];
 
             // If we haven't fulfilled it already, check to see if it even exists
             if (!method_exists($context, $internalName))
@@ -233,48 +233,5 @@ abstract class Module
         return count($fulfilledRequest) === 1
             ? $fulfilledRequest[0]
             : $fulfilledRequest;
-    }
-
-    /**
-     * Bulk Module Loading
-     *
-     * Uses reflection to bulk-load every function in a module and place it into a key/value array. The key
-     * is the function name as it is defined in the module.
-     * The result of this method call can be used in the PHP function `explode` to place an entire
-     * module into the local scope without the boilerplate of loading functions individually if you need
-     * many functions from a single module.
-     *
-     * ```
-     * extract(MyModule::usingAll()); // Lots of new functions in the scope
-     * ```
-     *
-     * @type [(* -> *)]
-     *
-     * @return array A key/value array of function names and actual curried callable
-     */
-    public static function usingAll()
-    {
-        $context     = get_called_class();
-        $isInContext = function(\ReflectionMethod $m) use ($context) {
-            return $m->getDeclaringClass()->getName() === $context;
-        };
-
-        // The names of the functions we're requesting, sans the inherited Module methods
-        $fNames = array_map(function(\ReflectionMethod $f) use ($context) {
-            $fName = $f->getName();
-
-            // Check for the full method name
-            $fName = substr($fName, 2);
-
-            return $fName;
-        }, array_filter((new \ReflectionClass($context))->getMethods(), $isInContext));
-
-        // The actual functions we're using pulled from the module
-        $fValues = array_map(function($f) {
-            return self::using($f);
-        }, $fNames);
-
-        // Return the fulfilled functions in a key/value array for extract() to work
-        return array_combine($fNames, $fValues);
     }
 }

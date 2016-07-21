@@ -25,6 +25,19 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that the module caches function resolutions
+     */
+    public function testModuleCaching()
+    {
+        // Loading the function should add it to the cache
+        $notAPureFunction = Stub\TestFunctions::using('notAPureFunction');
+
+        $cache = Stub\TestFunctions::getFulfillmentCache()['Vector\Test\Core\Stub\TestFunctions'];
+
+        $this->assertArrayHasKey('__notAPureFunction', $cache);
+    }
+
+    /**
      * Test alternative function calling scheme
      */
     public function testAlternativeFunctionPattern()
@@ -52,25 +65,6 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
         $sideEffects = ob_get_clean();
 
         $this->assertEquals($sideEffects, "");
-    }
-
-    /**
-     * Test that usingAll pulls ALL of the functions out of the given module.
-     * It defers to Using, so all we need to test is that it returns them in a k/v array
-     */
-    public function testUsingAllFunctions()
-    {
-        $all = Stub\TestFunctions::usingAll();
-
-        $this->assertEquals(array_keys($all), [
-            'noArgFunction',
-            'oneArgFunction',
-            'twoArgFunction',
-            'variadicFunction',
-            'complexVariadicFunction',
-            'nonCurriedFunction',
-            'memoizedFunction'
-        ]);
     }
 
     /**

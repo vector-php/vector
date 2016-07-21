@@ -1,5 +1,7 @@
 <?php
 
+namespace Vector\Euclid\Doc;
+
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 class SignatureTag extends Tag

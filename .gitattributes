@@ -5,3 +5,4 @@
 /docs           export-ignore
 /site           export-ignore
 /mkdocs.yml     export-ignore
+/testing        export-ignore

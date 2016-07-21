@@ -23,5 +23,9 @@
         }
     },
     "require": {
+    },
+    "scripts": {
+        "runTests": "./testing/runTests.sh",
+        "prepareTests": "./testing/buildTests.sh"
     }
 }

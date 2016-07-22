@@ -1,10 +1,10 @@
-## fmap
+## extract
 
 This function is currently missing documentation.
 
 ---
 
-## extract
+## fmap
 
 This function is currently missing documentation.
 

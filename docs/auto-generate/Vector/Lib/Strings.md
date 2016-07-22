@@ -12,6 +12,20 @@ Strings::concat('World', $concat('ello', 'H')); // 'HelloWorld'
 
 ---
 
+## join
+
+__String Joining__ :: String -> [String] -> String
+
+Joins an array of strings together with a given delimiter. Works similarly
+to PHP `implode`. The inverse of `split`.
+
+```
+Strings::join(' ', ['Hello', 'World']); // 'Hello World'
+Strings::join('', ['a', 's', 'd', 'f']); // 'asdf'
+```
+
+---
+
 ## split
 
 __String Splitting__ :: String -> String -> [String]
@@ -75,20 +89,6 @@ PHP trim.
 
 ```
 Strings::trim(' asdf '); // 'asdf'
-```
-
----
-
-## join
-
-__String Joining__ :: String -> [String] -> String
-
-Joins an array of strings together with a given delimiter. Works similarly
-to PHP `implode`. The inverse of `split`.
-
-```
-Strings::join(' ', ['Hello', 'World']); // 'Hello World'
-Strings::join('', ['a', 's', 'd', 'f']); // 'asdf'
 ```
 
 ---

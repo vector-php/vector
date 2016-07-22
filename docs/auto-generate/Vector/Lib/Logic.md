@@ -1,17 +1,12 @@
-## orCombinator
+## all
 
-__Logical Or Combinator__ :: [(a -> Bool)] -> a -> Bool
+__All__ :: array -> Bool
 
-Given two functions f and g, combine them in such a way to produce a new
-function h that returns true given f(x) OR g(x) returns true.
+Returns true given all values are truthy
 
 ```
-$funcF = function($x) { return $x >= 5; };
-$funcG = function($x) { return $x == 0; };
-$combinator = Logic::orCombinator([$funcF, $funcG]);
-$combinator(9); // True
-$combinator(0); // True
-$combinator(2); // False
+Logic::all(1, 'asdf', true); // True
+Logic::all(1, false); // False
 ```
 
 ---
@@ -34,42 +29,41 @@ $combinator(7); // False
 
 ---
 
-## logicalOr
+## any
 
-__Logical Or__ :: Bool -> Bool -> Bool
+__Any__ :: array -> Bool
 
-Returns true given $a OR $b returns true.
-
-```
-Logic::logicalOr(true, false); // True
-Logic::logicalOr(false, false); // False
-```
-
----
-
-## logicalNot
-
-__Logical Not__ :: Bool -> Bool
-
-Returns true given $a is false.
-Returns false given $a is true.
+Returns true given any values are truthy
 
 ```
-Logic::logicalNot(true); // False
-Logic::logicalNot(false); // True
+Logic::any(true, false); // True
+Logic::any(false, false); // False
 ```
 
 ---
 
-## logicalAnd
+## eq
 
-__Logical And__ :: Bool -> Bool -> Bool
+__Equal (Not Strict / ==)__ :: mixed -> mixed -> Bool
 
-Returns true given $a AND $b are true.
+Returns true given $a equals $b
 
 ```
-Logic::logicalAnd(true, true); // True
-Logic::logicalAnd(true, false); // False
+Logic::eq(1, 1); // True
+Logic::eq(1, 2); // False
+```
+
+---
+
+## eqStrict
+
+__Equal (Strict / ===)__ :: mixed -> mixed -> Bool
+
+Returns true given $a equals $b
+
+```
+Logic::eqStrict(1, 1); // True
+Logic::eqStrict(1, '1'); // False
 ```
 
 ---
@@ -100,6 +94,46 @@ Logic::gte(1, 2); // True
 
 ---
 
+## logicalAnd
+
+__Logical And__ :: Bool -> Bool -> Bool
+
+Returns true given $a AND $b are true.
+
+```
+Logic::logicalAnd(true, true); // True
+Logic::logicalAnd(true, false); // False
+```
+
+---
+
+## logicalNot
+
+__Logical Not__ :: Bool -> Bool
+
+Returns true given $a is false.
+Returns false given $a is true.
+
+```
+Logic::logicalNot(true); // False
+Logic::logicalNot(false); // True
+```
+
+---
+
+## logicalOr
+
+__Logical Or__ :: Bool -> Bool -> Bool
+
+Returns true given $a OR $b returns true.
+
+```
+Logic::logicalOr(true, false); // True
+Logic::logicalOr(false, false); // False
+```
+
+---
+
 ## lt
 
 __Less Than__ :: mixed -> mixed -> Bool
@@ -122,32 +156,6 @@ Returns true given $b is less than or equal to $a.
 ```
 Logic::lte(1, 1); // True
 Logic::lte(2, 1); // True
-```
-
----
-
-## eq
-
-__Equal (Not Strict / ==)__ :: mixed -> mixed -> Bool
-
-Returns true given $a equals $b
-
-```
-Logic::eq(1, 1); // True
-Logic::eq(1, 2); // False
-```
-
----
-
-## eqStrict
-
-__Equal (Strict / ===)__ :: mixed -> mixed -> Bool
-
-Returns true given $a equals $b
-
-```
-Logic::eqStrict(1, 1); // True
-Logic::eqStrict(1, '1'); // False
 ```
 
 ---
@@ -190,28 +198,20 @@ Logic::notEqStrict(1, '1'); // False
 
 ---
 
-## all
+## orCombinator
 
-__All__ :: array -> Bool
+__Logical Or Combinator__ :: [(a -> Bool)] -> a -> Bool
 
-Returns true given all values are truthy
-
-```
-Logic::all(1, 'asdf', true); // True
-Logic::all(1, false); // False
-```
-
----
-
-## any
-
-__Any__ :: array -> Bool
-
-Returns true given any values are truthy
+Given two functions f and g, combine them in such a way to produce a new
+function h that returns true given f(x) OR g(x) returns true.
 
 ```
-Logic::any(true, false); // True
-Logic::any(false, false); // False
+$funcF = function($x) { return $x >= 5; };
+$funcG = function($x) { return $x == 0; };
+$combinator = Logic::orCombinator([$funcF, $funcG]);
+$combinator(9); // True
+$combinator(0); // True
+$combinator(2); // False
 ```
 
 ---

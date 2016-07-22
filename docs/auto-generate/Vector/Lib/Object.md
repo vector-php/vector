@@ -1,19 +1,3 @@
-## setProp
-
-__Set Property__ :: String -> a -> Obj a -> Obj a
-
-Sets a property on the object
-
-```
-Object::setValue('value', new stdClass(), 'hi!');
-// object(stdClass)#1 (1) {
-//   ["value"]=>
-//   string(3) "hi!"
-// }
-```
-
----
-
 ## assign
 
 This function is currently missing documentation.
@@ -59,6 +43,22 @@ Checks if the object is an instance of the specified class
 
 ```
 Object::isInstanceOf('stdClass', (new stdClass())); // true
+```
+
+---
+
+## setProp
+
+__Set Property__ :: String -> a -> Obj a -> Obj a
+
+Sets a property on the object
+
+```
+Object::setValue('value', new stdClass(), 'hi!');
+// object(stdClass)#1 (1) {
+//   ["value"]=>
+//   string(3) "hi!"
+// }
 ```
 
 ---

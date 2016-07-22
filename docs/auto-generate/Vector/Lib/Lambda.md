@@ -1,9 +1,3 @@
-## pipe
-
-This function is currently missing documentation.
-
----
-
 ## compose
 
 This function is currently missing documentation.
@@ -24,6 +18,19 @@ Lambda::flip(Math::subtract())(2, 6); // -4
 
 ---
 
+## id
+
+__Identity Function__ :: a -> a
+
+Given some value a, return a unchanged
+
+```
+Lambda::id(4); // 4
+Lambda::id('foo'); // 'foo'
+```
+
+---
+
 ## k
 
 __K Combinator__ :: a -> (b -> a)
@@ -40,16 +47,9 @@ $alwaysFour(); // 4
 
 ---
 
-## id
+## pipe
 
-__Identity Function__ :: a -> a
-
-Given some value a, return a unchanged
-
-```
-Lambda::id(4); // 4
-Lambda::id('foo'); // 'foo'
-```
+This function is currently missing documentation.
 
 ---
 

@@ -68,9 +68,14 @@ class GenerateDocumentationCommand extends Command
                 $moduleDirectory
             );
 
+            // Sort the functions in the docs alphabetically
+            $functions = ArrayList::sort(function($fA, $fB) {
+                return $fA->properName() <=> $fB->properName();
+            }, $moduleDoc->getFunctionDocs());
+
             // For each function in this module, add the markdown content to a buffer
             $buffer = '';
-            foreach ($moduleDoc->getFunctionDocs() as $function) {
+            foreach ($functions as $function) {
                 $buffer .= $this->generateFunctionDocMarkdown($function);
             }
 

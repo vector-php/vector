@@ -11,73 +11,6 @@ Math::add(-1, 2); // 1
 
 ---
 
-## sum
-
-__Array Sum__ :: Number a => [a] -> a
-
-Add all the numbers of a list together and return their sum. If the given
-list is empty, returns 0.
-
-```
-Math::sum([1, 2, 3]); // 6
-Math::sum([]); // 0
-```
-
----
-
-## negate
-
-__Negate a number.__ :: Number a => a -> a
-
-Returns a given number * -1.
-
-```
-Math::negate(4); // -4
-Math::negate(0); // 0
-```
-
----
-
-## subtract
-
-__Arithmetic Subtraction.__ :: Number a => a -> a -> a
-
-Subtracts two numbers, with the first argument being subtracted from the second.
-
-```
-Math::subtract(4, 9); // 5
-Math::subtract(-1, 3); // 4
-```
-
----
-
-## multiply
-
-__Arithmetic Multiplication__ :: Number a => a -> a -> a
-
-Multiply two numbers together.
-
-```
-Math::multiply(2, 4); // 8
-Math::multiply(0, 4); // 0
-```
-
----
-
-## product
-
-__Array Product__ :: Number a => [a] -> a
-
-Returns the product of a list of numbers, i.e. the result of multiplying
-every element of a list together. Returns 1 for an empty list.
-
-```
-Math::product([2, 2, 3]); // 12
-Math::product([]); // 1
-```
-
----
-
 ## divide
 
 __Arithmetic Division__ :: Number a => a -> a -> a
@@ -91,33 +24,29 @@ Math::divide(4, 12); // 3
 
 ---
 
-## mod
+## max
 
-__Modulus Operator__ :: Int -> Int -> Int
+__Maximum Value__ :: Number a => a -> a -> a
 
-Take the modulus of two integers, with the first argument being the divisor.
-Returns the remainder of $b / $a.
+Returns the maximum of two arguments a and b. If a and b are equal, just returns the value.
 
 ```
-Math::mod(2, 5); // 1
-Math::mod(5, 12); // 2
-Math::mod(3, 3); // 0
+Math::max(1, 2); // 2
+Math::max(-1, -6); // -1
+Math::max(5, 5); // 5
 ```
 
 ---
 
-## range
+## mean
 
-__Number Range__ :: Number a => a -> a -> a
+__Arithmetic mean__ :: Number a => [a] -> a
 
-Given two values m and n, return all values between m and n in an array, inclusive, with a
-step size of $step. The list of numbers will start at the first value and approach the second value.
+Returns the average of a list, or zero for an empty list.
 
 ```
-Math::range(1, 1, 5); // [1, 2, 3, 4, 5]
-Math::range(2, 0, -3); // [0, -2]
-Math::range(0, 0, 0); // [0]
-Math::range(0.1, 0, 0.5); // [0, 0.1, 0.2, 0.3, 0.4, 0.5]
+Math::mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2
+Math::mean([]); // 0
 ```
 
 ---
@@ -138,16 +67,43 @@ Math::min(5, 5); // 5
 
 ---
 
-## max
+## mod
 
-__Maximum Value__ :: Number a => a -> a -> a
+__Modulus Operator__ :: Int -> Int -> Int
 
-Returns the maximum of two arguments a and b. If a and b are equal, just returns the value.
+Take the modulus of two integers, with the first argument being the divisor.
+Returns the remainder of $b / $a.
 
 ```
-Math::max(1, 2); // 2
-Math::max(-1, -6); // -1
-Math::max(5, 5); // 5
+Math::mod(2, 5); // 1
+Math::mod(5, 12); // 2
+Math::mod(3, 3); // 0
+```
+
+---
+
+## multiply
+
+__Arithmetic Multiplication__ :: Number a => a -> a -> a
+
+Multiply two numbers together.
+
+```
+Math::multiply(2, 4); // 8
+Math::multiply(0, 4); // 0
+```
+
+---
+
+## negate
+
+__Negate a number.__ :: Number a => a -> a
+
+Returns a given number * -1.
+
+```
+Math::negate(4); // -4
+Math::negate(0); // 0
 ```
 
 ---
@@ -166,15 +122,59 @@ Math::pow(3, 2); // 2 ^ 3 = 8
 
 ---
 
-## mean
+## product
 
-__Arithmetic mean__ :: Number a => [a] -> a
+__Array Product__ :: Number a => [a] -> a
 
-Returns the average of a list, or zero for an empty list.
+Returns the product of a list of numbers, i.e. the result of multiplying
+every element of a list together. Returns 1 for an empty list.
 
 ```
-Math::mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2
-Math::mean([]); // 0
+Math::product([2, 2, 3]); // 12
+Math::product([]); // 1
+```
+
+---
+
+## range
+
+__Number Range__ :: Number a => a -> a -> a
+
+Given two values m and n, return all values between m and n in an array, inclusive, with a
+step size of $step. The list of numbers will start at the first value and approach the second value.
+
+```
+Math::range(1, 1, 5); // [1, 2, 3, 4, 5]
+Math::range(2, 0, -3); // [0, -2]
+Math::range(0, 0, 0); // [0]
+Math::range(0.1, 0, 0.5); // [0, 0.1, 0.2, 0.3, 0.4, 0.5]
+```
+
+---
+
+## subtract
+
+__Arithmetic Subtraction.__ :: Number a => a -> a -> a
+
+Subtracts two numbers, with the first argument being subtracted from the second.
+
+```
+Math::subtract(4, 9); // 5
+Math::subtract(-1, 3); // 4
+```
+
+---
+
+## sum
+
+__Array Sum__ :: Number a => [a] -> a
+
+Add all the numbers of a list together and return their sum. If the given
+list is empty, returns 0.
+
+```
+Math::sum([1, 2, 3]); // 6
+Math::sum([]); // 0
 ```
 
 ---

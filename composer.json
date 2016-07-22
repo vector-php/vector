@@ -30,6 +30,7 @@
         "runTests": "./scripts/runTests.sh",
         "buildTestEnvironments": "./scripts/buildTestEnvironments.sh",
         "runDocs": "./scripts/runDocs.sh",
-        "buildDocs": "./scripts/buildDocs.sh"
+        "buildDocs": "./scripts/buildDocs.sh",
+        "deployDocs": "./scripts/deployDocs.sh"
     }
 }

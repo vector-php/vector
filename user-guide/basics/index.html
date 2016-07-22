@@ -276,7 +276,6 @@ write:</p>
 <pre><code class="php">Vector\Lib\ArrayList::length([1, 2, 3]); // 3
 </code></pre>
 
-<p>At first this may seem strange, but it's actually both intended and useful -- and a direct consequence of currying, which will we discuss next.</p>
 <p>If you look at the ArrayList class in Vector\Lib, you'll notice that there is not actually a <code>length</code> function defined anywhere. Rather, there's a <code>__length</code>
 function that looks something like this:</p>
 <pre><code class="php">protected static function __length($list)
@@ -293,6 +292,7 @@ when invoked. For instance:</p>
 $length([1, 2, 3]); // 3
 </code></pre>
 
+<p>At first this may seem strange, but it's actually both intended and useful -- and a direct consequence of currying, which will we discuss next.</p>
 <h2 id="currying">Currying</h2>
 <p>Currying is the act of modifying a function in such a way that it can accept its arguments in chunks. A curried function
 doesn't have to be supplied all of its arguments in order to have some effect.</p>

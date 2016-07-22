@@ -20,6 +20,10 @@ pages:
             -
                 'Vector Modules': user-guide/module.md
     -
+        'Advanced Topics':
+            -
+                Lenses: advanced/lenses.md
+    -
         Vector:
             -
                 Lib:

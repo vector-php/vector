@@ -177,6 +177,11 @@ class GenerateDocumentationCommand extends Command
                         ['Vector Modules' => 'user-guide/module.md']
                     ]
                 ],
+                [
+                    'Advanced Topics' => [
+                        ['Lenses' => 'advanced/lenses.md']
+                    ]
+                ],
                 $this->dictToList($moduleDirectory)[0]
             ]
         ];

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Joseph Walker">
+  
+  <title>ArrayList - Vector</title>
+  
+
+  <link rel="shortcut icon" href="../../../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../css/highlight.css">
+  <link href="../../../../extra.css" rel="stylesheet">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "ArrayList";
+    var mkdocs_page_input_path = "auto-generate/Vector/Lib/ArrayList.md";
+    var mkdocs_page_url = "/auto-generate/Vector/Lib/ArrayList/";
+  </script>
+  
+  <script src="../../../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../../../js/highlight.pack.js"></script>
+  <script src="../../../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../../.." class="icon icon-home"> Vector</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../../..">Introduction</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>User Guide</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../user-guide/basics/">Functional Basics</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../user-guide/capsule/">The Function Capsule</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Vector</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>Lib</span></li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">ArrayList</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#bifurcate">bifurcate</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#concat">concat</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#cons">cons</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#contains">contains</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#drop">drop</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#dropwhile">dropWhile</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#filter">filter</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#flatten">flatten</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#foldl">foldl</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#groupby">groupBy</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#head">head</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#index">index</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#init">init</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#keys">keys</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#last">last</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#length">length</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#map">map</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#mapindexed">mapIndexed</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#replicate">replicate</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#reverse">reverse</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#setindex">setIndex</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#sort">sort</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#tail">tail</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#take">take</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#takewhile">takeWhile</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#values">values</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#zip">zip</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#zipwith">zipWith</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Lambda/">Lambda</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Logic/">Logic</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Math/">Math</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Object/">Object</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Strings/">Strings</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>Control</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../Control/Applicative/">Applicative</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../Control/Functor/">Functor</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../Control/Lens/">Lens</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../Control/Monad/">Monad</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../..">Vector</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Vector &raquo;</li>
+        
+      
+        
+          <li>Lib &raquo;</li>
+        
+      
+    
+    <li>ArrayList</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/joseph-walker/vector" class="icon icon-github"> Edit on GitHub</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="bifurcate">bifurcate</h2>
+<p><strong>Array Bifurcation</strong> :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])</p>
+<p>Given an array and some filtering test that returns a boolean, return two arrays - one array
+of elements that pass the test, and another array of elements that don't. Similar to filter,
+but returns the elements that fail as well.</p>
+<pre><code>ArrayList::bifurcate($isEven, [1, 2, 3, 4, 5]); // [[2, 4], [1, 3, 5]]
+</code></pre>
+
+<hr />
+<h2 id="concat">concat</h2>
+<p><strong>Array Concatenation</strong> :: [a] -&gt; [a] -&gt; [a]</p>
+<p>Joins two arrays together, with the second argument being appended
+to the end of the first. Defers to php build-in function <code>array_merge</code>,
+so repeated keys will be overwritten.</p>
+<pre><code>ArrayList::concat([1, 2], [2, 3]); // [1, 2, 2, 3]
+ArrayList::concat(['a' =&gt; 1, 'b' =&gt; 2], ['a' =&gt; 'foo', 'c' =&gt; 3]); // ['a' =&gt; 'foo', 'b' =&gt; 2, 'c' =&gt; 3]
+</code></pre>
+
+<hr />
+<h2 id="cons">cons</h2>
+<p><strong>Cons Operator</strong> :: a -&gt; [a] -&gt; [a]</p>
+<p>Given a value and an array, append that value to the end of the array.</p>
+<pre><code>ArrayList::cons(3, [1, 2]); // [1, 2, 3]
+ArrayList::cons(1, []); // [1]
+</code></pre>
+
+<hr />
+<h2 id="contains">contains</h2>
+<p><strong>Array Contains Element</strong> :: a -&gt; [a] -&gt; Bool</p>
+<p>Returns true if a given array contains the item to test, or false if
+it does not.</p>
+<pre><code>ArrayList::contains(1, [1, 2, 3]); // true
+ArrayList::contains('a', ['b', 'c', 'd']); // false
+</code></pre>
+
+<hr />
+<h2 id="drop">drop</h2>
+<p><strong>Drop Elements</strong> :: Int -&gt; [a] -&gt; [a]</p>
+<p>Given some number n, drop n elements from an input array and return the rest of
+the elements. If n is greater than the length of the array, returns an empty array.</p>
+<pre><code>ArrayList::drop(2, [1, 2, 3, 4]); // [3, 4]
+ArrayList::drop(4, [1, 2]); // []
+</code></pre>
+
+<hr />
+<h2 id="dropwhile">dropWhile</h2>
+<p><strong>Drop Elements with Predicate</strong> :: (a -&gt; Bool) -&gt; [a] -&gt; [a]</p>
+<p>Given some function that returns true or false, drop elements from an array starting
+at the front, testing each element along the way, until that function returns false.
+Return the array without all of those elements.</p>
+<pre><code>$greaterThanOne = function($n) { return $n &gt; 1; };
+ArrayList::dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]
+</code></pre>
+
+<hr />
+<h2 id="filter">filter</h2>
+<p><strong>Filter a List</strong> :: (a -&gt; Bool) -&gt; [a] -&gt; [a]</p>
+<p>Returns a filtered list. Given a function that takes an element and returns
+either true or false, return a list of all the elements
+of the input list that pass the test.</p>
+<pre><code>ArrayList::filter(function($a) { return $a &gt; 2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function
+ArrayList::filter(function($a) { return $a &gt; 2; }, ['foo' =&gt; 1, 'bar' =&gt; 3]); // ['foo' =&gt; 1]
+ArrayList::filter(Math::lte(2), [1, 2, 3, 4, 5]); // [1, 2], using `lte` from the Math module
+</code></pre>
+
+<hr />
+<h2 id="flatten">flatten</h2>
+<p><strong>Array Flatten</strong> :: [a] -&gt; [b]</p>
+<p>Flattens a nested array structure into a single-dimensional array. Can handle
+arrays of arbitrary dimension.</p>
+<pre><code>ArrayList::flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]
+</code></pre>
+
+<hr />
+<h2 id="foldl">foldl</h2>
+<p><strong>List Fold - From Left</strong> :: (b -&gt; a -&gt; b) -&gt; b -&gt; [a] -&gt; b</p>
+<p>Fold a list by iterating over the list from left to right. Pass each element, one by one, into
+the fold function $f, and carry its value over to the next iteration. Also referred to as array
+reduce.</p>
+<pre><code>$add = function($a, $b) { return $a + $b; };
+ArrayList::foldl(Math::add(), 0, [1, 2, 3]); // 6
+ArrayList::foldl(Logic::and(), True, [True, True]); // True
+ArrayList::foldl(Logic::and(), True, [True, True, False]); // False
+</code></pre>
+
+<hr />
+<h2 id="groupby">groupBy</h2>
+<p><strong>Group By</strong> :: (a -&gt; String) -&gt; [a] -&gt; [[a]]</p>
+<p>Given a function that turns an element into a string, map over a list of elements
+and return a multi-dimensional array with elements grouped together by their key
+generator.</p>
+<pre><code>$testCase = [1, 2, 3, 4, 5, 6, 7];
+$keyGen = function($a) {
+    return ($a &lt;= 3) ? 'small' : 'big';
+};
+ArrayList::groupBy($keyGen, $testCase); // ['small' =&gt; [1, 2, 3], 'big' =&gt; [4, 5, 6, 7]]
+</code></pre>
+
+<hr />
+<h2 id="head">head</h2>
+<p><strong>List Head</strong> :: [a] -&gt; a</p>
+<p>Returns the first element of a list, the element at index 0. Also functions
+properly for key/value arrays, e.g. arrays whose first element may not necessarily
+be index 0. If an empty array is given, head throws an Exception.</p>
+<pre><code>ArrayList::head([1, 2, 3]); // 1
+ArrayList::head(['a' =&gt; 1, 'b' =&gt; 2]); // 1
+ArrayList::head([]); // Exception thrown
+</code></pre>
+
+<hr />
+<h2 id="index">index</h2>
+<p><strong>List Index</strong> :: Int -&gt; [a] -&gt; a</p>
+<p>Returns the element of a list at the given index. Throws an exception
+if the given index does not exist in the list.</p>
+<pre><code>ArrayList::index(0, [1, 2, 3]); // 1
+ArrayList::index('foo', ['bar' =&gt; 1, 'foo' =&gt; 2]); // 2
+ArrayList::index('baz', [1, 2, 3]); // Exception thrown
+</code></pre>
+
+<hr />
+<h2 id="init">init</h2>
+<p><strong>Initial List Values</strong> :: [a] -&gt; [a]</p>
+<p>Returns an array without its last element, e.g. the inverse of <code>tail</code>. Works on
+key/value arrays as well as 'regular' arrays. If an empty or single-value array is given,
+returns an empty array.</p>
+<pre><code>ArrayList::init([1, 2, 3]); // [1, 2]
+ArrayList::init(['a' =&gt; 1, 'b' =&gt; 2]); // ['a' =&gt; 1];
+</code></pre>
+
+<hr />
+<h2 id="keys">keys</h2>
+<p><strong>Array Keys</strong> :: [a] -&gt; [b]</p>
+<p>Returns the keys of an associative key/value array. Returns numerical indexes
+for non key/value arrays.</p>
+<pre><code>ArrayList::keys(['a' =&gt; 1, 'b' =&gt; 2]); // ['a', 'b']
+ArrayList::keys([1, 2, 3]); // [0, 1, 2]
+</code></pre>
+
+<hr />
+<h2 id="last">last</h2>
+<p><strong>Last List Value</strong> :: [a] -&gt; a</p>
+<p>Returns the last element of an array, e.g. the complement of <code>init</code>. Works on key/value
+arrays as well as 'regular' arrays. If an empty array is given, throws an exception.</p>
+<pre><code>ArrayList::last([1, 2, 3]); // 3
+ArrayList::last(['a' =&gt; 1, 'b' =&gt; 2]); // 2
+ArrayList::last([]); // Exception thrown
+</code></pre>
+
+<hr />
+<h2 id="length">length</h2>
+<p><strong>Array Length</strong> :: [a] -&gt; a</p>
+<p>Returns the length of a list or array. Wraps php <code>count</code> function.</p>
+<pre><code>ArrayList::length([1, 2, 3]); // 3
+ArrayList::length(['a' =&gt; 1, 'b' =&gt; 2]); // 2
+</code></pre>
+
+<hr />
+<h2 id="map">map</h2>
+<p><strong>Array Map</strong> :: (a -&gt; b) -&gt; [a] -&gt; [b]</p>
+<p>Given some function and a list of arbitrary length, return a new array that is the
+result of calling the given function on each element of the original list.</p>
+<pre><code>ArrayList::map($add(1), [1, 2, 3]); // [2, 3, 4]
+</code></pre>
+
+<hr />
+<h2 id="mapindexed">mapIndexed</h2>
+<p><strong>Array Map Indexed</strong> :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [c]</p>
+<p>Given some function and a list of arbitrary length, return a new array that is the
+result of calling the given function on each element of the original list.</p>
+<pre><code>ArrayList::mapIndexed($filterEvenIndexes, [1, 2, 3]); // [null, 2, null]
+</code></pre>
+
+<hr />
+<h2 id="replicate">replicate</h2>
+<p><strong>Replicate Item</strong> :: Int -&gt; a -&gt; [a]</p>
+<p>Given some integer n and an item to repeat, repeat that item and place
+the results into an array of length n.</p>
+<pre><code>ArrayList::replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']
+</code></pre>
+
+<hr />
+<h2 id="reverse">reverse</h2>
+<p><strong>Array Reverse</strong> :: [a] -&gt; [a]</p>
+<p>Flip the order of a given array. Does not modify the original array.</p>
+<pre><code>ArrayList::reverse([1, 2, 3]); // [3, 2, 1]
+</code></pre>
+
+<hr />
+<h2 id="setindex">setIndex</h2>
+<p><strong>Set Array Value</strong> :: a -&gt; b -&gt; [b] -&gt; [b]</p>
+<p>Sets the value of an array at the given index; works for non-numerical indexes.
+The value is set in an immutable way, so the original array is not modified.</p>
+<pre><code>ArrayList::setValue(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]
+ArrayList::setValue('c', 3, ['a' =&gt; 1, 'b' =&gt; 2]); // ['a' =&gt; 1, 'b' =&gt; 2, 'c' =&gt; 3]
+</code></pre>
+
+<hr />
+<h2 id="sort">sort</h2>
+<p><strong>Array Sort</strong> :: (a -&gt; a -&gt; Int) -&gt; [a] -&gt; [a]</p>
+<p>Given a function that compares two values, sort an array. This function defers to usort
+but does not mutate the original array. The comparison function should return -1 if the
+first argument is ordered before the second, 0 if it's the same ordering, and 1 if
+first argument is ordered after the second.</p>
+<pre><code>$comp = function($a, $b) { return $a &lt;=&gt; $b; };
+ArrayList::sort($comp, [3, 2, 1]);
+</code></pre>
+
+<hr />
+<h2 id="tail">tail</h2>
+<p><strong>List Tail</strong> :: [a] -&gt; [a]</p>
+<p>Returns an array without its first element, e.g. the complement of <code>head</code>. Works on
+key/value arrays as well as 'regular' arrays. If an empty array of an array of one element
+is given, returns an empty array.</p>
+<pre><code>ArrayList::([1, 2, 3]); // [2, 3]
+ArrayList::(['a' =&gt; 1, 'b' =&gt; 2]); // ['b' =&gt; 2];
+</code></pre>
+
+<hr />
+<h2 id="take">take</h2>
+<p><strong>Take Elements</strong> :: Int -&gt; [a] -&gt; [a]</p>
+<p>Given some number n, return the first n elements of a given array. Returns the whole
+array if n is greater than the array length.</p>
+<pre><code>ArrayList::take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]
+</code></pre>
+
+<hr />
+<h2 id="takewhile">takeWhile</h2>
+<p><strong>Take Elements with Predicate</strong> :: (a -&gt; Bool) -&gt; [a] -&gt; [a]</p>
+<p>Given some function that returns true or false, return the first elements of the array
+that all pass the test, until the test fails.</p>
+<pre><code>$greaterThanOne = function($n) { return $n &gt; 1; };
+ArrayList::takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]
+</code></pre>
+
+<hr />
+<h2 id="values">values</h2>
+<p><strong>Array Values</strong> :: [a] -&gt; [a]</p>
+<p>Returns the values of an associative key/value array.</p>
+<pre><code>ArrayList::values(['a' =&gt; 1, 'b' =&gt; 2]); // [1, 2]
+ArrayList::values([1, 2, 3]); // [1, 2, 3]
+</code></pre>
+
+<hr />
+<h2 id="zip">zip</h2>
+<p><strong>Array Zip</strong> :: [a] -&gt; [b] -&gt; [(a, b)]</p>
+<p>Given two arrays a and b, return a new array where each element is a tuple of a and b. If a and b
+are not the same length, the resultant array will always be the same length as the shorter array.</p>
+<pre><code>ArrayList::zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]
+</code></pre>
+
+<hr />
+<h2 id="zipwith">zipWith</h2>
+<p><strong>Custom Array Zip</strong> :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c]</p>
+<p>Given two arrays a and b, and some combinator f, combine the arrays using the combinator
+f(ai, bi) into a new array c. If a and b are not the same length, the resultant array will
+always be the same length as the shorter array, i.e. the zip stops when it runs out of pairs.</p>
+<pre><code>$combinator = function($a, $b) { return $a + $b; };
+ArrayList::zipWith($combinator, [1, 2, 3], [0, 8, -1]); // [1, 10, 2]
+$combinator = function($a, $b) { return $a - $b; };
+ArrayList::zipWith($combinator, [0], [1, 2, 3]); // [-1]
+</code></pre>
+
+<hr />
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Lambda/" class="btn btn-neutral float-right" title="Lambda">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../../../user-guide/capsule/" class="btn btn-neutral" title="The Function Capsule"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Copyright (c) 2016 Joseph Walker</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/joseph-walker/vector" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../../../../user-guide/capsule/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Lambda/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

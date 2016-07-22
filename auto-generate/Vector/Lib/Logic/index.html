@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Joseph Walker">
+  
+  <title>Logic - Vector</title>
+  
+
+  <link rel="shortcut icon" href="../../../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../css/highlight.css">
+  <link href="../../../../extra.css" rel="stylesheet">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Logic";
+    var mkdocs_page_input_path = "auto-generate/Vector/Lib/Logic.md";
+    var mkdocs_page_url = "/auto-generate/Vector/Lib/Logic/";
+  </script>
+  
+  <script src="../../../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../../../js/highlight.pack.js"></script>
+  <script src="../../../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../../.." class="icon icon-home"> Vector</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../../..">Introduction</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>User Guide</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../user-guide/basics/">Functional Basics</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../user-guide/capsule/">The Function Capsule</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Vector</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>Lib</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../ArrayList/">ArrayList</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Lambda/">Lambda</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Logic</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#all">all</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#andcombinator">andCombinator</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#any">any</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#eq">eq</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#eqstrict">eqStrict</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#gt">gt</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#gte">gte</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#logicaland">logicalAnd</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#logicalnot">logicalNot</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#logicalor">logicalOr</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#lt">lt</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#lte">lte</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#not">not</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#noteq">notEq</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#noteqstrict">notEqStrict</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#orcombinator">orCombinator</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Math/">Math</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Object/">Object</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Strings/">Strings</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>Control</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../Control/Applicative/">Applicative</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../Control/Functor/">Functor</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../Control/Lens/">Lens</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../Control/Monad/">Monad</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../..">Vector</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Vector &raquo;</li>
+        
+      
+        
+          <li>Lib &raquo;</li>
+        
+      
+    
+    <li>Logic</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/joseph-walker/vector" class="icon icon-github"> Edit on GitHub</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="all">all</h2>
+<p><strong>All</strong> :: array -&gt; Bool</p>
+<p>Returns true given all values are truthy</p>
+<pre><code>Logic::all(1, 'asdf', true); // True
+Logic::all(1, false); // False
+</code></pre>
+
+<hr />
+<h2 id="andcombinator">andCombinator</h2>
+<p><strong>Logical And Combinator</strong> :: [(a -&gt; Bool)] -&gt; a -&gt; Bool</p>
+<p>Given two functions f and g, combine them in such a way to produce a new
+function h that returns true given f(x) AND g(x) returns true.</p>
+<pre><code>$funcF = function($x) { return $x &lt; 5; };
+$funcG = function($x) { return $x &gt; 0; };
+$combinator = Logic::andCombinator([$funcF, $funcG]);
+$combinator(4); // True
+$combinator(2); // True
+$combinator(7); // False
+</code></pre>
+
+<hr />
+<h2 id="any">any</h2>
+<p><strong>Any</strong> :: array -&gt; Bool</p>
+<p>Returns true given any values are truthy</p>
+<pre><code>Logic::any(true, false); // True
+Logic::any(false, false); // False
+</code></pre>
+
+<hr />
+<h2 id="eq">eq</h2>
+<p><strong>Equal (Not Strict / ==)</strong> :: mixed -&gt; mixed -&gt; Bool</p>
+<p>Returns true given $a equals $b</p>
+<pre><code>Logic::eq(1, 1); // True
+Logic::eq(1, 2); // False
+</code></pre>
+
+<hr />
+<h2 id="eqstrict">eqStrict</h2>
+<p><strong>Equal (Strict / ===)</strong> :: mixed -&gt; mixed -&gt; Bool</p>
+<p>Returns true given $a equals $b</p>
+<pre><code>Logic::eqStrict(1, 1); // True
+Logic::eqStrict(1, '1'); // False
+</code></pre>
+
+<hr />
+<h2 id="gt">gt</h2>
+<p><strong>Greater Than</strong> :: mixed -&gt; mixed -&gt; Bool</p>
+<p>Returns true given $b is greater than $a.</p>
+<pre><code>Logic::gt(2, 1); // False
+Logic::gt(1, 2); // True
+</code></pre>
+
+<hr />
+<h2 id="gte">gte</h2>
+<p><strong>Greater Than Or Equal</strong> :: mixed -&gt; mixed -&gt; Bool</p>
+<p>Returns true given $b is greater than or equal to $a.</p>
+<pre><code>Logic::gte(1, 1); // True
+Logic::gte(1, 2); // True
+</code></pre>
+
+<hr />
+<h2 id="logicaland">logicalAnd</h2>
+<p><strong>Logical And</strong> :: Bool -&gt; Bool -&gt; Bool</p>
+<p>Returns true given $a AND $b are true.</p>
+<pre><code>Logic::logicalAnd(true, true); // True
+Logic::logicalAnd(true, false); // False
+</code></pre>
+
+<hr />
+<h2 id="logicalnot">logicalNot</h2>
+<p><strong>Logical Not</strong> :: Bool -&gt; Bool</p>
+<p>Returns true given $a is false.
+Returns false given $a is true.</p>
+<pre><code>Logic::logicalNot(true); // False
+Logic::logicalNot(false); // True
+</code></pre>
+
+<hr />
+<h2 id="logicalor">logicalOr</h2>
+<p><strong>Logical Or</strong> :: Bool -&gt; Bool -&gt; Bool</p>
+<p>Returns true given $a OR $b returns true.</p>
+<pre><code>Logic::logicalOr(true, false); // True
+Logic::logicalOr(false, false); // False
+</code></pre>
+
+<hr />
+<h2 id="lt">lt</h2>
+<p><strong>Less Than</strong> :: mixed -&gt; mixed -&gt; Bool</p>
+<p>Returns true given $b is less than $a.</p>
+<pre><code>Logic::lt(2, 1); // True
+Logic::lt(1, 2); // False
+</code></pre>
+
+<hr />
+<h2 id="lte">lte</h2>
+<p><strong>Less Than Or Equal</strong> :: mixed -&gt; mixed -&gt; Bool</p>
+<p>Returns true given $b is less than or equal to $a.</p>
+<pre><code>Logic::lte(1, 1); // True
+Logic::lte(2, 1); // True
+</code></pre>
+
+<hr />
+<h2 id="not">not</h2>
+<p><strong>Logical Not</strong> :: Bool -&gt; Bool</p>
+<p>Returns the inverse of $a</p>
+<pre><code>Logic::not(false); // true
+</code></pre>
+
+<hr />
+<h2 id="noteq">notEq</h2>
+<p><strong>Not Equal (Not Strict / ==)</strong> :: mixed -&gt; mixed -&gt; Bool</p>
+<p>Returns true given $a does not equal $b</p>
+<pre><code>Logic::notEq(1, 1); // False
+Logic::notEq(1, 2); // True
+</code></pre>
+
+<hr />
+<h2 id="noteqstrict">notEqStrict</h2>
+<p><strong>Not Equal (Strict / ===)</strong> :: mixed -&gt; mixed -&gt; Bool</p>
+<p>Returns true given $a does not equal $b</p>
+<pre><code>Logic::notEqStrict(1, 2); // True
+Logic::notEqStrict(1, '1'); // False
+</code></pre>
+
+<hr />
+<h2 id="orcombinator">orCombinator</h2>
+<p><strong>Logical Or Combinator</strong> :: [(a -&gt; Bool)] -&gt; a -&gt; Bool</p>
+<p>Given two functions f and g, combine them in such a way to produce a new
+function h that returns true given f(x) OR g(x) returns true.</p>
+<pre><code>$funcF = function($x) { return $x &gt;= 5; };
+$funcG = function($x) { return $x == 0; };
+$combinator = Logic::orCombinator([$funcF, $funcG]);
+$combinator(9); // True
+$combinator(0); // True
+$combinator(2); // False
+</code></pre>
+
+<hr />
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Math/" class="btn btn-neutral float-right" title="Math">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../Lambda/" class="btn btn-neutral" title="Lambda"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Copyright (c) 2016 Joseph Walker</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/joseph-walker/vector" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../Lambda/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Math/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

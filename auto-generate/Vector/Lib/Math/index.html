@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Joseph Walker">
+  
+  <title>Math - Vector</title>
+  
+
+  <link rel="shortcut icon" href="../../../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../css/highlight.css">
+  <link href="../../../../extra.css" rel="stylesheet">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Math";
+    var mkdocs_page_input_path = "auto-generate/Vector/Lib/Math.md";
+    var mkdocs_page_url = "/auto-generate/Vector/Lib/Math/";
+  </script>
+  
+  <script src="../../../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../../../js/highlight.pack.js"></script>
+  <script src="../../../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../../.." class="icon icon-home"> Vector</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../../..">Introduction</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>User Guide</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../user-guide/basics/">Functional Basics</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../user-guide/capsule/">The Function Capsule</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Vector</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>Lib</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../ArrayList/">ArrayList</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Lambda/">Lambda</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Logic/">Logic</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Math</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#add">add</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#divide">divide</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#max">max</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#mean">mean</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#min">min</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#mod">mod</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#multiply">multiply</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#negate">negate</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#pow">pow</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#product">product</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#range">range</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#subtract">subtract</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#sum">sum</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Object/">Object</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Strings/">Strings</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>Control</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../Control/Applicative/">Applicative</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../Control/Functor/">Functor</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../Control/Lens/">Lens</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../Control/Monad/">Monad</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../..">Vector</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Vector &raquo;</li>
+        
+      
+        
+          <li>Lib &raquo;</li>
+        
+      
+    
+    <li>Math</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/joseph-walker/vector" class="icon icon-github"> Edit on GitHub</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="add">add</h2>
+<p><strong>Arithmetic Addition</strong> :: Number a =&gt; a -&gt; a -&gt; a</p>
+<p>Add two numbers together.</p>
+<pre><code>Math::add(2, 2); // 4
+Math::add(-1, 2); // 1
+</code></pre>
+
+<hr />
+<h2 id="divide">divide</h2>
+<p><strong>Arithmetic Division</strong> :: Number a =&gt; a -&gt; a -&gt; a</p>
+<p>Divide two numbers, with the first argument being the divisor.</p>
+<pre><code>Math::divide(2, 8); // 4
+Math::divide(4, 12); // 3
+</code></pre>
+
+<hr />
+<h2 id="max">max</h2>
+<p><strong>Maximum Value</strong> :: Number a =&gt; a -&gt; a -&gt; a</p>
+<p>Returns the maximum of two arguments a and b. If a and b are equal, just returns the value.</p>
+<pre><code>Math::max(1, 2); // 2
+Math::max(-1, -6); // -1
+Math::max(5, 5); // 5
+</code></pre>
+
+<hr />
+<h2 id="mean">mean</h2>
+<p><strong>Arithmetic mean</strong> :: Number a =&gt; [a] -&gt; a</p>
+<p>Returns the average of a list, or zero for an empty list.</p>
+<pre><code>Math::mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2
+Math::mean([]); // 0
+</code></pre>
+
+<hr />
+<h2 id="min">min</h2>
+<p><strong>Minimum Value</strong> :: Number a =&gt; a -&gt; a -&gt; a</p>
+<p>Returns the minimum of two arguments a and b.
+If a and be are equal, returns the first value. But since they're equal, that doesn't
+really matter now does it?</p>
+<pre><code>Math::min(1, 2); // 1
+Math::min(-1, -6); // -6
+Math::min(5, 5); // 5
+</code></pre>
+
+<hr />
+<h2 id="mod">mod</h2>
+<p><strong>Modulus Operator</strong> :: Int -&gt; Int -&gt; Int</p>
+<p>Take the modulus of two integers, with the first argument being the divisor.
+Returns the remainder of $b / $a.</p>
+<pre><code>Math::mod(2, 5); // 1
+Math::mod(5, 12); // 2
+Math::mod(3, 3); // 0
+</code></pre>
+
+<hr />
+<h2 id="multiply">multiply</h2>
+<p><strong>Arithmetic Multiplication</strong> :: Number a =&gt; a -&gt; a -&gt; a</p>
+<p>Multiply two numbers together.</p>
+<pre><code>Math::multiply(2, 4); // 8
+Math::multiply(0, 4); // 0
+</code></pre>
+
+<hr />
+<h2 id="negate">negate</h2>
+<p><strong>Negate a number.</strong> :: Number a =&gt; a -&gt; a</p>
+<p>Returns a given number * -1.</p>
+<pre><code>Math::negate(4); // -4
+Math::negate(0); // 0
+</code></pre>
+
+<hr />
+<h2 id="pow">pow</h2>
+<p><strong>Power function</strong> :: Number a =&gt; a -&gt; a -&gt; a</p>
+<p>Arithmetic exponentiation. Raises the second argument to the power
+of the first.</p>
+<pre><code>Math::pow(2, 3); // 3 ^ 2 = 9
+Math::pow(3, 2); // 2 ^ 3 = 8
+</code></pre>
+
+<hr />
+<h2 id="product">product</h2>
+<p><strong>Array Product</strong> :: Number a =&gt; [a] -&gt; a</p>
+<p>Returns the product of a list of numbers, i.e. the result of multiplying
+every element of a list together. Returns 1 for an empty list.</p>
+<pre><code>Math::product([2, 2, 3]); // 12
+Math::product([]); // 1
+</code></pre>
+
+<hr />
+<h2 id="range">range</h2>
+<p><strong>Number Range</strong> :: Number a =&gt; a -&gt; a -&gt; a</p>
+<p>Given two values m and n, return all values between m and n in an array, inclusive, with a
+step size of $step. The list of numbers will start at the first value and approach the second value.</p>
+<pre><code>Math::range(1, 1, 5); // [1, 2, 3, 4, 5]
+Math::range(2, 0, -3); // [0, -2]
+Math::range(0, 0, 0); // [0]
+Math::range(0.1, 0, 0.5); // [0, 0.1, 0.2, 0.3, 0.4, 0.5]
+</code></pre>
+
+<hr />
+<h2 id="subtract">subtract</h2>
+<p><strong>Arithmetic Subtraction.</strong> :: Number a =&gt; a -&gt; a -&gt; a</p>
+<p>Subtracts two numbers, with the first argument being subtracted from the second.</p>
+<pre><code>Math::subtract(4, 9); // 5
+Math::subtract(-1, 3); // 4
+</code></pre>
+
+<hr />
+<h2 id="sum">sum</h2>
+<p><strong>Array Sum</strong> :: Number a =&gt; [a] -&gt; a</p>
+<p>Add all the numbers of a list together and return their sum. If the given
+list is empty, returns 0.</p>
+<pre><code>Math::sum([1, 2, 3]); // 6
+Math::sum([]); // 0
+</code></pre>
+
+<hr />
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Object/" class="btn btn-neutral float-right" title="Object">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../Logic/" class="btn btn-neutral" title="Logic"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Copyright (c) 2016 Joseph Walker</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/joseph-walker/vector" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../Logic/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Object/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

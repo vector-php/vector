@@ -27,7 +27,9 @@
     "require": {
     },
     "scripts": {
-        "runTests": "./testing/runTests.sh",
-        "buildTestEnvironments": "./testing/buildTestEnvironments.sh"
+        "runTests": "./scripts/runTests.sh",
+        "buildTestEnvironments": "./scripts/buildTestEnvironments.sh",
+        "runDocs": "./scripts/runDocs.sh",
+        "buildDocs": "./scripts/buildDocs.sh"
     }
 }

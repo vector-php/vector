@@ -1,5 +1,6 @@
 #! /bin/bash
 
+echo "Building documentation..."
 php ./bin/vector.php docs:generate \
     Vector\\Lib\\ArrayList \
     Vector\\Lib\\Lambda \
@@ -7,7 +8,7 @@ php ./bin/vector.php docs:generate \
     Vector\\Lib\\Math \
     Vector\\Lib\\Object \
     Vector\\Lib\\Strings \
-    Vector\\Core\\Applicative \
-    Vector\\Core\\Functor \
-    Vector\\Core\\Lens \
-    Vector\\Core\\Monad
+    Vector\\Control\\Applicative \
+    Vector\\Control\\Functor \
+    Vector\\Control\\Lens \
+    Vector\\Control\\Monad

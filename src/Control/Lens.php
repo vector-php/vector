@@ -30,14 +30,14 @@ class Lens extends Module
      * behavior of this function will vary slightly depending on the particular
      * lens that you're using.
      *
-     * ```
-     * $myLens = $indexLens('a');
-     * $view($myLens, ['a' => 'b']); // b
-     * ```
+     * @example
+     * $myLens = Lens::indexLens('a');
+     * Lens::viewL($myLens, ['a' => 'b']); // b
      *
-     * !!! Note
-     *     Depending on which lens you use, this method might throw an exception.
-     *     Refer to the indivual lenses to see if they're safe to use or not.
+     * @note Depending on which lens you use, this method might throw an exception.
+     *       Refer to the indivual lenses to see if they're safe to use or not.
+     *
+     * @type Lens a -> a
      *
      * @param  Lens  $lens Lens to use when viewing an object
      * @param  Mixed $x    Object or array to view

@@ -39,9 +39,6 @@ class Object extends Module
         return $newObj;
     }
 
-    /**
-     * Assign Properties
-    */
     protected static function __assign($props, $objOriginal)
     {
         $obj = clone $objOriginal;
@@ -63,7 +60,6 @@ class Object extends Module
      *
      * @param String $prop Property to get
      * @param Object $obj Object
-     *
      * @return mixed $val value
      */
     protected static function __getProp($prop, $obj)
@@ -88,7 +84,6 @@ class Object extends Module
      *
      * @param String $method Method to call
      * @param Object $obj Object
-     *
      * @return mixed $val value
      */
     protected static function __invokeMethod($method, $obj)
@@ -108,7 +103,6 @@ class Object extends Module
      *
      * @param String $expected Class
      * @param Object $given Object
-     *
      * @return mixed $val value
      */
     protected static function __isInstanceOf($expected, $given)

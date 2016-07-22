@@ -4,7 +4,6 @@ namespace Vector\Euclid\Doc;
 
 use Reflector;
 use Vector\Lib\ArrayList;
-use phpDocumentor\Reflection\DocBlockFactory;
 
 class FunctionDoc
 {
@@ -12,10 +11,10 @@ class FunctionDoc
     private $docBlock;
     private $tags;
 
-    public function __construct(DocBlockFactory $docBlockParser, Reflector $reflector)
+    public function __construct($docBlock, Reflector $reflector)
     {
         $this->reflector = $reflector;
-        $this->docBlock = $docBlockParser->create($reflector);
+        $this->docBlock = $docBlock;
         $this->collectTags();
     }
 

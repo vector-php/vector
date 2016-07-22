@@ -77,7 +77,7 @@
                 
                     <li><a class="toctree-l4" href="#function-declaration-vs-function-expression">Function Declaration vs. Function Expression</a></li>
                 
-                    <li><a class="toctree-l4" href="#using-vector-functions">using Vector Functions</a></li>
+                    <li><a class="toctree-l4" href="#using-vector-functions">Using Vector Functions</a></li>
                 
                     <li><a class="toctree-l4" href="#currying">Currying</a></li>
                 
@@ -95,7 +95,7 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../capsule/">The Function Capsule</a>
+        <a class="" href="../module/">Vector Modules</a>
         
     </li>
 
@@ -268,23 +268,31 @@ $add = function($a, $b) {
 
 <p>Vector makes exclusive use of function expressions, both for consistency when combining functions together
 and for their scoped nature.</p>
-<h3 id="using-vector-functions">using Vector Functions</h3>
-<p>Functions in Vector are organized into modules, which each have some related functionality or 'theme.' We tell our code
-that we want to use a Vector functions using the <code>using</code> static method on the module we want to pull functions in from.</p>
-<p>For instance, if we want to pull in the Vector wrapper function for <code>array_map</code> called <code>$map</code> from the <code>ArrayList</code> module, we would
+<h3 id="using-vector-functions">Using Vector Functions</h3>
+<p>Functions in Vector are organized into modules, which each have some related functionality or 'theme.' Simply call the function
+you want to use as though it were a normal static function on the module in question.</p>
+<p>For instance, if we want to use in the Vector wrapper function for <code>count</code> called <code>length</code> from the <code>ArrayList</code> module, we would
 write:</p>
-<pre><code class="php">$map = Vector\Lib\ArrayList::using('map');
+<pre><code class="php">Vector\Lib\ArrayList::length([1, 2, 3]); // 3
 </code></pre>
 
-<p>This function expression places <code>$map</code> into the local scope for our use. We can load multiple functions using the built-in PHP syntax <code>list</code>:</p>
-<pre><code class="php">list($map, $filter, $foldl) = Vector\Lib\ArrayList::using('map', 'filter', 'foldl');
+<p>At first this may seem strange, but it's actually both intended and useful -- and a direct consequence of currying, which will we discuss next.</p>
+<p>If you look at the ArrayList class in Vector\Lib, you'll notice that there is not actually a <code>length</code> function defined anywhere. Rather, there's a <code>__length</code>
+function that looks something like this:</p>
+<pre><code class="php">protected static function __length($list)
+{
+    return count($list);
+}
 </code></pre>
 
-<p>And if you need an entire module and aren't afraid of using <code>extract</code>:</p>
-<pre><code class="php">extract(Vector\Lib\ArrayList::usingAll());
+<p>The function module intercepts calls to static functions on a module and performs a set of operations under the hood and completely transparently. We'll
+go into more detail about how this is implemented, and more importantly, how you can implement your own modules in the 'Module' section.</p>
+<p>It's important to note that calling a function on a module with no arguments will return a closure that executes the requested function
+when invoked. For instance:</p>
+<pre><code class="php">$length = Vector\Lib\ArrayList::length();
+$length([1, 2, 3]); // 3
 </code></pre>
 
-<p>We'll go into more detail about how this is implemented, and more importantly, how you can implement your own modules in the 'Module' section.</p>
 <h2 id="currying">Currying</h2>
 <p>Currying is the act of modifying a function in such a way that it can accept its arguments in chunks. A curried function
 doesn't have to be supplied all of its arguments in order to have some effect.</p>
@@ -323,19 +331,21 @@ $increment(9); // 10
 
 <p>We've taken our <code>$add</code> function and created an increment function, without writing a single line of code aside from applying the first argument. We can create an infinite
 number of <code>$addX</code> functions in exactly the same way.</p>
-<p>All functions in Vector are curried by default, so they can all be partially applied.</p>
+<p>All functions in Vector are curried by default, so they can all be partially applied. This is why calling a Vector function with no arguments returns that function as a closure
+as we discussed in the <strong>Using Vector Functions</strong> section.</p>
 <h2 id="composition">Composition</h2>
 <p>We've now seen how we can create functions from other functions by partially applying them. But there are other ways to create new functions from small components.
 We can also compose them together, which is like creating a chain of steps for a function to step through, from beginning to end.</p>
-<p>Vector provides a <code>$compose</code> function in the Lambda module which we can pull in and play around with. <code>$compose</code> takes its arguments and applies them sequentially from
-back to front - provided every argument is a function.</p>
+<p>Vector provides a <code>compose</code> function in the Lambda module which we can pull in and play around with. <code>compose</code> takes its arguments and applies them sequentially from
+back to front -- provided every argument is a function.</p>
 <p>Let's say we want to create a function that converts from celcius to fahrenheit, and that we've already implmented the basic mathematical functions like
-add, subtract, multiply, and divide. We can use <code>$compose</code> to chain all these calculations together to create a <code>$toFahrenheit</code> function:</p>
-<pre><code class="php">// Given that we have $add and $multiply, pull in compose:
-$compose = Vector\Lib\Lambda::using('compose');
+add, subtract, multiply, and divide. We can use <code>compose</code> to chain all these calculations together to create a <code>toFahrenheit</code> function:</p>
+<pre><code class="php">// Let's assume we have an $add and $multiply function. The Math module
+// provies these, but we'll just assume we have them in locally scoped closure objects.
 
-// Then create our function
-$toFahrenheit = $compose(
+// Notice that compose returns a function.
+// In PHP 7+ you can invoke it immediately using Lambda::compose(...)($arg)
+$toFahrenheit = Lambda::compose(
     $add(32),
     $multiply(9/5)
 );
@@ -343,44 +353,41 @@ $toFahrenheit = $compose(
 $toFahrenheit(8); // Returns 46.4
 </code></pre>
 
-<p>Notice how <code>$compose</code> reads: We first perform the operation last in the list, then move backward to the front of the list. This is laid out to match the mathematical definition
-of compose: <code>(f ∘ g)(x) = f(g(x))</code>. If you can't wrap your head around the backwards nature, Vector also supplied a <code>$pipe</code> function on the Lambda module that acts as compose
+<p>Notice how <code>compose</code> reads: We first perform the operation last in the list, then move backward to the front of the list. This is laid out to match the mathematical definition
+of compose: <code>(f ∘ g)(x) = f(g(x))</code>. If you can't wrap your head around the backwards nature, Vector also supplied a <code>pipe</code> function on the Lambda module that acts as compose
 from front-to-back.</p>
-<p>Notice also how we used partial application to create helper functions from <code>$add</code> and <code>$multiply</code>. These two methods
+<p>Notice also how we used partial application to create helper functions from <code>$add</code> and <code>$multiply</code>. Partial application and composition
 can be mixed and matched to create more complex functions from very simple components.</p>
 <h2 id="lifting">Lifting</h2>
 <p>Let's use our <code>$toFahrenheit</code> function from before, but imagine instead that we want to apply it to a list of temperatures. Instead of looping over the
-list in a procedural way, let's use <code>$map</code> from the List module.</p>
-<pre><code class="php">$map = Vector\Lib\ArrayList::using('map');
-
-// Our list of temperatures
+list in a procedural way, let's use <code>map</code> from the ArrayList module.</p>
+<pre><code class="php">// Our list of temperatures
 $data = [50.0, 176.0, 212.0];
 
-$map($toFahrenheit, $data); // Returns [10, 80, 100]
+ArrayList::map($toFahrenheit, $data); // Returns [10, 80, 100]
 </code></pre>
 
-<p>If you've ever used PHP's <code>array_map</code> before, you should recognize what's going on. <code>$map</code> is taking a function with one input and one output, and sequentially
+<p>If you've ever used PHP's <code>array_map</code> before, you should recognize what's going on. <code>map</code> is taking a function with one input and one output, and sequentially
 applying it to every element in an array.</p>
-<p>However, <code>$map</code> is a function just like any other - it's curried, and it can be partially applied. If we partially apply <code>$map</code>, we've created a new function that now operates
+<p>However, <code>map</code> is a function just like any other - it's curried, and it can be partially applied. If we partially apply <code>map</code>, we've created a new function that now operates
 on a list as opposed to a single element. We've lifted it from one domain to another. Let's see how we can use this in conjunction with partial application and composition, putting
 it all together.</p>
-<p>Say we have a set of data from a temperature probe, but it's uncalibrated. Our task is to calculate the mean temperature from the probe's 10 samples after correcting the values by shifting
+<p>Say we have a set of temperature data from a weather API, but it's not the highest quality -- The values it gives us are one degree lower than they should be.
+Our task is to calculate the mean temperature from the temperature data after correcting the values by shifting
 them one degree higher.</p>
-<pre><code class="php">// using the $mean function from the Math module and all the functions we've made so far
-$mean = Vector\Lib\Math::using('mean');
-
-$correctedMeanTemp = $compose(
-    $mean,
-    $map(
-        $compose($toFahrenheit, $add(1))
+<pre><code class="php">// The Math module provides a mean function, and we're using $add and $toFahrenheit from above
+$correctedMeanTemp = Lambda::compose(
+    Math::mean(),
+    ArrayList::map(
+        Lambda::compose($toFahrenheit, $add(1))
     )
 );
 </code></pre>
 
 <p>Notice how we have created a function to complete our task without even bothering to load our data in - we don't need it. Our function will first
-add one to every element in the dataset and then convert it to fahrenheit, then pass that mapped array to our mean function.</p>
-<p>Now we can take our <code>$correctedMeanTemp</code> and add it to our own Vector module and use it throughout our codebase whenever we need to work with sample data.</p>
-<p>In the next section, we'll go over the Vector function capsule - how it works, and how you can make your own.</p>
+add one to every element in the dataset and then convert it to fahrenheit, then pass that mapped array to our mean function. This is called the point-free style.</p>
+<p>Now we can take our <code>$correctedMeanTemp</code> and add it to our own Vector module and use it throughout our codebase whenever we need to work with temperature data.</p>
+<p>In the next section, we'll go over the Vector Module - how it works, and how you can make your own.</p>
               
             </div>
           </div>
@@ -388,7 +395,7 @@ add one to every element in the dataset and then convert it to fahrenheit, then 
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../capsule/" class="btn btn-neutral float-right" title="The Function Capsule">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../module/" class="btn btn-neutral float-right" title="Vector Modules">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../.." class="btn btn-neutral" title="Introduction"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -424,7 +431,7 @@ add one to every element in the dataset and then convert it to fahrenheit, then 
         <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../capsule/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../module/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

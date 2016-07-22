@@ -89,7 +89,7 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="user-guide/capsule/">The Function Capsule</a>
+        <a class="" href="user-guide/module/">Vector Modules</a>
         
     </li>
 
@@ -239,22 +239,22 @@ It gives you useful helpers for composing simple functions into more complex one
 <li>5.6 +</li>
 </ul>
 <h2 id="show-me-some-code">Show Me Some Code</h2>
-<p>Autoloading Functions? No problem.</p>
+<p>Autoloading Functions? A snap.</p>
 <pre><code>use Vector\Lib\ArrayList;
 </code></pre>
 
-<p>Currying? No problem.</p>
+<p>Currying? Completely free.</p>
 <pre><code>$addOne = ArrayList::map(function($a) { return $a + 1; });
 $addOne([1, 2, 3]); // [2, 3, 4]
 </code></pre>
 
-<p>Memoization? No problem.</p>
+<p>Memoization? Batteries included.</p>
 <pre><code>Class MyFunctions extends Module {
     protected $memoize = ['myFunction'];
 }
 </code></pre>
 
-<p>Composition? No problem;</p>
+<p>Composition? No problem.</p>
 <pre><code>$addSix = Lambda::compose(Math::add(4), Math::add(2));
 $addSix(4); // 10;
 </code></pre>
@@ -307,5 +307,5 @@ $addSix(4); // 10;
 
 <!--
 MkDocs version : 0.15.3
-Build Date UTC : 2016-07-22 18:09:54.073724
+Build Date UTC : 2016-07-22 19:22:01.470968
 -->

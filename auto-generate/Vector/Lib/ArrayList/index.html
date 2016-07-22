@@ -76,7 +76,7 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../user-guide/capsule/">The Function Capsule</a>
+        <a class="" href="../../../../user-guide/module/">Vector Modules</a>
         
     </li>
 
@@ -478,7 +478,9 @@ result of calling the given function on each element of the original list.</p>
 <h2 id="mapindexed">mapIndexed</h2>
 <p><strong>Array Map Indexed</strong> :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [c]</p>
 <p>Given some function and a list of arbitrary length, return a new array that is the
-result of calling the given function on each element of the original list.</p>
+result of calling the given function on each element of the original list. The first argument
+of the mapping function is the value, and the second argument is the key or index of the array being
+mapped over.</p>
 <pre><code>ArrayList::mapIndexed($filterEvenIndexes, [1, 2, 3]); // [null, 2, null]
 </code></pre>
 
@@ -583,7 +585,7 @@ ArrayList::zipWith($combinator, [0], [1, 2, 3]); // [-1]
         <a href="../Lambda/" class="btn btn-neutral float-right" title="Lambda">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../../../user-guide/capsule/" class="btn btn-neutral" title="The Function Capsule"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../../../user-guide/module/" class="btn btn-neutral" title="Vector Modules"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -613,7 +615,7 @@ ArrayList::zipWith($combinator, [0], [1, 2, 3]); // [-1]
           <a href="https://github.com/joseph-walker/vector" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../../../../user-guide/capsule/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../../../user-guide/module/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../Lambda/" style="color: #fcfcfc">Next &raquo;</a></span>

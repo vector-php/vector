@@ -91,7 +91,7 @@ abstract class Module
      *                               argument is for internal use only.
      * @return Callable              The result of currying the original function.
      */
-    private static function curryWithArity(Callable $f, $arity, $appliedArgs = [])
+    protected static function curryWithArity(Callable $f, $arity, $appliedArgs = [])
     {
         // Return a new function where we use the arguments already closed over,
         // and merge them with the arguments we get from the new function.
@@ -128,7 +128,7 @@ abstract class Module
      * @param  Callable $f Function to memoize
      * @return Callable    Memoized funciton $f
      */
-    private static function memoize(Callable $f)
+    protected static function memoize(Callable $f)
     {
         return function(...$args) use ($f) {
             static $cache;
@@ -158,7 +158,7 @@ abstract class Module
      * @param  Callable $f Function to get arity for
      * @return Int         Number of arguments for $f
      */
-    private static function getArity(Callable $f)
+    protected static function getArity(Callable $f)
     {
         if ($f instanceof \Closure) {
             $reflector = (new \ReflectionFunction($f));

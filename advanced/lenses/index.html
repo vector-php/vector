@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Joseph Walker">
+  
+  <title>Lenses - Vector</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <link href="../../extra.css" rel="stylesheet">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Lenses";
+    var mkdocs_page_input_path = "advanced/lenses.md";
+    var mkdocs_page_url = "/advanced/lenses/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Vector</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">Introduction</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>User Guide</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../user-guide/basics/">Functional Basics</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../user-guide/module/">Vector Modules</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Advanced Topics</span></li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Lenses</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#lenses">Lenses</a></li>
+                
+                    <li><a class="toctree-l4" href="#what-is-a-lens">What is a Lens</a></li>
+                
+                    <li><a class="toctree-l4" href="#using-lenses">Using Lenses</a></li>
+                
+                    <li><a class="toctree-l4" href="#combining-lenses">Combining Lenses</a></li>
+                
+                    <li><a class="toctree-l4" href="#advanced-example">Advanced Example</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Vector</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>Lib</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Vector/Lib/ArrayList/">ArrayList</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Vector/Lib/Lambda/">Lambda</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Vector/Lib/Logic/">Logic</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Vector/Lib/Math/">Math</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Vector/Lib/Object/">Object</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Vector/Lib/Strings/">Strings</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>Control</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Vector/Control/Applicative/">Applicative</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Vector/Control/Functor/">Functor</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Vector/Control/Lens/">Lens</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Vector/Control/Monad/">Monad</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Vector</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Advanced Topics &raquo;</li>
+        
+      
+    
+    <li>Lenses</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/joseph-walker/vector" class="icon icon-github"> Edit on GitHub</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="lenses">Lenses</h1>
+<p>Lenses are both the most complicated and most powerful tool provided by Vector, offering a potent method of operating on
+dense or complex data structures. On this page we'll be going through what they are, how they work,
+and how to use them.</p>
+<p>Lenses are provided in the Vector\Control\Lens module.</p>
+<h2 id="what-is-a-lens">What is a Lens</h2>
+<p>In the simplest terms, a lens is a function that acts as both a getter and a setter. It is a partially applied function that encodes a location or path to a
+specific part of an object. We describe a lens as "focusing" on a particular section of an object or array, and we operate on the data by applying
+a function at the focused point.</p>
+<p>Let's consider an example piece of data:</p>
+<pre><code class="php">$data = [
+    'name' =&gt; 'Joseph',
+    'code' =&gt; [
+        'library' =&gt; 'Vector'
+    ]
+];
+</code></pre>
+
+<p>Now let's create a lens that focuses on the <code>name</code> index of an array.</p>
+<pre><code class="php">$nameLens = Lens::indexLens('name');
+</code></pre>
+
+<p>We now have a lens that is pointed at the <code>name</code> index of a key/value array. We can now use it to manipulate our data.</p>
+<h2 id="using-lenses">Using Lenses</h2>
+<h3 id="getting-values-with-lenses">Getting Values with Lenses</h3>
+<p>Let's see how a lens works as a getter. We already have a lens focusing on the <code>name</code> index of a piece of data. To use this lens
+to retrieve data, we need to invoke it as a getter. The <code>Lens</code> module provides the <code>viewL</code> function to do this, short for "View Through Lens":</p>
+<pre><code class="php">$name = Lens::viewL($nameLens, $data); // 'Joseph'
+</code></pre>
+
+<p><code>viewL</code> expects a lens as the first argument, and the data set to invoke the lens on as the second argument. We can interpret this function call
+as "Viewing the $data object through the $nameLens."</p>
+<h3 id="setting-values-with-lenses">Setting Values with Lenses</h3>
+<p>We've seen how lenses act as getters, now let's use them as setters. We'll need to invoke the lens as a setter, and the <code>Lens</code> module provides
+the <code>setL</code> function (short for "Set Through Lens") to do just that.</p>
+<pre><code class="php">$result = Lens::setL($nameLens, 'Logan', $data);
+</code></pre>
+
+<p>This call results in <code>$result</code> being:</p>
+<pre><code class="php">[
+    'name' =&gt; 'Logan',
+    'code' =&gt; [
+        'library' =&gt; 'Vector'
+    ]
+]
+</code></pre>
+
+<p><code>setL</code> takes the lens as the first argument, the value to set the focused position to as the second argument, and the object to manipulate through the lens
+as the third argument.</p>
+<p>Unlike setting a property directly through PHP, the <code>setL</code> function has an extremely important property: <strong>It is immutable.</strong> When we call <code>setL</code> on the <code>$data</code> object
+and get the result, the <code>$data</code> object is <strong>not</strong> changed.</p>
+<h3 id="mutating-values-with-lenses">Mutating Values with Lenses</h3>
+<p>Lenses actually provide a third execution context which is a combination of getting and setting. For example, if we want to modify a value in the original <code>$data</code> structure
+while simultaneously returning its entire contents, we can use the <code>overL</code> function, which is short for "Execute Over Lens." This function executes a lambda expression over
+the focus of the lens and returns the modified data structure.</p>
+<p>Let's say we want to append my last name to the <code>name</code> field in the original data structure:</p>
+<pre><code class="php">$addLastName = function($firstName) {
+    return $firstName . ' Walker';
+};
+
+$result = Lens::overL($nameLens, $addLastName, $data);
+</code></pre>
+
+<p>Which results in:</p>
+<pre><code class="php">[
+    'name' =&gt; 'Joseph Walker',
+    'code' =&gt; [
+        'library' =&gt; 'Vector'
+    ]
+]
+</code></pre>
+
+<p>The <code>overL</code> function still takes as lens as its first argument and the object to modify as the last, but now takes a function as the second argument. <code>overL</code>
+will run this function over whatever the lens is focusing on and return the entirety of the data structure with the changes applied.</p>
+<p>Note that just like <code>setL</code>, <code>overL</code> is <strong>immutable</strong>. The original data is not changed.</p>
+<h2 id="combining-lenses">Combining Lenses</h2>
+<p>Let's say now that we want to pull the <code>library</code> field from the <code>$data</code> object. Let's write a naive solution to this problem using only what
+we've learned so far about lenses:</p>
+<pre><code class="php">Lens::viewL(Lens::indexLens('library'), Lens::viewL(Lens::indexLens('code'), $data)); // 'Vector'
+</code></pre>
+
+<p>This certainly works, but let's take it a step further. We know that lenses are functions, we just execute them in special ways.</p>
+<p>However, we also know that functions can be composed. This is where lenses really start to shine: <strong>Lenses can be composed.</strong></p>
+<pre><code class="php">$codeLens = Lambda::compose(
+    Lens::indexLens('code'),
+    Lens::indexLens('library')
+);
+</code></pre>
+
+<p>Now we can use this lens to view the <code>library</code> property just like before:</p>
+<pre><code class="php">Lens::viewL($codeLens, $data); // 'Vector'
+</code></pre>
+
+<p>This composed lens operates <em>exactly</em> like the basic lenses we were working with before. We can use it to set values, and operate over values.</p>
+<pre><code class="php">Lens::setL($codeLens, 'PHP', $data);
+Lens::overL($codeLens, Strings::append('Lib'), $data);
+</code></pre>
+
+<h2 id="advanced-example">Advanced Example</h2>
+<p>Now that we know the basics of lenses, let's see how to use them in a more complex scenario:</p>
+<pre><code class="php">$someApiResponse = [
+    &quot;meta&quot; =&gt; [
+        &quot;info&quot; =&gt; &quot;An API Request Example&quot;
+    ],
+    &quot;data&quot; =&gt; [
+        &quot;users&quot; =&gt; [
+            [
+                &quot;name&quot; =&gt; &quot;Joseph&quot;,
+                &quot;favorites&quot; =&gt; [
+                    &quot;colors&quot; =&gt; [
+                        &quot;blue&quot;,
+                        &quot;green&quot;
+                    ],
+                    &quot;foods&quot; =&gt; [
+                        &quot;pho&quot;,
+                        &quot;fajitas&quot;
+                    ]
+                ]
+            ],
+            [
+                &quot;name&quot; =&gt; &quot;Logan&quot;,
+                &quot;favorites&quot; =&gt; [
+                    &quot;colors&quot; =&gt; [
+                        &quot;red&quot;
+                    ],
+                    &quot;foods&quot; =&gt; [
+                        &quot;hamburgers&quot;,
+                        &quot;curry&quot;
+                    ]
+                ]
+            ]
+        ]
+    ]
+]
+</code></pre>
+
+<p>Let's do some things with this data set using lenses.</p>
+<h4 id="can-you-paint-with-all-the-colors-of-the-api">Can you paint with all the colors of the API?</h4>
+<p>By combining several <code>ArrayList</code> functions and <code>viewL</code>, we can gather up all the colors in our data set.</p>
+<pre><code class="php">// The Lens::pathLens() function let's us shortcut explicitly composing lenses by doing it for us.
+// We just supply an array of index strings.
+$colorsLens = Lens::pathLens(['favorites', 'colors']);
+
+$colors = ArrayList::flatten(
+    ArrayList::map(Lens::viewL($colorsLens), $someApiResponse['data']['users'])
+);
+</code></pre>
+
+<h4 id="everybody-likes-tacos">Everybody likes tacos</h4>
+<p>Let's use the <code>overL</code> function to append "tacos" to everyone's favorite foods.</p>
+<pre><code class="php">$usersLens = Lens::pathLens(['data', 'users']);
+$foodsLens = Lens::pathLens(['favorites', 'foods']);
+
+$withTacos = Lens::overL(
+    $usersLens,
+    ArrayList::map(
+        Lens::overL($foodLens, ArrayList::cons('tacos'))
+    ),
+    $someApiResponse
+);
+</code></pre>
+
+<h4 id="tag-youre-it">Tag, you're it</h4>
+<p>Let's say we want to tag a timestamp field of our response in the <code>meta</code> block. We're going to use a special type of lens here
+called a <code>safe</code> lens. This is a lens that can point to properties that technically don't have to exist. You can see the details
+for this lens in the Lens API Documentation.</p>
+<pre><code class="php">// We're point to meta.timestamp here, which doesn't exist! But that's okay,
+// because we're using a safe lens.
+$timestampLens = Lens::pathLensSafe(['meta', 'timestamp']);
+
+$withTimestamps = Lens::setL(
+    $timestampLens,
+    time(),
+    $someApiResponse
+);
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../auto-generate/Vector/Lib/ArrayList/" class="btn btn-neutral float-right" title="ArrayList">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../user-guide/module/" class="btn btn-neutral" title="Vector Modules"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Copyright (c) 2016 Joseph Walker</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/joseph-walker/vector" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../../user-guide/module/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../auto-generate/Vector/Lib/ArrayList/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

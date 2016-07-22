@@ -50,8 +50,6 @@ write:
 Vector\Lib\ArrayList::length([1, 2, 3]); // 3
 ```
 
-At first this may seem strange, but it's actually both intended and useful -- and a direct consequence of currying, which will we discuss next.
-
 If you look at the ArrayList class in Vector\Lib, you'll notice that there is not actually a `length` function defined anywhere. Rather, there's a `__length`
 function that looks something like this:
 
@@ -71,6 +69,8 @@ when invoked. For instance:
 $length = Vector\Lib\ArrayList::length();
 $length([1, 2, 3]); // 3
 ```
+
+At first this may seem strange, but it's actually both intended and useful -- and a direct consequence of currying, which will we discuss next.
 
 ## Currying
 

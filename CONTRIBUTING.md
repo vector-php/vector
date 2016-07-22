@@ -39,5 +39,12 @@ Your docblocks should follow this style, since they're used in generating the do
 ```
 
 ## Generating documentation
-### This only applied to Github users with contributor access! ###
-Documentation for Lib-namespaced functions are auto-generated from doc-blocks. To preview the documentation, run `sh ./sripts/previewDocs.sh` from the project root. Once you're happy with it after proofreading it, you can deploy the docs using `sh ./scripts/deployDocs.sh`.
+*Requires `mkdocs` -- http://www.mkdocs.org/*
+
+To generate and run documentation locally, run the command `composer runDocs`. If you only want to regenerate the documentation without previewing it, you can run
+`composer buildDocs`.
+
+## Deploying Documentation
+*This only applies to contributors with administrator access to the repository.*
+
+To deploy the documentation, run the `composer deployDocs` command.

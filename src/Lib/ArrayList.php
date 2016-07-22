@@ -70,9 +70,9 @@ class ArrayList extends Module
      * @example
      * $testCase = [1, 2, 3, 4, 5, 6, 7];
      * $keyGen = function($a) {
-     *     return ($a % 2 == 0) ? 'even' : 'odd';
+     *     return ($a <= 3) ? 'small' : 'big';
      * };
-     * ArrayList::groupBy($keyGen, $testCase); // ['even' => [2, 4, 6], 'odd' => [1, 3, 5, 7]]
+     * ArrayList::groupBy($keyGen, $testCase); // ['small' => [1, 2, 3], 'big' => [4, 5, 6, 7]]
      *
      * @type (a -> String) -> [a] -> [[a]]
      *
@@ -530,7 +530,6 @@ class ArrayList extends Module
      * but returns the elements that fail as well.
      *
      * @example
-     * $isEven = function($a) { return $a % 2 === 0; };
      * ArrayList::bifurcate($isEven, [1, 2, 3, 4, 5]); // [[2, 4], [1, 3, 5]]
      *
      * @type (a -> Bool) -> [a] -> ([a], [a])

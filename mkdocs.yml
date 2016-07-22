@@ -18,7 +18,7 @@ pages:
             -
                 'Functional Basics': user-guide/basics.md
             -
-                'The Function Capsule': user-guide/capsule.md
+                'Vector Modules': user-guide/module.md
     -
         Vector:
             -

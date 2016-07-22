@@ -253,7 +253,9 @@ ArrayList::map($add(1), [1, 2, 3]); // [2, 3, 4]
 __Array Map Indexed__ :: (a -> b -> c) -> [a] -> [c]
 
 Given some function and a list of arbitrary length, return a new array that is the
-result of calling the given function on each element of the original list.
+result of calling the given function on each element of the original list. The first argument
+of the mapping function is the value, and the second argument is the key or index of the array being
+mapped over.
 
 ```
 ArrayList::mapIndexed($filterEvenIndexes, [1, 2, 3]); // [null, 2, null]

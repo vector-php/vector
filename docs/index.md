@@ -11,25 +11,25 @@ It gives you useful helpers for composing simple functions into more complex one
 - 5.6 +
 
 ## Show Me Some Code
-Autoloading Functions? No problem.
+Autoloading Functions? A snap.
 ```
 use Vector\Lib\ArrayList;
 ```
 
-Currying? No problem.
+Currying? Completely free.
 ```
 $addOne = ArrayList::map(function($a) { return $a + 1; });
 $addOne([1, 2, 3]); // [2, 3, 4]
 ```
 
-Memoization? No problem.
+Memoization? Batteries included.
 ```
 Class MyFunctions extends Module {
     protected $memoize = ['myFunction'];
 }
 ```
 
-Composition? No problem;
+Composition? No problem.
 ```
 $addSix = Lambda::compose(Math::add(4), Math::add(2));
 $addSix(4); // 10;

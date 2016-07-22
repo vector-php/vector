@@ -174,7 +174,7 @@ class GenerateDocumentationCommand extends Command
                 [
                     'User Guide' => [
                         ['Functional Basics' => 'user-guide/basics.md'],
-                        ['The Function Capsule' => 'user-guide/capsule.md']
+                        ['Vector Modules' => 'user-guide/module.md']
                     ]
                 ],
                 $this->dictToList($moduleDirectory)[0]

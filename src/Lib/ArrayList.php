@@ -116,7 +116,7 @@ class ArrayList extends Module
         if (count($list) === 0)
             throw new EmptyListException("'head' function is undefined for empty lists.");
 
-        return array_slice($list, 0, 1)[0];
+        return reset($list);
     }
 
     /**

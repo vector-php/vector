@@ -57,6 +57,17 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests that head returns the first elements of a list,
+     * even when it is not numerically indexed
+     */
+    public function testHead_returnsFirstElementNonNumericIndexed()
+    {
+        $head = ArrayList::Using('head');
+
+        $this->assertEquals($head(['test' => 'works', 'another' => 'test', 'ok' => 1]), 'works');
+    }
+
+    /**
      * Expect that an EmptyListException is thrown for head on empty lists
      */
     public function testHead_undefinedOnEmptyList()

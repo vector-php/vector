@@ -5,10 +5,10 @@ namespace Vector\Lib;
 use Vector\Core\Module;
 
 /**
- * @method static callable setValue() set($key, $obj, $val)
- * @method static callable getValue() get($prop, $obj)
- * @method static callable invokeMethod() invoke($method, $obj)
- * @method static callable isInstanceOf() isInstanceOf($expected, $given)
+ * @method static callable getProp($key, $obj, $val)
+ * @method static callable setProp($prop, $obj)
+ * @method static callable invokeMethod($method, $obj)
+ * @method static callable isInstanceOf($expected, $given)
  */
 class Object extends Module
 {

@@ -4,8 +4,53 @@ namespace Vector\Test\Lib;
 
 use Vector\Lib\Strings;
 
+/**
+ * Class StringsTest
+ * @package Vector\Test\Lib
+ */
 class StringsTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Tests that lchomp works in an expected case
+     */
+    public function testLchomp()
+    {
+        $this->assertEquals(
+            ' that this is a test, I think',
+            Strings::lchomp('I think that this is a test, I think', 'I think')
+        );
+    }
+
+    /**
+     * Tests that rchomp works in an expected case
+     */
+    public function testRchomp()
+    {
+        $this->assertEquals(
+            'I think that this is a test, ',
+            Strings::rchomp('I think that this is a test, I think', 'I think')
+        );
+    }
+
+    /**
+     * Tests that chomp works in an expected case
+     */
+    public function testChomp()
+    {
+        $this->assertEquals(
+            ' that this is a test, ',
+            Strings::chomp('I think that this is a test, I think', 'I think')
+        );
+    }
+
+    /**
+     * Tests that chomp behaves intuitively, i.e. no character mask
+     */
+    public function testChompAsTrimReplacement()
+    {
+        $this->assertEquals('abc', Strings::chomp('abc', 'bad'));
+    }
+
     /**
      * Tests that strings are concatenated like the PHP '.' operation
      */

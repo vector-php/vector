@@ -5,13 +5,16 @@ namespace Vector\Lib;
 use Vector\Core\Module;
 
 /**
- * @method static string concat() contact(string $a, string $b) Concatenates the first argument to the second argument.
- * @method static array split() split(string $delimiter, string $string) Split a string into parts based on a delimiter. Operates similar to php `explode`.
- * @method static string startsWith() startsWith(string $substring, string $string) Determines if a string starts with a specific substring.
- * @method static string toLowercase() toLowercase(string $string) Converts a string to lowercase.
- * @method static string toUppercase() toUppercase(string $string) Converts a string to uppercase.
- * @method static string trim() trim(string $string) Removes all leading and trailing whitespace from a string.
- * @method static string join() join(string $string) Joins an array of strings together with a given delimiter.
+ * @method static string contact(string $a, string $b) Concatenates the first argument to the second argument.
+ * @method static array split(string $delimiter, string $string) Split a string into parts based on a delimiter. Operates similar to php `explode`.
+ * @method static string startsWith(string $substring, string $string) Determines if a string starts with a specific substring.
+ * @method static string toLowercase(string $string) Converts a string to lowercase.
+ * @method static string toUppercase(string $string) Converts a string to uppercase.
+ * @method static string trim(string $string) Removes all leading and trailing whitespace from a string.
+ * @method static string lchomp(string $string, string $toChomp) Removes the specified string from the left end of the target string.
+ * @method static string rchomp(string $string, string $toChomp) Removes the specified string from thr right end of the target string.
+ * @method static string chomp(string $string, string $toChomp) Removes the specified string from both ends of the target string.
+ * @method static string join(string $string) Joins an array of strings together with a given delimiter.
  */
 class Strings extends Module
 {
@@ -144,6 +147,87 @@ class Strings extends Module
     protected static function __trim($str)
     {
         return trim($str);
+    }
+
+    /**
+     * Chomp string off left end of a target string
+     *
+     * Removes the specified string from the left end of the target string.
+     *
+     * @example
+     * Strings::lchomp('abca', 'a'); // 'bc'
+     *
+     * @type String -> String
+     *
+     * @param  String $string string to be chomped
+     * @param  String $toChomp string to chomp
+     * @return string
+     */
+    protected static function __lchomp($string, $toChomp)
+    {
+        $length = strlen($toChomp);
+
+        if (strcmp(substr($string, 0, $length), $toChomp) === 0) {
+            return substr($string, $length);
+        }
+
+        return $string;
+    }
+
+    /**
+     * Chomp string off both ends of a target string
+     *
+     * Removes the specified strings from both ends of the target string.
+     *
+     * @example
+     * Strings::rchomp('abc', 'c'); // 'ab'
+     *
+     * @type String -> String
+     *
+     * @param  String $string string to be chomped
+     * @param  String $toChomp string to chomp
+     * @return string
+     */
+    protected static function __rchomp($string, $toChomp)
+    {
+        $length = strlen($toChomp);
+
+        if (strcmp(substr($string, -$length, $length), $toChomp) === 0) {
+            $string = substr($string, 0, -$length);
+        }
+
+        return $string;
+    }
+
+    /**
+     * Chomp string off both ends of a target string
+     *
+     * Removes the specified strings from both ends of the target string.
+     *
+     * @example
+     * Strings::chomp('abc', 'bad'); // 'abc'
+     * Strings::chomp('abc', 'bc'); // 'a'
+     * Strings::chomp('abc', 'ab'); // 'c'
+     *
+     * @type String -> String
+     *
+     * @param  String $string string to be chomped
+     * @param  String $toChomp string to chomp
+     * @return string
+     */
+    protected static function __chomp($string, $toChomp)
+    {
+        $length = strlen($toChomp);
+
+        if (strcmp(substr($string, -$length, $length), $toChomp) === 0) {
+            $string = substr($string, 0, -$length);
+        }
+
+        if (strcmp(substr($string, 0, $length), $toChomp) === 0) {
+            $string = substr($string, $length);
+        }
+
+        return $string;
     }
 
     /**

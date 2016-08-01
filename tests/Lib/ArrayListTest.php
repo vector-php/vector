@@ -400,4 +400,15 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($groupBy(ArrayList::index('foo'), $testCase), $correctAnswer);
     }
+
+    /**
+     * Unique should..unique
+     */
+    public function testUnique()
+    {
+        $this->assertEquals(
+            [1, 2, 4],
+            ArrayList::unique([1, 2, 2, 4])
+        );
+    }
 }

@@ -34,6 +34,7 @@ use Vector\Control\Functor;
  * @method static flatten($list) Return a flattened list.
  * @method static contains($item, $list) Return whether or not a list contains 'item'.
  * @method static replicate($n, $item) Return 'item' repeated 'n' times into a list.
+ * @method static unique($list) Return unique values as list.
  */
 class ArrayList extends Module
 {
@@ -753,5 +754,23 @@ class ArrayList extends Module
         }
 
         return $result;
+    }
+
+    /**
+     * Unique
+     *
+     * Given a list, return only unique values
+     *
+     * @example
+     * ArrayList::unique([1, 2, 2, 4]); // [1, 2, 4]
+     *
+     * @type [a] -> [a]
+     *
+     * @param  array $list List of items to make unique
+     * @return array Original list minus duplicates
+     */
+    protected static function __unique($list)
+    {
+        return array_values(array_flip(array_flip($list)));
     }
 }

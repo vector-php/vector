@@ -16,10 +16,7 @@
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">src/</directory>
+            <directory suffix=".php">src/Vector/</directory>
         </whitelist>
-        <blacklist>
-            <directory suffix=".php">src/Euclid/</directory>
-        </blacklist>
     </filter>
 </phpunit>

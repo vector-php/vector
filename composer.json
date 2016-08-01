@@ -20,7 +20,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Vector\\": "src/",
+            "Vector\\": "src/Vector/",
+            "Vector\\Euclid\\": "src/Euclid",
             "Vector\\Test\\": "tests/"
         }
     },

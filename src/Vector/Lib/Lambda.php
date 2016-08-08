@@ -44,9 +44,9 @@ abstract class Lambda extends Module
      */
     protected static function __flip($f)
     {
-        return function($a, $b) use ($f) {
+        return self::curry(function($a, $b) use ($f) {
             return $f($b, $a);
-        };
+        });
     }
 
     /**

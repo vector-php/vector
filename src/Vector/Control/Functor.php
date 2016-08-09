@@ -4,6 +4,7 @@ namespace Vector\Control;
 
 use Vector\Core\Module;
 use Vector\Lib\Lambda;
+use Vector\Lib\ArrayList;
 use Vector\Typeclass\FunctorInterface as TypeclassFunctor;
 
 abstract class Functor extends Module
@@ -12,7 +13,7 @@ abstract class Functor extends Module
     {
         // If $container is a simple array, just defer to array_map
         if (is_array($container))
-            return array_map($f, $container);
+            return ArrayList::map($f, $container);
 
         // If $container is a function, we defer to compose
         if ($container instanceof \Closure) {

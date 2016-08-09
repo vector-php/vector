@@ -137,8 +137,7 @@ class ArrayList extends Module
      */
     protected static function __map($f, $list)
     {
-        $map = Functor::using('fmap');
-        return $map($f, $list);
+        return array_map($f, $list);
     }
 
     /**

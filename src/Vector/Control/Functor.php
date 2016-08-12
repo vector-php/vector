@@ -6,6 +6,11 @@ use Vector\Core\Module;
 use Vector\Lib\Lambda;
 use Vector\Typeclass\FunctorInterface as TypeclassFunctor;
 
+/**
+ * Class Functor
+ * @package Vector\Control
+ * @method static array fmap($f, $container)
+ */
 abstract class Functor extends Module
 {
     protected static function __fmap($f, $container)

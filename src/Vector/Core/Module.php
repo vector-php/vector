@@ -4,6 +4,11 @@ namespace Vector\Core;
 
 use Vector\Core\Exception\FunctionNotFoundException;
 
+/**
+ * Class Module
+ * @package Vector\Core
+ * @method static callable curry(callable $f) Given some callable f, curry it so that its arguments can be applied in chunks.
+ */
 abstract class Module
 {
     /**

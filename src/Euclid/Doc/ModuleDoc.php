@@ -2,7 +2,7 @@
 
 namespace Vector\Euclid\Doc;
 
-use ReflectionClass;
+use Reflector;
 
 use Vector\Lib\Lambda;
 use Vector\Lib\Logic;
@@ -16,13 +16,13 @@ class ModuleDoc
     private $module;
     private $functionDocs;
 
-    public function __construct(DocBlockFactory $docBlockParser, $module)
+    public function __construct(Reflector $module)
     {
-        $makeFunctionDoc = function($function) use ($docBlockParser) {
-            return FunctionDocFactory::createFunctionDoc($docBlockParser, $function);
+        $makeFunctionDoc = function($function) {
+            return FunctionDocFactory::createFunctionDocFromReflector($function);
         };
 
-        $this->module = new ReflectionClass($module);
+        $this->module = $module;
         $this->functionDocs = ArrayList::map($makeFunctionDoc, $this->getFunctions());
     }
 

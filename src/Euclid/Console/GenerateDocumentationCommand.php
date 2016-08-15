@@ -6,6 +6,7 @@ use Reflectionmethod;
 
 use phpDocumentor\Reflection\DocBlockFactory;
 
+use Vector\Euclid\Doc\FunctionDocFactory;
 use Vector\Euclid\Doc\FunctionDocEmpty;
 use Vector\Euclid\Doc\FunctionDoc;
 use Vector\Euclid\Doc\ModuleDoc;
@@ -49,16 +50,13 @@ class GenerateDocumentationCommand extends Command
         // Given a fully qualified namespace, create the containing directory
         $namespaceToDir = Lambda::compose(Strings::join('/'), ArrayList::init(), Strings::split('\\'));
 
-        // An instance of a doc block parser to pass to our documentation engine
-        $docBlockParser = DocBlockFactory::createInstance();
-
         // A tree that represents the organization of the modules we're generating documentation for
         $moduleDirectory = [];
 
         // For each module, we're going to generate a documentation file and place it in the auto-generate folder in the
         // root docs directory. We're going to build up the module directory as we go
         foreach ($input->getArgument('modules') as $module) {
-            $moduleDoc = new ModuleDoc($docBlockParser, $module);
+            $moduleDoc = FunctionDocFactory::createModuleDocFromName($module);
             $moduleDocMarkdownDirectory = getcwd() . '/docs/auto-generate/' . $namespaceToDir($module);
             $moduleDocMarkdownFileLocation = getcwd() . '/docs/auto-generate/' . $namespaceToPath($module);
 

@@ -64,7 +64,7 @@ class Object extends Module
      */
     protected static function __getProp($prop, $obj)
     {
-        if (!property_exists($obj, $prop)) {
+        if (!isset($obj->{$prop})) {
             throw new UndefinedPropertyException("'getProp' function tried to access undefined property '$prop'");
         }
 

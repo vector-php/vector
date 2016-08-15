@@ -46,9 +46,10 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test does not throw exception on defined but null property
+     * Test throws exception on undefined or null property
+     * @expectedException \Vector\Core\Exception\UndefinedPropertyException
      */
-    public function testGetPropDoesNotThrowNullValue()
+    public function testGetPropThrowsNullValue()
     {
         $obj = new \stdClass();
         $obj->test = null;

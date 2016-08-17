@@ -65,13 +65,9 @@ class Lens extends Module
      */
     protected static function __viewL(callable $lens, $x)
     {
-        $compose = Lambda::using('compose');
-        $makeConst = self::using('constant');
-        $runConst = Functor::using('extract');
-
-        $view = $compose(
-            $runConst,
-            $lens($makeConst)
+        $view = Lambda::compose(
+            Functor::extract(),
+            $lens(self::constant())
         );
 
         return $view($x);
@@ -79,15 +75,9 @@ class Lens extends Module
 
     protected static function __overL($lens, $f, $x)
     {
-        $compose = Lambda::using('compose');
-        $makeIdent = self::using('identity');
-        $runIdent = Functor::using('extract');
-
-        $setter = $compose($makeIdent, $f);
-
-        $over = $compose(
-            $runIdent,
-            $lens($setter)
+        $over = Lambda::compose(
+            Functor::extract(),
+            $lens(Lambda::compose(self::identity(), $f))
         );
 
         return $over($x);
@@ -95,10 +85,7 @@ class Lens extends Module
 
     protected static function __setL($lens, $v, $x)
     {
-        $k = Lambda::using('k');
-        $over = self::using('overL');
-
-        return $over($lens, $k($v), $x);
+        return self::overL($lens, Lambda::k($v), $x);
     }
 
     protected static function __indexLens($index)

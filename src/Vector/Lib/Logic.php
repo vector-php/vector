@@ -278,24 +278,6 @@ class Logic extends Module
     }
 
     /**
-     * Logical Not
-     *
-     * Returns the inverse of $a
-     *
-     * @example
-     * Logic::not(false); // true
-     *
-     * @type Bool -> Bool
-     *
-     * @param  bool $a Value to invert
-     * @return bool    Inverted value
-     */
-    protected static function __not($a)
-    {
-        return !$a;
-    }
-
-    /**
      * Not Equal (Not Strict / ==)
      *
      * Returns true given $a does not equal $b

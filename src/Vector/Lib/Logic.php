@@ -28,8 +28,8 @@ class Logic extends Module
     /**
      * Logical Or Combinator
      *
-     * Given two functions f and g, combine them in such a way to produce a new
-     * function h that returns true given f(x) OR g(x) returns true.
+     * Given n functions {f1, f2, ..., fn}, combine them in such a way to produce a new
+     * function g that returns true given at least one of {f1(x), f2(x), ... fn(x)} return true.
      *
      * @example
      * $funcF = function($x) { return $x >= 5; };
@@ -55,8 +55,8 @@ class Logic extends Module
     /**
      * Logical And Combinator
      *
-     * Given two functions f and g, combine them in such a way to produce a new
-     * function h that returns true given f(x) AND g(x) returns true.
+     * Given n functions {f1, f2, ..., fn}, combine them in such a way to produce a new
+     * function g that returns true given {f1(x), f2(x), ... fn(x)} all return true.
      *
      * @example
      * $funcF = function($x) { return $x < 5; };
@@ -339,7 +339,7 @@ class Logic extends Module
      */
     protected static function __all($arr)
     {
-        return ArrayList::foldl(self::using('logicalAnd'), true, $arr);
+        return ArrayList::foldl(self::logicalAnd(), true, $arr);
     }
 
     /**
@@ -360,6 +360,6 @@ class Logic extends Module
      */
     protected static function __any($arr)
     {
-        return ArrayList::foldl(self::using('logicalOr'), false, $arr);
+        return ArrayList::foldl(self::logicalOr(), false, $arr);
     }
 }

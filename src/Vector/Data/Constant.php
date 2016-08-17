@@ -13,18 +13,10 @@ class Constant implements MonadInterface
         $this->heldValue = $value;
     }
 
-    /*
-     * Constructor Methods (Static)
-     \ --- */
-
     public static function constant($a)
     {
         return new Constant($a);
     }
-
-    /*
-     * Functor Instance
-     \ --- */
 
     public function fmap(Callable $f)
     {
@@ -36,10 +28,6 @@ class Constant implements MonadInterface
         return $this->heldValue;
     }
 
-    /*
-     * Applicative Instance
-     \ --- */
-
     public static function pure($a)
     {
         return self::Constant($a);
@@ -49,10 +37,6 @@ class Constant implements MonadInterface
     {
         return $this;
     }
-
-    /*
-     * Monad Instances
-     \ --- */
 
     public function bind(Callable $f)
     {

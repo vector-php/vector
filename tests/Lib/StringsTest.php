@@ -15,9 +15,16 @@ class StringsTest extends \PHPUnit_Framework_TestCase
      */
     public function testLchomp()
     {
+        // Base behavior
         $this->assertEquals(
             ' that this is a test, I think',
-            Strings::lchomp('I think that this is a test, I think', 'I think')
+            Strings::lchomp('I think', 'I think that this is a test, I think')
+        );
+
+        // Case sensitive
+        $this->assertEquals(
+            'I think that this is a test, I think',
+            Strings::lchomp('i think', 'I think that this is a test, I think')
         );
     }
 
@@ -26,9 +33,16 @@ class StringsTest extends \PHPUnit_Framework_TestCase
      */
     public function testRchomp()
     {
+        // Base behavior
         $this->assertEquals(
             'I think that this is a test, ',
-            Strings::rchomp('I think that this is a test, I think', 'I think')
+            Strings::rchomp('I think', 'I think that this is a test, I think')
+        );
+
+        // Case sensitive
+        $this->assertEquals(
+            'I think that this is a test, I think',
+            Strings::rchomp('i think', 'I think that this is a test, I think')
         );
     }
 
@@ -39,7 +53,7 @@ class StringsTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             ' that this is a test, ',
-            Strings::chomp('I think that this is a test, I think', 'I think')
+            Strings::chomp('I think', 'I think that this is a test, I think')
         );
     }
 
@@ -48,7 +62,7 @@ class StringsTest extends \PHPUnit_Framework_TestCase
      */
     public function testChompAsTrimReplacement()
     {
-        $this->assertEquals('abc', Strings::chomp('abc', 'bad'));
+        $this->assertEquals('abc', Strings::chomp('bad', 'abc'));
     }
 
     /**

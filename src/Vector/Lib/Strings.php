@@ -151,20 +151,24 @@ class Strings extends Module
     }
 
     /**
-     * Chomp string off left end of a target string
+     * Left Chomp
      *
-     * Removes the specified string from the left end of the target string.
+     * Removes the specified substring from the left end of the target string. Unlike PHP's
+     * trim function, the substring to chomp is not a character mask -- rather it is a full
+     * substring. This function is case sensitive.
      *
      * @example
-     * Strings::lchomp('abca', 'a'); // 'bc'
+     * Strings::lchomp('He', 'Hello World'); // 'llo World'
+     * Strings::lchomp('Hi', 'Hello World'); // 'Hello World'
+     * Strings::lchomp('he', 'Hello World'); // 'Hello World'
      *
      * @type String -> String
      *
-     * @param  String $string string to be chomped
      * @param  String $toChomp string to chomp
+     * @param  String $string string to be chomped
      * @return string
      */
-    protected static function __lchomp($string, $toChomp)
+    protected static function __lchomp($toChomp, $string)
     {
         $length = strlen($toChomp);
 
@@ -176,20 +180,24 @@ class Strings extends Module
     }
 
     /**
-     * Chomp string off both ends of a target string
+     * Right Chomp
      *
-     * Removes the specified strings from both ends of the target string.
+     * Removes the specified substring from the right end of the target string. Unlike PHP's
+     * trim function, the substring to chomp is not a character mask -- rather it is a full
+     * substring. This function is case sensitive.
      *
      * @example
-     * Strings::rchomp('abc', 'c'); // 'ab'
+     * Strings::rchomp('ld', 'Hello World'); // 'Hello Wor'
+     * Strings::rchomp('li', 'Hello World'); // 'Hello World'
+     * Strings::rchomp('LD', 'Hello World'); // 'Hello World'
      *
      * @type String -> String
      *
-     * @param  String $string string to be chomped
      * @param  String $toChomp string to chomp
+     * @param  String $string string to be chomped
      * @return string
      */
-    protected static function __rchomp($string, $toChomp)
+    protected static function __rchomp($toChomp, $string)
     {
         $length = strlen($toChomp);
 
@@ -201,34 +209,28 @@ class Strings extends Module
     }
 
     /**
-     * Chomp string off both ends of a target string
+     * Two-Sided Chomp
      *
-     * Removes the specified strings from both ends of the target string.
+     * Removes the specified substring from both ends of the target string. Unlike PHP's
+     * trim function, the substring to chomp is not a character mask -- rather it is a full
+     * substring. This function is case sensitive.
      *
      * @example
-     * Strings::chomp('abc', 'bad'); // 'abc'
-     * Strings::chomp('abc', 'bc'); // 'a'
-     * Strings::chomp('abc', 'ab'); // 'c'
+     * Strings::chomp('a', 'abccba'); // 'bccb'
+     * Strings::chomp('ab', 'abccba'); // 'abccba'
+     * Strings::chomp('A', 'abccba'); // 'abccba'
      *
      * @type String -> String
      *
-     * @param  String $string string to be chomped
      * @param  String $toChomp string to chomp
+     * @param  String $string string to be chomped
      * @return string
      */
-    protected static function __chomp($string, $toChomp)
+    protected static function __chomp($toChomp, $string)
     {
-        $length = strlen($toChomp);
+        $chomp = Lambda::compose(self::lChomp($toChomp), self::rChomp($toChomp));
 
-        if (strcmp(substr($string, -$length, $length), $toChomp) === 0) {
-            $string = substr($string, 0, -$length);
-        }
-
-        if (strcmp(substr($string, 0, $length), $toChomp) === 0) {
-            $string = substr($string, $length);
-        }
-
-        return $string;
+        return $chomp($string);
     }
 
     /**

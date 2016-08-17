@@ -15,6 +15,7 @@ use Vector\Core\Module;
  * @method static string rchomp(string $string, string $toChomp) Removes the specified string from thr right end of the target string.
  * @method static string chomp(string $string, string $toChomp) Removes the specified string from both ends of the target string.
  * @method static string join(string $string) Joins an array of strings together with a given delimiter.
+ * @method static string replace(string $substring, string $replacement, string $string) Replace all occurrences of the search string with the replacement string.
  */
 class Strings extends Module
 {
@@ -251,5 +252,24 @@ class Strings extends Module
     protected static function __join($on, $string)
     {
         return implode($on, $string);
+    }
+
+    /**
+     * String Replace
+     *
+     * Replace all occurrences of the search string with the replacement string.
+     *
+     * @example
+     * Strings::replace('test', 'passes', 'this test']); // 'this passes'
+     *
+     * @type String -> String -> String
+     *
+     * @param  String $substring Substring to find
+     * @param  String $string Replacement string
+     * @return String $string Result after replacement
+     */
+    protected static function __replace($substring, $replacement, $string)
+    {
+        return str_replace($substring, $replacement, $string);
     }
 }

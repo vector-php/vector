@@ -35,6 +35,7 @@ use Vector\Control\Functor;
  * @method static contains($item, $list) Return whether or not a list contains 'item'.
  * @method static replicate($n, $item) Return 'item' repeated 'n' times into a list.
  * @method static unique($list) Return unique values as list.
+ * @method static sort($comp, $list) Given a function that compares two values, sort an array.
  */
 class ArrayList extends Module
 {

@@ -2,11 +2,12 @@
 
 namespace Vector\Lib;
 
+use Vector\Core\Exception\UndefinedPropertyException;
 use Vector\Core\Module;
 
 /**
- * @method static callable getProp($key, $obj, $val)
- * @method static callable setProp($prop, $obj)
+ * @method static callable getProp($key, $obj)
+ * @method static callable setProp($prop, $val, $obj)
  * @method static callable invokeMethod($method, $obj)
  * @method static callable isInstanceOf($expected, $given)
  */
@@ -56,15 +57,18 @@ class Object extends Module
      * $obj->value = 'hi!';
      * Object::getValue('value', $obj); // 'hi!'
      *
-     * @type String -> Obj a -> mixed
-     *
      * @param String $prop Property to get
      * @param Object $obj Object
      * @return mixed $val value
+     * @throws UndefinedPropertyException
      */
     protected static function __getProp($prop, $obj)
     {
-        return $obj->$prop;
+        if (!isset($obj->{$prop})) {
+            throw new UndefinedPropertyException("'getProp' function tried to access undefined property '$prop'");
+        }
+
+        return $obj->{$prop};
     }
 
     /**

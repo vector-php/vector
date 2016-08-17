@@ -11,16 +11,37 @@ use Vector\Lib\Lambda;
 use Vector\Lib\ArrayList;
 use Vector\Lib\Object;
 
+/**
+ * Class Lens
+ * @package Vector\Control
+ * @method static callable indexLens(mixed $index)
+ * @method static callable indexLensSafe(mixed $index)
+ * @method static callable propLens(string $prop)
+ * @method static callable propLensSafe(string $prop)
+ * @method static callable pathLens(array $path)
+ * @method static callable pathLensSafe(array $path)
+ * @method static callable viewL(callable $lens, mixed $x)
+ */
 class Lens extends Module
 {
+    /**
+     * @param $a
+     * @return Constant
+     * Necessary to the implementation of Lens functions
+     */
     protected static function __constant($a)
     {
-        return Constant::Constant($a);
+        return Constant::constant($a);
     }
 
+    /**
+     * @param $a
+     * @return Identity
+     * Necessary to the implementation of Lens functions
+     */
     protected static function __identity($a)
     {
-        return Identity::Identity($a);
+        return Identity::identity($a);
     }
 
     /**
@@ -37,17 +58,16 @@ class Lens extends Module
      * @note Depending on which lens you use, this method might throw an exception.
      *       Refer to the indivual lenses to see if they're safe to use or not.
      *
-     * @type Lens a -> a
-     *
-     * @param  Lens  $lens Lens to use when viewing an object
-     * @param  Mixed $x    Object or array to view
-     * @return Mixed       The property that the lens focused on
+     * @param callable|Lens $lens Lens to use when viewing an object
+     * @param  Mixed $x Object or array to view
+     * @return mixed The property that the lens focused on
+     * @internal param Lens $ a -> a
      */
     protected static function __viewL(callable $lens, $x)
     {
-        $compose   = Lambda::Using('compose');
-        $makeConst = self::Using('constant');
-        $runConst  = Functor::Using('extract');
+        $compose = Lambda::using('compose');
+        $makeConst = self::using('constant');
+        $runConst = Functor::using('extract');
 
         $view = $compose(
             $runConst,
@@ -59,9 +79,9 @@ class Lens extends Module
 
     protected static function __overL($lens, $f, $x)
     {
-        $compose   = Lambda::Using('compose');
-        $makeIdent = self::Using('identity');
-        $runIdent  = Functor::Using('extract');
+        $compose = Lambda::using('compose');
+        $makeIdent = self::using('identity');
+        $runIdent = Functor::using('extract');
 
         $setter = $compose($makeIdent, $f);
 
@@ -75,18 +95,20 @@ class Lens extends Module
 
     protected static function __setL($lens, $v, $x)
     {
-        $k    = Lambda::Using('k');
-        $over = self::Using('overL');
+        $k = Lambda::using('k');
+        $over = self::using('overL');
 
         return $over($lens, $k($v), $x);
     }
 
     protected static function __indexLens($index)
     {
-        $arraySetter = Module::curry(function($i, $arr, $val) {
-            $arr[$i] = $val; return $arr;
+        $arraySetter = Module::curry(function ($i, $arr, $val) {
+            $arr[$i] = $val;
+            return $arr;
         });
 
+        /** @noinspection PhpParamsInspection */
         $indexLens = self::makeLens(ArrayList::index(), $arraySetter);
 
         return $indexLens($index);
@@ -94,29 +116,56 @@ class Lens extends Module
 
     protected static function __propLens($prop)
     {
-        $objectSetter = Module::curry(function($k, $objO, $val) {
-            $obj = clone $objO; $obj->$k = $val; return $obj;
+        $objectSetter = Module::curry(function ($k, $objO, $val) {
+            $obj = clone $objO;
+            $obj->{$k} = $val;
+            return $obj;
         });
 
+        /** @noinspection PhpParamsInspection */
         $propLens = self::makeLens(Object::getProp(), $objectSetter);
+
+        return $propLens($prop);
+    }
+
+    protected static function __propLensSafe($prop)
+    {
+        $objectSetter = Module::curry(function ($k, $objO, $val) {
+            $obj = clone $objO;
+            $obj->{$k} = $val;
+            return $obj;
+        });
+
+        $safeGetter = function ($prop, $obj) {
+            if ($obj === null) {
+                return null;
+            } elseif (isset($obj->{$prop})) {
+                return $obj->{$prop};
+            }
+
+            return null;
+        };
+
+        $propLens = self::makeLens($safeGetter, $objectSetter);
 
         return $propLens($prop);
     }
 
     protected static function __indexLensSafe($index)
     {
-        $arraySetter = Module::curry(function($i, $arr, $val) {
-            $arr[$i] = $val; return $arr;
+        $arraySetter = Module::curry(function ($i, $arr, $val) {
+            $arr[$i] = $val;
+            return $arr;
         });
 
-        $safeGetter = function($index, $arr) {
-            if ($arr === null)
+        $safeGetter = function ($index, $arr) {
+            if ($arr === null) {
                 return null;
-            else if (isset($arr[$index])) {
+            } elseif (isset($arr[$index])) {
                 return $arr[$index];
             }
-            else
-                return null;
+
+            return null;
         };
 
         $indexLens = self::makeLens($safeGetter, $arraySetter);
@@ -126,17 +175,35 @@ class Lens extends Module
 
     protected static function __pathLens($path)
     {
-        return Lambda::compose(...Functor::fmap(function($index) { return self::indexLens($index); }, $path));
+        return Lambda::compose(...Functor::fmap(function ($index) {
+            return self::indexLens($index);
+        }, $path));
     }
 
     protected static function __pathLensSafe($path)
     {
-        return Lambda::compose(...Functor::fmap(function($index) { return self::indexLensSafe($index); }, $path));
+        return Lambda::compose(...Functor::fmap(function ($index) {
+            return self::indexLensSafe($index);
+        }, $path));
+    }
+
+    protected static function __pathPropLens($path)
+    {
+        return Lambda::compose(...Functor::fmap(function ($index) {
+            return self::propLens($index);
+        }, $path));
+    }
+
+    protected static function __pathPropLensSafe($path)
+    {
+        return Lambda::compose(...Functor::fmap(function ($index) {
+            return self::propLensSafe($index);
+        }, $path));
     }
 
     private static function makeLens($getter, $setter)
     {
-        return Module::curry(function($key, $f, $inv) use ($getter, $setter) {
+        return Module::curry(function ($key, $f, $inv) use ($getter, $setter) {
             return Functor::fmap($setter($key, $inv), $f($getter($key, $inv)));
         });
     }

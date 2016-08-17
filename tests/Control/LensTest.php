@@ -6,6 +6,10 @@ use Vector\Control\Lens;
 
 use Vector\Lib\Lambda;
 
+/**
+ * Class LensTest
+ * @package Vector\Test\Control
+ */
 class LensTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -43,11 +47,101 @@ class LensTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that indexLens throws on non-existent index
+     * @expectedException \Vector\Core\Exception\IndexOutOfBoundsException
+     */
+    public function testIndexLensThrows()
+    {
+        list($view, $indexLens) = Lens::using('viewL', 'indexLens');
+
+        $arr = [1, 2, 3];
+        $lens = $indexLens(4);
+
+        $view($lens, $arr);
+    }
+
+    /**
+     * Test that propLens throws on undefined property
+     * @expectedException \Vector\Core\Exception\UndefinedPropertyException
+     */
+    public function testPropLensThrows()
+    {
+        list($view, $propLens) = Lens::using('viewL', 'propLens');
+
+        $obj = new \stdClass();
+        $lens = $propLens('value');
+
+        $view($lens, $obj);
+    }
+
+    /**
+     * Test that indexLens is null on non-existent index
+     */
+    public function testIndexSafeLensIsNull()
+    {
+        list($view, $indexLens) = Lens::using('viewL', 'indexLensSafe');
+
+        $arr = [1, 2, 3];
+        $lens = $indexLens(4);
+
+        self::assertEquals(null, $view($lens, $arr));
+    }
+
+    /**
+     * Test that pathLens can traverse arrays
+     */
+    public function testPathLens()
+    {
+        list($view, $pathLens) = Lens::using('viewL', 'pathLens');
+
+        $arr = [1, 2, 'nested' => [
+            'value' => 5
+        ]];
+
+        $lens = $pathLens(['nested', 'value']);
+
+        self::assertEquals(5, $view($lens, $arr));
+    }
+
+    /**
+     * Test that pathLens can traverse objects
+     */
+    public function testPathPropLens()
+    {
+        list($view, $pathPropLens) = Lens::using('viewL', 'pathPropLens');
+
+        $obj = new \stdClass();
+        $second = new \stdClass();
+        $second->value = 'works';
+        $obj->first = $second;
+
+        $lens = $pathPropLens(['first', 'value']);
+
+        self::assertEquals('works', $view($lens, $obj));
+    }
+
+    /**
+     * @expectedException \Vector\Core\Exception\IndexOutOfBoundsException
+     */
+    public function testPathLensNullsOnBadPath()
+    {
+        list($view, $pathLens) = Lens::using('viewL', 'pathLens');
+
+        $arr = [1, 2, 'nested' => [
+            'value' => 5
+        ]];
+
+        $lens = $pathLens(['bad', 'path']);
+
+        $view($lens, $arr);
+    }
+
+    /**
      * Test that you can view through indexLens
      */
     public function testViewThroughArrayLens()
     {
-        list($view, $indexLens) = Lens::Using('viewL', 'indexLens');
+        list($view, $indexLens) = Lens::using('viewL', 'indexLens');
 
         $arr = [1, 2, 3];
         $lens = $indexLens(1);
@@ -60,9 +154,9 @@ class LensTest extends \PHPUnit_Framework_TestCase
      */
     public function testViewThroughObjectLens()
     {
-        list($view, $propLens) = Lens::Using('viewL', 'propLens');
+        list($view, $propLens) = Lens::using('viewL', 'propLens');
 
-        $obj = new \StdClass();
+        $obj = new \stdClass();
         $obj->a = 'foo';
 
         $lens = $propLens('a');
@@ -76,7 +170,7 @@ class LensTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetThroughArrayLens()
     {
-        list($set, $indexLens) = Lens::Using('setL', 'indexLens');
+        list($set, $indexLens) = Lens::using('setL', 'indexLens');
 
         $arr = [1, 2, 3];
         $lens = $indexLens(1);
@@ -94,15 +188,15 @@ class LensTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetThroughObjectLens()
     {
-        list($set, $propLens) = Lens::Using('setL', 'propLens');
+        list($set, $propLens) = Lens::using('setL', 'propLens');
 
-        $obj = new \StdClass();
+        $obj = new \stdClass();
         $obj->a = 'foo';
 
-        $objOriginal = new \StdClass();
+        $objOriginal = new \stdClass();
         $objOriginal->a = 'foo';
 
-        $expected = new \StdClass();
+        $expected = new \stdClass();
         $expected->a = 'bar';
 
         $lens = $propLens('a');
@@ -120,7 +214,7 @@ class LensTest extends \PHPUnit_Framework_TestCase
      */
     public function testOverArrayLens()
     {
-        list($over, $indexLens) = Lens::Using('overL', 'indexLens');
+        list($over, $indexLens) = Lens::using('overL', 'indexLens');
 
         $arr = [1, 2, 3];
         $lens = $indexLens(1);
@@ -140,17 +234,17 @@ class LensTest extends \PHPUnit_Framework_TestCase
      */
     public function testOverObjectLens()
     {
-        list($over, $propLens) = Lens::Using('overL', 'propLens');
+        list($over, $propLens) = Lens::using('overL', 'propLens');
 
-        $obj = new \StdClass();
+        $obj = new \stdClass();
         $obj->a = 'foo';
 
-        $expected = new \StdClass();
+        $expected = new \stdClass();
         $expected->a = 'foobar';
 
         $lens = $propLens('a');
 
-        $testFn = function($a) {
+        $testFn = function ($a) {
             return $a . 'bar';
         };
 
@@ -165,12 +259,12 @@ class LensTest extends \PHPUnit_Framework_TestCase
      */
     public function testLensComposition()
     {
-        list($view, $indexLens, $propLens) = Lens::Using('viewL', 'indexLens', 'propLens');
-        $compose = Lambda::Using('compose');
+        list($view, $indexLens, $propLens) = Lens::using('viewL', 'indexLens', 'propLens');
+        $compose = Lambda::using('compose');
 
         $complexLens = $compose($propLens('a'), $indexLens(0));
 
-        $obj = new \StdClass();
+        $obj = new \stdClass();
         $obj->a = [1, 2, 3];
 
         // Test viewing with complex lenses

@@ -360,6 +360,18 @@ ArrayList::takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]
 
 ---
 
+## unique
+
+__Unique__ :: [a] -> [a]
+
+Given a list, return only unique values
+
+```
+ArrayList::unique([1, 2, 2, 4]); // [1, 2, 4]
+```
+
+---
+
 ## values
 
 __Array Values__ :: [a] -> [a]

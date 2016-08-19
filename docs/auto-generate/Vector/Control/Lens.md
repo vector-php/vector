@@ -1,12 +1,22 @@
 ## constant
 
-This function is currently missing documentation.
+____ :: 
+
+
+
+```
+```
 
 ---
 
 ## identity
 
-This function is currently missing documentation.
+____ :: 
+
+
+
+```
+```
 
 ---
 
@@ -46,7 +56,25 @@ This function is currently missing documentation.
 
 ---
 
+## pathPropLens
+
+This function is currently missing documentation.
+
+---
+
+## pathPropLensSafe
+
+This function is currently missing documentation.
+
+---
+
 ## propLens
+
+This function is currently missing documentation.
+
+---
+
+## propLensSafe
 
 This function is currently missing documentation.
 
@@ -60,7 +88,7 @@ This function is currently missing documentation.
 
 ## viewL
 
-__View__ :: Lens a -> a
+__View__ :: 
 
 View an object or array through a lens. Simply applies your lens - the
 behavior of this function will vary slightly depending on the particular

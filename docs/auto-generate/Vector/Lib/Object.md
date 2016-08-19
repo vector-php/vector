@@ -6,7 +6,7 @@ This function is currently missing documentation.
 
 ## getProp
 
-__Get Property__ :: String -> Obj a -> mixed
+__Get Property__ :: String -> Object a -> a
 
 Gets a property on the object
 

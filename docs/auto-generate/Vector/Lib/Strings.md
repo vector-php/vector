@@ -1,3 +1,19 @@
+## chomp
+
+__Two-Sided Chomp__ :: String -> String
+
+Removes the specified substring from both ends of the target string. Unlike PHP's
+trim function, the substring to chomp is not a character mask -- rather it is a full
+substring. This function is case sensitive.
+
+```
+Strings::chomp('a', 'abccba'); // 'bccb'
+Strings::chomp('ab', 'abccba'); // 'abccba'
+Strings::chomp('A', 'abccba'); // 'abccba'
+```
+
+---
+
 ## concat
 
 __String Concatenation__ :: String -> String -> String
@@ -22,6 +38,50 @@ to PHP `implode`. The inverse of `split`.
 ```
 Strings::join(' ', ['Hello', 'World']); // 'Hello World'
 Strings::join('', ['a', 's', 'd', 'f']); // 'asdf'
+```
+
+---
+
+## lchomp
+
+__Left Chomp__ :: String -> String
+
+Removes the specified substring from the left end of the target string. Unlike PHP's
+trim function, the substring to chomp is not a character mask -- rather it is a full
+substring. This function is case sensitive.
+
+```
+Strings::lchomp('He', 'Hello World'); // 'llo World'
+Strings::lchomp('Hi', 'Hello World'); // 'Hello World'
+Strings::lchomp('he', 'Hello World'); // 'Hello World'
+```
+
+---
+
+## rchomp
+
+__Right Chomp__ :: String -> String
+
+Removes the specified substring from the right end of the target string. Unlike PHP's
+trim function, the substring to chomp is not a character mask -- rather it is a full
+substring. This function is case sensitive.
+
+```
+Strings::rchomp('ld', 'Hello World'); // 'Hello Wor'
+Strings::rchomp('li', 'Hello World'); // 'Hello World'
+Strings::rchomp('LD', 'Hello World'); // 'Hello World'
+```
+
+---
+
+## replace
+
+__String Replace__ :: String -> String -> String
+
+Replace all occurrences of the search string with the replacement string.
+
+```
+Strings::replace('test', 'passes', 'this test']); // 'this passes'
 ```
 
 ---

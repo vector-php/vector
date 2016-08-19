@@ -57,6 +57,8 @@ class Object extends Module
      * $obj->value = 'hi!';
      * Object::getValue('value', $obj); // 'hi!'
      *
+     * @type String -> Object a -> a
+     *
      * @param String $prop Property to get
      * @param Object $obj Object
      * @return mixed $val value

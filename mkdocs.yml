@@ -23,6 +23,8 @@ pages:
         'Advanced Topics':
             -
                 Lenses: advanced/lenses.md
+            -
+                'Functors, Applicatives & Monads': advanced/fam.md
     -
         Vector:
             -

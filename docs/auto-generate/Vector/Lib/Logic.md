@@ -15,8 +15,8 @@ Logic::all(1, false); // False
 
 __Logical And Combinator__ :: [(a -> Bool)] -> a -> Bool
 
-Given two functions f and g, combine them in such a way to produce a new
-function h that returns true given f(x) AND g(x) returns true.
+Given n functions {f1, f2, ..., fn}, combine them in such a way to produce a new
+function g that returns true given {f1(x), f2(x), ... fn(x)} all return true.
 
 ```
 $funcF = function($x) { return $x < 5; };
@@ -160,18 +160,6 @@ Logic::lte(2, 1); // True
 
 ---
 
-## not
-
-__Logical Not__ :: Bool -> Bool
-
-Returns the inverse of $a
-
-```
-Logic::not(false); // true
-```
-
----
-
 ## notEq
 
 __Not Equal (Not Strict / ==)__ :: mixed -> mixed -> Bool
@@ -202,8 +190,8 @@ Logic::notEqStrict(1, '1'); // False
 
 __Logical Or Combinator__ :: [(a -> Bool)] -> a -> Bool
 
-Given two functions f and g, combine them in such a way to produce a new
-function h that returns true given f(x) OR g(x) returns true.
+Given n functions {f1, f2, ..., fn}, combine them in such a way to produce a new
+function g that returns true given at least one of {f1(x), f2(x), ... fn(x)} return true.
 
 ```
 $funcF = function($x) { return $x >= 5; };

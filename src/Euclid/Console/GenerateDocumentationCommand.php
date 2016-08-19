@@ -177,7 +177,8 @@ class GenerateDocumentationCommand extends Command
                 ],
                 [
                     'Advanced Topics' => [
-                        ['Lenses' => 'advanced/lenses.md']
+                        ['Lenses' => 'advanced/lenses.md'],
+                        ['Functors, Applicatives & Monads' => 'advanced/fam.md']
                     ]
                 ],
                 $this->dictToList($moduleDirectory)[0]

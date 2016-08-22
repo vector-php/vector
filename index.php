@@ -2,52 +2,20 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use phpDocumentor\Reflection\DocBlock;
-use Vector\Lib\ArrayList;
-use Vector\Control\Lens;
-use Vector\Core\Module;
+use Vector\Core\Structures;
+use Vector\Data\Maybe;
 
-$someApiResponse = [
-    "meta" => [
-        "info" => "An API Request Example"
-    ],
-    "data" => [
-        "users" => [
-            [
-                "name" => "Joseph",
-                "favorites" => [
-                    "colors" => [
-                        "blue",
-                        "green"
-                    ],
-                    "foods" => [
-                        "pho",
-                        "fajitas"
-                    ]
-                ]
-            ],
-            [
-                "name" => "Logan",
-                "favorites" => [
-                    "colors" => [
-                        "red"
-                    ],
-                    "foods" => [
-                        "hamburgers",
-                        "curry"
-                    ]
-                ]
-            ]
-        ]
-    ]
-];
+$justThree = Maybe::nothing();
+$default = 7;
 
-$timestampLens = Lens::pathLensSafe(['meta', 'timestamp']);
+$pattern = Structures::patternMatch(Maybe::class)
+    ->just(function($value) {
+        return $value;
+    })
+    ->nothing(function() use ($default) {
+        return $default;
+    });
 
-$withTimestamps = Lens::setL(
-    $timestampLens,
-    time(),
-    $someApiResponse
-);
+$res = $pattern($justThree);
 
-var_dump($withTimestamps);
+var_dump($res);

@@ -37,6 +37,30 @@ class MathTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test finding min of 2 numbers
+     */
+    public function testMin()
+    {
+        $this->assertEquals(1, Math::min(1, 5));
+    }
+
+    /**
+     * Test finding max of 2 numbers
+     */
+    public function testMax()
+    {
+        $this->assertEquals(5, Math::max(1, 5));
+    }
+
+    /**
+     * Test finding mean
+     */
+    public function testMean()
+    {
+        $this->assertEquals(2, Math::mean([1, 2, 3]));
+    }
+
+    /**
      * Test that you can subtract two numbers. The second argument is subtracted
      * from the first argument.
      */

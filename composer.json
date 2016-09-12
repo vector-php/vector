@@ -26,6 +26,7 @@
         }
     },
     "require": {
+        "php": "^7.0"
     },
     "scripts": {
         "runTests": "./scripts/runTests.sh",

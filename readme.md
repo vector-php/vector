@@ -14,7 +14,7 @@ It provides built-in memoization for abstracting away time-consuming pure operat
 It gives you useful helpers for composing simple functions into more complex ones and gives you the building blocks you need to make data manipulation easier than ever, all while maintaining a simple and declarative module loading system so your dependencies are always clear and concise.
 
 ## PHP Version Support
-- 5.6 +
+- 7.0 +
 
 ## Show Me Some Code
 Autoloading Functions? A snap.

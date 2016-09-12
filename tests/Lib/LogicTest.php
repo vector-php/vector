@@ -63,4 +63,60 @@ class LogicTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($notEqStrict(1, '1'));
     }
+
+    /**
+     * Test that not works as intended
+     */
+    public function testNot()
+    {
+        $this->assertEquals(Logic::logicalNot(false), true);
+    }
+
+    /**
+     * Test that gt works as intended
+     */
+    public function testGt()
+    {
+        $this->assertEquals(Logic::gt(1, 2), true);
+    }
+
+    /**
+     * Test that gt works as intended
+     */
+    public function testGte()
+    {
+        $this->assertEquals(Logic::gte(2, 2), true);
+    }
+
+    /**
+     * Test that lt works as intended
+     */
+    public function testLt()
+    {
+        $this->assertEquals(Logic::lt(2, 1), true);
+    }
+
+    /**
+     * Test that lte works as intended
+     */
+    public function testLte()
+    {
+        $this->assertEquals(Logic::lte(2, 2), true);
+    }
+
+    /**
+     * Test that eq works as intended
+     */
+    public function testEq()
+    {
+        $this->assertEquals(Logic::eq(2, '2'), true);
+    }
+
+    /**
+     * Test that eqStrict works as intended
+     */
+    public function testEqStrict()
+    {
+        $this->assertEquals(Logic::eqStrict(2, '2'), false);
+    }
 }

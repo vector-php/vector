@@ -339,6 +339,7 @@ class Logic extends Module
      */
     protected static function __all($arr)
     {
+        /** @noinspection PhpParamsInspection */
         return ArrayList::foldl(self::logicalAnd(), true, $arr);
     }
 
@@ -360,6 +361,7 @@ class Logic extends Module
      */
     protected static function __any($arr)
     {
+        /** @noinspection PhpParamsInspection */
         return ArrayList::foldl(self::logicalOr(), false, $arr);
     }
 }

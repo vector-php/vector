@@ -2,13 +2,14 @@
 
 namespace Vector\Data;
 
+use Vector\Core\Module;
 use Vector\Typeclass\MonadInterface;
 
 /**
  * Class Constant
  * @package Vector\Data
  */
-class Constant implements MonadInterface
+class Constant extends Module implements MonadInterface
 {
     private $heldValue;
 
@@ -25,7 +26,7 @@ class Constant implements MonadInterface
      * @param $a
      * @return Constant
      */
-    public static function constant($a)
+    protected static function __constant($a)
     {
         return new Constant($a);
     }

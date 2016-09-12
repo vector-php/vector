@@ -2,13 +2,14 @@
 
 namespace Vector\Data;
 
+use Vector\Core\Module;
 use Vector\Typeclass\MonadInterface;
 
 /**
  * Class Identity
  * @package Vector\Data
  */
-class Identity implements MonadInterface
+class Identity extends Module implements MonadInterface
 {
     private $heldValue;
 
@@ -25,7 +26,7 @@ class Identity implements MonadInterface
      * @param $a
      * @return Identity
      */
-    public static function identity($a)
+    protected static function __identity($a)
     {
         return new Identity($a);
     }

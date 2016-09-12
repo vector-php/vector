@@ -36,6 +36,7 @@ use Vector\Control\Functor;
  * @method static replicate($n, $item) Return 'item' repeated 'n' times into a list.
  * @method static unique($list) Return unique values as list.
  * @method static sort($comp, $list) Given a function that compares two values, sort an array.
+ * @method static takeLast($a, $list) Return the last n items from a list.
  */
 class ArrayList extends Module
 {
@@ -772,5 +773,24 @@ class ArrayList extends Module
     protected static function __unique($list)
     {
         return array_values(array_flip(array_flip($list)));
+    }
+
+    /**
+     * takeLast
+     *
+     * Return the last n items from a list
+     *
+     * @example
+     * ArrayList::takeLast(2, [1, 2, 2, 4]); // [2, 4]
+     *
+     * @type Int -> [a] -> [a]
+     *
+     * @param  int number of items to take starting at the end of the list
+     * @param  array $list List of items
+     * @return array last n items
+     */
+    protected static function __takeLast(int $n, array $list) : array
+    {
+        return array_slice($list, -$n, count($list));
     }
 }

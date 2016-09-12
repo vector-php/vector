@@ -411,4 +411,15 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
             ArrayList::unique([1, 2, 2, 4])
         );
     }
+
+    /**
+     * Test takeLast
+     */
+    public function testTakeLast()
+    {
+        $this->assertEquals(
+            [2, 4],
+            ArrayList::takeLast(2, [1, 1, 2, 4])
+        );
+    }
 }

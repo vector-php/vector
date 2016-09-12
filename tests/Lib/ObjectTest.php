@@ -2,6 +2,7 @@
 
 namespace Vector\Test\Lib;
 
+use stdClass;
 use Vector\Lib\Object;
 use Vector\Test\Control\Stub\TestObject;
 
@@ -73,5 +74,23 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
     public function testInvokeMethod()
     {
         self::assertEquals('works', Object::invokeMethod('getValue', new TestObject()));
+    }
+
+    /**
+     * Test can assign
+     */
+    public function testAssign()
+    {
+        $object = new stdClass();
+        $object->a = 'a';
+        $object->b = 'b';
+
+        $assigned = Object::assign(['a' => 0, 'b' => 1], $object);
+
+        $shouldBe = new stdClass();
+        $shouldBe->a = 0;
+        $shouldBe->b = 1;
+
+        self::assertEquals($shouldBe, $assigned);
     }
 }

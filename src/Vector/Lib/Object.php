@@ -10,6 +10,7 @@ use Vector\Core\Module;
  * @method static callable setProp($prop, $val, $obj)
  * @method static callable invokeMethod($method, $obj)
  * @method static callable isInstanceOf($expected, $given)
+ * @method static callable assign($expected, $given)
  */
 class Object extends Module
 {
@@ -25,7 +26,7 @@ class Object extends Module
      * //   string(3) "hi!"
      * // }
      *
-     * @type String -> a -> Obj a -> Obj a
+     * @type String -> a -> Object a -> Object a
      *
      * @param  String $key Property to set
      * @param  mixed  $val Value
@@ -36,15 +37,41 @@ class Object extends Module
     {
         $newObj = clone $obj;
 
+        /** @noinspection PhpVariableVariableInspection */
         $newObj->$key = $val;
         return $newObj;
     }
 
+    /**
+     * Assign Properties
+     *
+     * Set/Update properties on the object using a key/value array
+     *
+     * @example
+     * Object::assign(['value' => 'hi!'], new stdClass);
+     * // object(stdClass)#1 (1) {
+     * //   ["value"]=>
+     * //   string(3) "hi!"
+     * // }
+     *
+     * @type array props -> Object objOriginal -> Object objUpdated
+     *
+     * @param $props
+     * @param $objOriginal
+     * @return mixed
+     */
     protected static function __assign($props, $objOriginal)
     {
         $obj = clone $objOriginal;
 
-        return ArrayList::foldl(function($obj, $setter) { return $setter($obj); }, $obj, ArrayList::mapIndexed(Lambda::flip(self::setProp()), $props));
+        /** @noinspection PhpParamsInspection */
+        return ArrayList::foldl(
+            function ($obj, $setter) {
+                return $setter($obj);
+            },
+            $obj,
+            ArrayList::mapIndexed(Lambda::flip(self::setProp()), $props)
+        );
     }
 
     /**

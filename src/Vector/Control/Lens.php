@@ -25,26 +25,6 @@ use Vector\Lib\Object;
 class Lens extends Module
 {
     /**
-     * @param $a
-     * @return Constant
-     * Necessary to the implementation of Lens functions
-     */
-    protected static function __constant($a)
-    {
-        return Constant::constant($a);
-    }
-
-    /**
-     * @param $a
-     * @return Identity
-     * Necessary to the implementation of Lens functions
-     */
-    protected static function __identity($a)
-    {
-        return Identity::identity($a);
-    }
-
-    /**
      * View
      *
      * View an object or array through a lens. Simply applies your lens - the
@@ -67,7 +47,7 @@ class Lens extends Module
     {
         $view = Lambda::compose(
             Functor::extract(),
-            $lens(self::constant())
+            $lens(Constant::constant())
         );
 
         return $view($x);
@@ -77,7 +57,7 @@ class Lens extends Module
     {
         $over = Lambda::compose(
             Functor::extract(),
-            $lens(Lambda::compose(self::identity(), $f))
+            $lens(Lambda::compose(Identity::identity(), $f))
         );
 
         return $over($x);

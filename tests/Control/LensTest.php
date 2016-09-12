@@ -13,26 +13,6 @@ use Vector\Lib\Lambda;
 class LensTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Lenses use Identity functor constructors - test those here
-     */
-    public function testConstituentIdentity()
-    {
-        $identity = Lens::using('identity');
-
-        $this->assertInstanceOf('\\Vector\\Data\\Identity', $identity(true));
-    }
-
-    /**
-     * Lenses use Constant functor constructors - test those here
-     */
-    public function testConstituentConstant()
-    {
-        $constant = Lens::using('constant');
-
-        $this->assertInstanceOf('\\Vector\\Data\\Constant', $constant(true));
-    }
-
-    /**
      * Test that lenses can be created at all
      */
     public function testLensesCanBeCreated()

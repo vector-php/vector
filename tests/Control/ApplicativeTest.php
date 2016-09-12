@@ -4,8 +4,14 @@ namespace Vector\Test\Control;
 
 use Vector\Control\Applicative;
 use Vector\Control\Functor;
+use Vector\Data\Identity;
+use Vector\Lib\ArrayList;
 use Vector\Lib\Math;
 
+/**
+ * Class ApplicativeTest
+ * @package Vector\Test\Control
+ */
 class ApplicativeTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -33,5 +39,24 @@ class ApplicativeTest extends \PHPUnit_Framework_TestCase
         $add    = Math::using('add');
 
         $this->assertEquals($liftA2([], $add, [1, 2, 3], [1, 2, 3]), [2, 3, 4, 3, 4, 5, 4, 5, 6]);
+    }
+
+    /**
+     * Apply should operator applicative instances
+     * The applicative instance is effectively a vector cross product
+     */
+    public function testApply_nonArrayArgument()
+    {
+        $liftA2 = Applicative::using('liftA2');
+        $add  = Math::using('add');
+
+        /** @noinspection PhpParamsInspection */
+        $sum = ArrayList::foldl(
+            $liftA2(Identity::class, $add),
+            Identity::identity(0),
+            [Identity::identity(1), Identity::identity(2), Identity::identity(3)]
+        );
+
+        $this->assertEquals(Identity::identity(6), $sum);
     }
 }

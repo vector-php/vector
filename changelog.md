@@ -4,5 +4,5 @@
 - php 7+ requirement
 - update Module names
   - Lib\Object -> Lib\Objects
-  - Lib\ArrayList -> Lib\Array
-- strict array params in Lib\Array (formerly Lib\ArrayList)
+  - Lib\ArrayList -> Lib\Arrays
+- strict array params in Lib\Arrays (formerly Lib\ArrayList)

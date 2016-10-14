@@ -6,7 +6,7 @@
 
 [Read the Docs](http://joseph-walker.github.io/vector/)
 
-## Purpose
+## The Elevator Pitch
 Vector gives your functions superpowers.
 It lets you autoload your functions with Composer without having to mess with autoloading individual files.
 It allows you to automatically curry your userland functions with zero effort on your part.

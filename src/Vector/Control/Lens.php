@@ -53,7 +53,26 @@ class Lens extends Module
         return $view($x);
     }
 
-    protected static function __overL($lens, $f, $x)
+    /**
+     * Over
+     *
+     * Perform an operation over the focus of a lens. Returns the entire object
+     * as passed in, but with the given function run over a portion of it. Is similar to composing
+     * a set and a get operation all at once.
+     *
+     * @example
+     * $myLens = Lens::indexLens('a');
+     * Lens::overL($myLens, Math::add(1), ['a' => 1]; // ['a' => 2]
+     *
+     * @note Depending on which lens you use, this method might throw an exception.
+     *       Refer to the indivual lenses to see if they're safe to use or not.
+     *
+     * @param callable|Lens $lens Lens to use when viewing an object
+     * @param  Mixed $x Object or array to view
+     * @return mixed The property that the lens focused on
+     * @internal param Lens $ a -> a
+     */
+    protected static function __overL(callable $lens, $f, $x)
     {
         $over = Lambda::compose(
             Functor::extract(),

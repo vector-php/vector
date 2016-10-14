@@ -6,7 +6,6 @@ use Vector\Core\Exception\EmptyListException;
 use Vector\Core\Exception\IndexOutOfBoundsException;
 
 use Vector\Core\Module;
-use Vector\Control\Functor;
 
 /**
  * @method static array groupBy(callable $keyGen, array $list) Return a grouping of $list elements grouped by the $keyGen function.

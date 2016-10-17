@@ -11,6 +11,8 @@ use Vector\Euclid\Doc\FunctionDocEmpty;
 use Vector\Euclid\Doc\FunctionDoc;
 use Vector\Euclid\Doc\ModuleDoc;
 use Vector\Control\Lens;
+use Vector\Control\Functor;
+use Vector\Data\Either;
 use Vector\Lib\ArrayList;
 use Vector\Lib\Strings;
 use Vector\Lib\Lambda;
@@ -104,14 +106,20 @@ class GenerateDocumentationCommand extends Command
         // Otherwise generate the markdown content
         else {
             $buffer .= '## ' . $function->properName() . $eol;
-            $buffer .= '__' . $function->name() . '__ :: ' . $function->type() . $eol;
+            $buffer .= '[Source](' . $function->githubSource() . ')' . $eol;
+            $buffer .= '__' . $function->name() . '__ :: ' . Either::extract($function->type()) . $eol;
             $buffer .= $function->description() . $eol;
 
-            $buffer .= '```' . PHP_EOL;
-            foreach ($function->examples() as $example) {
-                $buffer .= $example->getDescription() . PHP_EOL;
-            }
-            $buffer .= '```' . $eol;
+            $buffer .= Either::extract(Functor::fmap(function($examples) use ($eol) {
+                $exampleBuffer = "";
+                $exampleBuffer .= '```' . PHP_EOL;
+                foreach ($examples as $example) {
+                    $exampleBuffer .= $example->getDescription() . PHP_EOL;
+                }
+                $exampleBuffer .= '```' . $eol;
+
+                return $exampleBuffer;
+            }, $function->examples()));
         }
 
         $buffer .= '---' . $eol;
@@ -123,7 +131,6 @@ class GenerateDocumentationCommand extends Command
     {
         /*
         YAML is literally the worst thing in the world.
-        If I could choose between XML, Binary, and YAML, I would choose binary-encoded XML.
 
         Our module directory looks like this:
         [

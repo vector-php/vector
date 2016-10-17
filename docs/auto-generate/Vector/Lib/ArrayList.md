@@ -1,5 +1,7 @@
 ## bifurcate
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L546)
+
 __Array Bifurcation__ :: (a -> Bool) -> [a] -> ([a], [a])
 
 Given an array and some filtering test that returns a boolean, return two arrays - one array
@@ -13,6 +15,8 @@ ArrayList::bifurcate($isEven, [1, 2, 3, 4, 5]); // [[2, 4], [1, 3, 5]]
 ---
 
 ## concat
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L417)
 
 __Array Concatenation__ :: [a] -> [a] -> [a]
 
@@ -29,6 +33,8 @@ ArrayList::concat(['a' => 1, 'b' => 2], ['a' => 'foo', 'c' => 3]); // ['a' => 'f
 
 ## cons
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L60)
+
 __Cons Operator__ :: a -> [a] -> [a]
 
 Given a value and an array, append that value to the end of the array.
@@ -41,6 +47,8 @@ ArrayList::cons(1, []); // [1]
 ---
 
 ## contains
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L729)
 
 __Array Contains Element__ :: a -> [a] -> Bool
 
@@ -56,6 +64,8 @@ ArrayList::contains('a', ['b', 'c', 'd']); // false
 
 ## drop
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L579)
+
 __Drop Elements__ :: Int -> [a] -> [a]
 
 Given some number n, drop n elements from an input array and return the rest of
@@ -69,6 +79,8 @@ ArrayList::drop(4, [1, 2]); // []
 ---
 
 ## dropWhile
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L601)
 
 __Drop Elements with Predicate__ :: (a -> Bool) -> [a] -> [a]
 
@@ -84,6 +96,8 @@ ArrayList::dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]
 ---
 
 ## filter
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L350)
 
 __Filter a List__ :: (a -> Bool) -> [a] -> [a]
 
@@ -101,6 +115,8 @@ ArrayList::filter(Math::lte(2), [1, 2, 3, 4, 5]); // [1, 2], using `lte` from th
 
 ## flatten
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L699)
+
 __Array Flatten__ :: [a] -> [b]
 
 Flattens a nested array structure into a single-dimensional array. Can handle
@@ -113,6 +129,8 @@ ArrayList::flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]
 ---
 
 ## foldl
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L471)
 
 __List Fold - From Left__ :: (b -> a -> b) -> b -> [a] -> b
 
@@ -130,6 +148,8 @@ ArrayList::foldl(Logic::and(), True, [True, True, False]); // False
 ---
 
 ## groupBy
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L86)
 
 __Group By__ :: (a -> String) -> [a] -> [[a]]
 
@@ -149,6 +169,8 @@ ArrayList::groupBy($keyGen, $testCase); // ['small' => [1, 2, 3], 'big' => [4, 5
 
 ## head
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L117)
+
 __List Head__ :: [a] -> a
 
 Returns the first element of a list, the element at index 0. Also functions
@@ -165,6 +187,8 @@ ArrayList::head([]); // Exception thrown
 
 ## index
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L312)
+
 __List Index__ :: Int -> [a] -> a
 
 Returns the element of a list at the given index. Throws an exception
@@ -179,6 +203,8 @@ ArrayList::index('baz', [1, 2, 3]); // Exception thrown
 ---
 
 ## init
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L233)
 
 __Initial List Values__ :: [a] -> [a]
 
@@ -195,6 +221,8 @@ ArrayList::init(['a' => 1, 'b' => 2]); // ['a' => 1];
 
 ## keys
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L372)
+
 __Array Keys__ :: [a] -> [b]
 
 Returns the keys of an associative key/value array. Returns numerical indexes
@@ -208,6 +236,8 @@ ArrayList::keys([1, 2, 3]); // [0, 1, 2]
 ---
 
 ## last
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L260)
 
 __Last List Value__ :: [a] -> a
 
@@ -224,6 +254,8 @@ ArrayList::last([]); // Exception thrown
 
 ## length
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L284)
+
 __Array Length__ :: [a] -> a
 
 Returns the length of a list or array. Wraps php `count` function.
@@ -237,6 +269,8 @@ ArrayList::length(['a' => 1, 'b' => 2]); // 2
 
 ## map
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L140)
+
 __Array Map__ :: (a -> b) -> [a] -> [b]
 
 Given some function and a list of arbitrary length, return a new array that is the
@@ -249,6 +283,8 @@ ArrayList::map($add(1), [1, 2, 3]); // [2, 3, 4]
 ---
 
 ## mapIndexed
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L162)
 
 __Array Map Indexed__ :: (a -> b -> c) -> [a] -> [c]
 
@@ -265,6 +301,8 @@ ArrayList::mapIndexed($filterEvenIndexes, [1, 2, 3]); // [null, 2, null]
 
 ## replicate
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L749)
+
 __Replicate Item__ :: Int -> a -> [a]
 
 Given some integer n and an item to repeat, repeat that item and place
@@ -278,6 +316,8 @@ ArrayList::replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']
 
 ## reverse
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L680)
+
 __Array Reverse__ :: [a] -> [a]
 
 Flip the order of a given array. Does not modify the original array.
@@ -289,6 +329,8 @@ ArrayList::reverse([1, 2, 3]); // [3, 2, 1]
 ---
 
 ## setIndex
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L441)
 
 __Set Array Value__ :: a -> b -> [b] -> [b]
 
@@ -303,6 +345,8 @@ ArrayList::setValue('c', 3, ['a' => 1, 'b' => 2]); // ['a' => 1, 'b' => 2, 'c' =
 ---
 
 ## sort
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L185)
 
 __Array Sort__ :: (a -> a -> Int) -> [a] -> [a]
 
@@ -320,6 +364,8 @@ ArrayList::sort($comp, [3, 2, 1]);
 
 ## tail
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L210)
+
 __List Tail__ :: [a] -> [a]
 
 Returns an array without its first element, e.g. the complement of `head`. Works on
@@ -335,6 +381,8 @@ ArrayList::(['a' => 1, 'b' => 2]); // ['b' => 2];
 
 ## take
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L630)
+
 __Take Elements__ :: Int -> [a] -> [a]
 
 Given some number n, return the first n elements of a given array. Returns the whole
@@ -346,7 +394,23 @@ ArrayList::take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]
 
 ---
 
+## takeLast
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L792)
+
+__takeLast__ :: Int -> [a] -> [a]
+
+Return the last n items from a list
+
+```
+ArrayList::takeLast(2, [1, 2, 2, 4]); // [2, 4]
+```
+
+---
+
 ## takeWhile
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L651)
 
 __Take Elements with Predicate__ :: (a -> Bool) -> [a] -> [a]
 
@@ -362,6 +426,8 @@ ArrayList::takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]
 
 ## unique
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L773)
+
 __Unique__ :: [a] -> [a]
 
 Given a list, return only unique values
@@ -373,6 +439,8 @@ ArrayList::unique([1, 2, 2, 4]); // [1, 2, 4]
 ---
 
 ## values
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L393)
 
 __Array Values__ :: [a] -> [a]
 
@@ -387,6 +455,8 @@ ArrayList::values([1, 2, 3]); // [1, 2, 3]
 
 ## zip
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L524)
+
 __Array Zip__ :: [a] -> [b] -> [(a, b)]
 
 Given two arrays a and b, return a new array where each element is a tuple of a and b. If a and b
@@ -399,6 +469,8 @@ ArrayList::zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]
 ---
 
 ## zipWith
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L498)
 
 __Custom Array Zip__ :: (a -> b -> c) -> [a] -> [b] -> [c]
 

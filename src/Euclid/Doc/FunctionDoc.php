@@ -4,6 +4,10 @@ namespace Vector\Euclid\Doc;
 
 use Reflector;
 use Vector\Lib\ArrayList;
+use Vector\Data\{
+    Maybe,
+    Either
+};
 
 class FunctionDoc
 {
@@ -40,22 +44,38 @@ class FunctionDoc
 
     public function firstExample()
     {
-        return $this->firstTag('example');
+        return $this->firstTagOr('No examples given for this function.', 'example');
     }
 
     public function examples()
     {
-        return $this->tags['example'];
+        if (!isset($this->tags['example']))
+            return Either::left('No examples given for this function.');
+
+        return count($this->tags['example'])
+            ? Either::right($this->tags['example'])
+            : Either::left('No examples given for this function.');
     }
 
     public function type()
     {
-        return $this->firstTag('type');
+        return $this->firstTagOr('No type given for this function.', 'type');
     }
 
     public function returnType()
     {
-        return $this->firstTag('return');
+        return $this->firstTagOr('No return type given for this function.', 'return');
+    }
+
+    public function githubSource()
+    {
+        $parentClass = $this->reflector->getDeclaringClass();
+
+        $github = 'https://github.com/joseph-walker/vector/blob/master/src';
+        $filePath = str_replace('\\', '/', $parentClass->getNamespaceName());
+        $fileName = $parentClass->getShortName();
+
+        return $github . '/' . $filePath . '/' . $fileName . '.php#L' . ($this->reflector->getStartLine() + 1);
     }
 
     public function params()
@@ -72,8 +92,15 @@ class FunctionDoc
         $this->tags = ArrayList::groupBy($tagName, $this->docBlock->getTags());
     }
 
-    private function firstTag($name)
+    private function firstTagOr($errorMessage, $name)
     {
-        return ArrayList::head($this->tags[$name]);
+        try {
+            if (!isset($this->tags[$name]))
+                throw new \Exception('Tag not found.');
+
+            return Either::right(ArrayList::head($this->tags[$name]));
+        } catch (\Exception $e) {
+            return Either::left($errorMessage);
+        }
     }
 }

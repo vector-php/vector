@@ -1,5 +1,7 @@
 ## chomp
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L230)
+
 __Two-Sided Chomp__ :: String -> String
 
 Removes the specified substring from both ends of the target string. Unlike PHP's
@@ -16,6 +18,8 @@ Strings::chomp('A', 'abccba'); // 'abccba'
 
 ## concat
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L41)
+
 __String Concatenation__ :: String -> String -> String
 
 Concatenates the first argument to the second argument, provided both arguments
@@ -30,6 +34,8 @@ Strings::concat('World', $concat('ello', 'H')); // 'HelloWorld'
 
 ## join
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L255)
+
 __String Joining__ :: String -> [String] -> String
 
 Joins an array of strings together with a given delimiter. Works similarly
@@ -43,6 +49,8 @@ Strings::join('', ['a', 's', 'd', 'f']); // 'asdf'
 ---
 
 ## lchomp
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L172)
 
 __Left Chomp__ :: String -> String
 
@@ -60,6 +68,8 @@ Strings::lchomp('he', 'Hello World'); // 'Hello World'
 
 ## rchomp
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L201)
+
 __Right Chomp__ :: String -> String
 
 Removes the specified substring from the right end of the target string. Unlike PHP's
@@ -76,6 +86,8 @@ Strings::rchomp('LD', 'Hello World'); // 'Hello World'
 
 ## replace
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L274)
+
 __String Replace__ :: String -> String -> String
 
 Replace all occurrences of the search string with the replacement string.
@@ -87,6 +99,8 @@ Strings::replace('test', 'passes', 'this test']); // 'this passes'
 ---
 
 ## split
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L68)
 
 __String Splitting__ :: String -> String -> [String]
 
@@ -104,6 +118,8 @@ Strings::split('-', 'foo-bar-'); ['foo', 'bar']
 
 ## startsWith
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L94)
+
 __Substring Match__ :: String -> String -> Bool
 
 Determines if a string starts with a specific substring. Returns true if the string
@@ -118,6 +134,8 @@ Strings::startsWith('foo', 'barfoo'); false
 
 ## toLowercase
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L112)
+
 __Lowercase Conversion__ :: String -> String
 
 Converts a string to lowercase.
@@ -130,6 +148,8 @@ Strings::toLowercase('ASdf'); // 'asdf'
 
 ## toUppercase
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L130)
+
 __Uppercase Conversion__ :: String -> String
 
 Converts a string to uppercase.
@@ -141,6 +161,8 @@ Strings::toUppercase('asdf'); // 'ASDF'
 ---
 
 ## trim
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L149)
 
 __Trim Whitespace__ :: String -> String
 

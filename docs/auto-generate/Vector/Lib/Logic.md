@@ -1,5 +1,7 @@
 ## all
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L341)
+
 __All__ :: array -> Bool
 
 Returns true given all values are truthy
@@ -12,6 +14,8 @@ Logic::all(1, false); // False
 ---
 
 ## andCombinator
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L76)
 
 __Logical And Combinator__ :: [(a -> Bool)] -> a -> Bool
 
@@ -31,6 +35,8 @@ $combinator(7); // False
 
 ## any
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L363)
+
 __Any__ :: array -> Bool
 
 Returns true given any values are truthy
@@ -43,6 +49,8 @@ Logic::any(false, false); // False
 ---
 
 ## eq
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L254)
 
 __Equal (Not Strict / ==)__ :: mixed -> mixed -> Bool
 
@@ -57,6 +65,8 @@ Logic::eq(1, 2); // False
 
 ## eqStrict
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L276)
+
 __Equal (Strict / ===)__ :: mixed -> mixed -> Bool
 
 Returns true given $a equals $b
@@ -69,6 +79,8 @@ Logic::eqStrict(1, '1'); // False
 ---
 
 ## gt
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L166)
 
 __Greater Than__ :: mixed -> mixed -> Bool
 
@@ -83,6 +95,8 @@ Logic::gt(1, 2); // True
 
 ## gte
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L188)
+
 __Greater Than Or Equal__ :: mixed -> mixed -> Bool
 
 Returns true given $b is greater than or equal to $a.
@@ -96,6 +110,8 @@ Logic::gte(1, 2); // True
 
 ## logicalAnd
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L144)
+
 __Logical And__ :: Bool -> Bool -> Bool
 
 Returns true given $a AND $b are true.
@@ -108,6 +124,8 @@ Logic::logicalAnd(true, false); // False
 ---
 
 ## logicalNot
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L122)
 
 __Logical Not__ :: Bool -> Bool
 
@@ -123,6 +141,8 @@ Logic::logicalNot(false); // True
 
 ## logicalOr
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L100)
+
 __Logical Or__ :: Bool -> Bool -> Bool
 
 Returns true given $a OR $b returns true.
@@ -135,6 +155,8 @@ Logic::logicalOr(false, false); // False
 ---
 
 ## lt
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L210)
 
 __Less Than__ :: mixed -> mixed -> Bool
 
@@ -149,6 +171,8 @@ Logic::lt(1, 2); // False
 
 ## lte
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L232)
+
 __Less Than Or Equal__ :: mixed -> mixed -> Bool
 
 Returns true given $b is less than or equal to $a.
@@ -161,6 +185,8 @@ Logic::lte(2, 1); // True
 ---
 
 ## notEq
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L298)
 
 __Not Equal (Not Strict / ==)__ :: mixed -> mixed -> Bool
 
@@ -175,6 +201,8 @@ Logic::notEq(1, 2); // True
 
 ## notEqStrict
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L320)
+
 __Not Equal (Strict / ===)__ :: mixed -> mixed -> Bool
 
 Returns true given $a does not equal $b
@@ -187,6 +215,8 @@ Logic::notEqStrict(1, '1'); // False
 ---
 
 ## orCombinator
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L49)
 
 __Logical Or Combinator__ :: [(a -> Bool)] -> a -> Bool
 

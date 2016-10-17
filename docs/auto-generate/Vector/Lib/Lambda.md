@@ -6,6 +6,8 @@ This function is currently missing documentation.
 
 ## flip
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Lambda.php#L46)
+
 __Flip Combinator__ :: (a -> b -> c) -> b -> a -> c
 
 Given a function that takes two arguments, return a new function that
@@ -20,6 +22,8 @@ Lambda::flip(Math::subtract())(2, 6); // -4
 
 ## id
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Lambda.php#L92)
+
 __Identity Function__ :: a -> a
 
 Given some value a, return a unchanged
@@ -32,6 +36,8 @@ Lambda::id('foo'); // 'foo'
 ---
 
 ## k
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Lambda.php#L70)
 
 __K Combinator__ :: a -> (b -> a)
 

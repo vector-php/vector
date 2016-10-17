@@ -1,5 +1,7 @@
 ## add
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Math.php#L42)
+
 __Arithmetic Addition__ :: Number a => a -> a -> a
 
 Add two numbers together.
@@ -13,6 +15,8 @@ Math::add(-1, 2); // 1
 
 ## divide
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Math.php#L181)
+
 __Arithmetic Division__ :: Number a => a -> a -> a
 
 Divide two numbers, with the first argument being the divisor.
@@ -25,6 +29,8 @@ Math::divide(4, 12); // 3
 ---
 
 ## max
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Math.php#L291)
 
 __Maximum Value__ :: Number a => a -> a -> a
 
@@ -40,6 +46,8 @@ Math::max(5, 5); // 5
 
 ## mean
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Math.php#L335)
+
 __Arithmetic mean__ :: Number a => [a] -> a
 
 Returns the average of a list, or zero for an empty list.
@@ -52,6 +60,8 @@ Math::mean([]); // 0
 ---
 
 ## min
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Math.php#L266)
 
 __Minimum Value__ :: Number a => a -> a -> a
 
@@ -69,6 +79,8 @@ Math::min(5, 5); // 5
 
 ## mod
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Math.php#L207)
+
 __Modulus Operator__ :: Int -> Int -> Int
 
 Take the modulus of two integers, with the first argument being the divisor.
@@ -84,6 +96,8 @@ Math::mod(3, 3); // 0
 
 ## multiply
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Math.php#L132)
+
 __Arithmetic Multiplication__ :: Number a => a -> a -> a
 
 Multiply two numbers together.
@@ -97,6 +111,8 @@ Math::multiply(0, 4); // 0
 
 ## negate
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Math.php#L88)
+
 __Negate a number.__ :: Number a => a -> a
 
 Returns a given number * -1.
@@ -109,6 +125,8 @@ Math::negate(0); // 0
 ---
 
 ## pow
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Math.php#L314)
 
 __Power function__ :: Number a => a -> a -> a
 
@@ -124,6 +142,8 @@ Math::pow(3, 2); // 2 ^ 3 = 8
 
 ## product
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Math.php#L154)
+
 __Array Product__ :: Number a => [a] -> a
 
 Returns the product of a list of numbers, i.e. the result of multiplying
@@ -137,6 +157,8 @@ Math::product([]); // 1
 ---
 
 ## range
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Math.php#L237)
 
 __Number Range__ :: Number a => a -> a -> a
 
@@ -154,6 +176,8 @@ Math::range(0.1, 0, 0.5); // [0, 0.1, 0.2, 0.3, 0.4, 0.5]
 
 ## subtract
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Math.php#L110)
+
 __Arithmetic Subtraction.__ :: Number a => a -> a -> a
 
 Subtracts two numbers, with the first argument being subtracted from the second.
@@ -166,6 +190,8 @@ Math::subtract(-1, 3); // 4
 ---
 
 ## sum
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Math.php#L64)
 
 __Array Sum__ :: Number a => [a] -> a
 

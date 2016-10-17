@@ -1,10 +1,24 @@
 ## assign
 
-This function is currently missing documentation.
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L64)
+
+__Assign Properties__ :: array props -> Object objOriginal -> Object objUpdated
+
+Set/Update properties on the object using a key/value array
+
+```
+Object::assign(['value' => 'hi!'], new stdClass);
+// object(stdClass)#1 (1) {
+//   ["value"]=>
+//   string(3) "hi!"
+// }
+```
 
 ---
 
 ## getProp
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L95)
 
 __Get Property__ :: String -> Object a -> a
 
@@ -19,6 +33,8 @@ Object::getValue('value', $obj); // 'hi!'
 ---
 
 ## invokeMethod
+
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L123)
 
 __Invoke Method__ :: String -> Obj a -> mixed
 
@@ -37,6 +53,8 @@ Object::invokeMethod('sayHi', $person); // 'hi!'
 
 ## isInstanceOf
 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L142)
+
 __Is Instance Of__ :: String -> Obj a -> mixed
 
 Checks if the object is an instance of the specified class
@@ -49,7 +67,9 @@ Object::isInstanceOf('stdClass', (new stdClass())); // true
 
 ## setProp
 
-__Set Property__ :: String -> a -> Obj a -> Obj a
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L37)
+
+__Set Property__ :: String -> a -> Object a -> Object a
 
 Sets a property on the object
 

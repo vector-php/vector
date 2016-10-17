@@ -1,25 +1,3 @@
-## constant
-
-____ :: 
-
-
-
-```
-```
-
----
-
-## identity
-
-____ :: 
-
-
-
-```
-```
-
----
-
 ## indexLens
 
 This function is currently missing documentation.
@@ -40,7 +18,18 @@ This function is currently missing documentation.
 
 ## overL
 
-This function is currently missing documentation.
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Control/Lens.php#L76)
+
+__Over__ :: No type given for this function.
+
+Perform an operation over the focus of a lens. Returns the entire object
+as passed in, but with the given function run over a portion of it. Is similar to composing
+a set and a get operation all at once.
+
+```
+$myLens = Lens::indexLens('a');
+Lens::overL($myLens, Math::add(1), ['a' => 1]; // ['a' => 2]
+```
 
 ---
 
@@ -88,7 +77,9 @@ This function is currently missing documentation.
 
 ## viewL
 
-__View__ :: 
+[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Control/Lens.php#L47)
+
+__View__ :: No type given for this function.
 
 View an object or array through a lens. Simply applies your lens - the
 behavior of this function will vary slightly depending on the particular

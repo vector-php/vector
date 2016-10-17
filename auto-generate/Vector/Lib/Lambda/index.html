@@ -132,13 +132,13 @@
                 <li class="toctree-l3"><a href="#compose">compose</a></li>
                 
             
-                <li class="toctree-l3"><a href="#flip">flip</a></li>
+                <li class="toctree-l3"><a href="#flipsource">flipSource</a></li>
                 
             
-                <li class="toctree-l3"><a href="#id">id</a></li>
+                <li class="toctree-l3"><a href="#idsource">idSource</a></li>
                 
             
-                <li class="toctree-l3"><a href="#k">k</a></li>
+                <li class="toctree-l3"><a href="#ksource">kSource</a></li>
                 
             
                 <li class="toctree-l3"><a href="#pipe">pipe</a></li>
@@ -266,8 +266,7 @@
                 <h2 id="compose">compose</h2>
 <p>This function is currently missing documentation.</p>
 <hr />
-<h2 id="flip">flip</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Lambda.php#L46">Source</a></p>
+<h2 id="flipsource">flip<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Lambda.php#L46">Source</a></h2>
 <p><strong>Flip Combinator</strong> :: (a -&gt; b -&gt; c) -&gt; b -&gt; a -&gt; c</p>
 <p>Given a function that takes two arguments, return a new function that
 takes those two arguments with their order reversed.</p>
@@ -276,8 +275,7 @@ Lambda::flip(Math::subtract())(2, 6); // -4
 </code></pre>
 
 <hr />
-<h2 id="id">id</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Lambda.php#L92">Source</a></p>
+<h2 id="idsource">id<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Lambda.php#L92">Source</a></h2>
 <p><strong>Identity Function</strong> :: a -&gt; a</p>
 <p>Given some value a, return a unchanged</p>
 <pre><code>Lambda::id(4); // 4
@@ -285,8 +283,7 @@ Lambda::id('foo'); // 'foo'
 </code></pre>
 
 <hr />
-<h2 id="k">k</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Lambda.php#L70">Source</a></p>
+<h2 id="ksource">k<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Lambda.php#L70">Source</a></h2>
 <p><strong>K Combinator</strong> :: a -&gt; (b -&gt; a)</p>
 <p>Given some value k, return a lambda expression which always evaluates to k, regardless
 of any arguments it is given.</p>

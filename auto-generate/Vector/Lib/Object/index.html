@@ -150,19 +150,19 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#assign">assign</a></li>
+                <li class="toctree-l3"><a href="#assignsource">assignSource</a></li>
                 
             
-                <li class="toctree-l3"><a href="#getprop">getProp</a></li>
+                <li class="toctree-l3"><a href="#getpropsource">getPropSource</a></li>
                 
             
-                <li class="toctree-l3"><a href="#invokemethod">invokeMethod</a></li>
+                <li class="toctree-l3"><a href="#invokemethodsource">invokeMethodSource</a></li>
                 
             
-                <li class="toctree-l3"><a href="#isinstanceof">isInstanceOf</a></li>
+                <li class="toctree-l3"><a href="#isinstanceofsource">isInstanceOfSource</a></li>
                 
             
-                <li class="toctree-l3"><a href="#setprop">setProp</a></li>
+                <li class="toctree-l3"><a href="#setpropsource">setPropSource</a></li>
                 
             
             </ul>
@@ -263,8 +263,7 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="assign">assign</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L64">Source</a></p>
+                <h2 id="assignsource">assign<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L64">Source</a></h2>
 <p><strong>Assign Properties</strong> :: array props -&gt; Object objOriginal -&gt; Object objUpdated</p>
 <p>Set/Update properties on the object using a key/value array</p>
 <pre><code>Object::assign(['value' =&gt; 'hi!'], new stdClass);
@@ -275,8 +274,7 @@
 </code></pre>
 
 <hr />
-<h2 id="getprop">getProp</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L95">Source</a></p>
+<h2 id="getpropsource">getProp<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L95">Source</a></h2>
 <p><strong>Get Property</strong> :: String -&gt; Object a -&gt; a</p>
 <p>Gets a property on the object</p>
 <pre><code>$obj = new stdClass();
@@ -285,8 +283,7 @@ Object::getValue('value', $obj); // 'hi!'
 </code></pre>
 
 <hr />
-<h2 id="invokemethod">invokeMethod</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L123">Source</a></p>
+<h2 id="invokemethodsource">invokeMethod<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L123">Source</a></h2>
 <p><strong>Invoke Method</strong> :: String -&gt; Obj a -&gt; mixed</p>
 <p>Invokes a method on the object</p>
 <pre><code>$person = new stdObject(array(
@@ -298,16 +295,14 @@ Object::invokeMethod('sayHi', $person); // 'hi!'
 </code></pre>
 
 <hr />
-<h2 id="isinstanceof">isInstanceOf</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L142">Source</a></p>
+<h2 id="isinstanceofsource">isInstanceOf<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L142">Source</a></h2>
 <p><strong>Is Instance Of</strong> :: String -&gt; Obj a -&gt; mixed</p>
 <p>Checks if the object is an instance of the specified class</p>
 <pre><code>Object::isInstanceOf('stdClass', (new stdClass())); // true
 </code></pre>
 
 <hr />
-<h2 id="setprop">setProp</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L37">Source</a></p>
+<h2 id="setpropsource">setProp<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L37">Source</a></h2>
 <p><strong>Set Property</strong> :: String -&gt; a -&gt; Object a -&gt; Object a</p>
 <p>Sets a property on the object</p>
 <pre><code>Object::setValue('value', new stdClass(), 'hi!');

@@ -157,37 +157,37 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#chomp">chomp</a></li>
+                <li class="toctree-l3"><a href="#chompsource">chompSource</a></li>
                 
             
-                <li class="toctree-l3"><a href="#concat">concat</a></li>
+                <li class="toctree-l3"><a href="#concatsource">concatSource</a></li>
                 
             
-                <li class="toctree-l3"><a href="#join">join</a></li>
+                <li class="toctree-l3"><a href="#joinsource">joinSource</a></li>
                 
             
-                <li class="toctree-l3"><a href="#lchomp">lchomp</a></li>
+                <li class="toctree-l3"><a href="#lchompsource">lchompSource</a></li>
                 
             
-                <li class="toctree-l3"><a href="#rchomp">rchomp</a></li>
+                <li class="toctree-l3"><a href="#rchompsource">rchompSource</a></li>
                 
             
-                <li class="toctree-l3"><a href="#replace">replace</a></li>
+                <li class="toctree-l3"><a href="#replacesource">replaceSource</a></li>
                 
             
-                <li class="toctree-l3"><a href="#split">split</a></li>
+                <li class="toctree-l3"><a href="#splitsource">splitSource</a></li>
                 
             
-                <li class="toctree-l3"><a href="#startswith">startsWith</a></li>
+                <li class="toctree-l3"><a href="#startswithsource">startsWithSource</a></li>
                 
             
-                <li class="toctree-l3"><a href="#tolowercase">toLowercase</a></li>
+                <li class="toctree-l3"><a href="#tolowercasesource">toLowercaseSource</a></li>
                 
             
-                <li class="toctree-l3"><a href="#touppercase">toUppercase</a></li>
+                <li class="toctree-l3"><a href="#touppercasesource">toUppercaseSource</a></li>
                 
             
-                <li class="toctree-l3"><a href="#trim">trim</a></li>
+                <li class="toctree-l3"><a href="#trimsource">trimSource</a></li>
                 
             
             </ul>
@@ -281,8 +281,7 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="chomp">chomp</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L230">Source</a></p>
+                <h2 id="chompsource">chomp<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L230">Source</a></h2>
 <p><strong>Two-Sided Chomp</strong> :: String -&gt; String</p>
 <p>Removes the specified substring from both ends of the target string. Unlike PHP's
 trim function, the substring to chomp is not a character mask -- rather it is a full
@@ -293,8 +292,7 @@ Strings::chomp('A', 'abccba'); // 'abccba'
 </code></pre>
 
 <hr />
-<h2 id="concat">concat</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L41">Source</a></p>
+<h2 id="concatsource">concat<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L41">Source</a></h2>
 <p><strong>String Concatenation</strong> :: String -&gt; String -&gt; String</p>
 <p>Concatenates the first argument to the second argument, provided both arguments
 are strings. Defers to the PHP built-in concatenation.</p>
@@ -303,8 +301,7 @@ Strings::concat('World', $concat('ello', 'H')); // 'HelloWorld'
 </code></pre>
 
 <hr />
-<h2 id="join">join</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L255">Source</a></p>
+<h2 id="joinsource">join<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L255">Source</a></h2>
 <p><strong>String Joining</strong> :: String -&gt; [String] -&gt; String</p>
 <p>Joins an array of strings together with a given delimiter. Works similarly
 to PHP <code>implode</code>. The inverse of <code>split</code>.</p>
@@ -313,8 +310,7 @@ Strings::join('', ['a', 's', 'd', 'f']); // 'asdf'
 </code></pre>
 
 <hr />
-<h2 id="lchomp">lchomp</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L172">Source</a></p>
+<h2 id="lchompsource">lchomp<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L172">Source</a></h2>
 <p><strong>Left Chomp</strong> :: String -&gt; String</p>
 <p>Removes the specified substring from the left end of the target string. Unlike PHP's
 trim function, the substring to chomp is not a character mask -- rather it is a full
@@ -325,8 +321,7 @@ Strings::lchomp('he', 'Hello World'); // 'Hello World'
 </code></pre>
 
 <hr />
-<h2 id="rchomp">rchomp</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L201">Source</a></p>
+<h2 id="rchompsource">rchomp<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L201">Source</a></h2>
 <p><strong>Right Chomp</strong> :: String -&gt; String</p>
 <p>Removes the specified substring from the right end of the target string. Unlike PHP's
 trim function, the substring to chomp is not a character mask -- rather it is a full
@@ -337,16 +332,14 @@ Strings::rchomp('LD', 'Hello World'); // 'Hello World'
 </code></pre>
 
 <hr />
-<h2 id="replace">replace</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L274">Source</a></p>
+<h2 id="replacesource">replace<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L274">Source</a></h2>
 <p><strong>String Replace</strong> :: String -&gt; String -&gt; String</p>
 <p>Replace all occurrences of the search string with the replacement string.</p>
 <pre><code>Strings::replace('test', 'passes', 'this test']); // 'this passes'
 </code></pre>
 
 <hr />
-<h2 id="split">split</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L68">Source</a></p>
+<h2 id="splitsource">split<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L68">Source</a></h2>
 <p><strong>String Splitting</strong> :: String -&gt; String -&gt; [String]</p>
 <p>Split a string into parts based on a delimiter. Operates similar to php <code>explode</code>,
 but is more consistent. Can split on empty delimiters, and trims out empty strings
@@ -357,8 +350,7 @@ Strings::split('-', 'foo-bar-'); ['foo', 'bar']
 </code></pre>
 
 <hr />
-<h2 id="startswith">startsWith</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L94">Source</a></p>
+<h2 id="startswithsource">startsWith<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L94">Source</a></h2>
 <p><strong>Substring Match</strong> :: String -&gt; String -&gt; Bool</p>
 <p>Determines if a string starts with a specific substring. Returns true if the string
 matches the substring at its start, otherwise false.</p>
@@ -367,24 +359,21 @@ Strings::startsWith('foo', 'barfoo'); false
 </code></pre>
 
 <hr />
-<h2 id="tolowercase">toLowercase</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L112">Source</a></p>
+<h2 id="tolowercasesource">toLowercase<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L112">Source</a></h2>
 <p><strong>Lowercase Conversion</strong> :: String -&gt; String</p>
 <p>Converts a string to lowercase.</p>
 <pre><code>Strings::toLowercase('ASdf'); // 'asdf'
 </code></pre>
 
 <hr />
-<h2 id="touppercase">toUppercase</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L130">Source</a></p>
+<h2 id="touppercasesource">toUppercase<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L130">Source</a></h2>
 <p><strong>Uppercase Conversion</strong> :: String -&gt; String</p>
 <p>Converts a string to uppercase.</p>
 <pre><code>Strings::toUppercase('asdf'); // 'ASDF'
 </code></pre>
 
 <hr />
-<h2 id="trim">trim</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L149">Source</a></p>
+<h2 id="trimsource">trim<a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L149">Source</a></h2>
 <p><strong>Trim Whitespace</strong> :: String -&gt; String</p>
 <p>Removes all leading and trailing whitespace from a string. Defers to
 PHP trim.</p>

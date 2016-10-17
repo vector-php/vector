@@ -105,7 +105,7 @@ class GenerateDocumentationCommand extends Command
         }
         // Otherwise generate the markdown content
         else {
-            $buffer .= '## ' . $function->properName() . $eol;
+            $buffer .= '## ' . $function->properName();
             $buffer .= '[Source](' . $function->githubSource() . ')' . $eol;
             $buffer .= '__' . $function->name() . '__ :: ' . Either::extract($function->type()) . $eol;
             $buffer .= $function->description() . $eol;

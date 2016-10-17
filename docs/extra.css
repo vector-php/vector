@@ -2,7 +2,11 @@
     text-align: left;
 }
 
-h2 + p {
+h2 a {
+    font-family: sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 44px;
     float: right;
     margin: 0;
 }

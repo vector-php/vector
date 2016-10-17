@@ -1,6 +1,4 @@
-## bifurcate
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L546)
+## bifurcate[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L546)
 
 __Array Bifurcation__ :: (a -> Bool) -> [a] -> ([a], [a])
 
@@ -14,9 +12,7 @@ ArrayList::bifurcate($isEven, [1, 2, 3, 4, 5]); // [[2, 4], [1, 3, 5]]
 
 ---
 
-## concat
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L417)
+## concat[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L417)
 
 __Array Concatenation__ :: [a] -> [a] -> [a]
 
@@ -31,9 +27,7 @@ ArrayList::concat(['a' => 1, 'b' => 2], ['a' => 'foo', 'c' => 3]); // ['a' => 'f
 
 ---
 
-## cons
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L60)
+## cons[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L60)
 
 __Cons Operator__ :: a -> [a] -> [a]
 
@@ -46,9 +40,7 @@ ArrayList::cons(1, []); // [1]
 
 ---
 
-## contains
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L729)
+## contains[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L729)
 
 __Array Contains Element__ :: a -> [a] -> Bool
 
@@ -62,9 +54,7 @@ ArrayList::contains('a', ['b', 'c', 'd']); // false
 
 ---
 
-## drop
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L579)
+## drop[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L579)
 
 __Drop Elements__ :: Int -> [a] -> [a]
 
@@ -78,9 +68,7 @@ ArrayList::drop(4, [1, 2]); // []
 
 ---
 
-## dropWhile
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L601)
+## dropWhile[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L601)
 
 __Drop Elements with Predicate__ :: (a -> Bool) -> [a] -> [a]
 
@@ -95,9 +83,7 @@ ArrayList::dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]
 
 ---
 
-## filter
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L350)
+## filter[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L350)
 
 __Filter a List__ :: (a -> Bool) -> [a] -> [a]
 
@@ -113,9 +99,7 @@ ArrayList::filter(Math::lte(2), [1, 2, 3, 4, 5]); // [1, 2], using `lte` from th
 
 ---
 
-## flatten
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L699)
+## flatten[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L699)
 
 __Array Flatten__ :: [a] -> [b]
 
@@ -128,9 +112,7 @@ ArrayList::flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]
 
 ---
 
-## foldl
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L471)
+## foldl[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L471)
 
 __List Fold - From Left__ :: (b -> a -> b) -> b -> [a] -> b
 
@@ -147,9 +129,7 @@ ArrayList::foldl(Logic::and(), True, [True, True, False]); // False
 
 ---
 
-## groupBy
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L86)
+## groupBy[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L86)
 
 __Group By__ :: (a -> String) -> [a] -> [[a]]
 
@@ -167,9 +147,7 @@ ArrayList::groupBy($keyGen, $testCase); // ['small' => [1, 2, 3], 'big' => [4, 5
 
 ---
 
-## head
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L117)
+## head[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L117)
 
 __List Head__ :: [a] -> a
 
@@ -185,9 +163,7 @@ ArrayList::head([]); // Exception thrown
 
 ---
 
-## index
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L312)
+## index[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L312)
 
 __List Index__ :: Int -> [a] -> a
 
@@ -202,9 +178,7 @@ ArrayList::index('baz', [1, 2, 3]); // Exception thrown
 
 ---
 
-## init
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L233)
+## init[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L233)
 
 __Initial List Values__ :: [a] -> [a]
 
@@ -219,9 +193,7 @@ ArrayList::init(['a' => 1, 'b' => 2]); // ['a' => 1];
 
 ---
 
-## keys
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L372)
+## keys[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L372)
 
 __Array Keys__ :: [a] -> [b]
 
@@ -235,9 +207,7 @@ ArrayList::keys([1, 2, 3]); // [0, 1, 2]
 
 ---
 
-## last
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L260)
+## last[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L260)
 
 __Last List Value__ :: [a] -> a
 
@@ -252,9 +222,7 @@ ArrayList::last([]); // Exception thrown
 
 ---
 
-## length
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L284)
+## length[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L284)
 
 __Array Length__ :: [a] -> a
 
@@ -267,9 +235,7 @@ ArrayList::length(['a' => 1, 'b' => 2]); // 2
 
 ---
 
-## map
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L140)
+## map[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L140)
 
 __Array Map__ :: (a -> b) -> [a] -> [b]
 
@@ -282,9 +248,7 @@ ArrayList::map($add(1), [1, 2, 3]); // [2, 3, 4]
 
 ---
 
-## mapIndexed
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L162)
+## mapIndexed[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L162)
 
 __Array Map Indexed__ :: (a -> b -> c) -> [a] -> [c]
 
@@ -299,9 +263,7 @@ ArrayList::mapIndexed($filterEvenIndexes, [1, 2, 3]); // [null, 2, null]
 
 ---
 
-## replicate
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L749)
+## replicate[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L749)
 
 __Replicate Item__ :: Int -> a -> [a]
 
@@ -314,9 +276,7 @@ ArrayList::replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']
 
 ---
 
-## reverse
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L680)
+## reverse[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L680)
 
 __Array Reverse__ :: [a] -> [a]
 
@@ -328,9 +288,7 @@ ArrayList::reverse([1, 2, 3]); // [3, 2, 1]
 
 ---
 
-## setIndex
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L441)
+## setIndex[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L441)
 
 __Set Array Value__ :: a -> b -> [b] -> [b]
 
@@ -344,9 +302,7 @@ ArrayList::setValue('c', 3, ['a' => 1, 'b' => 2]); // ['a' => 1, 'b' => 2, 'c' =
 
 ---
 
-## sort
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L185)
+## sort[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L185)
 
 __Array Sort__ :: (a -> a -> Int) -> [a] -> [a]
 
@@ -362,9 +318,7 @@ ArrayList::sort($comp, [3, 2, 1]);
 
 ---
 
-## tail
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L210)
+## tail[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L210)
 
 __List Tail__ :: [a] -> [a]
 
@@ -379,9 +333,7 @@ ArrayList::(['a' => 1, 'b' => 2]); // ['b' => 2];
 
 ---
 
-## take
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L630)
+## take[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L630)
 
 __Take Elements__ :: Int -> [a] -> [a]
 
@@ -394,9 +346,7 @@ ArrayList::take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]
 
 ---
 
-## takeLast
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L792)
+## takeLast[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L792)
 
 __takeLast__ :: Int -> [a] -> [a]
 
@@ -408,9 +358,7 @@ ArrayList::takeLast(2, [1, 2, 2, 4]); // [2, 4]
 
 ---
 
-## takeWhile
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L651)
+## takeWhile[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L651)
 
 __Take Elements with Predicate__ :: (a -> Bool) -> [a] -> [a]
 
@@ -424,9 +372,7 @@ ArrayList::takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]
 
 ---
 
-## unique
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L773)
+## unique[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L773)
 
 __Unique__ :: [a] -> [a]
 
@@ -438,9 +384,7 @@ ArrayList::unique([1, 2, 2, 4]); // [1, 2, 4]
 
 ---
 
-## values
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L393)
+## values[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L393)
 
 __Array Values__ :: [a] -> [a]
 
@@ -453,9 +397,7 @@ ArrayList::values([1, 2, 3]); // [1, 2, 3]
 
 ---
 
-## zip
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L524)
+## zip[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L524)
 
 __Array Zip__ :: [a] -> [b] -> [(a, b)]
 
@@ -468,9 +410,7 @@ ArrayList::zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]
 
 ---
 
-## zipWith
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L498)
+## zipWith[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L498)
 
 __Custom Array Zip__ :: (a -> b -> c) -> [a] -> [b] -> [c]
 

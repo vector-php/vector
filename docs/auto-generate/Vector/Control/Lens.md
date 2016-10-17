@@ -16,9 +16,7 @@ This function is currently missing documentation.
 
 ---
 
-## overL
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Control/Lens.php#L76)
+## overL[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Control/Lens.php#L76)
 
 __Over__ :: No type given for this function.
 
@@ -75,9 +73,7 @@ This function is currently missing documentation.
 
 ---
 
-## viewL
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Control/Lens.php#L47)
+## viewL[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Control/Lens.php#L47)
 
 __View__ :: No type given for this function.
 

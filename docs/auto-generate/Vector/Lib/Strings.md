@@ -1,6 +1,4 @@
-## chomp
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L230)
+## chomp[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L230)
 
 __Two-Sided Chomp__ :: String -> String
 
@@ -16,9 +14,7 @@ Strings::chomp('A', 'abccba'); // 'abccba'
 
 ---
 
-## concat
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L41)
+## concat[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L41)
 
 __String Concatenation__ :: String -> String -> String
 
@@ -32,9 +28,7 @@ Strings::concat('World', $concat('ello', 'H')); // 'HelloWorld'
 
 ---
 
-## join
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L255)
+## join[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L255)
 
 __String Joining__ :: String -> [String] -> String
 
@@ -48,9 +42,7 @@ Strings::join('', ['a', 's', 'd', 'f']); // 'asdf'
 
 ---
 
-## lchomp
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L172)
+## lchomp[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L172)
 
 __Left Chomp__ :: String -> String
 
@@ -66,9 +58,7 @@ Strings::lchomp('he', 'Hello World'); // 'Hello World'
 
 ---
 
-## rchomp
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L201)
+## rchomp[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L201)
 
 __Right Chomp__ :: String -> String
 
@@ -84,9 +74,7 @@ Strings::rchomp('LD', 'Hello World'); // 'Hello World'
 
 ---
 
-## replace
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L274)
+## replace[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L274)
 
 __String Replace__ :: String -> String -> String
 
@@ -98,9 +86,7 @@ Strings::replace('test', 'passes', 'this test']); // 'this passes'
 
 ---
 
-## split
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L68)
+## split[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L68)
 
 __String Splitting__ :: String -> String -> [String]
 
@@ -116,9 +102,7 @@ Strings::split('-', 'foo-bar-'); ['foo', 'bar']
 
 ---
 
-## startsWith
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L94)
+## startsWith[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L94)
 
 __Substring Match__ :: String -> String -> Bool
 
@@ -132,9 +116,7 @@ Strings::startsWith('foo', 'barfoo'); false
 
 ---
 
-## toLowercase
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L112)
+## toLowercase[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L112)
 
 __Lowercase Conversion__ :: String -> String
 
@@ -146,9 +128,7 @@ Strings::toLowercase('ASdf'); // 'asdf'
 
 ---
 
-## toUppercase
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L130)
+## toUppercase[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L130)
 
 __Uppercase Conversion__ :: String -> String
 
@@ -160,9 +140,7 @@ Strings::toUppercase('asdf'); // 'ASDF'
 
 ---
 
-## trim
-
-[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L149)
+## trim[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L149)
 
 __Trim Whitespace__ :: String -> String
 

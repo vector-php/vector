@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Vector / Core\n\n\nPurpose\n\n\nVector gives your functions superpowers.\nIt lets you autoload your functions with Composer without having to mess with autload files.\nIt allows you to automatically curry your userland functions with zero effort on your part.\nIt provides built-in memoization for abstracting away time-consuming pure operations.\nIt gives you useful helpers for composing simple functions into more complex ones and gives you the building blocks you need to make data manipulation easier than ever, all while maintaining a simple and declarative module loading system so your dependencies are always clear and concise.\n\n\nPHP Version Support\n\n\n\n\n5.6 +\n\n\n\n\nShow Me Some Code\n\n\nAutoloading Functions? A snap.\n\n\nuse Vector\\Lib\\ArrayList;\n\n\n\n\nCurrying? Completely free.\n\n\n$addOne = ArrayList::map(function($a) { return $a + 1; });\n$addOne([1, 2, 3]); // [2, 3, 4]\n\n\n\n\nMemoization? Batteries included.\n\n\nClass MyFunctions extends Module {\n    protected $memoize = ['myFunction'];\n}\n\n\n\n\nComposition? No problem.\n\n\n$addSix = Lambda::compose(Math::add(4), Math::add(2));\n$addSix(4); // 10;", 
+            "text": "Vector / Core\n\n\nPurpose\n\n\nVector gives your functions superpowers.\nIt lets you autoload your functions with Composer without having to mess with autoloading individual files.\nIt allows you to automatically curry your userland functions with zero effort on your part.\nIt provides built-in memoization for abstracting away time-consuming pure operations.\nIt gives you useful helpers for composing simple functions into more complex ones and gives you the building blocks you need to make data manipulation easier than ever, all while maintaining a simple and declarative module loading system so your dependencies are always clear and concise.\n\n\nPHP Version Support\n\n\n\n\n5.6 +\n\n\n\n\nShow Me Some Code\n\n\nAutoloading Functions? A snap.\n\n\nuse Vector\\Lib\\ArrayList;\n\n\n\n\nCurrying? Completely free.\n\n\n$addOne = ArrayList::map(function($a) { return $a + 1; });\n$addOne([1, 2, 3]); // [2, 3, 4]\n\n\n\n\nMemoization? Batteries included.\n\n\nClass MyFunctions extends Module {\n    protected $memoize = ['myFunction'];\n}\n\n\n\n\nComposition? No problem.\n\n\n$addSix = Lambda::compose(Math::add(4), Math::add(2));\n$addSix(4); // 10;", 
             "title": "Introduction"
         }, 
         {
@@ -12,7 +12,7 @@
         }, 
         {
             "location": "/#purpose", 
-            "text": "Vector gives your functions superpowers.\nIt lets you autoload your functions with Composer without having to mess with autload files.\nIt allows you to automatically curry your userland functions with zero effort on your part.\nIt provides built-in memoization for abstracting away time-consuming pure operations.\nIt gives you useful helpers for composing simple functions into more complex ones and gives you the building blocks you need to make data manipulation easier than ever, all while maintaining a simple and declarative module loading system so your dependencies are always clear and concise.", 
+            "text": "Vector gives your functions superpowers.\nIt lets you autoload your functions with Composer without having to mess with autoloading individual files.\nIt allows you to automatically curry your userland functions with zero effort on your part.\nIt provides built-in memoization for abstracting away time-consuming pure operations.\nIt gives you useful helpers for composing simple functions into more complex ones and gives you the building blocks you need to make data manipulation easier than ever, all while maintaining a simple and declarative module loading system so your dependencies are always clear and concise.", 
             "title": "Purpose"
         }, 
         {
@@ -166,153 +166,168 @@
             "title": "Tag, you're it"
         }, 
         {
+            "location": "/advanced/fam/", 
+            "text": "", 
+            "title": "Functors, Applicatives & Monads"
+        }, 
+        {
             "location": "/auto-generate/Vector/Lib/ArrayList/", 
-            "text": "bifurcate\n\n\nArray Bifurcation\n :: (a -\n Bool) -\n [a] -\n ([a], [a])\n\n\nGiven an array and some filtering test that returns a boolean, return two arrays - one array\nof elements that pass the test, and another array of elements that don't. Similar to filter,\nbut returns the elements that fail as well.\n\n\nArrayList::bifurcate($isEven, [1, 2, 3, 4, 5]); // [[2, 4], [1, 3, 5]]\n\n\n\n\n\n\nconcat\n\n\nArray Concatenation\n :: [a] -\n [a] -\n [a]\n\n\nJoins two arrays together, with the second argument being appended\nto the end of the first. Defers to php build-in function \narray_merge\n,\nso repeated keys will be overwritten.\n\n\nArrayList::concat([1, 2], [2, 3]); // [1, 2, 2, 3]\nArrayList::concat(['a' =\n 1, 'b' =\n 2], ['a' =\n 'foo', 'c' =\n 3]); // ['a' =\n 'foo', 'b' =\n 2, 'c' =\n 3]\n\n\n\n\n\n\ncons\n\n\nCons Operator\n :: a -\n [a] -\n [a]\n\n\nGiven a value and an array, append that value to the end of the array.\n\n\nArrayList::cons(3, [1, 2]); // [1, 2, 3]\nArrayList::cons(1, []); // [1]\n\n\n\n\n\n\ncontains\n\n\nArray Contains Element\n :: a -\n [a] -\n Bool\n\n\nReturns true if a given array contains the item to test, or false if\nit does not.\n\n\nArrayList::contains(1, [1, 2, 3]); // true\nArrayList::contains('a', ['b', 'c', 'd']); // false\n\n\n\n\n\n\ndrop\n\n\nDrop Elements\n :: Int -\n [a] -\n [a]\n\n\nGiven some number n, drop n elements from an input array and return the rest of\nthe elements. If n is greater than the length of the array, returns an empty array.\n\n\nArrayList::drop(2, [1, 2, 3, 4]); // [3, 4]\nArrayList::drop(4, [1, 2]); // []\n\n\n\n\n\n\ndropWhile\n\n\nDrop Elements with Predicate\n :: (a -\n Bool) -\n [a] -\n [a]\n\n\nGiven some function that returns true or false, drop elements from an array starting\nat the front, testing each element along the way, until that function returns false.\nReturn the array without all of those elements.\n\n\n$greaterThanOne = function($n) { return $n \n 1; };\nArrayList::dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]\n\n\n\n\n\n\nfilter\n\n\nFilter a List\n :: (a -\n Bool) -\n [a] -\n [a]\n\n\nReturns a filtered list. Given a function that takes an element and returns\neither true or false, return a list of all the elements\nof the input list that pass the test.\n\n\nArrayList::filter(function($a) { return $a \n 2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function\nArrayList::filter(function($a) { return $a \n 2; }, ['foo' =\n 1, 'bar' =\n 3]); // ['foo' =\n 1]\nArrayList::filter(Math::lte(2), [1, 2, 3, 4, 5]); // [1, 2], using `lte` from the Math module\n\n\n\n\n\n\nflatten\n\n\nArray Flatten\n :: [a] -\n [b]\n\n\nFlattens a nested array structure into a single-dimensional array. Can handle\narrays of arbitrary dimension.\n\n\nArrayList::flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]\n\n\n\n\n\n\nfoldl\n\n\nList Fold - From Left\n :: (b -\n a -\n b) -\n b -\n [a] -\n b\n\n\nFold a list by iterating over the list from left to right. Pass each element, one by one, into\nthe fold function $f, and carry its value over to the next iteration. Also referred to as array\nreduce.\n\n\n$add = function($a, $b) { return $a + $b; };\nArrayList::foldl(Math::add(), 0, [1, 2, 3]); // 6\nArrayList::foldl(Logic::and(), True, [True, True]); // True\nArrayList::foldl(Logic::and(), True, [True, True, False]); // False\n\n\n\n\n\n\ngroupBy\n\n\nGroup By\n :: (a -\n String) -\n [a] -\n [[a]]\n\n\nGiven a function that turns an element into a string, map over a list of elements\nand return a multi-dimensional array with elements grouped together by their key\ngenerator.\n\n\n$testCase = [1, 2, 3, 4, 5, 6, 7];\n$keyGen = function($a) {\n    return ($a \n= 3) ? 'small' : 'big';\n};\nArrayList::groupBy($keyGen, $testCase); // ['small' =\n [1, 2, 3], 'big' =\n [4, 5, 6, 7]]\n\n\n\n\n\n\nhead\n\n\nList Head\n :: [a] -\n a\n\n\nReturns the first element of a list, the element at index 0. Also functions\nproperly for key/value arrays, e.g. arrays whose first element may not necessarily\nbe index 0. If an empty array is given, head throws an Exception.\n\n\nArrayList::head([1, 2, 3]); // 1\nArrayList::head(['a' =\n 1, 'b' =\n 2]); // 1\nArrayList::head([]); // Exception thrown\n\n\n\n\n\n\nindex\n\n\nList Index\n :: Int -\n [a] -\n a\n\n\nReturns the element of a list at the given index. Throws an exception\nif the given index does not exist in the list.\n\n\nArrayList::index(0, [1, 2, 3]); // 1\nArrayList::index('foo', ['bar' =\n 1, 'foo' =\n 2]); // 2\nArrayList::index('baz', [1, 2, 3]); // Exception thrown\n\n\n\n\n\n\ninit\n\n\nInitial List Values\n :: [a] -\n [a]\n\n\nReturns an array without its last element, e.g. the inverse of \ntail\n. Works on\nkey/value arrays as well as 'regular' arrays. If an empty or single-value array is given,\nreturns an empty array.\n\n\nArrayList::init([1, 2, 3]); // [1, 2]\nArrayList::init(['a' =\n 1, 'b' =\n 2]); // ['a' =\n 1];\n\n\n\n\n\n\nkeys\n\n\nArray Keys\n :: [a] -\n [b]\n\n\nReturns the keys of an associative key/value array. Returns numerical indexes\nfor non key/value arrays.\n\n\nArrayList::keys(['a' =\n 1, 'b' =\n 2]); // ['a', 'b']\nArrayList::keys([1, 2, 3]); // [0, 1, 2]\n\n\n\n\n\n\nlast\n\n\nLast List Value\n :: [a] -\n a\n\n\nReturns the last element of an array, e.g. the complement of \ninit\n. Works on key/value\narrays as well as 'regular' arrays. If an empty array is given, throws an exception.\n\n\nArrayList::last([1, 2, 3]); // 3\nArrayList::last(['a' =\n 1, 'b' =\n 2]); // 2\nArrayList::last([]); // Exception thrown\n\n\n\n\n\n\nlength\n\n\nArray Length\n :: [a] -\n a\n\n\nReturns the length of a list or array. Wraps php \ncount\n function.\n\n\nArrayList::length([1, 2, 3]); // 3\nArrayList::length(['a' =\n 1, 'b' =\n 2]); // 2\n\n\n\n\n\n\nmap\n\n\nArray Map\n :: (a -\n b) -\n [a] -\n [b]\n\n\nGiven some function and a list of arbitrary length, return a new array that is the\nresult of calling the given function on each element of the original list.\n\n\nArrayList::map($add(1), [1, 2, 3]); // [2, 3, 4]\n\n\n\n\n\n\nmapIndexed\n\n\nArray Map Indexed\n :: (a -\n b -\n c) -\n [a] -\n [c]\n\n\nGiven some function and a list of arbitrary length, return a new array that is the\nresult of calling the given function on each element of the original list. The first argument\nof the mapping function is the value, and the second argument is the key or index of the array being\nmapped over.\n\n\nArrayList::mapIndexed($filterEvenIndexes, [1, 2, 3]); // [null, 2, null]\n\n\n\n\n\n\nreplicate\n\n\nReplicate Item\n :: Int -\n a -\n [a]\n\n\nGiven some integer n and an item to repeat, repeat that item and place\nthe results into an array of length n.\n\n\nArrayList::replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']\n\n\n\n\n\n\nreverse\n\n\nArray Reverse\n :: [a] -\n [a]\n\n\nFlip the order of a given array. Does not modify the original array.\n\n\nArrayList::reverse([1, 2, 3]); // [3, 2, 1]\n\n\n\n\n\n\nsetIndex\n\n\nSet Array Value\n :: a -\n b -\n [b] -\n [b]\n\n\nSets the value of an array at the given index; works for non-numerical indexes.\nThe value is set in an immutable way, so the original array is not modified.\n\n\nArrayList::setValue(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]\nArrayList::setValue('c', 3, ['a' =\n 1, 'b' =\n 2]); // ['a' =\n 1, 'b' =\n 2, 'c' =\n 3]\n\n\n\n\n\n\nsort\n\n\nArray Sort\n :: (a -\n a -\n Int) -\n [a] -\n [a]\n\n\nGiven a function that compares two values, sort an array. This function defers to usort\nbut does not mutate the original array. The comparison function should return -1 if the\nfirst argument is ordered before the second, 0 if it's the same ordering, and 1 if\nfirst argument is ordered after the second.\n\n\n$comp = function($a, $b) { return $a \n=\n $b; };\nArrayList::sort($comp, [3, 2, 1]);\n\n\n\n\n\n\ntail\n\n\nList Tail\n :: [a] -\n [a]\n\n\nReturns an array without its first element, e.g. the complement of \nhead\n. Works on\nkey/value arrays as well as 'regular' arrays. If an empty array of an array of one element\nis given, returns an empty array.\n\n\nArrayList::([1, 2, 3]); // [2, 3]\nArrayList::(['a' =\n 1, 'b' =\n 2]); // ['b' =\n 2];\n\n\n\n\n\n\ntake\n\n\nTake Elements\n :: Int -\n [a] -\n [a]\n\n\nGiven some number n, return the first n elements of a given array. Returns the whole\narray if n is greater than the array length.\n\n\nArrayList::take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]\n\n\n\n\n\n\ntakeWhile\n\n\nTake Elements with Predicate\n :: (a -\n Bool) -\n [a] -\n [a]\n\n\nGiven some function that returns true or false, return the first elements of the array\nthat all pass the test, until the test fails.\n\n\n$greaterThanOne = function($n) { return $n \n 1; };\nArrayList::takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]\n\n\n\n\n\n\nvalues\n\n\nArray Values\n :: [a] -\n [a]\n\n\nReturns the values of an associative key/value array.\n\n\nArrayList::values(['a' =\n 1, 'b' =\n 2]); // [1, 2]\nArrayList::values([1, 2, 3]); // [1, 2, 3]\n\n\n\n\n\n\nzip\n\n\nArray Zip\n :: [a] -\n [b] -\n [(a, b)]\n\n\nGiven two arrays a and b, return a new array where each element is a tuple of a and b. If a and b\nare not the same length, the resultant array will always be the same length as the shorter array.\n\n\nArrayList::zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]\n\n\n\n\n\n\nzipWith\n\n\nCustom Array Zip\n :: (a -\n b -\n c) -\n [a] -\n [b] -\n [c]\n\n\nGiven two arrays a and b, and some combinator f, combine the arrays using the combinator\nf(ai, bi) into a new array c. If a and b are not the same length, the resultant array will\nalways be the same length as the shorter array, i.e. the zip stops when it runs out of pairs.\n\n\n$combinator = function($a, $b) { return $a + $b; };\nArrayList::zipWith($combinator, [1, 2, 3], [0, 8, -1]); // [1, 10, 2]\n$combinator = function($a, $b) { return $a - $b; };\nArrayList::zipWith($combinator, [0], [1, 2, 3]); // [-1]", 
+            "text": "bifurcate\n\n\nSource\n\n\nArray Bifurcation\n :: (a -\n Bool) -\n [a] -\n ([a], [a])\n\n\nGiven an array and some filtering test that returns a boolean, return two arrays - one array\nof elements that pass the test, and another array of elements that don't. Similar to filter,\nbut returns the elements that fail as well.\n\n\nArrayList::bifurcate($isEven, [1, 2, 3, 4, 5]); // [[2, 4], [1, 3, 5]]\n\n\n\n\n\n\nconcat\n\n\nSource\n\n\nArray Concatenation\n :: [a] -\n [a] -\n [a]\n\n\nJoins two arrays together, with the second argument being appended\nto the end of the first. Defers to php build-in function \narray_merge\n,\nso repeated keys will be overwritten.\n\n\nArrayList::concat([1, 2], [2, 3]); // [1, 2, 2, 3]\nArrayList::concat(['a' =\n 1, 'b' =\n 2], ['a' =\n 'foo', 'c' =\n 3]); // ['a' =\n 'foo', 'b' =\n 2, 'c' =\n 3]\n\n\n\n\n\n\ncons\n\n\nSource\n\n\nCons Operator\n :: a -\n [a] -\n [a]\n\n\nGiven a value and an array, append that value to the end of the array.\n\n\nArrayList::cons(3, [1, 2]); // [1, 2, 3]\nArrayList::cons(1, []); // [1]\n\n\n\n\n\n\ncontains\n\n\nSource\n\n\nArray Contains Element\n :: a -\n [a] -\n Bool\n\n\nReturns true if a given array contains the item to test, or false if\nit does not.\n\n\nArrayList::contains(1, [1, 2, 3]); // true\nArrayList::contains('a', ['b', 'c', 'd']); // false\n\n\n\n\n\n\ndrop\n\n\nSource\n\n\nDrop Elements\n :: Int -\n [a] -\n [a]\n\n\nGiven some number n, drop n elements from an input array and return the rest of\nthe elements. If n is greater than the length of the array, returns an empty array.\n\n\nArrayList::drop(2, [1, 2, 3, 4]); // [3, 4]\nArrayList::drop(4, [1, 2]); // []\n\n\n\n\n\n\ndropWhile\n\n\nSource\n\n\nDrop Elements with Predicate\n :: (a -\n Bool) -\n [a] -\n [a]\n\n\nGiven some function that returns true or false, drop elements from an array starting\nat the front, testing each element along the way, until that function returns false.\nReturn the array without all of those elements.\n\n\n$greaterThanOne = function($n) { return $n \n 1; };\nArrayList::dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]\n\n\n\n\n\n\nfilter\n\n\nSource\n\n\nFilter a List\n :: (a -\n Bool) -\n [a] -\n [a]\n\n\nReturns a filtered list. Given a function that takes an element and returns\neither true or false, return a list of all the elements\nof the input list that pass the test.\n\n\nArrayList::filter(function($a) { return $a \n 2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function\nArrayList::filter(function($a) { return $a \n 2; }, ['foo' =\n 1, 'bar' =\n 3]); // ['foo' =\n 1]\nArrayList::filter(Math::lte(2), [1, 2, 3, 4, 5]); // [1, 2], using `lte` from the Math module\n\n\n\n\n\n\nflatten\n\n\nSource\n\n\nArray Flatten\n :: [a] -\n [b]\n\n\nFlattens a nested array structure into a single-dimensional array. Can handle\narrays of arbitrary dimension.\n\n\nArrayList::flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]\n\n\n\n\n\n\nfoldl\n\n\nSource\n\n\nList Fold - From Left\n :: (b -\n a -\n b) -\n b -\n [a] -\n b\n\n\nFold a list by iterating over the list from left to right. Pass each element, one by one, into\nthe fold function $f, and carry its value over to the next iteration. Also referred to as array\nreduce.\n\n\n$add = function($a, $b) { return $a + $b; };\nArrayList::foldl(Math::add(), 0, [1, 2, 3]); // 6\nArrayList::foldl(Logic::and(), True, [True, True]); // True\nArrayList::foldl(Logic::and(), True, [True, True, False]); // False\n\n\n\n\n\n\ngroupBy\n\n\nSource\n\n\nGroup By\n :: (a -\n String) -\n [a] -\n [[a]]\n\n\nGiven a function that turns an element into a string, map over a list of elements\nand return a multi-dimensional array with elements grouped together by their key\ngenerator.\n\n\n$testCase = [1, 2, 3, 4, 5, 6, 7];\n$keyGen = function($a) {\n    return ($a \n= 3) ? 'small' : 'big';\n};\nArrayList::groupBy($keyGen, $testCase); // ['small' =\n [1, 2, 3], 'big' =\n [4, 5, 6, 7]]\n\n\n\n\n\n\nhead\n\n\nSource\n\n\nList Head\n :: [a] -\n a\n\n\nReturns the first element of a list, the element at index 0. Also functions\nproperly for key/value arrays, e.g. arrays whose first element may not necessarily\nbe index 0. If an empty array is given, head throws an Exception.\n\n\nArrayList::head([1, 2, 3]); // 1\nArrayList::head(['a' =\n 1, 'b' =\n 2]); // 1\nArrayList::head([]); // Exception thrown\n\n\n\n\n\n\nindex\n\n\nSource\n\n\nList Index\n :: Int -\n [a] -\n a\n\n\nReturns the element of a list at the given index. Throws an exception\nif the given index does not exist in the list.\n\n\nArrayList::index(0, [1, 2, 3]); // 1\nArrayList::index('foo', ['bar' =\n 1, 'foo' =\n 2]); // 2\nArrayList::index('baz', [1, 2, 3]); // Exception thrown\n\n\n\n\n\n\ninit\n\n\nSource\n\n\nInitial List Values\n :: [a] -\n [a]\n\n\nReturns an array without its last element, e.g. the inverse of \ntail\n. Works on\nkey/value arrays as well as 'regular' arrays. If an empty or single-value array is given,\nreturns an empty array.\n\n\nArrayList::init([1, 2, 3]); // [1, 2]\nArrayList::init(['a' =\n 1, 'b' =\n 2]); // ['a' =\n 1];\n\n\n\n\n\n\nkeys\n\n\nSource\n\n\nArray Keys\n :: [a] -\n [b]\n\n\nReturns the keys of an associative key/value array. Returns numerical indexes\nfor non key/value arrays.\n\n\nArrayList::keys(['a' =\n 1, 'b' =\n 2]); // ['a', 'b']\nArrayList::keys([1, 2, 3]); // [0, 1, 2]\n\n\n\n\n\n\nlast\n\n\nSource\n\n\nLast List Value\n :: [a] -\n a\n\n\nReturns the last element of an array, e.g. the complement of \ninit\n. Works on key/value\narrays as well as 'regular' arrays. If an empty array is given, throws an exception.\n\n\nArrayList::last([1, 2, 3]); // 3\nArrayList::last(['a' =\n 1, 'b' =\n 2]); // 2\nArrayList::last([]); // Exception thrown\n\n\n\n\n\n\nlength\n\n\nSource\n\n\nArray Length\n :: [a] -\n a\n\n\nReturns the length of a list or array. Wraps php \ncount\n function.\n\n\nArrayList::length([1, 2, 3]); // 3\nArrayList::length(['a' =\n 1, 'b' =\n 2]); // 2\n\n\n\n\n\n\nmap\n\n\nSource\n\n\nArray Map\n :: (a -\n b) -\n [a] -\n [b]\n\n\nGiven some function and a list of arbitrary length, return a new array that is the\nresult of calling the given function on each element of the original list.\n\n\nArrayList::map($add(1), [1, 2, 3]); // [2, 3, 4]\n\n\n\n\n\n\nmapIndexed\n\n\nSource\n\n\nArray Map Indexed\n :: (a -\n b -\n c) -\n [a] -\n [c]\n\n\nGiven some function and a list of arbitrary length, return a new array that is the\nresult of calling the given function on each element of the original list. The first argument\nof the mapping function is the value, and the second argument is the key or index of the array being\nmapped over.\n\n\nArrayList::mapIndexed($filterEvenIndexes, [1, 2, 3]); // [null, 2, null]\n\n\n\n\n\n\nreplicate\n\n\nSource\n\n\nReplicate Item\n :: Int -\n a -\n [a]\n\n\nGiven some integer n and an item to repeat, repeat that item and place\nthe results into an array of length n.\n\n\nArrayList::replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']\n\n\n\n\n\n\nreverse\n\n\nSource\n\n\nArray Reverse\n :: [a] -\n [a]\n\n\nFlip the order of a given array. Does not modify the original array.\n\n\nArrayList::reverse([1, 2, 3]); // [3, 2, 1]\n\n\n\n\n\n\nsetIndex\n\n\nSource\n\n\nSet Array Value\n :: a -\n b -\n [b] -\n [b]\n\n\nSets the value of an array at the given index; works for non-numerical indexes.\nThe value is set in an immutable way, so the original array is not modified.\n\n\nArrayList::setValue(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]\nArrayList::setValue('c', 3, ['a' =\n 1, 'b' =\n 2]); // ['a' =\n 1, 'b' =\n 2, 'c' =\n 3]\n\n\n\n\n\n\nsort\n\n\nSource\n\n\nArray Sort\n :: (a -\n a -\n Int) -\n [a] -\n [a]\n\n\nGiven a function that compares two values, sort an array. This function defers to usort\nbut does not mutate the original array. The comparison function should return -1 if the\nfirst argument is ordered before the second, 0 if it's the same ordering, and 1 if\nfirst argument is ordered after the second.\n\n\n$comp = function($a, $b) { return $a \n=\n $b; };\nArrayList::sort($comp, [3, 2, 1]);\n\n\n\n\n\n\ntail\n\n\nSource\n\n\nList Tail\n :: [a] -\n [a]\n\n\nReturns an array without its first element, e.g. the complement of \nhead\n. Works on\nkey/value arrays as well as 'regular' arrays. If an empty array of an array of one element\nis given, returns an empty array.\n\n\nArrayList::([1, 2, 3]); // [2, 3]\nArrayList::(['a' =\n 1, 'b' =\n 2]); // ['b' =\n 2];\n\n\n\n\n\n\ntake\n\n\nSource\n\n\nTake Elements\n :: Int -\n [a] -\n [a]\n\n\nGiven some number n, return the first n elements of a given array. Returns the whole\narray if n is greater than the array length.\n\n\nArrayList::take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]\n\n\n\n\n\n\ntakeLast\n\n\nSource\n\n\ntakeLast\n :: Int -\n [a] -\n [a]\n\n\nReturn the last n items from a list\n\n\nArrayList::takeLast(2, [1, 2, 2, 4]); // [2, 4]\n\n\n\n\n\n\ntakeWhile\n\n\nSource\n\n\nTake Elements with Predicate\n :: (a -\n Bool) -\n [a] -\n [a]\n\n\nGiven some function that returns true or false, return the first elements of the array\nthat all pass the test, until the test fails.\n\n\n$greaterThanOne = function($n) { return $n \n 1; };\nArrayList::takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]\n\n\n\n\n\n\nunique\n\n\nSource\n\n\nUnique\n :: [a] -\n [a]\n\n\nGiven a list, return only unique values\n\n\nArrayList::unique([1, 2, 2, 4]); // [1, 2, 4]\n\n\n\n\n\n\nvalues\n\n\nSource\n\n\nArray Values\n :: [a] -\n [a]\n\n\nReturns the values of an associative key/value array.\n\n\nArrayList::values(['a' =\n 1, 'b' =\n 2]); // [1, 2]\nArrayList::values([1, 2, 3]); // [1, 2, 3]\n\n\n\n\n\n\nzip\n\n\nSource\n\n\nArray Zip\n :: [a] -\n [b] -\n [(a, b)]\n\n\nGiven two arrays a and b, return a new array where each element is a tuple of a and b. If a and b\nare not the same length, the resultant array will always be the same length as the shorter array.\n\n\nArrayList::zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]\n\n\n\n\n\n\nzipWith\n\n\nSource\n\n\nCustom Array Zip\n :: (a -\n b -\n c) -\n [a] -\n [b] -\n [c]\n\n\nGiven two arrays a and b, and some combinator f, combine the arrays using the combinator\nf(ai, bi) into a new array c. If a and b are not the same length, the resultant array will\nalways be the same length as the shorter array, i.e. the zip stops when it runs out of pairs.\n\n\n$combinator = function($a, $b) { return $a + $b; };\nArrayList::zipWith($combinator, [1, 2, 3], [0, 8, -1]); // [1, 10, 2]\n$combinator = function($a, $b) { return $a - $b; };\nArrayList::zipWith($combinator, [0], [1, 2, 3]); // [-1]", 
             "title": "ArrayList"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#bifurcate", 
-            "text": "Array Bifurcation  :: (a -  Bool) -  [a] -  ([a], [a])  Given an array and some filtering test that returns a boolean, return two arrays - one array\nof elements that pass the test, and another array of elements that don't. Similar to filter,\nbut returns the elements that fail as well.  ArrayList::bifurcate($isEven, [1, 2, 3, 4, 5]); // [[2, 4], [1, 3, 5]]", 
+            "text": "Source  Array Bifurcation  :: (a -  Bool) -  [a] -  ([a], [a])  Given an array and some filtering test that returns a boolean, return two arrays - one array\nof elements that pass the test, and another array of elements that don't. Similar to filter,\nbut returns the elements that fail as well.  ArrayList::bifurcate($isEven, [1, 2, 3, 4, 5]); // [[2, 4], [1, 3, 5]]", 
             "title": "bifurcate"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#concat", 
-            "text": "Array Concatenation  :: [a] -  [a] -  [a]  Joins two arrays together, with the second argument being appended\nto the end of the first. Defers to php build-in function  array_merge ,\nso repeated keys will be overwritten.  ArrayList::concat([1, 2], [2, 3]); // [1, 2, 2, 3]\nArrayList::concat(['a' =  1, 'b' =  2], ['a' =  'foo', 'c' =  3]); // ['a' =  'foo', 'b' =  2, 'c' =  3]", 
+            "text": "Source  Array Concatenation  :: [a] -  [a] -  [a]  Joins two arrays together, with the second argument being appended\nto the end of the first. Defers to php build-in function  array_merge ,\nso repeated keys will be overwritten.  ArrayList::concat([1, 2], [2, 3]); // [1, 2, 2, 3]\nArrayList::concat(['a' =  1, 'b' =  2], ['a' =  'foo', 'c' =  3]); // ['a' =  'foo', 'b' =  2, 'c' =  3]", 
             "title": "concat"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#cons", 
-            "text": "Cons Operator  :: a -  [a] -  [a]  Given a value and an array, append that value to the end of the array.  ArrayList::cons(3, [1, 2]); // [1, 2, 3]\nArrayList::cons(1, []); // [1]", 
+            "text": "Source  Cons Operator  :: a -  [a] -  [a]  Given a value and an array, append that value to the end of the array.  ArrayList::cons(3, [1, 2]); // [1, 2, 3]\nArrayList::cons(1, []); // [1]", 
             "title": "cons"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#contains", 
-            "text": "Array Contains Element  :: a -  [a] -  Bool  Returns true if a given array contains the item to test, or false if\nit does not.  ArrayList::contains(1, [1, 2, 3]); // true\nArrayList::contains('a', ['b', 'c', 'd']); // false", 
+            "text": "Source  Array Contains Element  :: a -  [a] -  Bool  Returns true if a given array contains the item to test, or false if\nit does not.  ArrayList::contains(1, [1, 2, 3]); // true\nArrayList::contains('a', ['b', 'c', 'd']); // false", 
             "title": "contains"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#drop", 
-            "text": "Drop Elements  :: Int -  [a] -  [a]  Given some number n, drop n elements from an input array and return the rest of\nthe elements. If n is greater than the length of the array, returns an empty array.  ArrayList::drop(2, [1, 2, 3, 4]); // [3, 4]\nArrayList::drop(4, [1, 2]); // []", 
+            "text": "Source  Drop Elements  :: Int -  [a] -  [a]  Given some number n, drop n elements from an input array and return the rest of\nthe elements. If n is greater than the length of the array, returns an empty array.  ArrayList::drop(2, [1, 2, 3, 4]); // [3, 4]\nArrayList::drop(4, [1, 2]); // []", 
             "title": "drop"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#dropwhile", 
-            "text": "Drop Elements with Predicate  :: (a -  Bool) -  [a] -  [a]  Given some function that returns true or false, drop elements from an array starting\nat the front, testing each element along the way, until that function returns false.\nReturn the array without all of those elements.  $greaterThanOne = function($n) { return $n   1; };\nArrayList::dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]", 
+            "text": "Source  Drop Elements with Predicate  :: (a -  Bool) -  [a] -  [a]  Given some function that returns true or false, drop elements from an array starting\nat the front, testing each element along the way, until that function returns false.\nReturn the array without all of those elements.  $greaterThanOne = function($n) { return $n   1; };\nArrayList::dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]", 
             "title": "dropWhile"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#filter", 
-            "text": "Filter a List  :: (a -  Bool) -  [a] -  [a]  Returns a filtered list. Given a function that takes an element and returns\neither true or false, return a list of all the elements\nof the input list that pass the test.  ArrayList::filter(function($a) { return $a   2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function\nArrayList::filter(function($a) { return $a   2; }, ['foo' =  1, 'bar' =  3]); // ['foo' =  1]\nArrayList::filter(Math::lte(2), [1, 2, 3, 4, 5]); // [1, 2], using `lte` from the Math module", 
+            "text": "Source  Filter a List  :: (a -  Bool) -  [a] -  [a]  Returns a filtered list. Given a function that takes an element and returns\neither true or false, return a list of all the elements\nof the input list that pass the test.  ArrayList::filter(function($a) { return $a   2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function\nArrayList::filter(function($a) { return $a   2; }, ['foo' =  1, 'bar' =  3]); // ['foo' =  1]\nArrayList::filter(Math::lte(2), [1, 2, 3, 4, 5]); // [1, 2], using `lte` from the Math module", 
             "title": "filter"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#flatten", 
-            "text": "Array Flatten  :: [a] -  [b]  Flattens a nested array structure into a single-dimensional array. Can handle\narrays of arbitrary dimension.  ArrayList::flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]", 
+            "text": "Source  Array Flatten  :: [a] -  [b]  Flattens a nested array structure into a single-dimensional array. Can handle\narrays of arbitrary dimension.  ArrayList::flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]", 
             "title": "flatten"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#foldl", 
-            "text": "List Fold - From Left  :: (b -  a -  b) -  b -  [a] -  b  Fold a list by iterating over the list from left to right. Pass each element, one by one, into\nthe fold function $f, and carry its value over to the next iteration. Also referred to as array\nreduce.  $add = function($a, $b) { return $a + $b; };\nArrayList::foldl(Math::add(), 0, [1, 2, 3]); // 6\nArrayList::foldl(Logic::and(), True, [True, True]); // True\nArrayList::foldl(Logic::and(), True, [True, True, False]); // False", 
+            "text": "Source  List Fold - From Left  :: (b -  a -  b) -  b -  [a] -  b  Fold a list by iterating over the list from left to right. Pass each element, one by one, into\nthe fold function $f, and carry its value over to the next iteration. Also referred to as array\nreduce.  $add = function($a, $b) { return $a + $b; };\nArrayList::foldl(Math::add(), 0, [1, 2, 3]); // 6\nArrayList::foldl(Logic::and(), True, [True, True]); // True\nArrayList::foldl(Logic::and(), True, [True, True, False]); // False", 
             "title": "foldl"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#groupby", 
-            "text": "Group By  :: (a -  String) -  [a] -  [[a]]  Given a function that turns an element into a string, map over a list of elements\nand return a multi-dimensional array with elements grouped together by their key\ngenerator.  $testCase = [1, 2, 3, 4, 5, 6, 7];\n$keyGen = function($a) {\n    return ($a  = 3) ? 'small' : 'big';\n};\nArrayList::groupBy($keyGen, $testCase); // ['small' =  [1, 2, 3], 'big' =  [4, 5, 6, 7]]", 
+            "text": "Source  Group By  :: (a -  String) -  [a] -  [[a]]  Given a function that turns an element into a string, map over a list of elements\nand return a multi-dimensional array with elements grouped together by their key\ngenerator.  $testCase = [1, 2, 3, 4, 5, 6, 7];\n$keyGen = function($a) {\n    return ($a  = 3) ? 'small' : 'big';\n};\nArrayList::groupBy($keyGen, $testCase); // ['small' =  [1, 2, 3], 'big' =  [4, 5, 6, 7]]", 
             "title": "groupBy"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#head", 
-            "text": "List Head  :: [a] -  a  Returns the first element of a list, the element at index 0. Also functions\nproperly for key/value arrays, e.g. arrays whose first element may not necessarily\nbe index 0. If an empty array is given, head throws an Exception.  ArrayList::head([1, 2, 3]); // 1\nArrayList::head(['a' =  1, 'b' =  2]); // 1\nArrayList::head([]); // Exception thrown", 
+            "text": "Source  List Head  :: [a] -  a  Returns the first element of a list, the element at index 0. Also functions\nproperly for key/value arrays, e.g. arrays whose first element may not necessarily\nbe index 0. If an empty array is given, head throws an Exception.  ArrayList::head([1, 2, 3]); // 1\nArrayList::head(['a' =  1, 'b' =  2]); // 1\nArrayList::head([]); // Exception thrown", 
             "title": "head"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#index", 
-            "text": "List Index  :: Int -  [a] -  a  Returns the element of a list at the given index. Throws an exception\nif the given index does not exist in the list.  ArrayList::index(0, [1, 2, 3]); // 1\nArrayList::index('foo', ['bar' =  1, 'foo' =  2]); // 2\nArrayList::index('baz', [1, 2, 3]); // Exception thrown", 
+            "text": "Source  List Index  :: Int -  [a] -  a  Returns the element of a list at the given index. Throws an exception\nif the given index does not exist in the list.  ArrayList::index(0, [1, 2, 3]); // 1\nArrayList::index('foo', ['bar' =  1, 'foo' =  2]); // 2\nArrayList::index('baz', [1, 2, 3]); // Exception thrown", 
             "title": "index"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#init", 
-            "text": "Initial List Values  :: [a] -  [a]  Returns an array without its last element, e.g. the inverse of  tail . Works on\nkey/value arrays as well as 'regular' arrays. If an empty or single-value array is given,\nreturns an empty array.  ArrayList::init([1, 2, 3]); // [1, 2]\nArrayList::init(['a' =  1, 'b' =  2]); // ['a' =  1];", 
+            "text": "Source  Initial List Values  :: [a] -  [a]  Returns an array without its last element, e.g. the inverse of  tail . Works on\nkey/value arrays as well as 'regular' arrays. If an empty or single-value array is given,\nreturns an empty array.  ArrayList::init([1, 2, 3]); // [1, 2]\nArrayList::init(['a' =  1, 'b' =  2]); // ['a' =  1];", 
             "title": "init"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#keys", 
-            "text": "Array Keys  :: [a] -  [b]  Returns the keys of an associative key/value array. Returns numerical indexes\nfor non key/value arrays.  ArrayList::keys(['a' =  1, 'b' =  2]); // ['a', 'b']\nArrayList::keys([1, 2, 3]); // [0, 1, 2]", 
+            "text": "Source  Array Keys  :: [a] -  [b]  Returns the keys of an associative key/value array. Returns numerical indexes\nfor non key/value arrays.  ArrayList::keys(['a' =  1, 'b' =  2]); // ['a', 'b']\nArrayList::keys([1, 2, 3]); // [0, 1, 2]", 
             "title": "keys"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#last", 
-            "text": "Last List Value  :: [a] -  a  Returns the last element of an array, e.g. the complement of  init . Works on key/value\narrays as well as 'regular' arrays. If an empty array is given, throws an exception.  ArrayList::last([1, 2, 3]); // 3\nArrayList::last(['a' =  1, 'b' =  2]); // 2\nArrayList::last([]); // Exception thrown", 
+            "text": "Source  Last List Value  :: [a] -  a  Returns the last element of an array, e.g. the complement of  init . Works on key/value\narrays as well as 'regular' arrays. If an empty array is given, throws an exception.  ArrayList::last([1, 2, 3]); // 3\nArrayList::last(['a' =  1, 'b' =  2]); // 2\nArrayList::last([]); // Exception thrown", 
             "title": "last"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#length", 
-            "text": "Array Length  :: [a] -  a  Returns the length of a list or array. Wraps php  count  function.  ArrayList::length([1, 2, 3]); // 3\nArrayList::length(['a' =  1, 'b' =  2]); // 2", 
+            "text": "Source  Array Length  :: [a] -  a  Returns the length of a list or array. Wraps php  count  function.  ArrayList::length([1, 2, 3]); // 3\nArrayList::length(['a' =  1, 'b' =  2]); // 2", 
             "title": "length"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#map", 
-            "text": "Array Map  :: (a -  b) -  [a] -  [b]  Given some function and a list of arbitrary length, return a new array that is the\nresult of calling the given function on each element of the original list.  ArrayList::map($add(1), [1, 2, 3]); // [2, 3, 4]", 
+            "text": "Source  Array Map  :: (a -  b) -  [a] -  [b]  Given some function and a list of arbitrary length, return a new array that is the\nresult of calling the given function on each element of the original list.  ArrayList::map($add(1), [1, 2, 3]); // [2, 3, 4]", 
             "title": "map"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#mapindexed", 
-            "text": "Array Map Indexed  :: (a -  b -  c) -  [a] -  [c]  Given some function and a list of arbitrary length, return a new array that is the\nresult of calling the given function on each element of the original list. The first argument\nof the mapping function is the value, and the second argument is the key or index of the array being\nmapped over.  ArrayList::mapIndexed($filterEvenIndexes, [1, 2, 3]); // [null, 2, null]", 
+            "text": "Source  Array Map Indexed  :: (a -  b -  c) -  [a] -  [c]  Given some function and a list of arbitrary length, return a new array that is the\nresult of calling the given function on each element of the original list. The first argument\nof the mapping function is the value, and the second argument is the key or index of the array being\nmapped over.  ArrayList::mapIndexed($filterEvenIndexes, [1, 2, 3]); // [null, 2, null]", 
             "title": "mapIndexed"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#replicate", 
-            "text": "Replicate Item  :: Int -  a -  [a]  Given some integer n and an item to repeat, repeat that item and place\nthe results into an array of length n.  ArrayList::replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']", 
+            "text": "Source  Replicate Item  :: Int -  a -  [a]  Given some integer n and an item to repeat, repeat that item and place\nthe results into an array of length n.  ArrayList::replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']", 
             "title": "replicate"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#reverse", 
-            "text": "Array Reverse  :: [a] -  [a]  Flip the order of a given array. Does not modify the original array.  ArrayList::reverse([1, 2, 3]); // [3, 2, 1]", 
+            "text": "Source  Array Reverse  :: [a] -  [a]  Flip the order of a given array. Does not modify the original array.  ArrayList::reverse([1, 2, 3]); // [3, 2, 1]", 
             "title": "reverse"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#setindex", 
-            "text": "Set Array Value  :: a -  b -  [b] -  [b]  Sets the value of an array at the given index; works for non-numerical indexes.\nThe value is set in an immutable way, so the original array is not modified.  ArrayList::setValue(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]\nArrayList::setValue('c', 3, ['a' =  1, 'b' =  2]); // ['a' =  1, 'b' =  2, 'c' =  3]", 
+            "text": "Source  Set Array Value  :: a -  b -  [b] -  [b]  Sets the value of an array at the given index; works for non-numerical indexes.\nThe value is set in an immutable way, so the original array is not modified.  ArrayList::setValue(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]\nArrayList::setValue('c', 3, ['a' =  1, 'b' =  2]); // ['a' =  1, 'b' =  2, 'c' =  3]", 
             "title": "setIndex"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#sort", 
-            "text": "Array Sort  :: (a -  a -  Int) -  [a] -  [a]  Given a function that compares two values, sort an array. This function defers to usort\nbut does not mutate the original array. The comparison function should return -1 if the\nfirst argument is ordered before the second, 0 if it's the same ordering, and 1 if\nfirst argument is ordered after the second.  $comp = function($a, $b) { return $a  =  $b; };\nArrayList::sort($comp, [3, 2, 1]);", 
+            "text": "Source  Array Sort  :: (a -  a -  Int) -  [a] -  [a]  Given a function that compares two values, sort an array. This function defers to usort\nbut does not mutate the original array. The comparison function should return -1 if the\nfirst argument is ordered before the second, 0 if it's the same ordering, and 1 if\nfirst argument is ordered after the second.  $comp = function($a, $b) { return $a  =  $b; };\nArrayList::sort($comp, [3, 2, 1]);", 
             "title": "sort"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#tail", 
-            "text": "List Tail  :: [a] -  [a]  Returns an array without its first element, e.g. the complement of  head . Works on\nkey/value arrays as well as 'regular' arrays. If an empty array of an array of one element\nis given, returns an empty array.  ArrayList::([1, 2, 3]); // [2, 3]\nArrayList::(['a' =  1, 'b' =  2]); // ['b' =  2];", 
+            "text": "Source  List Tail  :: [a] -  [a]  Returns an array without its first element, e.g. the complement of  head . Works on\nkey/value arrays as well as 'regular' arrays. If an empty array of an array of one element\nis given, returns an empty array.  ArrayList::([1, 2, 3]); // [2, 3]\nArrayList::(['a' =  1, 'b' =  2]); // ['b' =  2];", 
             "title": "tail"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#take", 
-            "text": "Take Elements  :: Int -  [a] -  [a]  Given some number n, return the first n elements of a given array. Returns the whole\narray if n is greater than the array length.  ArrayList::take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]", 
+            "text": "Source  Take Elements  :: Int -  [a] -  [a]  Given some number n, return the first n elements of a given array. Returns the whole\narray if n is greater than the array length.  ArrayList::take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]", 
             "title": "take"
         }, 
         {
+            "location": "/auto-generate/Vector/Lib/ArrayList/#takelast", 
+            "text": "Source  takeLast  :: Int -  [a] -  [a]  Return the last n items from a list  ArrayList::takeLast(2, [1, 2, 2, 4]); // [2, 4]", 
+            "title": "takeLast"
+        }, 
+        {
             "location": "/auto-generate/Vector/Lib/ArrayList/#takewhile", 
-            "text": "Take Elements with Predicate  :: (a -  Bool) -  [a] -  [a]  Given some function that returns true or false, return the first elements of the array\nthat all pass the test, until the test fails.  $greaterThanOne = function($n) { return $n   1; };\nArrayList::takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]", 
+            "text": "Source  Take Elements with Predicate  :: (a -  Bool) -  [a] -  [a]  Given some function that returns true or false, return the first elements of the array\nthat all pass the test, until the test fails.  $greaterThanOne = function($n) { return $n   1; };\nArrayList::takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]", 
             "title": "takeWhile"
         }, 
         {
+            "location": "/auto-generate/Vector/Lib/ArrayList/#unique", 
+            "text": "Source  Unique  :: [a] -  [a]  Given a list, return only unique values  ArrayList::unique([1, 2, 2, 4]); // [1, 2, 4]", 
+            "title": "unique"
+        }, 
+        {
             "location": "/auto-generate/Vector/Lib/ArrayList/#values", 
-            "text": "Array Values  :: [a] -  [a]  Returns the values of an associative key/value array.  ArrayList::values(['a' =  1, 'b' =  2]); // [1, 2]\nArrayList::values([1, 2, 3]); // [1, 2, 3]", 
+            "text": "Source  Array Values  :: [a] -  [a]  Returns the values of an associative key/value array.  ArrayList::values(['a' =  1, 'b' =  2]); // [1, 2]\nArrayList::values([1, 2, 3]); // [1, 2, 3]", 
             "title": "values"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#zip", 
-            "text": "Array Zip  :: [a] -  [b] -  [(a, b)]  Given two arrays a and b, return a new array where each element is a tuple of a and b. If a and b\nare not the same length, the resultant array will always be the same length as the shorter array.  ArrayList::zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]", 
+            "text": "Source  Array Zip  :: [a] -  [b] -  [(a, b)]  Given two arrays a and b, return a new array where each element is a tuple of a and b. If a and b\nare not the same length, the resultant array will always be the same length as the shorter array.  ArrayList::zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]", 
             "title": "zip"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/ArrayList/#zipwith", 
-            "text": "Custom Array Zip  :: (a -  b -  c) -  [a] -  [b] -  [c]  Given two arrays a and b, and some combinator f, combine the arrays using the combinator\nf(ai, bi) into a new array c. If a and b are not the same length, the resultant array will\nalways be the same length as the shorter array, i.e. the zip stops when it runs out of pairs.  $combinator = function($a, $b) { return $a + $b; };\nArrayList::zipWith($combinator, [1, 2, 3], [0, 8, -1]); // [1, 10, 2]\n$combinator = function($a, $b) { return $a - $b; };\nArrayList::zipWith($combinator, [0], [1, 2, 3]); // [-1]", 
+            "text": "Source  Custom Array Zip  :: (a -  b -  c) -  [a] -  [b] -  [c]  Given two arrays a and b, and some combinator f, combine the arrays using the combinator\nf(ai, bi) into a new array c. If a and b are not the same length, the resultant array will\nalways be the same length as the shorter array, i.e. the zip stops when it runs out of pairs.  $combinator = function($a, $b) { return $a + $b; };\nArrayList::zipWith($combinator, [1, 2, 3], [0, 8, -1]); // [1, 10, 2]\n$combinator = function($a, $b) { return $a - $b; };\nArrayList::zipWith($combinator, [0], [1, 2, 3]); // [-1]", 
             "title": "zipWith"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Lambda/", 
-            "text": "compose\n\n\nThis function is currently missing documentation.\n\n\n\n\nflip\n\n\nFlip Combinator\n :: (a -\n b -\n c) -\n b -\n a -\n c\n\n\nGiven a function that takes two arguments, return a new function that\ntakes those two arguments with their order reversed.\n\n\nMath::subtract(2, 6); // 4\nLambda::flip(Math::subtract())(2, 6); // -4\n\n\n\n\n\n\nid\n\n\nIdentity Function\n :: a -\n a\n\n\nGiven some value a, return a unchanged\n\n\nLambda::id(4); // 4\nLambda::id('foo'); // 'foo'\n\n\n\n\n\n\nk\n\n\nK Combinator\n :: a -\n (b -\n a)\n\n\nGiven some value k, return a lambda expression which always evaluates to k, regardless\nof any arguments it is given.\n\n\n$alwaysFour = Lambda::k(4);\n$alwaysFour('foo'); // 4\n$alwaysFour(1, 2, 3); // 4\n$alwaysFour(); // 4\n\n\n\n\n\n\npipe\n\n\nThis function is currently missing documentation.", 
+            "text": "compose\n\n\nThis function is currently missing documentation.\n\n\n\n\nflip\n\n\nSource\n\n\nFlip Combinator\n :: (a -\n b -\n c) -\n b -\n a -\n c\n\n\nGiven a function that takes two arguments, return a new function that\ntakes those two arguments with their order reversed.\n\n\nMath::subtract(2, 6); // 4\nLambda::flip(Math::subtract())(2, 6); // -4\n\n\n\n\n\n\nid\n\n\nSource\n\n\nIdentity Function\n :: a -\n a\n\n\nGiven some value a, return a unchanged\n\n\nLambda::id(4); // 4\nLambda::id('foo'); // 'foo'\n\n\n\n\n\n\nk\n\n\nSource\n\n\nK Combinator\n :: a -\n (b -\n a)\n\n\nGiven some value k, return a lambda expression which always evaluates to k, regardless\nof any arguments it is given.\n\n\n$alwaysFour = Lambda::k(4);\n$alwaysFour('foo'); // 4\n$alwaysFour(1, 2, 3); // 4\n$alwaysFour(); // 4\n\n\n\n\n\n\npipe\n\n\nThis function is currently missing documentation.", 
             "title": "Lambda"
         }, 
         {
@@ -322,17 +337,17 @@
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Lambda/#flip", 
-            "text": "Flip Combinator  :: (a -  b -  c) -  b -  a -  c  Given a function that takes two arguments, return a new function that\ntakes those two arguments with their order reversed.  Math::subtract(2, 6); // 4\nLambda::flip(Math::subtract())(2, 6); // -4", 
+            "text": "Source  Flip Combinator  :: (a -  b -  c) -  b -  a -  c  Given a function that takes two arguments, return a new function that\ntakes those two arguments with their order reversed.  Math::subtract(2, 6); // 4\nLambda::flip(Math::subtract())(2, 6); // -4", 
             "title": "flip"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Lambda/#id", 
-            "text": "Identity Function  :: a -  a  Given some value a, return a unchanged  Lambda::id(4); // 4\nLambda::id('foo'); // 'foo'", 
+            "text": "Source  Identity Function  :: a -  a  Given some value a, return a unchanged  Lambda::id(4); // 4\nLambda::id('foo'); // 'foo'", 
             "title": "id"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Lambda/#k", 
-            "text": "K Combinator  :: a -  (b -  a)  Given some value k, return a lambda expression which always evaluates to k, regardless\nof any arguments it is given.  $alwaysFour = Lambda::k(4);\n$alwaysFour('foo'); // 4\n$alwaysFour(1, 2, 3); // 4\n$alwaysFour(); // 4", 
+            "text": "Source  K Combinator  :: a -  (b -  a)  Given some value k, return a lambda expression which always evaluates to k, regardless\nof any arguments it is given.  $alwaysFour = Lambda::k(4);\n$alwaysFour('foo'); // 4\n$alwaysFour(1, 2, 3); // 4\n$alwaysFour(); // 4", 
             "title": "k"
         }, 
         {
@@ -342,283 +357,288 @@
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Logic/", 
-            "text": "all\n\n\nAll\n :: array -\n Bool\n\n\nReturns true given all values are truthy\n\n\nLogic::all(1, 'asdf', true); // True\nLogic::all(1, false); // False\n\n\n\n\n\n\nandCombinator\n\n\nLogical And Combinator\n :: [(a -\n Bool)] -\n a -\n Bool\n\n\nGiven two functions f and g, combine them in such a way to produce a new\nfunction h that returns true given f(x) AND g(x) returns true.\n\n\n$funcF = function($x) { return $x \n 5; };\n$funcG = function($x) { return $x \n 0; };\n$combinator = Logic::andCombinator([$funcF, $funcG]);\n$combinator(4); // True\n$combinator(2); // True\n$combinator(7); // False\n\n\n\n\n\n\nany\n\n\nAny\n :: array -\n Bool\n\n\nReturns true given any values are truthy\n\n\nLogic::any(true, false); // True\nLogic::any(false, false); // False\n\n\n\n\n\n\neq\n\n\nEqual (Not Strict / ==)\n :: mixed -\n mixed -\n Bool\n\n\nReturns true given $a equals $b\n\n\nLogic::eq(1, 1); // True\nLogic::eq(1, 2); // False\n\n\n\n\n\n\neqStrict\n\n\nEqual (Strict / ===)\n :: mixed -\n mixed -\n Bool\n\n\nReturns true given $a equals $b\n\n\nLogic::eqStrict(1, 1); // True\nLogic::eqStrict(1, '1'); // False\n\n\n\n\n\n\ngt\n\n\nGreater Than\n :: mixed -\n mixed -\n Bool\n\n\nReturns true given $b is greater than $a.\n\n\nLogic::gt(2, 1); // False\nLogic::gt(1, 2); // True\n\n\n\n\n\n\ngte\n\n\nGreater Than Or Equal\n :: mixed -\n mixed -\n Bool\n\n\nReturns true given $b is greater than or equal to $a.\n\n\nLogic::gte(1, 1); // True\nLogic::gte(1, 2); // True\n\n\n\n\n\n\nlogicalAnd\n\n\nLogical And\n :: Bool -\n Bool -\n Bool\n\n\nReturns true given $a AND $b are true.\n\n\nLogic::logicalAnd(true, true); // True\nLogic::logicalAnd(true, false); // False\n\n\n\n\n\n\nlogicalNot\n\n\nLogical Not\n :: Bool -\n Bool\n\n\nReturns true given $a is false.\nReturns false given $a is true.\n\n\nLogic::logicalNot(true); // False\nLogic::logicalNot(false); // True\n\n\n\n\n\n\nlogicalOr\n\n\nLogical Or\n :: Bool -\n Bool -\n Bool\n\n\nReturns true given $a OR $b returns true.\n\n\nLogic::logicalOr(true, false); // True\nLogic::logicalOr(false, false); // False\n\n\n\n\n\n\nlt\n\n\nLess Than\n :: mixed -\n mixed -\n Bool\n\n\nReturns true given $b is less than $a.\n\n\nLogic::lt(2, 1); // True\nLogic::lt(1, 2); // False\n\n\n\n\n\n\nlte\n\n\nLess Than Or Equal\n :: mixed -\n mixed -\n Bool\n\n\nReturns true given $b is less than or equal to $a.\n\n\nLogic::lte(1, 1); // True\nLogic::lte(2, 1); // True\n\n\n\n\n\n\nnot\n\n\nLogical Not\n :: Bool -\n Bool\n\n\nReturns the inverse of $a\n\n\nLogic::not(false); // true\n\n\n\n\n\n\nnotEq\n\n\nNot Equal (Not Strict / ==)\n :: mixed -\n mixed -\n Bool\n\n\nReturns true given $a does not equal $b\n\n\nLogic::notEq(1, 1); // False\nLogic::notEq(1, 2); // True\n\n\n\n\n\n\nnotEqStrict\n\n\nNot Equal (Strict / ===)\n :: mixed -\n mixed -\n Bool\n\n\nReturns true given $a does not equal $b\n\n\nLogic::notEqStrict(1, 2); // True\nLogic::notEqStrict(1, '1'); // False\n\n\n\n\n\n\norCombinator\n\n\nLogical Or Combinator\n :: [(a -\n Bool)] -\n a -\n Bool\n\n\nGiven two functions f and g, combine them in such a way to produce a new\nfunction h that returns true given f(x) OR g(x) returns true.\n\n\n$funcF = function($x) { return $x \n= 5; };\n$funcG = function($x) { return $x == 0; };\n$combinator = Logic::orCombinator([$funcF, $funcG]);\n$combinator(9); // True\n$combinator(0); // True\n$combinator(2); // False", 
+            "text": "all\n\n\nSource\n\n\nAll\n :: array -\n Bool\n\n\nReturns true given all values are truthy\n\n\nLogic::all(1, 'asdf', true); // True\nLogic::all(1, false); // False\n\n\n\n\n\n\nandCombinator\n\n\nSource\n\n\nLogical And Combinator\n :: [(a -\n Bool)] -\n a -\n Bool\n\n\nGiven n functions {f1, f2, ..., fn}, combine them in such a way to produce a new\nfunction g that returns true given {f1(x), f2(x), ... fn(x)} all return true.\n\n\n$funcF = function($x) { return $x \n 5; };\n$funcG = function($x) { return $x \n 0; };\n$combinator = Logic::andCombinator([$funcF, $funcG]);\n$combinator(4); // True\n$combinator(2); // True\n$combinator(7); // False\n\n\n\n\n\n\nany\n\n\nSource\n\n\nAny\n :: array -\n Bool\n\n\nReturns true given any values are truthy\n\n\nLogic::any(true, false); // True\nLogic::any(false, false); // False\n\n\n\n\n\n\neq\n\n\nSource\n\n\nEqual (Not Strict / ==)\n :: mixed -\n mixed -\n Bool\n\n\nReturns true given $a equals $b\n\n\nLogic::eq(1, 1); // True\nLogic::eq(1, 2); // False\n\n\n\n\n\n\neqStrict\n\n\nSource\n\n\nEqual (Strict / ===)\n :: mixed -\n mixed -\n Bool\n\n\nReturns true given $a equals $b\n\n\nLogic::eqStrict(1, 1); // True\nLogic::eqStrict(1, '1'); // False\n\n\n\n\n\n\ngt\n\n\nSource\n\n\nGreater Than\n :: mixed -\n mixed -\n Bool\n\n\nReturns true given $b is greater than $a.\n\n\nLogic::gt(2, 1); // False\nLogic::gt(1, 2); // True\n\n\n\n\n\n\ngte\n\n\nSource\n\n\nGreater Than Or Equal\n :: mixed -\n mixed -\n Bool\n\n\nReturns true given $b is greater than or equal to $a.\n\n\nLogic::gte(1, 1); // True\nLogic::gte(1, 2); // True\n\n\n\n\n\n\nlogicalAnd\n\n\nSource\n\n\nLogical And\n :: Bool -\n Bool -\n Bool\n\n\nReturns true given $a AND $b are true.\n\n\nLogic::logicalAnd(true, true); // True\nLogic::logicalAnd(true, false); // False\n\n\n\n\n\n\nlogicalNot\n\n\nSource\n\n\nLogical Not\n :: Bool -\n Bool\n\n\nReturns true given $a is false.\nReturns false given $a is true.\n\n\nLogic::logicalNot(true); // False\nLogic::logicalNot(false); // True\n\n\n\n\n\n\nlogicalOr\n\n\nSource\n\n\nLogical Or\n :: Bool -\n Bool -\n Bool\n\n\nReturns true given $a OR $b returns true.\n\n\nLogic::logicalOr(true, false); // True\nLogic::logicalOr(false, false); // False\n\n\n\n\n\n\nlt\n\n\nSource\n\n\nLess Than\n :: mixed -\n mixed -\n Bool\n\n\nReturns true given $b is less than $a.\n\n\nLogic::lt(2, 1); // True\nLogic::lt(1, 2); // False\n\n\n\n\n\n\nlte\n\n\nSource\n\n\nLess Than Or Equal\n :: mixed -\n mixed -\n Bool\n\n\nReturns true given $b is less than or equal to $a.\n\n\nLogic::lte(1, 1); // True\nLogic::lte(2, 1); // True\n\n\n\n\n\n\nnotEq\n\n\nSource\n\n\nNot Equal (Not Strict / ==)\n :: mixed -\n mixed -\n Bool\n\n\nReturns true given $a does not equal $b\n\n\nLogic::notEq(1, 1); // False\nLogic::notEq(1, 2); // True\n\n\n\n\n\n\nnotEqStrict\n\n\nSource\n\n\nNot Equal (Strict / ===)\n :: mixed -\n mixed -\n Bool\n\n\nReturns true given $a does not equal $b\n\n\nLogic::notEqStrict(1, 2); // True\nLogic::notEqStrict(1, '1'); // False\n\n\n\n\n\n\norCombinator\n\n\nSource\n\n\nLogical Or Combinator\n :: [(a -\n Bool)] -\n a -\n Bool\n\n\nGiven n functions {f1, f2, ..., fn}, combine them in such a way to produce a new\nfunction g that returns true given at least one of {f1(x), f2(x), ... fn(x)} return true.\n\n\n$funcF = function($x) { return $x \n= 5; };\n$funcG = function($x) { return $x == 0; };\n$combinator = Logic::orCombinator([$funcF, $funcG]);\n$combinator(9); // True\n$combinator(0); // True\n$combinator(2); // False", 
             "title": "Logic"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Logic/#all", 
-            "text": "All  :: array -  Bool  Returns true given all values are truthy  Logic::all(1, 'asdf', true); // True\nLogic::all(1, false); // False", 
+            "text": "Source  All  :: array -  Bool  Returns true given all values are truthy  Logic::all(1, 'asdf', true); // True\nLogic::all(1, false); // False", 
             "title": "all"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Logic/#andcombinator", 
-            "text": "Logical And Combinator  :: [(a -  Bool)] -  a -  Bool  Given two functions f and g, combine them in such a way to produce a new\nfunction h that returns true given f(x) AND g(x) returns true.  $funcF = function($x) { return $x   5; };\n$funcG = function($x) { return $x   0; };\n$combinator = Logic::andCombinator([$funcF, $funcG]);\n$combinator(4); // True\n$combinator(2); // True\n$combinator(7); // False", 
+            "text": "Source  Logical And Combinator  :: [(a -  Bool)] -  a -  Bool  Given n functions {f1, f2, ..., fn}, combine them in such a way to produce a new\nfunction g that returns true given {f1(x), f2(x), ... fn(x)} all return true.  $funcF = function($x) { return $x   5; };\n$funcG = function($x) { return $x   0; };\n$combinator = Logic::andCombinator([$funcF, $funcG]);\n$combinator(4); // True\n$combinator(2); // True\n$combinator(7); // False", 
             "title": "andCombinator"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Logic/#any", 
-            "text": "Any  :: array -  Bool  Returns true given any values are truthy  Logic::any(true, false); // True\nLogic::any(false, false); // False", 
+            "text": "Source  Any  :: array -  Bool  Returns true given any values are truthy  Logic::any(true, false); // True\nLogic::any(false, false); // False", 
             "title": "any"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Logic/#eq", 
-            "text": "Equal (Not Strict / ==)  :: mixed -  mixed -  Bool  Returns true given $a equals $b  Logic::eq(1, 1); // True\nLogic::eq(1, 2); // False", 
+            "text": "Source  Equal (Not Strict / ==)  :: mixed -  mixed -  Bool  Returns true given $a equals $b  Logic::eq(1, 1); // True\nLogic::eq(1, 2); // False", 
             "title": "eq"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Logic/#eqstrict", 
-            "text": "Equal (Strict / ===)  :: mixed -  mixed -  Bool  Returns true given $a equals $b  Logic::eqStrict(1, 1); // True\nLogic::eqStrict(1, '1'); // False", 
+            "text": "Source  Equal (Strict / ===)  :: mixed -  mixed -  Bool  Returns true given $a equals $b  Logic::eqStrict(1, 1); // True\nLogic::eqStrict(1, '1'); // False", 
             "title": "eqStrict"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Logic/#gt", 
-            "text": "Greater Than  :: mixed -  mixed -  Bool  Returns true given $b is greater than $a.  Logic::gt(2, 1); // False\nLogic::gt(1, 2); // True", 
+            "text": "Source  Greater Than  :: mixed -  mixed -  Bool  Returns true given $b is greater than $a.  Logic::gt(2, 1); // False\nLogic::gt(1, 2); // True", 
             "title": "gt"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Logic/#gte", 
-            "text": "Greater Than Or Equal  :: mixed -  mixed -  Bool  Returns true given $b is greater than or equal to $a.  Logic::gte(1, 1); // True\nLogic::gte(1, 2); // True", 
+            "text": "Source  Greater Than Or Equal  :: mixed -  mixed -  Bool  Returns true given $b is greater than or equal to $a.  Logic::gte(1, 1); // True\nLogic::gte(1, 2); // True", 
             "title": "gte"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Logic/#logicaland", 
-            "text": "Logical And  :: Bool -  Bool -  Bool  Returns true given $a AND $b are true.  Logic::logicalAnd(true, true); // True\nLogic::logicalAnd(true, false); // False", 
+            "text": "Source  Logical And  :: Bool -  Bool -  Bool  Returns true given $a AND $b are true.  Logic::logicalAnd(true, true); // True\nLogic::logicalAnd(true, false); // False", 
             "title": "logicalAnd"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Logic/#logicalnot", 
-            "text": "Logical Not  :: Bool -  Bool  Returns true given $a is false.\nReturns false given $a is true.  Logic::logicalNot(true); // False\nLogic::logicalNot(false); // True", 
+            "text": "Source  Logical Not  :: Bool -  Bool  Returns true given $a is false.\nReturns false given $a is true.  Logic::logicalNot(true); // False\nLogic::logicalNot(false); // True", 
             "title": "logicalNot"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Logic/#logicalor", 
-            "text": "Logical Or  :: Bool -  Bool -  Bool  Returns true given $a OR $b returns true.  Logic::logicalOr(true, false); // True\nLogic::logicalOr(false, false); // False", 
+            "text": "Source  Logical Or  :: Bool -  Bool -  Bool  Returns true given $a OR $b returns true.  Logic::logicalOr(true, false); // True\nLogic::logicalOr(false, false); // False", 
             "title": "logicalOr"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Logic/#lt", 
-            "text": "Less Than  :: mixed -  mixed -  Bool  Returns true given $b is less than $a.  Logic::lt(2, 1); // True\nLogic::lt(1, 2); // False", 
+            "text": "Source  Less Than  :: mixed -  mixed -  Bool  Returns true given $b is less than $a.  Logic::lt(2, 1); // True\nLogic::lt(1, 2); // False", 
             "title": "lt"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Logic/#lte", 
-            "text": "Less Than Or Equal  :: mixed -  mixed -  Bool  Returns true given $b is less than or equal to $a.  Logic::lte(1, 1); // True\nLogic::lte(2, 1); // True", 
+            "text": "Source  Less Than Or Equal  :: mixed -  mixed -  Bool  Returns true given $b is less than or equal to $a.  Logic::lte(1, 1); // True\nLogic::lte(2, 1); // True", 
             "title": "lte"
         }, 
         {
-            "location": "/auto-generate/Vector/Lib/Logic/#not", 
-            "text": "Logical Not  :: Bool -  Bool  Returns the inverse of $a  Logic::not(false); // true", 
-            "title": "not"
-        }, 
-        {
             "location": "/auto-generate/Vector/Lib/Logic/#noteq", 
-            "text": "Not Equal (Not Strict / ==)  :: mixed -  mixed -  Bool  Returns true given $a does not equal $b  Logic::notEq(1, 1); // False\nLogic::notEq(1, 2); // True", 
+            "text": "Source  Not Equal (Not Strict / ==)  :: mixed -  mixed -  Bool  Returns true given $a does not equal $b  Logic::notEq(1, 1); // False\nLogic::notEq(1, 2); // True", 
             "title": "notEq"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Logic/#noteqstrict", 
-            "text": "Not Equal (Strict / ===)  :: mixed -  mixed -  Bool  Returns true given $a does not equal $b  Logic::notEqStrict(1, 2); // True\nLogic::notEqStrict(1, '1'); // False", 
+            "text": "Source  Not Equal (Strict / ===)  :: mixed -  mixed -  Bool  Returns true given $a does not equal $b  Logic::notEqStrict(1, 2); // True\nLogic::notEqStrict(1, '1'); // False", 
             "title": "notEqStrict"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Logic/#orcombinator", 
-            "text": "Logical Or Combinator  :: [(a -  Bool)] -  a -  Bool  Given two functions f and g, combine them in such a way to produce a new\nfunction h that returns true given f(x) OR g(x) returns true.  $funcF = function($x) { return $x  = 5; };\n$funcG = function($x) { return $x == 0; };\n$combinator = Logic::orCombinator([$funcF, $funcG]);\n$combinator(9); // True\n$combinator(0); // True\n$combinator(2); // False", 
+            "text": "Source  Logical Or Combinator  :: [(a -  Bool)] -  a -  Bool  Given n functions {f1, f2, ..., fn}, combine them in such a way to produce a new\nfunction g that returns true given at least one of {f1(x), f2(x), ... fn(x)} return true.  $funcF = function($x) { return $x  = 5; };\n$funcG = function($x) { return $x == 0; };\n$combinator = Logic::orCombinator([$funcF, $funcG]);\n$combinator(9); // True\n$combinator(0); // True\n$combinator(2); // False", 
             "title": "orCombinator"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Math/", 
-            "text": "add\n\n\nArithmetic Addition\n :: Number a =\n a -\n a -\n a\n\n\nAdd two numbers together.\n\n\nMath::add(2, 2); // 4\nMath::add(-1, 2); // 1\n\n\n\n\n\n\ndivide\n\n\nArithmetic Division\n :: Number a =\n a -\n a -\n a\n\n\nDivide two numbers, with the first argument being the divisor.\n\n\nMath::divide(2, 8); // 4\nMath::divide(4, 12); // 3\n\n\n\n\n\n\nmax\n\n\nMaximum Value\n :: Number a =\n a -\n a -\n a\n\n\nReturns the maximum of two arguments a and b. If a and b are equal, just returns the value.\n\n\nMath::max(1, 2); // 2\nMath::max(-1, -6); // -1\nMath::max(5, 5); // 5\n\n\n\n\n\n\nmean\n\n\nArithmetic mean\n :: Number a =\n [a] -\n a\n\n\nReturns the average of a list, or zero for an empty list.\n\n\nMath::mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2\nMath::mean([]); // 0\n\n\n\n\n\n\nmin\n\n\nMinimum Value\n :: Number a =\n a -\n a -\n a\n\n\nReturns the minimum of two arguments a and b.\nIf a and be are equal, returns the first value. But since they're equal, that doesn't\nreally matter now does it?\n\n\nMath::min(1, 2); // 1\nMath::min(-1, -6); // -6\nMath::min(5, 5); // 5\n\n\n\n\n\n\nmod\n\n\nModulus Operator\n :: Int -\n Int -\n Int\n\n\nTake the modulus of two integers, with the first argument being the divisor.\nReturns the remainder of $b / $a.\n\n\nMath::mod(2, 5); // 1\nMath::mod(5, 12); // 2\nMath::mod(3, 3); // 0\n\n\n\n\n\n\nmultiply\n\n\nArithmetic Multiplication\n :: Number a =\n a -\n a -\n a\n\n\nMultiply two numbers together.\n\n\nMath::multiply(2, 4); // 8\nMath::multiply(0, 4); // 0\n\n\n\n\n\n\nnegate\n\n\nNegate a number.\n :: Number a =\n a -\n a\n\n\nReturns a given number * -1.\n\n\nMath::negate(4); // -4\nMath::negate(0); // 0\n\n\n\n\n\n\npow\n\n\nPower function\n :: Number a =\n a -\n a -\n a\n\n\nArithmetic exponentiation. Raises the second argument to the power\nof the first.\n\n\nMath::pow(2, 3); // 3 ^ 2 = 9\nMath::pow(3, 2); // 2 ^ 3 = 8\n\n\n\n\n\n\nproduct\n\n\nArray Product\n :: Number a =\n [a] -\n a\n\n\nReturns the product of a list of numbers, i.e. the result of multiplying\nevery element of a list together. Returns 1 for an empty list.\n\n\nMath::product([2, 2, 3]); // 12\nMath::product([]); // 1\n\n\n\n\n\n\nrange\n\n\nNumber Range\n :: Number a =\n a -\n a -\n a\n\n\nGiven two values m and n, return all values between m and n in an array, inclusive, with a\nstep size of $step. The list of numbers will start at the first value and approach the second value.\n\n\nMath::range(1, 1, 5); // [1, 2, 3, 4, 5]\nMath::range(2, 0, -3); // [0, -2]\nMath::range(0, 0, 0); // [0]\nMath::range(0.1, 0, 0.5); // [0, 0.1, 0.2, 0.3, 0.4, 0.5]\n\n\n\n\n\n\nsubtract\n\n\nArithmetic Subtraction.\n :: Number a =\n a -\n a -\n a\n\n\nSubtracts two numbers, with the first argument being subtracted from the second.\n\n\nMath::subtract(4, 9); // 5\nMath::subtract(-1, 3); // 4\n\n\n\n\n\n\nsum\n\n\nArray Sum\n :: Number a =\n [a] -\n a\n\n\nAdd all the numbers of a list together and return their sum. If the given\nlist is empty, returns 0.\n\n\nMath::sum([1, 2, 3]); // 6\nMath::sum([]); // 0", 
+            "text": "add\n\n\nSource\n\n\nArithmetic Addition\n :: Number a =\n a -\n a -\n a\n\n\nAdd two numbers together.\n\n\nMath::add(2, 2); // 4\nMath::add(-1, 2); // 1\n\n\n\n\n\n\ndivide\n\n\nSource\n\n\nArithmetic Division\n :: Number a =\n a -\n a -\n a\n\n\nDivide two numbers, with the first argument being the divisor.\n\n\nMath::divide(2, 8); // 4\nMath::divide(4, 12); // 3\n\n\n\n\n\n\nmax\n\n\nSource\n\n\nMaximum Value\n :: Number a =\n a -\n a -\n a\n\n\nReturns the maximum of two arguments a and b. If a and b are equal, just returns the value.\n\n\nMath::max(1, 2); // 2\nMath::max(-1, -6); // -1\nMath::max(5, 5); // 5\n\n\n\n\n\n\nmean\n\n\nSource\n\n\nArithmetic mean\n :: Number a =\n [a] -\n a\n\n\nReturns the average of a list, or zero for an empty list.\n\n\nMath::mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2\nMath::mean([]); // 0\n\n\n\n\n\n\nmin\n\n\nSource\n\n\nMinimum Value\n :: Number a =\n a -\n a -\n a\n\n\nReturns the minimum of two arguments a and b.\nIf a and be are equal, returns the first value. But since they're equal, that doesn't\nreally matter now does it?\n\n\nMath::min(1, 2); // 1\nMath::min(-1, -6); // -6\nMath::min(5, 5); // 5\n\n\n\n\n\n\nmod\n\n\nSource\n\n\nModulus Operator\n :: Int -\n Int -\n Int\n\n\nTake the modulus of two integers, with the first argument being the divisor.\nReturns the remainder of $b / $a.\n\n\nMath::mod(2, 5); // 1\nMath::mod(5, 12); // 2\nMath::mod(3, 3); // 0\n\n\n\n\n\n\nmultiply\n\n\nSource\n\n\nArithmetic Multiplication\n :: Number a =\n a -\n a -\n a\n\n\nMultiply two numbers together.\n\n\nMath::multiply(2, 4); // 8\nMath::multiply(0, 4); // 0\n\n\n\n\n\n\nnegate\n\n\nSource\n\n\nNegate a number.\n :: Number a =\n a -\n a\n\n\nReturns a given number * -1.\n\n\nMath::negate(4); // -4\nMath::negate(0); // 0\n\n\n\n\n\n\npow\n\n\nSource\n\n\nPower function\n :: Number a =\n a -\n a -\n a\n\n\nArithmetic exponentiation. Raises the second argument to the power\nof the first.\n\n\nMath::pow(2, 3); // 3 ^ 2 = 9\nMath::pow(3, 2); // 2 ^ 3 = 8\n\n\n\n\n\n\nproduct\n\n\nSource\n\n\nArray Product\n :: Number a =\n [a] -\n a\n\n\nReturns the product of a list of numbers, i.e. the result of multiplying\nevery element of a list together. Returns 1 for an empty list.\n\n\nMath::product([2, 2, 3]); // 12\nMath::product([]); // 1\n\n\n\n\n\n\nrange\n\n\nSource\n\n\nNumber Range\n :: Number a =\n a -\n a -\n a\n\n\nGiven two values m and n, return all values between m and n in an array, inclusive, with a\nstep size of $step. The list of numbers will start at the first value and approach the second value.\n\n\nMath::range(1, 1, 5); // [1, 2, 3, 4, 5]\nMath::range(2, 0, -3); // [0, -2]\nMath::range(0, 0, 0); // [0]\nMath::range(0.1, 0, 0.5); // [0, 0.1, 0.2, 0.3, 0.4, 0.5]\n\n\n\n\n\n\nsubtract\n\n\nSource\n\n\nArithmetic Subtraction.\n :: Number a =\n a -\n a -\n a\n\n\nSubtracts two numbers, with the first argument being subtracted from the second.\n\n\nMath::subtract(4, 9); // 5\nMath::subtract(-1, 3); // 4\n\n\n\n\n\n\nsum\n\n\nSource\n\n\nArray Sum\n :: Number a =\n [a] -\n a\n\n\nAdd all the numbers of a list together and return their sum. If the given\nlist is empty, returns 0.\n\n\nMath::sum([1, 2, 3]); // 6\nMath::sum([]); // 0", 
             "title": "Math"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Math/#add", 
-            "text": "Arithmetic Addition  :: Number a =  a -  a -  a  Add two numbers together.  Math::add(2, 2); // 4\nMath::add(-1, 2); // 1", 
+            "text": "Source  Arithmetic Addition  :: Number a =  a -  a -  a  Add two numbers together.  Math::add(2, 2); // 4\nMath::add(-1, 2); // 1", 
             "title": "add"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Math/#divide", 
-            "text": "Arithmetic Division  :: Number a =  a -  a -  a  Divide two numbers, with the first argument being the divisor.  Math::divide(2, 8); // 4\nMath::divide(4, 12); // 3", 
+            "text": "Source  Arithmetic Division  :: Number a =  a -  a -  a  Divide two numbers, with the first argument being the divisor.  Math::divide(2, 8); // 4\nMath::divide(4, 12); // 3", 
             "title": "divide"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Math/#max", 
-            "text": "Maximum Value  :: Number a =  a -  a -  a  Returns the maximum of two arguments a and b. If a and b are equal, just returns the value.  Math::max(1, 2); // 2\nMath::max(-1, -6); // -1\nMath::max(5, 5); // 5", 
+            "text": "Source  Maximum Value  :: Number a =  a -  a -  a  Returns the maximum of two arguments a and b. If a and b are equal, just returns the value.  Math::max(1, 2); // 2\nMath::max(-1, -6); // -1\nMath::max(5, 5); // 5", 
             "title": "max"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Math/#mean", 
-            "text": "Arithmetic mean  :: Number a =  [a] -  a  Returns the average of a list, or zero for an empty list.  Math::mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2\nMath::mean([]); // 0", 
+            "text": "Source  Arithmetic mean  :: Number a =  [a] -  a  Returns the average of a list, or zero for an empty list.  Math::mean([1, 2, 3]); // (1 + 2 + 3) / 3 = 2\nMath::mean([]); // 0", 
             "title": "mean"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Math/#min", 
-            "text": "Minimum Value  :: Number a =  a -  a -  a  Returns the minimum of two arguments a and b.\nIf a and be are equal, returns the first value. But since they're equal, that doesn't\nreally matter now does it?  Math::min(1, 2); // 1\nMath::min(-1, -6); // -6\nMath::min(5, 5); // 5", 
+            "text": "Source  Minimum Value  :: Number a =  a -  a -  a  Returns the minimum of two arguments a and b.\nIf a and be are equal, returns the first value. But since they're equal, that doesn't\nreally matter now does it?  Math::min(1, 2); // 1\nMath::min(-1, -6); // -6\nMath::min(5, 5); // 5", 
             "title": "min"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Math/#mod", 
-            "text": "Modulus Operator  :: Int -  Int -  Int  Take the modulus of two integers, with the first argument being the divisor.\nReturns the remainder of $b / $a.  Math::mod(2, 5); // 1\nMath::mod(5, 12); // 2\nMath::mod(3, 3); // 0", 
+            "text": "Source  Modulus Operator  :: Int -  Int -  Int  Take the modulus of two integers, with the first argument being the divisor.\nReturns the remainder of $b / $a.  Math::mod(2, 5); // 1\nMath::mod(5, 12); // 2\nMath::mod(3, 3); // 0", 
             "title": "mod"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Math/#multiply", 
-            "text": "Arithmetic Multiplication  :: Number a =  a -  a -  a  Multiply two numbers together.  Math::multiply(2, 4); // 8\nMath::multiply(0, 4); // 0", 
+            "text": "Source  Arithmetic Multiplication  :: Number a =  a -  a -  a  Multiply two numbers together.  Math::multiply(2, 4); // 8\nMath::multiply(0, 4); // 0", 
             "title": "multiply"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Math/#negate", 
-            "text": "Negate a number.  :: Number a =  a -  a  Returns a given number * -1.  Math::negate(4); // -4\nMath::negate(0); // 0", 
+            "text": "Source  Negate a number.  :: Number a =  a -  a  Returns a given number * -1.  Math::negate(4); // -4\nMath::negate(0); // 0", 
             "title": "negate"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Math/#pow", 
-            "text": "Power function  :: Number a =  a -  a -  a  Arithmetic exponentiation. Raises the second argument to the power\nof the first.  Math::pow(2, 3); // 3 ^ 2 = 9\nMath::pow(3, 2); // 2 ^ 3 = 8", 
+            "text": "Source  Power function  :: Number a =  a -  a -  a  Arithmetic exponentiation. Raises the second argument to the power\nof the first.  Math::pow(2, 3); // 3 ^ 2 = 9\nMath::pow(3, 2); // 2 ^ 3 = 8", 
             "title": "pow"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Math/#product", 
-            "text": "Array Product  :: Number a =  [a] -  a  Returns the product of a list of numbers, i.e. the result of multiplying\nevery element of a list together. Returns 1 for an empty list.  Math::product([2, 2, 3]); // 12\nMath::product([]); // 1", 
+            "text": "Source  Array Product  :: Number a =  [a] -  a  Returns the product of a list of numbers, i.e. the result of multiplying\nevery element of a list together. Returns 1 for an empty list.  Math::product([2, 2, 3]); // 12\nMath::product([]); // 1", 
             "title": "product"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Math/#range", 
-            "text": "Number Range  :: Number a =  a -  a -  a  Given two values m and n, return all values between m and n in an array, inclusive, with a\nstep size of $step. The list of numbers will start at the first value and approach the second value.  Math::range(1, 1, 5); // [1, 2, 3, 4, 5]\nMath::range(2, 0, -3); // [0, -2]\nMath::range(0, 0, 0); // [0]\nMath::range(0.1, 0, 0.5); // [0, 0.1, 0.2, 0.3, 0.4, 0.5]", 
+            "text": "Source  Number Range  :: Number a =  a -  a -  a  Given two values m and n, return all values between m and n in an array, inclusive, with a\nstep size of $step. The list of numbers will start at the first value and approach the second value.  Math::range(1, 1, 5); // [1, 2, 3, 4, 5]\nMath::range(2, 0, -3); // [0, -2]\nMath::range(0, 0, 0); // [0]\nMath::range(0.1, 0, 0.5); // [0, 0.1, 0.2, 0.3, 0.4, 0.5]", 
             "title": "range"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Math/#subtract", 
-            "text": "Arithmetic Subtraction.  :: Number a =  a -  a -  a  Subtracts two numbers, with the first argument being subtracted from the second.  Math::subtract(4, 9); // 5\nMath::subtract(-1, 3); // 4", 
+            "text": "Source  Arithmetic Subtraction.  :: Number a =  a -  a -  a  Subtracts two numbers, with the first argument being subtracted from the second.  Math::subtract(4, 9); // 5\nMath::subtract(-1, 3); // 4", 
             "title": "subtract"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Math/#sum", 
-            "text": "Array Sum  :: Number a =  [a] -  a  Add all the numbers of a list together and return their sum. If the given\nlist is empty, returns 0.  Math::sum([1, 2, 3]); // 6\nMath::sum([]); // 0", 
+            "text": "Source  Array Sum  :: Number a =  [a] -  a  Add all the numbers of a list together and return their sum. If the given\nlist is empty, returns 0.  Math::sum([1, 2, 3]); // 6\nMath::sum([]); // 0", 
             "title": "sum"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Object/", 
-            "text": "assign\n\n\nThis function is currently missing documentation.\n\n\n\n\ngetProp\n\n\nGet Property\n :: String -\n Obj a -\n mixed\n\n\nGets a property on the object\n\n\n$obj = new stdClass();\n$obj-\nvalue = 'hi!';\nObject::getValue('value', $obj); // 'hi!'\n\n\n\n\n\n\ninvokeMethod\n\n\nInvoke Method\n :: String -\n Obj a -\n mixed\n\n\nInvokes a method on the object\n\n\n$person = new stdObject(array(\n \nsayHi\n =\n function() {\n     return \nhi!\n;\n }\n));\nObject::invokeMethod('sayHi', $person); // 'hi!'\n\n\n\n\n\n\nisInstanceOf\n\n\nIs Instance Of\n :: String -\n Obj a -\n mixed\n\n\nChecks if the object is an instance of the specified class\n\n\nObject::isInstanceOf('stdClass', (new stdClass())); // true\n\n\n\n\n\n\nsetProp\n\n\nSet Property\n :: String -\n a -\n Obj a -\n Obj a\n\n\nSets a property on the object\n\n\nObject::setValue('value', new stdClass(), 'hi!');\n// object(stdClass)#1 (1) {\n//   [\nvalue\n]=\n\n//   string(3) \nhi!\n\n// }", 
+            "text": "assign\n\n\nSource\n\n\nAssign Properties\n :: array props -\n Object objOriginal -\n Object objUpdated\n\n\nSet/Update properties on the object using a key/value array\n\n\nObject::assign(['value' =\n 'hi!'], new stdClass);\n// object(stdClass)#1 (1) {\n//   [\nvalue\n]=\n\n//   string(3) \nhi!\n\n// }\n\n\n\n\n\n\ngetProp\n\n\nSource\n\n\nGet Property\n :: String -\n Object a -\n a\n\n\nGets a property on the object\n\n\n$obj = new stdClass();\n$obj-\nvalue = 'hi!';\nObject::getValue('value', $obj); // 'hi!'\n\n\n\n\n\n\ninvokeMethod\n\n\nSource\n\n\nInvoke Method\n :: String -\n Obj a -\n mixed\n\n\nInvokes a method on the object\n\n\n$person = new stdObject(array(\n \nsayHi\n =\n function() {\n     return \nhi!\n;\n }\n));\nObject::invokeMethod('sayHi', $person); // 'hi!'\n\n\n\n\n\n\nisInstanceOf\n\n\nSource\n\n\nIs Instance Of\n :: String -\n Obj a -\n mixed\n\n\nChecks if the object is an instance of the specified class\n\n\nObject::isInstanceOf('stdClass', (new stdClass())); // true\n\n\n\n\n\n\nsetProp\n\n\nSource\n\n\nSet Property\n :: String -\n a -\n Object a -\n Object a\n\n\nSets a property on the object\n\n\nObject::setValue('value', new stdClass(), 'hi!');\n// object(stdClass)#1 (1) {\n//   [\nvalue\n]=\n\n//   string(3) \nhi!\n\n// }", 
             "title": "Object"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Object/#assign", 
-            "text": "This function is currently missing documentation.", 
+            "text": "Source  Assign Properties  :: array props -  Object objOriginal -  Object objUpdated  Set/Update properties on the object using a key/value array  Object::assign(['value' =  'hi!'], new stdClass);\n// object(stdClass)#1 (1) {\n//   [ value ]= \n//   string(3)  hi! \n// }", 
             "title": "assign"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Object/#getprop", 
-            "text": "Get Property  :: String -  Obj a -  mixed  Gets a property on the object  $obj = new stdClass();\n$obj- value = 'hi!';\nObject::getValue('value', $obj); // 'hi!'", 
+            "text": "Source  Get Property  :: String -  Object a -  a  Gets a property on the object  $obj = new stdClass();\n$obj- value = 'hi!';\nObject::getValue('value', $obj); // 'hi!'", 
             "title": "getProp"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Object/#invokemethod", 
-            "text": "Invoke Method  :: String -  Obj a -  mixed  Invokes a method on the object  $person = new stdObject(array(\n  sayHi  =  function() {\n     return  hi! ;\n }\n));\nObject::invokeMethod('sayHi', $person); // 'hi!'", 
+            "text": "Source  Invoke Method  :: String -  Obj a -  mixed  Invokes a method on the object  $person = new stdObject(array(\n  sayHi  =  function() {\n     return  hi! ;\n }\n));\nObject::invokeMethod('sayHi', $person); // 'hi!'", 
             "title": "invokeMethod"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Object/#isinstanceof", 
-            "text": "Is Instance Of  :: String -  Obj a -  mixed  Checks if the object is an instance of the specified class  Object::isInstanceOf('stdClass', (new stdClass())); // true", 
+            "text": "Source  Is Instance Of  :: String -  Obj a -  mixed  Checks if the object is an instance of the specified class  Object::isInstanceOf('stdClass', (new stdClass())); // true", 
             "title": "isInstanceOf"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Object/#setprop", 
-            "text": "Set Property  :: String -  a -  Obj a -  Obj a  Sets a property on the object  Object::setValue('value', new stdClass(), 'hi!');\n// object(stdClass)#1 (1) {\n//   [ value ]= \n//   string(3)  hi! \n// }", 
+            "text": "Source  Set Property  :: String -  a -  Object a -  Object a  Sets a property on the object  Object::setValue('value', new stdClass(), 'hi!');\n// object(stdClass)#1 (1) {\n//   [ value ]= \n//   string(3)  hi! \n// }", 
             "title": "setProp"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Strings/", 
-            "text": "concat\n\n\nString Concatenation\n :: String -\n String -\n String\n\n\nConcatenates the first argument to the second argument, provided both arguments\nare strings. Defers to the PHP built-in concatenation.\n\n\nStrings::concat('as', 'df'); // 'dfas'\nStrings::concat('World', $concat('ello', 'H')); // 'HelloWorld'\n\n\n\n\n\n\njoin\n\n\nString Joining\n :: String -\n [String] -\n String\n\n\nJoins an array of strings together with a given delimiter. Works similarly\nto PHP \nimplode\n. The inverse of \nsplit\n.\n\n\nStrings::join(' ', ['Hello', 'World']); // 'Hello World'\nStrings::join('', ['a', 's', 'd', 'f']); // 'asdf'\n\n\n\n\n\n\nsplit\n\n\nString Splitting\n :: String -\n String -\n [String]\n\n\nSplit a string into parts based on a delimiter. Operates similar to php \nexplode\n,\nbut is more consistent. Can split on empty delimiters, and trims out empty strings\nafter exploding.\n\n\nStrings::split('-', 'Hello-World'); // ['Hello', 'World']\nStrings::split('', 'asdf'); // ['a', 's', 'd', 'f']\nStrings::split('-', 'foo-bar-'); ['foo', 'bar']\n\n\n\n\n\n\nstartsWith\n\n\nSubstring Match\n :: String -\n String -\n Bool\n\n\nDetermines if a string starts with a specific substring. Returns true if the string\nmatches the substring at its start, otherwise false.\n\n\nStrings::startsWith('as', 'asdf'); true\nStrings::startsWith('foo', 'barfoo'); false\n\n\n\n\n\n\ntoLowercase\n\n\nLowercase Conversion\n :: String -\n String\n\n\nConverts a string to lowercase.\n\n\nStrings::toLowercase('ASdf'); // 'asdf'\n\n\n\n\n\n\ntoUppercase\n\n\nUppercase Conversion\n :: String -\n String\n\n\nConverts a string to uppercase.\n\n\nStrings::toUppercase('asdf'); // 'ASDF'\n\n\n\n\n\n\ntrim\n\n\nTrim Whitespace\n :: String -\n String\n\n\nRemoves all leading and trailing whitespace from a string. Defers to\nPHP trim.\n\n\nStrings::trim(' asdf '); // 'asdf'", 
+            "text": "chomp\n\n\nSource\n\n\nTwo-Sided Chomp\n :: String -\n String\n\n\nRemoves the specified substring from both ends of the target string. Unlike PHP's\ntrim function, the substring to chomp is not a character mask -- rather it is a full\nsubstring. This function is case sensitive.\n\n\nStrings::chomp('a', 'abccba'); // 'bccb'\nStrings::chomp('ab', 'abccba'); // 'abccba'\nStrings::chomp('A', 'abccba'); // 'abccba'\n\n\n\n\n\n\nconcat\n\n\nSource\n\n\nString Concatenation\n :: String -\n String -\n String\n\n\nConcatenates the first argument to the second argument, provided both arguments\nare strings. Defers to the PHP built-in concatenation.\n\n\nStrings::concat('as', 'df'); // 'dfas'\nStrings::concat('World', $concat('ello', 'H')); // 'HelloWorld'\n\n\n\n\n\n\njoin\n\n\nSource\n\n\nString Joining\n :: String -\n [String] -\n String\n\n\nJoins an array of strings together with a given delimiter. Works similarly\nto PHP \nimplode\n. The inverse of \nsplit\n.\n\n\nStrings::join(' ', ['Hello', 'World']); // 'Hello World'\nStrings::join('', ['a', 's', 'd', 'f']); // 'asdf'\n\n\n\n\n\n\nlchomp\n\n\nSource\n\n\nLeft Chomp\n :: String -\n String\n\n\nRemoves the specified substring from the left end of the target string. Unlike PHP's\ntrim function, the substring to chomp is not a character mask -- rather it is a full\nsubstring. This function is case sensitive.\n\n\nStrings::lchomp('He', 'Hello World'); // 'llo World'\nStrings::lchomp('Hi', 'Hello World'); // 'Hello World'\nStrings::lchomp('he', 'Hello World'); // 'Hello World'\n\n\n\n\n\n\nrchomp\n\n\nSource\n\n\nRight Chomp\n :: String -\n String\n\n\nRemoves the specified substring from the right end of the target string. Unlike PHP's\ntrim function, the substring to chomp is not a character mask -- rather it is a full\nsubstring. This function is case sensitive.\n\n\nStrings::rchomp('ld', 'Hello World'); // 'Hello Wor'\nStrings::rchomp('li', 'Hello World'); // 'Hello World'\nStrings::rchomp('LD', 'Hello World'); // 'Hello World'\n\n\n\n\n\n\nreplace\n\n\nSource\n\n\nString Replace\n :: String -\n String -\n String\n\n\nReplace all occurrences of the search string with the replacement string.\n\n\nStrings::replace('test', 'passes', 'this test']); // 'this passes'\n\n\n\n\n\n\nsplit\n\n\nSource\n\n\nString Splitting\n :: String -\n String -\n [String]\n\n\nSplit a string into parts based on a delimiter. Operates similar to php \nexplode\n,\nbut is more consistent. Can split on empty delimiters, and trims out empty strings\nafter exploding.\n\n\nStrings::split('-', 'Hello-World'); // ['Hello', 'World']\nStrings::split('', 'asdf'); // ['a', 's', 'd', 'f']\nStrings::split('-', 'foo-bar-'); ['foo', 'bar']\n\n\n\n\n\n\nstartsWith\n\n\nSource\n\n\nSubstring Match\n :: String -\n String -\n Bool\n\n\nDetermines if a string starts with a specific substring. Returns true if the string\nmatches the substring at its start, otherwise false.\n\n\nStrings::startsWith('as', 'asdf'); true\nStrings::startsWith('foo', 'barfoo'); false\n\n\n\n\n\n\ntoLowercase\n\n\nSource\n\n\nLowercase Conversion\n :: String -\n String\n\n\nConverts a string to lowercase.\n\n\nStrings::toLowercase('ASdf'); // 'asdf'\n\n\n\n\n\n\ntoUppercase\n\n\nSource\n\n\nUppercase Conversion\n :: String -\n String\n\n\nConverts a string to uppercase.\n\n\nStrings::toUppercase('asdf'); // 'ASDF'\n\n\n\n\n\n\ntrim\n\n\nSource\n\n\nTrim Whitespace\n :: String -\n String\n\n\nRemoves all leading and trailing whitespace from a string. Defers to\nPHP trim.\n\n\nStrings::trim(' asdf '); // 'asdf'", 
             "title": "Strings"
         }, 
         {
+            "location": "/auto-generate/Vector/Lib/Strings/#chomp", 
+            "text": "Source  Two-Sided Chomp  :: String -  String  Removes the specified substring from both ends of the target string. Unlike PHP's\ntrim function, the substring to chomp is not a character mask -- rather it is a full\nsubstring. This function is case sensitive.  Strings::chomp('a', 'abccba'); // 'bccb'\nStrings::chomp('ab', 'abccba'); // 'abccba'\nStrings::chomp('A', 'abccba'); // 'abccba'", 
+            "title": "chomp"
+        }, 
+        {
             "location": "/auto-generate/Vector/Lib/Strings/#concat", 
-            "text": "String Concatenation  :: String -  String -  String  Concatenates the first argument to the second argument, provided both arguments\nare strings. Defers to the PHP built-in concatenation.  Strings::concat('as', 'df'); // 'dfas'\nStrings::concat('World', $concat('ello', 'H')); // 'HelloWorld'", 
+            "text": "Source  String Concatenation  :: String -  String -  String  Concatenates the first argument to the second argument, provided both arguments\nare strings. Defers to the PHP built-in concatenation.  Strings::concat('as', 'df'); // 'dfas'\nStrings::concat('World', $concat('ello', 'H')); // 'HelloWorld'", 
             "title": "concat"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Strings/#join", 
-            "text": "String Joining  :: String -  [String] -  String  Joins an array of strings together with a given delimiter. Works similarly\nto PHP  implode . The inverse of  split .  Strings::join(' ', ['Hello', 'World']); // 'Hello World'\nStrings::join('', ['a', 's', 'd', 'f']); // 'asdf'", 
+            "text": "Source  String Joining  :: String -  [String] -  String  Joins an array of strings together with a given delimiter. Works similarly\nto PHP  implode . The inverse of  split .  Strings::join(' ', ['Hello', 'World']); // 'Hello World'\nStrings::join('', ['a', 's', 'd', 'f']); // 'asdf'", 
             "title": "join"
         }, 
         {
+            "location": "/auto-generate/Vector/Lib/Strings/#lchomp", 
+            "text": "Source  Left Chomp  :: String -  String  Removes the specified substring from the left end of the target string. Unlike PHP's\ntrim function, the substring to chomp is not a character mask -- rather it is a full\nsubstring. This function is case sensitive.  Strings::lchomp('He', 'Hello World'); // 'llo World'\nStrings::lchomp('Hi', 'Hello World'); // 'Hello World'\nStrings::lchomp('he', 'Hello World'); // 'Hello World'", 
+            "title": "lchomp"
+        }, 
+        {
+            "location": "/auto-generate/Vector/Lib/Strings/#rchomp", 
+            "text": "Source  Right Chomp  :: String -  String  Removes the specified substring from the right end of the target string. Unlike PHP's\ntrim function, the substring to chomp is not a character mask -- rather it is a full\nsubstring. This function is case sensitive.  Strings::rchomp('ld', 'Hello World'); // 'Hello Wor'\nStrings::rchomp('li', 'Hello World'); // 'Hello World'\nStrings::rchomp('LD', 'Hello World'); // 'Hello World'", 
+            "title": "rchomp"
+        }, 
+        {
+            "location": "/auto-generate/Vector/Lib/Strings/#replace", 
+            "text": "Source  String Replace  :: String -  String -  String  Replace all occurrences of the search string with the replacement string.  Strings::replace('test', 'passes', 'this test']); // 'this passes'", 
+            "title": "replace"
+        }, 
+        {
             "location": "/auto-generate/Vector/Lib/Strings/#split", 
-            "text": "String Splitting  :: String -  String -  [String]  Split a string into parts based on a delimiter. Operates similar to php  explode ,\nbut is more consistent. Can split on empty delimiters, and trims out empty strings\nafter exploding.  Strings::split('-', 'Hello-World'); // ['Hello', 'World']\nStrings::split('', 'asdf'); // ['a', 's', 'd', 'f']\nStrings::split('-', 'foo-bar-'); ['foo', 'bar']", 
+            "text": "Source  String Splitting  :: String -  String -  [String]  Split a string into parts based on a delimiter. Operates similar to php  explode ,\nbut is more consistent. Can split on empty delimiters, and trims out empty strings\nafter exploding.  Strings::split('-', 'Hello-World'); // ['Hello', 'World']\nStrings::split('', 'asdf'); // ['a', 's', 'd', 'f']\nStrings::split('-', 'foo-bar-'); ['foo', 'bar']", 
             "title": "split"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Strings/#startswith", 
-            "text": "Substring Match  :: String -  String -  Bool  Determines if a string starts with a specific substring. Returns true if the string\nmatches the substring at its start, otherwise false.  Strings::startsWith('as', 'asdf'); true\nStrings::startsWith('foo', 'barfoo'); false", 
+            "text": "Source  Substring Match  :: String -  String -  Bool  Determines if a string starts with a specific substring. Returns true if the string\nmatches the substring at its start, otherwise false.  Strings::startsWith('as', 'asdf'); true\nStrings::startsWith('foo', 'barfoo'); false", 
             "title": "startsWith"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Strings/#tolowercase", 
-            "text": "Lowercase Conversion  :: String -  String  Converts a string to lowercase.  Strings::toLowercase('ASdf'); // 'asdf'", 
+            "text": "Source  Lowercase Conversion  :: String -  String  Converts a string to lowercase.  Strings::toLowercase('ASdf'); // 'asdf'", 
             "title": "toLowercase"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Strings/#touppercase", 
-            "text": "Uppercase Conversion  :: String -  String  Converts a string to uppercase.  Strings::toUppercase('asdf'); // 'ASDF'", 
+            "text": "Source  Uppercase Conversion  :: String -  String  Converts a string to uppercase.  Strings::toUppercase('asdf'); // 'ASDF'", 
             "title": "toUppercase"
         }, 
         {
             "location": "/auto-generate/Vector/Lib/Strings/#trim", 
-            "text": "Trim Whitespace  :: String -  String  Removes all leading and trailing whitespace from a string. Defers to\nPHP trim.  Strings::trim(' asdf '); // 'asdf'", 
+            "text": "Source  Trim Whitespace  :: String -  String  Removes all leading and trailing whitespace from a string. Defers to\nPHP trim.  Strings::trim(' asdf '); // 'asdf'", 
             "title": "trim"
         }, 
         {
             "location": "/auto-generate/Vector/Control/Applicative/", 
-            "text": "apply\n\n\nThis function is currently missing documentation.\n\n\n\n\nliftA2\n\n\nThis function is currently missing documentation.\n\n\n\n\nliftA3\n\n\nThis function is currently missing documentation.\n\n\n\n\npure\n\n\nThis function is currently missing documentation.", 
+            "text": "apply\n\n\nSource\n\n\n____ :: No type given for this function.\n\n\nNo examples given for this function.---\n\n\nliftA2\n\n\nSource\n\n\n____ :: No type given for this function.\n\n\nNo examples given for this function.---\n\n\nliftA3\n\n\nSource\n\n\n____ :: No type given for this function.\n\n\nNo examples given for this function.---\n\n\npure\n\n\nSource\n\n\n____ :: No type given for this function.\n\n\nNo examples given for this function.---", 
             "title": "Applicative"
         }, 
         {
             "location": "/auto-generate/Vector/Control/Applicative/#apply", 
-            "text": "This function is currently missing documentation.", 
+            "text": "Source  ____ :: No type given for this function.  No examples given for this function.---", 
             "title": "apply"
         }, 
         {
             "location": "/auto-generate/Vector/Control/Applicative/#lifta2", 
-            "text": "This function is currently missing documentation.", 
+            "text": "Source  ____ :: No type given for this function.  No examples given for this function.---", 
             "title": "liftA2"
         }, 
         {
             "location": "/auto-generate/Vector/Control/Applicative/#lifta3", 
-            "text": "This function is currently missing documentation.", 
+            "text": "Source  ____ :: No type given for this function.  No examples given for this function.---", 
             "title": "liftA3"
         }, 
         {
             "location": "/auto-generate/Vector/Control/Applicative/#pure", 
-            "text": "This function is currently missing documentation.", 
+            "text": "Source  ____ :: No type given for this function.  No examples given for this function.---", 
             "title": "pure"
         }, 
         {
             "location": "/auto-generate/Vector/Control/Functor/", 
-            "text": "extract\n\n\nThis function is currently missing documentation.\n\n\n\n\nfmap\n\n\nThis function is currently missing documentation.", 
+            "text": "extract\n\n\nSource\n\n\n____ :: No type given for this function.\n\n\nNo examples given for this function.---\n\n\nfmap\n\n\nSource\n\n\n____ :: No type given for this function.\n\n\nNo examples given for this function.---", 
             "title": "Functor"
         }, 
         {
             "location": "/auto-generate/Vector/Control/Functor/#extract", 
-            "text": "This function is currently missing documentation.", 
+            "text": "Source  ____ :: No type given for this function.  No examples given for this function.---", 
             "title": "extract"
         }, 
         {
             "location": "/auto-generate/Vector/Control/Functor/#fmap", 
-            "text": "This function is currently missing documentation.", 
+            "text": "Source  ____ :: No type given for this function.  No examples given for this function.---", 
             "title": "fmap"
         }, 
         {
             "location": "/auto-generate/Vector/Control/Lens/", 
-            "text": "constant\n\n\nThis function is currently missing documentation.\n\n\n\n\nidentity\n\n\nThis function is currently missing documentation.\n\n\n\n\nindexLens\n\n\nThis function is currently missing documentation.\n\n\n\n\nindexLensSafe\n\n\nThis function is currently missing documentation.\n\n\n\n\nkeLens\n\n\nThis function is currently missing documentation.\n\n\n\n\noverL\n\n\nThis function is currently missing documentation.\n\n\n\n\npathLens\n\n\nThis function is currently missing documentation.\n\n\n\n\npathLensSafe\n\n\nThis function is currently missing documentation.\n\n\n\n\npropLens\n\n\nThis function is currently missing documentation.\n\n\n\n\nsetL\n\n\nThis function is currently missing documentation.\n\n\n\n\nviewL\n\n\nView\n :: Lens a -\n a\n\n\nView an object or array through a lens. Simply applies your lens - the\nbehavior of this function will vary slightly depending on the particular\nlens that you're using.\n\n\n$myLens = Lens::indexLens('a');\nLens::viewL($myLens, ['a' =\n 'b']); // b", 
+            "text": "indexLens\n\n\nThis function is currently missing documentation.\n\n\n\n\nindexLensSafe\n\n\nThis function is currently missing documentation.\n\n\n\n\nkeLens\n\n\nThis function is currently missing documentation.\n\n\n\n\noverL\n\n\nSource\n\n\nOver\n :: No type given for this function.\n\n\nPerform an operation over the focus of a lens. Returns the entire object\nas passed in, but with the given function run over a portion of it. Is similar to composing\na set and a get operation all at once.\n\n\n$myLens = Lens::indexLens('a');\nLens::overL($myLens, Math::add(1), ['a' =\n 1]; // ['a' =\n 2]\n\n\n\n\n\n\npathLens\n\n\nThis function is currently missing documentation.\n\n\n\n\npathLensSafe\n\n\nThis function is currently missing documentation.\n\n\n\n\npathPropLens\n\n\nThis function is currently missing documentation.\n\n\n\n\npathPropLensSafe\n\n\nThis function is currently missing documentation.\n\n\n\n\npropLens\n\n\nThis function is currently missing documentation.\n\n\n\n\npropLensSafe\n\n\nThis function is currently missing documentation.\n\n\n\n\nsetL\n\n\nThis function is currently missing documentation.\n\n\n\n\nviewL\n\n\nSource\n\n\nView\n :: No type given for this function.\n\n\nView an object or array through a lens. Simply applies your lens - the\nbehavior of this function will vary slightly depending on the particular\nlens that you're using.\n\n\n$myLens = Lens::indexLens('a');\nLens::viewL($myLens, ['a' =\n 'b']); // b", 
             "title": "Lens"
-        }, 
-        {
-            "location": "/auto-generate/Vector/Control/Lens/#constant", 
-            "text": "This function is currently missing documentation.", 
-            "title": "constant"
-        }, 
-        {
-            "location": "/auto-generate/Vector/Control/Lens/#identity", 
-            "text": "This function is currently missing documentation.", 
-            "title": "identity"
         }, 
         {
             "location": "/auto-generate/Vector/Control/Lens/#indexlens", 
@@ -637,7 +657,7 @@
         }, 
         {
             "location": "/auto-generate/Vector/Control/Lens/#overl", 
-            "text": "This function is currently missing documentation.", 
+            "text": "Source  Over  :: No type given for this function.  Perform an operation over the focus of a lens. Returns the entire object\nas passed in, but with the given function run over a portion of it. Is similar to composing\na set and a get operation all at once.  $myLens = Lens::indexLens('a');\nLens::overL($myLens, Math::add(1), ['a' =  1]; // ['a' =  2]", 
             "title": "overL"
         }, 
         {
@@ -651,9 +671,24 @@
             "title": "pathLensSafe"
         }, 
         {
+            "location": "/auto-generate/Vector/Control/Lens/#pathproplens", 
+            "text": "This function is currently missing documentation.", 
+            "title": "pathPropLens"
+        }, 
+        {
+            "location": "/auto-generate/Vector/Control/Lens/#pathproplenssafe", 
+            "text": "This function is currently missing documentation.", 
+            "title": "pathPropLensSafe"
+        }, 
+        {
             "location": "/auto-generate/Vector/Control/Lens/#proplens", 
             "text": "This function is currently missing documentation.", 
             "title": "propLens"
+        }, 
+        {
+            "location": "/auto-generate/Vector/Control/Lens/#proplenssafe", 
+            "text": "This function is currently missing documentation.", 
+            "title": "propLensSafe"
         }, 
         {
             "location": "/auto-generate/Vector/Control/Lens/#setl", 
@@ -662,7 +697,7 @@
         }, 
         {
             "location": "/auto-generate/Vector/Control/Lens/#viewl", 
-            "text": "View  :: Lens a -  a  View an object or array through a lens. Simply applies your lens - the\nbehavior of this function will vary slightly depending on the particular\nlens that you're using.  $myLens = Lens::indexLens('a');\nLens::viewL($myLens, ['a' =  'b']); // b", 
+            "text": "Source  View  :: No type given for this function.  View an object or array through a lens. Simply applies your lens - the\nbehavior of this function will vary slightly depending on the particular\nlens that you're using.  $myLens = Lens::indexLens('a');\nLens::viewL($myLens, ['a' =  'b']); // b", 
             "title": "viewL"
         }, 
         {

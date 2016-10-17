@@ -96,6 +96,13 @@
     </li>
 
         
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../advanced/fam/">Functors, Applicatives & Monads</a>
+        
+    </li>
+
+        
     </ul>
 <li>
           
@@ -257,10 +264,20 @@
             <div class="section">
               
                 <h2 id="assign">assign</h2>
-<p>This function is currently missing documentation.</p>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L64">Source</a></p>
+<p><strong>Assign Properties</strong> :: array props -&gt; Object objOriginal -&gt; Object objUpdated</p>
+<p>Set/Update properties on the object using a key/value array</p>
+<pre><code>Object::assign(['value' =&gt; 'hi!'], new stdClass);
+// object(stdClass)#1 (1) {
+//   [&quot;value&quot;]=&gt;
+//   string(3) &quot;hi!&quot;
+// }
+</code></pre>
+
 <hr />
 <h2 id="getprop">getProp</h2>
-<p><strong>Get Property</strong> :: String -&gt; Obj a -&gt; mixed</p>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L95">Source</a></p>
+<p><strong>Get Property</strong> :: String -&gt; Object a -&gt; a</p>
 <p>Gets a property on the object</p>
 <pre><code>$obj = new stdClass();
 $obj-&gt;value = 'hi!';
@@ -269,6 +286,7 @@ Object::getValue('value', $obj); // 'hi!'
 
 <hr />
 <h2 id="invokemethod">invokeMethod</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L123">Source</a></p>
 <p><strong>Invoke Method</strong> :: String -&gt; Obj a -&gt; mixed</p>
 <p>Invokes a method on the object</p>
 <pre><code>$person = new stdObject(array(
@@ -281,6 +299,7 @@ Object::invokeMethod('sayHi', $person); // 'hi!'
 
 <hr />
 <h2 id="isinstanceof">isInstanceOf</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L142">Source</a></p>
 <p><strong>Is Instance Of</strong> :: String -&gt; Obj a -&gt; mixed</p>
 <p>Checks if the object is an instance of the specified class</p>
 <pre><code>Object::isInstanceOf('stdClass', (new stdClass())); // true
@@ -288,7 +307,8 @@ Object::invokeMethod('sayHi', $person); // 'hi!'
 
 <hr />
 <h2 id="setprop">setProp</h2>
-<p><strong>Set Property</strong> :: String -&gt; a -&gt; Obj a -&gt; Obj a</p>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L37">Source</a></p>
+<p><strong>Set Property</strong> :: String -&gt; a -&gt; Object a -&gt; Object a</p>
 <p>Sets a property on the object</p>
 <pre><code>Object::setValue('value', new stdClass(), 'hi!');
 // object(stdClass)#1 (1) {

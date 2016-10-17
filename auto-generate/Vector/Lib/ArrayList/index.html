@@ -96,6 +96,13 @@
     </li>
 
         
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../advanced/fam/">Functors, Applicatives & Monads</a>
+        
+    </li>
+
+        
     </ul>
 <li>
           
@@ -187,7 +194,13 @@
                 <li class="toctree-l3"><a href="#take">take</a></li>
                 
             
+                <li class="toctree-l3"><a href="#takelast">takeLast</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#takewhile">takeWhile</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#unique">unique</a></li>
                 
             
                 <li class="toctree-l3"><a href="#values">values</a></li>
@@ -326,6 +339,7 @@
             <div class="section">
               
                 <h2 id="bifurcate">bifurcate</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L546">Source</a></p>
 <p><strong>Array Bifurcation</strong> :: (a -&gt; Bool) -&gt; [a] -&gt; ([a], [a])</p>
 <p>Given an array and some filtering test that returns a boolean, return two arrays - one array
 of elements that pass the test, and another array of elements that don't. Similar to filter,
@@ -335,6 +349,7 @@ but returns the elements that fail as well.</p>
 
 <hr />
 <h2 id="concat">concat</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L417">Source</a></p>
 <p><strong>Array Concatenation</strong> :: [a] -&gt; [a] -&gt; [a]</p>
 <p>Joins two arrays together, with the second argument being appended
 to the end of the first. Defers to php build-in function <code>array_merge</code>,
@@ -345,6 +360,7 @@ ArrayList::concat(['a' =&gt; 1, 'b' =&gt; 2], ['a' =&gt; 'foo', 'c' =&gt; 3]); /
 
 <hr />
 <h2 id="cons">cons</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L60">Source</a></p>
 <p><strong>Cons Operator</strong> :: a -&gt; [a] -&gt; [a]</p>
 <p>Given a value and an array, append that value to the end of the array.</p>
 <pre><code>ArrayList::cons(3, [1, 2]); // [1, 2, 3]
@@ -353,6 +369,7 @@ ArrayList::cons(1, []); // [1]
 
 <hr />
 <h2 id="contains">contains</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L729">Source</a></p>
 <p><strong>Array Contains Element</strong> :: a -&gt; [a] -&gt; Bool</p>
 <p>Returns true if a given array contains the item to test, or false if
 it does not.</p>
@@ -362,6 +379,7 @@ ArrayList::contains('a', ['b', 'c', 'd']); // false
 
 <hr />
 <h2 id="drop">drop</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L579">Source</a></p>
 <p><strong>Drop Elements</strong> :: Int -&gt; [a] -&gt; [a]</p>
 <p>Given some number n, drop n elements from an input array and return the rest of
 the elements. If n is greater than the length of the array, returns an empty array.</p>
@@ -371,6 +389,7 @@ ArrayList::drop(4, [1, 2]); // []
 
 <hr />
 <h2 id="dropwhile">dropWhile</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L601">Source</a></p>
 <p><strong>Drop Elements with Predicate</strong> :: (a -&gt; Bool) -&gt; [a] -&gt; [a]</p>
 <p>Given some function that returns true or false, drop elements from an array starting
 at the front, testing each element along the way, until that function returns false.
@@ -381,6 +400,7 @@ ArrayList::dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]
 
 <hr />
 <h2 id="filter">filter</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L350">Source</a></p>
 <p><strong>Filter a List</strong> :: (a -&gt; Bool) -&gt; [a] -&gt; [a]</p>
 <p>Returns a filtered list. Given a function that takes an element and returns
 either true or false, return a list of all the elements
@@ -392,6 +412,7 @@ ArrayList::filter(Math::lte(2), [1, 2, 3, 4, 5]); // [1, 2], using `lte` from th
 
 <hr />
 <h2 id="flatten">flatten</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L699">Source</a></p>
 <p><strong>Array Flatten</strong> :: [a] -&gt; [b]</p>
 <p>Flattens a nested array structure into a single-dimensional array. Can handle
 arrays of arbitrary dimension.</p>
@@ -400,6 +421,7 @@ arrays of arbitrary dimension.</p>
 
 <hr />
 <h2 id="foldl">foldl</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L471">Source</a></p>
 <p><strong>List Fold - From Left</strong> :: (b -&gt; a -&gt; b) -&gt; b -&gt; [a] -&gt; b</p>
 <p>Fold a list by iterating over the list from left to right. Pass each element, one by one, into
 the fold function $f, and carry its value over to the next iteration. Also referred to as array
@@ -412,6 +434,7 @@ ArrayList::foldl(Logic::and(), True, [True, True, False]); // False
 
 <hr />
 <h2 id="groupby">groupBy</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L86">Source</a></p>
 <p><strong>Group By</strong> :: (a -&gt; String) -&gt; [a] -&gt; [[a]]</p>
 <p>Given a function that turns an element into a string, map over a list of elements
 and return a multi-dimensional array with elements grouped together by their key
@@ -425,6 +448,7 @@ ArrayList::groupBy($keyGen, $testCase); // ['small' =&gt; [1, 2, 3], 'big' =&gt;
 
 <hr />
 <h2 id="head">head</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L117">Source</a></p>
 <p><strong>List Head</strong> :: [a] -&gt; a</p>
 <p>Returns the first element of a list, the element at index 0. Also functions
 properly for key/value arrays, e.g. arrays whose first element may not necessarily
@@ -436,6 +460,7 @@ ArrayList::head([]); // Exception thrown
 
 <hr />
 <h2 id="index">index</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L312">Source</a></p>
 <p><strong>List Index</strong> :: Int -&gt; [a] -&gt; a</p>
 <p>Returns the element of a list at the given index. Throws an exception
 if the given index does not exist in the list.</p>
@@ -446,6 +471,7 @@ ArrayList::index('baz', [1, 2, 3]); // Exception thrown
 
 <hr />
 <h2 id="init">init</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L233">Source</a></p>
 <p><strong>Initial List Values</strong> :: [a] -&gt; [a]</p>
 <p>Returns an array without its last element, e.g. the inverse of <code>tail</code>. Works on
 key/value arrays as well as 'regular' arrays. If an empty or single-value array is given,
@@ -456,6 +482,7 @@ ArrayList::init(['a' =&gt; 1, 'b' =&gt; 2]); // ['a' =&gt; 1];
 
 <hr />
 <h2 id="keys">keys</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L372">Source</a></p>
 <p><strong>Array Keys</strong> :: [a] -&gt; [b]</p>
 <p>Returns the keys of an associative key/value array. Returns numerical indexes
 for non key/value arrays.</p>
@@ -465,6 +492,7 @@ ArrayList::keys([1, 2, 3]); // [0, 1, 2]
 
 <hr />
 <h2 id="last">last</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L260">Source</a></p>
 <p><strong>Last List Value</strong> :: [a] -&gt; a</p>
 <p>Returns the last element of an array, e.g. the complement of <code>init</code>. Works on key/value
 arrays as well as 'regular' arrays. If an empty array is given, throws an exception.</p>
@@ -475,6 +503,7 @@ ArrayList::last([]); // Exception thrown
 
 <hr />
 <h2 id="length">length</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L284">Source</a></p>
 <p><strong>Array Length</strong> :: [a] -&gt; a</p>
 <p>Returns the length of a list or array. Wraps php <code>count</code> function.</p>
 <pre><code>ArrayList::length([1, 2, 3]); // 3
@@ -483,6 +512,7 @@ ArrayList::length(['a' =&gt; 1, 'b' =&gt; 2]); // 2
 
 <hr />
 <h2 id="map">map</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L140">Source</a></p>
 <p><strong>Array Map</strong> :: (a -&gt; b) -&gt; [a] -&gt; [b]</p>
 <p>Given some function and a list of arbitrary length, return a new array that is the
 result of calling the given function on each element of the original list.</p>
@@ -491,6 +521,7 @@ result of calling the given function on each element of the original list.</p>
 
 <hr />
 <h2 id="mapindexed">mapIndexed</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L162">Source</a></p>
 <p><strong>Array Map Indexed</strong> :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [c]</p>
 <p>Given some function and a list of arbitrary length, return a new array that is the
 result of calling the given function on each element of the original list. The first argument
@@ -501,6 +532,7 @@ mapped over.</p>
 
 <hr />
 <h2 id="replicate">replicate</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L749">Source</a></p>
 <p><strong>Replicate Item</strong> :: Int -&gt; a -&gt; [a]</p>
 <p>Given some integer n and an item to repeat, repeat that item and place
 the results into an array of length n.</p>
@@ -509,6 +541,7 @@ the results into an array of length n.</p>
 
 <hr />
 <h2 id="reverse">reverse</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L680">Source</a></p>
 <p><strong>Array Reverse</strong> :: [a] -&gt; [a]</p>
 <p>Flip the order of a given array. Does not modify the original array.</p>
 <pre><code>ArrayList::reverse([1, 2, 3]); // [3, 2, 1]
@@ -516,6 +549,7 @@ the results into an array of length n.</p>
 
 <hr />
 <h2 id="setindex">setIndex</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L441">Source</a></p>
 <p><strong>Set Array Value</strong> :: a -&gt; b -&gt; [b] -&gt; [b]</p>
 <p>Sets the value of an array at the given index; works for non-numerical indexes.
 The value is set in an immutable way, so the original array is not modified.</p>
@@ -525,6 +559,7 @@ ArrayList::setValue('c', 3, ['a' =&gt; 1, 'b' =&gt; 2]); // ['a' =&gt; 1, 'b' =&
 
 <hr />
 <h2 id="sort">sort</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L185">Source</a></p>
 <p><strong>Array Sort</strong> :: (a -&gt; a -&gt; Int) -&gt; [a] -&gt; [a]</p>
 <p>Given a function that compares two values, sort an array. This function defers to usort
 but does not mutate the original array. The comparison function should return -1 if the
@@ -536,6 +571,7 @@ ArrayList::sort($comp, [3, 2, 1]);
 
 <hr />
 <h2 id="tail">tail</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L210">Source</a></p>
 <p><strong>List Tail</strong> :: [a] -&gt; [a]</p>
 <p>Returns an array without its first element, e.g. the complement of <code>head</code>. Works on
 key/value arrays as well as 'regular' arrays. If an empty array of an array of one element
@@ -546,6 +582,7 @@ ArrayList::(['a' =&gt; 1, 'b' =&gt; 2]); // ['b' =&gt; 2];
 
 <hr />
 <h2 id="take">take</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L630">Source</a></p>
 <p><strong>Take Elements</strong> :: Int -&gt; [a] -&gt; [a]</p>
 <p>Given some number n, return the first n elements of a given array. Returns the whole
 array if n is greater than the array length.</p>
@@ -553,7 +590,16 @@ array if n is greater than the array length.</p>
 </code></pre>
 
 <hr />
+<h2 id="takelast">takeLast</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L792">Source</a></p>
+<p><strong>takeLast</strong> :: Int -&gt; [a] -&gt; [a]</p>
+<p>Return the last n items from a list</p>
+<pre><code>ArrayList::takeLast(2, [1, 2, 2, 4]); // [2, 4]
+</code></pre>
+
+<hr />
 <h2 id="takewhile">takeWhile</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L651">Source</a></p>
 <p><strong>Take Elements with Predicate</strong> :: (a -&gt; Bool) -&gt; [a] -&gt; [a]</p>
 <p>Given some function that returns true or false, return the first elements of the array
 that all pass the test, until the test fails.</p>
@@ -562,7 +608,16 @@ ArrayList::takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]
 </code></pre>
 
 <hr />
+<h2 id="unique">unique</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L773">Source</a></p>
+<p><strong>Unique</strong> :: [a] -&gt; [a]</p>
+<p>Given a list, return only unique values</p>
+<pre><code>ArrayList::unique([1, 2, 2, 4]); // [1, 2, 4]
+</code></pre>
+
+<hr />
 <h2 id="values">values</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L393">Source</a></p>
 <p><strong>Array Values</strong> :: [a] -&gt; [a]</p>
 <p>Returns the values of an associative key/value array.</p>
 <pre><code>ArrayList::values(['a' =&gt; 1, 'b' =&gt; 2]); // [1, 2]
@@ -571,6 +626,7 @@ ArrayList::values([1, 2, 3]); // [1, 2, 3]
 
 <hr />
 <h2 id="zip">zip</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L524">Source</a></p>
 <p><strong>Array Zip</strong> :: [a] -&gt; [b] -&gt; [(a, b)]</p>
 <p>Given two arrays a and b, return a new array where each element is a tuple of a and b. If a and b
 are not the same length, the resultant array will always be the same length as the shorter array.</p>
@@ -579,6 +635,7 @@ are not the same length, the resultant array will always be the same length as t
 
 <hr />
 <h2 id="zipwith">zipWith</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L498">Source</a></p>
 <p><strong>Custom Array Zip</strong> :: (a -&gt; b -&gt; c) -&gt; [a] -&gt; [b] -&gt; [c]</p>
 <p>Given two arrays a and b, and some combinator f, combine the arrays using the combinator
 f(ai, bi) into a new array c. If a and b are not the same length, the resultant array will
@@ -600,7 +657,7 @@ ArrayList::zipWith($combinator, [0], [1, 2, 3]); // [-1]
         <a href="../Lambda/" class="btn btn-neutral float-right" title="Lambda">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../../../advanced/lenses/" class="btn btn-neutral" title="Lenses"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../../../advanced/fam/" class="btn btn-neutral" title="Functors, Applicatives & Monads"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -630,7 +687,7 @@ ArrayList::zipWith($combinator, [0], [1, 2, 3]); // [-1]
           <a href="https://github.com/joseph-walker/vector" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../../../../advanced/lenses/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../../../advanced/fam/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../Lambda/" style="color: #fcfcfc">Next &raquo;</a></span>

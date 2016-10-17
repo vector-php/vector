@@ -8,31 +8,31 @@
   
   <meta name="author" content="Joseph Walker">
   
-  <title>Functor - Vector</title>
+  <title>Functors, Applicatives & Monads - Vector</title>
   
 
-  <link rel="shortcut icon" href="../../../../img/favicon.ico">
+  <link rel="shortcut icon" href="../../img/favicon.ico">
 
   
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
-  <link rel="stylesheet" href="../../../../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="../../../../css/highlight.css">
-  <link href="../../../../extra.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <link href="../../extra.css" rel="stylesheet">
 
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Functor";
-    var mkdocs_page_input_path = "auto-generate/Vector/Control/Functor.md";
-    var mkdocs_page_url = "/auto-generate/Vector/Control/Functor/";
+    var mkdocs_page_name = "Functors, Applicatives & Monads";
+    var mkdocs_page_input_path = "advanced/fam.md";
+    var mkdocs_page_url = "/advanced/fam/";
   </script>
   
-  <script src="../../../../js/jquery-2.1.1.min.js"></script>
-  <script src="../../../../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../../../../js/highlight.pack.js"></script>
-  <script src="../../../../js/theme.js"></script> 
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
 
   
 </head>
@@ -44,9 +44,9 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href="../../../.." class="icon icon-home"> Vector</a>
+        <a href="../.." class="icon icon-home"> Vector</a>
         <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
   </form>
 </div>
@@ -57,7 +57,7 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../../../..">Introduction</a>
+        <a class="" href="../..">Introduction</a>
         
     </li>
 <li>
@@ -69,14 +69,14 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../user-guide/basics/">Functional Basics</a>
+        <a class="" href="../../user-guide/basics/">Functional Basics</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../user-guide/module/">Vector Modules</a>
+        <a class="" href="../../user-guide/module/">Vector Modules</a>
         
     </li>
 
@@ -91,14 +91,18 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../advanced/lenses/">Lenses</a>
+        <a class="" href="../lenses/">Lenses</a>
         
     </li>
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../advanced/fam/">Functors, Applicatives & Monads</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Functors, Applicatives & Monads</a>
+        
+            <ul>
+            
+            </ul>
         
     </li>
 
@@ -118,42 +122,42 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../Lib/ArrayList/">ArrayList</a>
+        <a class="" href="../../auto-generate/Vector/Lib/ArrayList/">ArrayList</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../Lib/Lambda/">Lambda</a>
+        <a class="" href="../../auto-generate/Vector/Lib/Lambda/">Lambda</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../Lib/Logic/">Logic</a>
+        <a class="" href="../../auto-generate/Vector/Lib/Logic/">Logic</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../Lib/Math/">Math</a>
+        <a class="" href="../../auto-generate/Vector/Lib/Math/">Math</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../Lib/Object/">Object</a>
+        <a class="" href="../../auto-generate/Vector/Lib/Object/">Object</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../Lib/Strings/">Strings</a>
+        <a class="" href="../../auto-generate/Vector/Lib/Strings/">Strings</a>
         
     </li>
 
@@ -168,38 +172,28 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Applicative/">Applicative</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 current">
-        <a class="current" href="./">Functor</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#extract">extract</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#fmap">fmap</a></li>
-                
-            
-            </ul>
+        <a class="" href="../../auto-generate/Vector/Control/Applicative/">Applicative</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Lens/">Lens</a>
+        <a class="" href="../../auto-generate/Vector/Control/Functor/">Functor</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Monad/">Monad</a>
+        <a class="" href="../../auto-generate/Vector/Control/Lens/">Lens</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../auto-generate/Vector/Control/Monad/">Monad</a>
         
     </li>
 
@@ -220,7 +214,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../../..">Vector</a>
+        <a href="../..">Vector</a>
       </nav>
 
       
@@ -228,19 +222,15 @@
         <div class="rst-content">
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="../../../..">Docs</a> &raquo;</li>
+    <li><a href="../..">Docs</a> &raquo;</li>
     
       
         
-          <li>Vector &raquo;</li>
-        
-      
-        
-          <li>Control &raquo;</li>
+          <li>Advanced Topics &raquo;</li>
         
       
     
-    <li>Functor</li>
+    <li>Functors, Applicatives & Monads</li>
     <li class="wy-breadcrumbs-aside">
       
         
@@ -254,14 +244,7 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="extract">extract</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Control/Functor.php#L65">Source</a></p>
-<p>____ :: No type given for this function.</p>
-<p>No examples given for this function.---</p>
-<h2 id="fmap">fmap</h2>
-<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Control/Functor.php#L26">Source</a></p>
-<p>____ :: No type given for this function.</p>
-<p>No examples given for this function.---</p>
+                
               
             </div>
           </div>
@@ -269,10 +252,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Lens/" class="btn btn-neutral float-right" title="Lens">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../auto-generate/Vector/Lib/ArrayList/" class="btn btn-neutral float-right" title="ArrayList">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Applicative/" class="btn btn-neutral" title="Applicative"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../lenses/" class="btn btn-neutral" title="Lenses"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -302,10 +285,10 @@
           <a href="https://github.com/joseph-walker/vector" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../Applicative/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../lenses/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../Lens/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../auto-generate/Vector/Lib/ArrayList/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

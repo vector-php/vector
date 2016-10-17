@@ -2,6 +2,11 @@
     text-align: left;
 }
 
+h2 + p {
+    float: right;
+    margin: 0;
+}
+
 code {
     line-height: 1.75 !important;
 }

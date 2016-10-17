@@ -96,6 +96,13 @@
     </li>
 
         
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../advanced/fam/">Functors, Applicatives & Monads</a>
+        
+    </li>
+
+        
     </ul>
 <li>
           
@@ -163,9 +170,6 @@
                 
             
                 <li class="toctree-l3"><a href="#lte">lte</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#not">not</a></li>
                 
             
                 <li class="toctree-l3"><a href="#noteq">notEq</a></li>
@@ -290,6 +294,7 @@
             <div class="section">
               
                 <h2 id="all">all</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L341">Source</a></p>
 <p><strong>All</strong> :: array -&gt; Bool</p>
 <p>Returns true given all values are truthy</p>
 <pre><code>Logic::all(1, 'asdf', true); // True
@@ -298,9 +303,10 @@ Logic::all(1, false); // False
 
 <hr />
 <h2 id="andcombinator">andCombinator</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L76">Source</a></p>
 <p><strong>Logical And Combinator</strong> :: [(a -&gt; Bool)] -&gt; a -&gt; Bool</p>
-<p>Given two functions f and g, combine them in such a way to produce a new
-function h that returns true given f(x) AND g(x) returns true.</p>
+<p>Given n functions {f1, f2, ..., fn}, combine them in such a way to produce a new
+function g that returns true given {f1(x), f2(x), ... fn(x)} all return true.</p>
 <pre><code>$funcF = function($x) { return $x &lt; 5; };
 $funcG = function($x) { return $x &gt; 0; };
 $combinator = Logic::andCombinator([$funcF, $funcG]);
@@ -311,6 +317,7 @@ $combinator(7); // False
 
 <hr />
 <h2 id="any">any</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L363">Source</a></p>
 <p><strong>Any</strong> :: array -&gt; Bool</p>
 <p>Returns true given any values are truthy</p>
 <pre><code>Logic::any(true, false); // True
@@ -319,6 +326,7 @@ Logic::any(false, false); // False
 
 <hr />
 <h2 id="eq">eq</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L254">Source</a></p>
 <p><strong>Equal (Not Strict / ==)</strong> :: mixed -&gt; mixed -&gt; Bool</p>
 <p>Returns true given $a equals $b</p>
 <pre><code>Logic::eq(1, 1); // True
@@ -327,6 +335,7 @@ Logic::eq(1, 2); // False
 
 <hr />
 <h2 id="eqstrict">eqStrict</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L276">Source</a></p>
 <p><strong>Equal (Strict / ===)</strong> :: mixed -&gt; mixed -&gt; Bool</p>
 <p>Returns true given $a equals $b</p>
 <pre><code>Logic::eqStrict(1, 1); // True
@@ -335,6 +344,7 @@ Logic::eqStrict(1, '1'); // False
 
 <hr />
 <h2 id="gt">gt</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L166">Source</a></p>
 <p><strong>Greater Than</strong> :: mixed -&gt; mixed -&gt; Bool</p>
 <p>Returns true given $b is greater than $a.</p>
 <pre><code>Logic::gt(2, 1); // False
@@ -343,6 +353,7 @@ Logic::gt(1, 2); // True
 
 <hr />
 <h2 id="gte">gte</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L188">Source</a></p>
 <p><strong>Greater Than Or Equal</strong> :: mixed -&gt; mixed -&gt; Bool</p>
 <p>Returns true given $b is greater than or equal to $a.</p>
 <pre><code>Logic::gte(1, 1); // True
@@ -351,6 +362,7 @@ Logic::gte(1, 2); // True
 
 <hr />
 <h2 id="logicaland">logicalAnd</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L144">Source</a></p>
 <p><strong>Logical And</strong> :: Bool -&gt; Bool -&gt; Bool</p>
 <p>Returns true given $a AND $b are true.</p>
 <pre><code>Logic::logicalAnd(true, true); // True
@@ -359,6 +371,7 @@ Logic::logicalAnd(true, false); // False
 
 <hr />
 <h2 id="logicalnot">logicalNot</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L122">Source</a></p>
 <p><strong>Logical Not</strong> :: Bool -&gt; Bool</p>
 <p>Returns true given $a is false.
 Returns false given $a is true.</p>
@@ -368,6 +381,7 @@ Logic::logicalNot(false); // True
 
 <hr />
 <h2 id="logicalor">logicalOr</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L100">Source</a></p>
 <p><strong>Logical Or</strong> :: Bool -&gt; Bool -&gt; Bool</p>
 <p>Returns true given $a OR $b returns true.</p>
 <pre><code>Logic::logicalOr(true, false); // True
@@ -376,6 +390,7 @@ Logic::logicalOr(false, false); // False
 
 <hr />
 <h2 id="lt">lt</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L210">Source</a></p>
 <p><strong>Less Than</strong> :: mixed -&gt; mixed -&gt; Bool</p>
 <p>Returns true given $b is less than $a.</p>
 <pre><code>Logic::lt(2, 1); // True
@@ -384,6 +399,7 @@ Logic::lt(1, 2); // False
 
 <hr />
 <h2 id="lte">lte</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L232">Source</a></p>
 <p><strong>Less Than Or Equal</strong> :: mixed -&gt; mixed -&gt; Bool</p>
 <p>Returns true given $b is less than or equal to $a.</p>
 <pre><code>Logic::lte(1, 1); // True
@@ -391,14 +407,8 @@ Logic::lte(2, 1); // True
 </code></pre>
 
 <hr />
-<h2 id="not">not</h2>
-<p><strong>Logical Not</strong> :: Bool -&gt; Bool</p>
-<p>Returns the inverse of $a</p>
-<pre><code>Logic::not(false); // true
-</code></pre>
-
-<hr />
 <h2 id="noteq">notEq</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L298">Source</a></p>
 <p><strong>Not Equal (Not Strict / ==)</strong> :: mixed -&gt; mixed -&gt; Bool</p>
 <p>Returns true given $a does not equal $b</p>
 <pre><code>Logic::notEq(1, 1); // False
@@ -407,6 +417,7 @@ Logic::notEq(1, 2); // True
 
 <hr />
 <h2 id="noteqstrict">notEqStrict</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L320">Source</a></p>
 <p><strong>Not Equal (Strict / ===)</strong> :: mixed -&gt; mixed -&gt; Bool</p>
 <p>Returns true given $a does not equal $b</p>
 <pre><code>Logic::notEqStrict(1, 2); // True
@@ -415,9 +426,10 @@ Logic::notEqStrict(1, '1'); // False
 
 <hr />
 <h2 id="orcombinator">orCombinator</h2>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Logic.php#L49">Source</a></p>
 <p><strong>Logical Or Combinator</strong> :: [(a -&gt; Bool)] -&gt; a -&gt; Bool</p>
-<p>Given two functions f and g, combine them in such a way to produce a new
-function h that returns true given f(x) OR g(x) returns true.</p>
+<p>Given n functions {f1, f2, ..., fn}, combine them in such a way to produce a new
+function g that returns true given at least one of {f1(x), f2(x), ... fn(x)} return true.</p>
 <pre><code>$funcF = function($x) { return $x &gt;= 5; };
 $funcG = function($x) { return $x == 0; };
 $combinator = Logic::orCombinator([$funcF, $funcG]);

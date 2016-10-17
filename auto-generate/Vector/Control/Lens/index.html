@@ -96,6 +96,13 @@
     </li>
 
         
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../advanced/fam/">Functors, Applicatives & Monads</a>
+        
+    </li>
+
+        
     </ul>
 <li>
           
@@ -179,12 +186,6 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#constant">constant</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#identity">identity</a></li>
-                
-            
                 <li class="toctree-l3"><a href="#indexlens">indexLens</a></li>
                 
             
@@ -203,7 +204,16 @@
                 <li class="toctree-l3"><a href="#pathlenssafe">pathLensSafe</a></li>
                 
             
+                <li class="toctree-l3"><a href="#pathproplens">pathPropLens</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#pathproplenssafe">pathPropLensSafe</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#proplens">propLens</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#proplenssafe">propLensSafe</a></li>
                 
             
                 <li class="toctree-l3"><a href="#setl">setL</a></li>
@@ -274,13 +284,7 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="constant">constant</h2>
-<p>This function is currently missing documentation.</p>
-<hr />
-<h2 id="identity">identity</h2>
-<p>This function is currently missing documentation.</p>
-<hr />
-<h2 id="indexlens">indexLens</h2>
+                <h2 id="indexlens">indexLens</h2>
 <p>This function is currently missing documentation.</p>
 <hr />
 <h2 id="indexlenssafe">indexLensSafe</h2>
@@ -290,7 +294,15 @@
 <p>This function is currently missing documentation.</p>
 <hr />
 <h2 id="overl">overL</h2>
-<p>This function is currently missing documentation.</p>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Control/Lens.php#L76">Source</a></p>
+<p><strong>Over</strong> :: No type given for this function.</p>
+<p>Perform an operation over the focus of a lens. Returns the entire object
+as passed in, but with the given function run over a portion of it. Is similar to composing
+a set and a get operation all at once.</p>
+<pre><code>$myLens = Lens::indexLens('a');
+Lens::overL($myLens, Math::add(1), ['a' =&gt; 1]; // ['a' =&gt; 2]
+</code></pre>
+
 <hr />
 <h2 id="pathlens">pathLens</h2>
 <p>This function is currently missing documentation.</p>
@@ -298,14 +310,24 @@
 <h2 id="pathlenssafe">pathLensSafe</h2>
 <p>This function is currently missing documentation.</p>
 <hr />
+<h2 id="pathproplens">pathPropLens</h2>
+<p>This function is currently missing documentation.</p>
+<hr />
+<h2 id="pathproplenssafe">pathPropLensSafe</h2>
+<p>This function is currently missing documentation.</p>
+<hr />
 <h2 id="proplens">propLens</h2>
+<p>This function is currently missing documentation.</p>
+<hr />
+<h2 id="proplenssafe">propLensSafe</h2>
 <p>This function is currently missing documentation.</p>
 <hr />
 <h2 id="setl">setL</h2>
 <p>This function is currently missing documentation.</p>
 <hr />
 <h2 id="viewl">viewL</h2>
-<p><strong>View</strong> :: Lens a -&gt; a</p>
+<p><a href="https://github.com/joseph-walker/vector/blob/master/src/Vector/Control/Lens.php#L47">Source</a></p>
+<p><strong>View</strong> :: No type given for this function.</p>
 <p>View an object or array through a lens. Simply applies your lens - the
 behavior of this function will vary slightly depending on the particular
 lens that you're using.</p>

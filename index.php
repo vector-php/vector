@@ -10,11 +10,11 @@ class Foo extends \Vector\Core\Module
 
     protected static function __fibonacci($n)
     {
-        return Pattern::patternMatch([
+        return Pattern::match([
             [ 0, function($_) { return 0; } ],
             [ 1, function($_) { return 1; } ],
             [ Pattern::any(), function($n) { return self::fibonacci($n - 1) + self::fibonacci($n - 2); } ]
-        ])(func_get_args());
+        ])(...func_get_args());
     }
 }
 

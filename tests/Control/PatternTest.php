@@ -26,7 +26,7 @@ class PatternTest extends \PHPUnit_Framework_TestCase
                         return 2;
                     }
                 ]
-            ])(func_get_args());
+            ])(...func_get_args());
         };
 
         $this->assertEquals(2, $f(2, 2));

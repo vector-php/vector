@@ -56,7 +56,7 @@ abstract class Pattern extends Module
                             self::make(),
                             ArrayList::init($pattern)
                         ),
-                        ...$args
+                        $args
                     )
                 );
             };
@@ -67,13 +67,13 @@ abstract class Pattern extends Module
                     ArrayList::last(),
                     ArrayList::first($patternApplies),
                     ArrayList::filter(function ($pattern) use ($args) {
-                        return (count($pattern) - 1) === (count($args[0]));
+                        return (count($pattern) - 1) === (count($args));
                     })
                 );
 
                 return call_user_func_array(
                     $getMatchedImplementation($patterns),
-                    ...$args
+                    $args
                 );
             } catch (\Exception $e) {
                 throw new IncompletePatternMatchException('Incomplete pattern match expression.');

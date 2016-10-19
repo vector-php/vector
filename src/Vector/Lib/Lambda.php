@@ -10,6 +10,7 @@ use Vector\Core\Module;
  * @method static callable k() k($k)
  * @method static mixed id() id($a)
  * @method static mixed flip() flip($f)
+ * @method static mixed apply() apply($f, $x)
  */
 abstract class Lambda extends Module
 {

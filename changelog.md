@@ -6,3 +6,5 @@
   - Lib\Object -> Lib\Objects
   - Lib\ArrayList -> Lib\Arrays
 - strict array params in Lib\Arrays (formerly Lib\ArrayList)
+- Maybe/Either/Just
+- Pattern Matching in Modules

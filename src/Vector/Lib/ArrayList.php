@@ -13,18 +13,19 @@ use Vector\Core\Module;
  * @method static mixed head() head(array $list) Return the first element of a list.
  * @method static array map() map(Callable $f, array $list) Return a transformed list.
  * @method static array mapIndexed() mapIndexed(Callable $f, array $list) Return a transformed list, receives indexes.
- * @method static tail($list) Return a list sans first element.
- * @method static init($list) Return a list sans last element.
- * @method static last($list) Return the last element of a list.
- * @method static length($list) Return the length of a list.
- * @method static index($i, $list) Return the element of a list at index 'i'.
- * @method static filter($f, $arr) Return a filtered array with every element passing test 'f'.
- * @method static keys($arr) Return the keys of a list.
- * @method static values($arr) Return the values of a list.
- * @method static concat($a, $b) Return two lists concatenated together.
- * @method static setValue($key, $arr, $val) Return a list with the element at index 'key' set to 'val'.
- * @method static foldl($f, $seed, $list) Return the result of folding 'f' over a list with initial value 'seed', from the left.
- * @method static zipWith($f, $a, $b) Return two lists combined by combinator 'f'.
+ * @method static mixed tail($list) Return a list sans first element.
+ * @method static mixed init($list) Return a list sans last element.
+ * @method static mixed last($list) Return the last element of a list.
+ * @method static int length($list) Return the length of a list.
+ * @method static int index($i, $list) Return the element of a list at index 'i'.
+ * @method static array filter($f, $arr) Return a filtered array with every element passing test 'f'.
+ * @method static mixed first($arr) Return a filtered array with every element passing test 'f'.
+ * @method static array keys($arr) Return the keys of a list.
+ * @method static array values($arr) Return the values of a list.
+ * @method static array concat($a, $b) Return two lists concatenated together.
+ * @method static array setValue($key, $arr, $val) Return a list with the element at index 'key' set to 'val'.
+ * @method static mixed foldl($f, $seed, $list) Return the result of folding 'f' over a list with initial value 'seed', from the left.
+ * @method static array zipWith($f, $a, $b) Return two lists combined by combinator 'f'.
  * @method static drop($n, $list) Return a list with 'n' elements removed from the front.
  * @method static dropWhile($predicate, $list) Return a list with elements removed so long as they pass 'predicate'.
  * @method static take($n, $list) Return the first 'n' elements of a list.
@@ -354,13 +355,18 @@ class ArrayList extends Module
     /**
      * First Element w/ Test
      *
-     * @type (a -> Bool) -> [a] -> a
+     * @param $f
+     * @param $arr
+     * @return
+     * @throws \Exception
+     * @internal param $ (a -> Bool) -> [a] -> a
      */
     protected static function __first($f, $arr)
     {
         foreach ($arr as $a) {
-            if ($f($a) === true)
+            if ($f($a) === true) {
                 return $a;
+            }
         }
 
         // @todo This needs to be a custom Vector exception

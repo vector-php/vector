@@ -2,52 +2,20 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use phpDocumentor\Reflection\DocBlock;
-use Vector\Lib\ArrayList;
-use Vector\Control\Lens;
-use Vector\Core\Module;
+use Vector\Control\Pattern;
 
-$someApiResponse = [
-    "meta" => [
-        "info" => "An API Request Example"
-    ],
-    "data" => [
-        "users" => [
-            [
-                "name" => "Joseph",
-                "favorites" => [
-                    "colors" => [
-                        "blue",
-                        "green"
-                    ],
-                    "foods" => [
-                        "pho",
-                        "fajitas"
-                    ]
-                ]
-            ],
-            [
-                "name" => "Logan",
-                "favorites" => [
-                    "colors" => [
-                        "red"
-                    ],
-                    "foods" => [
-                        "hamburgers",
-                        "curry"
-                    ]
-                ]
-            ]
-        ]
-    ]
-];
+class Foo extends \Vector\Core\Module
+{
+    protected static $memoize = ['fibonacci'];
 
-$timestampLens = Lens::pathLensSafe(['meta', 'timestamp']);
+    protected static function __fibonacci($n)
+    {
+        return Pattern::patternMatch([
+            [ 0, function($_) { return 0; } ],
+            [ 1, function($_) { return 1; } ],
+            [ Pattern::any(), function($n) { return self::fibonacci($n - 1) + self::fibonacci($n - 2); } ]
+        ])(func_get_args());
+    }
+}
 
-$withTimestamps = Lens::setL(
-    $timestampLens,
-    time(),
-    $someApiResponse
-);
-
-var_dump($withTimestamps);
+echo Foo::fibonacci(21);

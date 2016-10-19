@@ -22,6 +22,18 @@ abstract class Lambda extends Module
         };
     }
 
+    protected static function __dot($f, $g)
+    {
+        return function($x) {
+            return $f($g($x));
+        };
+    }
+
+    protected static function __apply($f, $x)
+    {
+        return $f($x);
+    }
+
     protected static function __compose(...$fs)
     {
         return self::pipe(...array_reverse($fs));

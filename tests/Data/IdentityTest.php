@@ -5,22 +5,24 @@ namespace Vector\Test\Data;
 use Vector\Data\Constant;
 use Vector\Control\Functor;
 use Vector\Data\Identity;
-use Vector\Test\Data\Generic\GenericFunctorTestCase;
+use Vector\Test\Data\Generic\ApplicativeLaws;
 
 /**
  * Class IdentityTest
  * @package Vector\Test\Data
  */
-class IdentityTest extends GenericFunctorTestCase
+class IdentityTest extends ApplicativeLaws
 {
     public function setUp()
     {
         /**
-         * Used for GenericFunctorTestCase
+         * Used for ApplicativeLaws
          */
         $this->testCases = [
             Identity::identity(7)
         ];
+
+        $this->applicativeContext = Identity::class;
     }
 
     /**

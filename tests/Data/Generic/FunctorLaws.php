@@ -6,7 +6,7 @@ use Vector\Data\Constant;
 use Vector\Control\Functor;
 use Vector\Lib\Lambda;
 
-class GenericFunctorTestCase extends \PHPUnit_Framework_TestCase
+class FunctorLaws extends \PHPUnit_Framework_TestCase
 {
     protected $testCases;
 

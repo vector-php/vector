@@ -352,6 +352,22 @@ class ArrayList extends Module
     }
 
     /**
+     * First Element w/ Test
+     *
+     * @type (a -> Bool) -> [a] -> a
+     */
+    protected static function __first($f, $arr)
+    {
+        foreach ($arr as $a) {
+            if ($f($a) === true)
+                return $a;
+        }
+
+        // @todo This needs to be a custom Vector exception
+        throw new \Exception("Element not found.");
+    }
+
+    /**
      * Array Keys
      *
      * Returns the keys of an associative key/value array. Returns numerical indexes

@@ -4,18 +4,18 @@ namespace Vector\Test\Data;
 
 use Vector\Data\Constant;
 use Vector\Control\Functor;
-use Vector\Test\Data\Generic\GenericFunctorTestCase;
+use Vector\Test\Data\Generic\FunctorLaws;
 
 /**
  * Class ConstantTest
  * @package Vector\Test\Data
  */
-class ConstantTest extends GenericFunctorTestCase
+class ConstantTest extends FunctorLaws
 {
     public function setUp()
     {
         /**
-         * Used for GenericFunctorTestCase
+         * Used for FunctorLaws
          */
         $this->testCases = [
             Constant::constant(7)

@@ -41,6 +41,7 @@ class PatternTest extends \PHPUnit_Framework_TestCase
     public function testThatItMatchesOnType()
     {
         $f = function ($a) {
+            /** @noinspection PhpParamsInspection */
             return Pattern::match([
                 [
                     Type::string(),

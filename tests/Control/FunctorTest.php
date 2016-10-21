@@ -4,8 +4,10 @@ namespace Vector\Test\Control;
 
 use Vector\Control\Functor;
 
-use Vector\Lib\Lambda;
-
+/**
+ * Class FunctorTest
+ * @package Vector\Test\Control
+ */
 class FunctorTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -48,10 +50,26 @@ class FunctorTest extends \PHPUnit_Framework_TestCase
         $fmap = Functor::using('fmap');
 
         $addOne = Stub\TestFunctions::using('addOne');
-        $mulTwo = function($a) { return $a * 2; };
+        $mulTwo = function ($a) {
+            return $a * 2;
+        };
 
         $fmappedFunction = $fmap($mulTwo, $addOne);
 
         $this->assertEquals($fmappedFunction(5), 12);
+    }
+
+    /**
+     * FMap should behave as if it were map when invoked on a traversable
+     */
+    public function testThatFmapHandlesTraversable()
+    {
+        $fmap = Functor::using('fmap');
+
+        $mulTwo = function ($a) {
+            return $a * 2;
+        };
+
+        $this->assertEquals([2, 4], $fmap($mulTwo, new \ArrayIterator([1, 2])));
     }
 }

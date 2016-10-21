@@ -82,23 +82,27 @@ abstract class Pattern extends Module
     }
 
     /**
-     * @param $pattern
      * @param $subject
+     * @param $pattern
      * @return bool
+     * @internal param $pattern
+     * @internal param $subject
      */
-    protected static function __number($pattern, $subject)
+    protected static function __number($subject, $pattern)
     {
-        return is_numeric($subject) && $pattern == $subject;
+        return Type::number($subject) && $pattern === $subject;
     }
 
     /**
-     * @param $pattern
      * @param $subject
+     * @param $pattern
      * @return bool
+     * @internal param $pattern
+     * @internal param $subject
      */
-    protected static function __string($pattern, $subject)
+    protected static function __string($subject, $pattern)
     {
-        return is_string($subject) && $pattern == $subject;
+        return Type::string($subject) && $pattern === $subject;
     }
 
     /**

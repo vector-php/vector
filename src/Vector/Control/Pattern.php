@@ -2,7 +2,7 @@
 
 namespace Vector\Control;
 
-use Vector\Control\Exception\IncompletePatternMatchException;
+use Vector\Core\Exception\IncompletePatternMatchException;
 use Vector\Core\Module;
 
 use Vector\Lib\{

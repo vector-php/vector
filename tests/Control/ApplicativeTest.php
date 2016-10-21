@@ -4,6 +4,7 @@ namespace Vector\Test\Control;
 
 use Vector\Control\Applicative;
 use Vector\Control\Functor;
+use Vector\Core\Module;
 use Vector\Data\Identity;
 use Vector\Lib\Arrays;
 use Vector\Lib\Math;
@@ -39,6 +40,20 @@ class ApplicativeTest extends \PHPUnit_Framework_TestCase
         $add    = Math::using('add');
 
         $this->assertEquals($liftA2([], $add, [1, 2, 3], [1, 2, 3]), [2, 3, 4, 3, 4, 5, 4, 5, 6]);
+    }
+
+    /**
+     * LiftA3 calls off to pure and apply for array arguments - test
+     * that it hands arrays off properly
+     */
+    public function testLiftA3_arrayArgument()
+    {
+        $liftA3 = Applicative::using('liftA3');
+        $add3 = Module::curry(function ($a, $b, $c) {
+            return $a + $b + $c;
+        });
+
+        $this->assertEquals($liftA3([], $add3, [1, 2], [2], [3]), [6, 7]);
     }
 
     /**

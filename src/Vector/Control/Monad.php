@@ -3,7 +3,7 @@
 namespace Vector\Control;
 
 use Vector\Core\Module;
-use Vector\Lib\ArrayList;
+use Vector\Lib\Arrays;
 
 abstract class Monad extends Module
 {
@@ -11,7 +11,7 @@ abstract class Monad extends Module
     {
         if (is_array($container)) {
             $result = [];
-            $concat = ArrayList::using('concat');
+            $concat = Arrays::using('concat');
 
             foreach ($container as $x) {
                 $result = $concat($result, $f($x));

@@ -6,7 +6,7 @@ use Reflector;
 
 use Vector\Lib\Lambda;
 use Vector\Lib\Logic;
-use Vector\Lib\ArrayList;
+use Vector\Lib\Arrays;
 use Vector\Lib\Object;
 
 use phpDocumentor\Reflection\DocBlockFactory;
@@ -23,7 +23,7 @@ class ModuleDoc
         };
 
         $this->module = $module;
-        $this->functionDocs = ArrayList::map($makeFunctionDoc, $this->getFunctions());
+        $this->functionDocs = Arrays::map($makeFunctionDoc, $this->getFunctions());
     }
 
     public function getFunctionDocs()
@@ -33,7 +33,7 @@ class ModuleDoc
 
     private function getFunctions()
     {
-        $filterModule = ArrayList::filter(
+        $filterModule = Arrays::filter(
             Lambda::compose(Logic::eq($this->module->name), Object::getProp('class'))
         );
 

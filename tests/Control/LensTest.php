@@ -3,7 +3,6 @@
 namespace Vector\Test\Control;
 
 use Vector\Control\Lens;
-
 use Vector\Lib\Lambda;
 
 /**

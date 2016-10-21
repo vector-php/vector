@@ -181,15 +181,15 @@ Let's do some things with this data set using lenses.
 
 #### Can you paint with all the colors of the API?
 
-By combining several `ArrayList` functions and `viewL`, we can gather up all the colors in our data set.
+By combining several `Arrays` functions and `viewL`, we can gather up all the colors in our data set.
 
 ```php
 // The Lens::pathLens() function let's us shortcut explicitly composing lenses by doing it for us.
 // We just supply an array of index strings.
 $colorsLens = Lens::pathLens(['favorites', 'colors']);
 
-$colors = ArrayList::flatten(
-    ArrayList::map(Lens::viewL($colorsLens), $someApiResponse['data']['users'])
+$colors = Arrays::flatten(
+    Arrays::map(Lens::viewL($colorsLens), $someApiResponse['data']['users'])
 );
 ```
 
@@ -203,8 +203,8 @@ $foodsLens = Lens::pathLens(['favorites', 'foods']);
 
 $withTacos = Lens::overL(
     $usersLens,
-    ArrayList::map(
-        Lens::overL($foodLens, ArrayList::cons('tacos'))
+    Arrays::map(
+        Lens::overL($foodLens, Arrays::cons('tacos'))
     ),
     $someApiResponse
 );

@@ -12,7 +12,7 @@ use Vector\Core\Module;
  * @method static callable isInstanceOf($expected, $given)
  * @method static callable assign($expected, $given)
  */
-class Object extends Module
+class Objects extends Module
 {
     /**
      * Set Property
@@ -65,12 +65,12 @@ class Object extends Module
         $obj = clone $objOriginal;
 
         /** @noinspection PhpParamsInspection */
-        return ArrayList::foldl(
+        return Arrays::foldl(
             function ($obj, $setter) {
                 return $setter($obj);
             },
             $obj,
-            ArrayList::mapIndexed(Lambda::flip(self::setProp()), $props)
+            Arrays::mapIndexed(Lambda::flip(self::setProp()), $props)
         );
     }
 

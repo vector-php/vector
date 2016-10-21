@@ -5,7 +5,7 @@ namespace Vector\Test\Control;
 use Vector\Control\Applicative;
 use Vector\Control\Functor;
 use Vector\Data\Identity;
-use Vector\Lib\ArrayList;
+use Vector\Lib\Arrays;
 use Vector\Lib\Math;
 
 /**
@@ -51,7 +51,7 @@ class ApplicativeTest extends \PHPUnit_Framework_TestCase
         $add  = Math::using('add');
 
         /** @noinspection PhpParamsInspection */
-        $sum = ArrayList::foldl(
+        $sum = Arrays::foldl(
             $liftA2(Identity::class, $add),
             Identity::identity(0),
             [Identity::identity(1), Identity::identity(2), Identity::identity(3)]

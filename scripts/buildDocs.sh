@@ -2,7 +2,7 @@
 
 echo "Building documentation..."
 php ./bin/vector.php docs:generate \
-    Vector\\Lib\\ArrayList \
+    Vector\\Lib\\Arrays \
     Vector\\Lib\\Lambda \
     Vector\\Lib\\Logic \
     Vector\\Lib\\Math \

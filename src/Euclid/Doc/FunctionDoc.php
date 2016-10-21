@@ -3,7 +3,7 @@
 namespace Vector\Euclid\Doc;
 
 use Reflector;
-use Vector\Lib\ArrayList;
+use Vector\Lib\Arrays;
 use Vector\Data\{
     Maybe,
     Either
@@ -89,7 +89,7 @@ class FunctionDoc
             return $tag->getName();
         };
 
-        $this->tags = ArrayList::groupBy($tagName, $this->docBlock->getTags());
+        $this->tags = Arrays::groupBy($tagName, $this->docBlock->getTags());
     }
 
     private function firstTagOr($errorMessage, $name)
@@ -98,7 +98,7 @@ class FunctionDoc
             if (!isset($this->tags[$name]))
                 throw new \Exception('Tag not found.');
 
-            return Either::right(ArrayList::head($this->tags[$name]));
+            return Either::right(Arrays::head($this->tags[$name]));
         } catch (\Exception $e) {
             return Either::left($errorMessage);
         }

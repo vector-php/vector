@@ -44,7 +44,7 @@ abstract class Module
      * $increment = Math::add(1);
      * $increment(5); // 6
      *
-     * $head = ArrayList::head();
+     * $head = Arrays::head();
      * $head([1, 2, 3]); // 1
      * ```
      *

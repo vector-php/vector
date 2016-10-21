@@ -5,10 +5,10 @@ namespace Vector\Test\Lib;
 use Vector\Core\Exception\EmptyListException;
 use Vector\Core\Exception\IndexOutOfBoundsException;
 
-use Vector\Lib\ArrayList;
+use Vector\Lib\Arrays;
 use Vector\Data\Maybe;
 
-class ArrayListTest extends \PHPUnit_Framework_TestCase
+class ArraysTest extends \PHPUnit_Framework_TestCase
 {
     protected $testCase;
 
@@ -19,7 +19,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
 
     public function testSort()
     {
-        $sort = ArrayList::using('sort');
+        $sort = Arrays::using('sort');
 
         $comp = function ($a, $b) {
             if ($a == $b) {
@@ -39,7 +39,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testConsOperator()
     {
-        $cons = ArrayList::using('cons');
+        $cons = Arrays::using('cons');
 
         $this->assertEquals($cons(4, $this->testCase), [0, 1, 2, 3, 4]);
         $this->assertEquals($cons(1, []), [1]);
@@ -51,7 +51,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testHead_returnsFirstElement()
     {
-        $head = ArrayList::Using('head');
+        $head = Arrays::Using('head');
 
         $this->assertEquals($head($this->testCase), 0);
     }
@@ -62,7 +62,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testHead_returnsFirstElementNonNumericIndexed()
     {
-        $head = ArrayList::Using('head');
+        $head = Arrays::Using('head');
 
         $this->assertEquals($head(['test' => 'works', 'another' => 'test', 'ok' => 1]), 'works');
     }
@@ -72,7 +72,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testHead_undefinedOnEmptyList()
     {
-        $head = ArrayList::Using('head');
+        $head = Arrays::Using('head');
         $this->expectException(EmptyListException::class);
 
         $head([]); // Throws Exception
@@ -83,7 +83,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testTail()
     {
-        $tail = ArrayList::Using('tail');
+        $tail = Arrays::Using('tail');
 
         $this->assertEquals($tail($this->testCase), [1, 2, 3]);
     }
@@ -93,7 +93,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testInit()
     {
-        $init = ArrayList::Using('init');
+        $init = Arrays::Using('init');
 
         $this->assertEquals($init($this->testCase), [0, 1, 2]);
     }
@@ -103,7 +103,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testLast_returnsLastElement()
     {
-        $last = ArrayList::Using('last');
+        $last = Arrays::Using('last');
 
         $this->assertEquals($last($this->testCase), 3);
     }
@@ -113,7 +113,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testLast_undefinedOnEmptyList()
     {
-        $last = ArrayList::Using('last');
+        $last = Arrays::Using('last');
         $this->expectException(EmptyListException::class);
 
         $last([]); // Throws Exception
@@ -124,7 +124,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testLength()
     {
-        $length = ArrayList::Using('length');
+        $length = Arrays::Using('length');
 
         $this->assertEquals($length($this->testCase), 4);
     }
@@ -134,7 +134,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testIndex_returnsElementAtIndex()
     {
-        $index = ArrayList::Using('index');
+        $index = Arrays::Using('index');
 
         $this->assertEquals($index(2, $this->testCase), 2);
     }
@@ -144,7 +144,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testIndex_returnsNullValue()
     {
-        $index = ArrayList::Using('index');
+        $index = Arrays::Using('index');
 
         $this->assertEquals($index(0, [null]), null);
     }
@@ -154,7 +154,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testIndex_throwsExceptionForNoKey()
     {
-        $index = ArrayList::Using('index');
+        $index = Arrays::Using('index');
         $this->expectException(IndexOutOfBoundsException::class);
 
         $index(17, [1, 2, 3]);
@@ -165,7 +165,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function test_mapIndexed()
     {
-        $mapIndexed = ArrayList::Using('mapIndexed');
+        $mapIndexed = Arrays::Using('mapIndexed');
 
         $list = [1, 2, 3];
 
@@ -185,7 +185,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testConcat()
     {
-        $concat = ArrayList::Using('concat');
+        $concat = Arrays::Using('concat');
 
         $this->assertEquals([0, 1, 2, 3, 0, 1, 2, 3], $concat($this->testCase, $this->testCase));
         $this->assertEquals(['foo' => 1, 'bar' => 2], $concat(['foo' => 1], ['bar' => 2]));
@@ -198,7 +198,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testSet()
     {
-        $set = ArrayList::Using('setIndex');
+        $set = Arrays::Using('setIndex');
 
         $this->assertEquals($set(2, 0, $this->testCase), [0, 1, 0, 3]);
         $this->assertEquals($this->testCase, [0, 1, 2, 3]);
@@ -209,7 +209,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testKeys()
     {
-        $keys = ArrayList::using('keys');
+        $keys = Arrays::using('keys');
 
         $this->assertEquals([0, 1, 2], $keys([5, 5, 5]));
         $this->assertEquals(['foo', 'bar', 'baz'], $keys(['foo' => 1, 'bar' => 2, 'baz' => 3]));
@@ -220,7 +220,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testValues()
     {
-        $values = ArrayList::using('values');
+        $values = Arrays::using('values');
 
         $this->assertEquals([1, 2, 3], $values([1, 2, 3]));
         $this->assertEquals([1, 2, 3], $values(['foo' => 1, 'bar' => 2, 'baz' => 3]));
@@ -231,7 +231,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testFilter()
     {
-        $filter = ArrayList::using('filter');
+        $filter = Arrays::using('filter');
 
         $id = function($a) { return true; };
         $gt = function($b) { return $b >= 2; };
@@ -246,7 +246,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testZipWith()
     {
-        $zipWith = ArrayList::using('zipWith');
+        $zipWith = Arrays::using('zipWith');
 
         $combinator = function($a, $b) { return $a + $b; };
 
@@ -264,7 +264,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testFoldL()
     {
-        $foldl = ArrayList::using('foldl');
+        $foldl = Arrays::using('foldl');
 
         $reducer = function($a, $b) { return $a + $b; };
 
@@ -276,7 +276,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testDrop()
     {
-        $drop = ArrayList::using('drop');
+        $drop = Arrays::using('drop');
 
         $this->assertequals([1, 2, 3], $drop(3, [0, 0, 0, 1, 2, 3]));
         $this->assertequals([1, 2], $drop(0, [1, 2]));
@@ -289,7 +289,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testDropWhile()
     {
-        $dropWhile = ArrayList::using('dropWhile');
+        $dropWhile = Arrays::using('dropWhile');
 
         $lteThree = function($n) { return $n <= 3; };
         $divByTwo = function($n) { return $n % 2 == 0; };
@@ -305,7 +305,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testTake()
     {
-        $take = ArrayList::using('take');
+        $take = Arrays::using('take');
 
         $this->assertEquals([1, 2, 3], $take(3, [1, 2, 3, 4, 5]));
         $this->assertEquals([], $take(0, [1, 2, 3, 4, 5]));
@@ -318,7 +318,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testTakeWhile()
     {
-        $takeWhile = ArrayList::using('takeWhile');
+        $takeWhile = Arrays::using('takeWhile');
 
         $lteThree = function($n) { return $n <= 3; };
         $divByTwo = function($n) { return $n % 2 == 0; };
@@ -332,7 +332,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testReverse()
     {
-        $reverse = ArrayList::using('reverse');
+        $reverse = Arrays::using('reverse');
 
         $arr = [1, 2, 3];
 
@@ -346,7 +346,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testFlatten()
     {
-        $flatten = ArrayList::using('flatten');
+        $flatten = Arrays::using('flatten');
 
         $testCase1 = [1, [2], [[3, 4]], [5, [6]], 7];
         $testCase2 = [1, 2, 3, [[[[[[[]]]]]]]];
@@ -360,7 +360,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testContains()
     {
-        $contains = ArrayList::using('contains');
+        $contains = Arrays::using('contains');
 
         $this->assertEquals(true, $contains(1, [1, 2, 3]));
         $this->assertEquals(false, $contains(5, [1, 2, 3]));
@@ -371,7 +371,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
      */
     public function testReplicate()
     {
-        $replicate = ArrayList::using('replicate');
+        $replicate = Arrays::using('replicate');
 
         $this->assertEquals([1, 1, 1], $replicate(3, 1));
         $this->assertEquals([], $replicate(0, 'foo'));
@@ -383,7 +383,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     public function testGroupBy()
     {
         // Test a simple keygen
-        $groupBy = ArrayList::using('groupBy');
+        $groupBy = Arrays::using('groupBy');
 
         $testCase = [1, 2, 3, 4, 5, 6, 7];
         $correctAnswer = ['even' => [2, 4, 6], 'odd' => [1, 3, 5, 7]];
@@ -398,7 +398,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
         $testCase = [['foo' => 'bar', 'value' => 1], ['foo' => 'bar', 'value' => 2], ['foo' => 'baz', 'value' => 3]];
         $correctAnswer = ['bar' => [['foo' => 'bar', 'value' => 1], ['foo' => 'bar', 'value' => 2]], 'baz' => [['foo' => 'baz', 'value' => 3]]];
 
-        $this->assertEquals($groupBy(ArrayList::index('foo'), $testCase), $correctAnswer);
+        $this->assertEquals($groupBy(Arrays::index('foo'), $testCase), $correctAnswer);
     }
 
     /**
@@ -408,7 +408,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             [1, 2, 4],
-            ArrayList::unique([1, 2, 2, 4])
+            Arrays::unique([1, 2, 2, 4])
         );
     }
 
@@ -419,7 +419,7 @@ class ArrayListTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             [2, 4],
-            ArrayList::takeLast(2, [1, 1, 2, 4])
+            Arrays::takeLast(2, [1, 1, 2, 4])
         );
     }
 }

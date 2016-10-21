@@ -38,7 +38,7 @@ use Vector\Core\Module;
  * @method static sort($comp, $list) Given a function that compares two values, sort an array.
  * @method static takeLast($a, $list) Return the last n items from a list.
  */
-class ArrayList extends Module
+class Arrays extends Module
 {
     /**
      * Cons Operator
@@ -46,10 +46,10 @@ class ArrayList extends Module
      * Given a value and an array, append that value to the end of the array.
      *
      * @example
-     * ArrayList::cons(3, [1, 2]); // [1, 2, 3]
+     * Arrays::cons(3, [1, 2]); // [1, 2, 3]
      *
      * @example
-     * ArrayList::cons(1, []); // [1]
+     * Arrays::cons(1, []); // [1]
      *
      * @type a -> [a] -> [a]
      *
@@ -75,7 +75,7 @@ class ArrayList extends Module
      * $keyGen = function($a) {
      *     return ($a <= 3) ? 'small' : 'big';
      * };
-     * ArrayList::groupBy($keyGen, $testCase); // ['small' => [1, 2, 3], 'big' => [4, 5, 6, 7]]
+     * Arrays::groupBy($keyGen, $testCase); // ['small' => [1, 2, 3], 'big' => [4, 5, 6, 7]]
      *
      * @type (a -> String) -> [a] -> [[a]]
      *
@@ -85,7 +85,7 @@ class ArrayList extends Module
      */
     protected static function __groupBy($keyGen, $list)
     {
-        return self::foldl(function($group, $element) use ($keyGen) {
+        return self::foldl(function ($group, $element) use ($keyGen) {
             $group[$keyGen($element)][] = $element;
             return $group;
         }, [], $list);
@@ -99,13 +99,13 @@ class ArrayList extends Module
      * be index 0. If an empty array is given, head throws an Exception.
      *
      * @example
-     * ArrayList::head([1, 2, 3]); // 1
+     * Arrays::head([1, 2, 3]); // 1
      *
      * @example
-     * ArrayList::head(['a' => 1, 'b' => 2]); // 1
+     * Arrays::head(['a' => 1, 'b' => 2]); // 1
      *
      * @example
-     * ArrayList::head([]); // Exception thrown
+     * Arrays::head([]); // Exception thrown
      *
      * @type [a] -> a
      *
@@ -129,7 +129,7 @@ class ArrayList extends Module
      * result of calling the given function on each element of the original list.
      *
      * @example
-     * ArrayList::map($add(1), [1, 2, 3]); // [2, 3, 4]
+     * Arrays::map($add(1), [1, 2, 3]); // [2, 3, 4]
      *
      * @type (a -> b) -> [a] -> [b]
      *
@@ -151,7 +151,7 @@ class ArrayList extends Module
      * mapped over.
      *
      * @example
-     * ArrayList::mapIndexed($filterEvenIndexes, [1, 2, 3]); // [null, 2, null]
+     * Arrays::mapIndexed($filterEvenIndexes, [1, 2, 3]); // [null, 2, null]
      *
      * @type (a -> b -> c) -> [a] -> [c]
      *
@@ -174,7 +174,7 @@ class ArrayList extends Module
      *
      * @example
      * $comp = function($a, $b) { return $a <=> $b; };
-     * ArrayList::sort($comp, [3, 2, 1]);
+     * Arrays::sort($comp, [3, 2, 1]);
      *
      * @type (a -> a -> Int) -> [a] -> [a]
      *
@@ -197,10 +197,10 @@ class ArrayList extends Module
      * is given, returns an empty array.
      *
      * @example
-     * ArrayList::([1, 2, 3]); // [2, 3]
+     * Arrays::([1, 2, 3]); // [2, 3]
      *
      * @example
-     * ArrayList::(['a' => 1, 'b' => 2]); // ['b' => 2];
+     * Arrays::(['a' => 1, 'b' => 2]); // ['b' => 2];
      *
      * @type [a] -> [a]
      *
@@ -220,10 +220,10 @@ class ArrayList extends Module
      * returns an empty array.
      *
      * @example
-     * ArrayList::init([1, 2, 3]); // [1, 2]
+     * Arrays::init([1, 2, 3]); // [1, 2]
      *
      * @example
-     * ArrayList::init(['a' => 1, 'b' => 2]); // ['a' => 1];
+     * Arrays::init(['a' => 1, 'b' => 2]); // ['a' => 1];
      *
      * @type [a] -> [a]
      *
@@ -242,13 +242,13 @@ class ArrayList extends Module
      * arrays as well as 'regular' arrays. If an empty array is given, throws an exception.
      *
      * @example
-     * ArrayList::last([1, 2, 3]); // 3
+     * Arrays::last([1, 2, 3]); // 3
      *
      * @example
-     * ArrayList::last(['a' => 1, 'b' => 2]); // 2
+     * Arrays::last(['a' => 1, 'b' => 2]); // 2
      *
      * @example
-     * ArrayList::last([]); // Exception thrown
+     * Arrays::last([]); // Exception thrown
      *
      * @type [a] -> a
      *
@@ -271,10 +271,10 @@ class ArrayList extends Module
      * Returns the length of a list or array. Wraps php `count` function.
      *
      * @example
-     * ArrayList::length([1, 2, 3]); // 3
+     * Arrays::length([1, 2, 3]); // 3
      *
      * @example
-     * ArrayList::length(['a' => 1, 'b' => 2]); // 2
+     * Arrays::length(['a' => 1, 'b' => 2]); // 2
      *
      * @type [a] -> a
      *
@@ -293,13 +293,13 @@ class ArrayList extends Module
      * if the given index does not exist in the list.
      *
      * @example
-     * ArrayList::index(0, [1, 2, 3]); // 1
+     * Arrays::index(0, [1, 2, 3]); // 1
      *
      * @example
-     * ArrayList::index('foo', ['bar' => 1, 'foo' => 2]); // 2
+     * Arrays::index('foo', ['bar' => 1, 'foo' => 2]); // 2
      *
      * @example
-     * ArrayList::index('baz', [1, 2, 3]); // Exception thrown
+     * Arrays::index('baz', [1, 2, 3]); // Exception thrown
      *
      * @type Int -> [a] -> a
      *
@@ -333,13 +333,13 @@ class ArrayList extends Module
      * @note 'filter' preserves the keys of a key/value array - it only looks at values
      *
      * @example
-     * ArrayList::filter(function($a) { return $a > 2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function
+     * Arrays::filter(function($a) { return $a > 2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function
      *
      * @example
-     * ArrayList::filter(function($a) { return $a > 2; }, ['foo' => 1, 'bar' => 3]); // ['foo' => 1]
+     * Arrays::filter(function($a) { return $a > 2; }, ['foo' => 1, 'bar' => 3]); // ['foo' => 1]
      *
      * @example
-     * ArrayList::filter(Math::lte(2), [1, 2, 3, 4, 5]); // [1, 2], using `lte` from the Math module
+     * Arrays::filter(Math::lte(2), [1, 2, 3, 4, 5]); // [1, 2], using `lte` from the Math module
      *
      * @type (a -> Bool) -> [a] -> [a]
      *
@@ -380,10 +380,10 @@ class ArrayList extends Module
      * for non key/value arrays.
      *
      * @example
-     * ArrayList::keys(['a' => 1, 'b' => 2]); // ['a', 'b']
+     * Arrays::keys(['a' => 1, 'b' => 2]); // ['a', 'b']
      *
      * @example
-     * ArrayList::keys([1, 2, 3]); // [0, 1, 2]
+     * Arrays::keys([1, 2, 3]); // [0, 1, 2]
      *
      * @type [a] -> [b]
      *
@@ -401,10 +401,10 @@ class ArrayList extends Module
      * Returns the values of an associative key/value array.
      *
      * @example
-     * ArrayList::values(['a' => 1, 'b' => 2]); // [1, 2]
+     * Arrays::values(['a' => 1, 'b' => 2]); // [1, 2]
      *
      * @example
-     * ArrayList::values([1, 2, 3]); // [1, 2, 3]
+     * Arrays::values([1, 2, 3]); // [1, 2, 3]
      *
      * @type [a] -> [a]
      *
@@ -424,10 +424,10 @@ class ArrayList extends Module
      * so repeated keys will be overwritten.
      *
      * @example
-     * ArrayList::concat([1, 2], [2, 3]); // [1, 2, 2, 3]
+     * Arrays::concat([1, 2], [2, 3]); // [1, 2, 2, 3]
      *
      * @example
-     * ArrayList::concat(['a' => 1, 'b' => 2], ['a' => 'foo', 'c' => 3]); // ['a' => 'foo', 'b' => 2, 'c' => 3]
+     * Arrays::concat(['a' => 1, 'b' => 2], ['a' => 'foo', 'c' => 3]); // ['a' => 'foo', 'b' => 2, 'c' => 3]
      *
      * @type [a] -> [a] -> [a]
      *
@@ -447,10 +447,10 @@ class ArrayList extends Module
      * The value is set in an immutable way, so the original array is not modified.
      *
      * @example
-     * ArrayList::setValue(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]
+     * Arrays::setValue(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]
      *
      * @example
-     * ArrayList::setValue('c', 3, ['a' => 1, 'b' => 2]); // ['a' => 1, 'b' => 2, 'c' => 3]
+     * Arrays::setValue('c', 3, ['a' => 1, 'b' => 2]); // ['a' => 1, 'b' => 2, 'c' => 3]
      *
      * @type a -> b -> [b] -> [b]
      *
@@ -474,13 +474,13 @@ class ArrayList extends Module
      *
      * @example
      * $add = function($a, $b) { return $a + $b; };
-     * ArrayList::foldl(Math::add(), 0, [1, 2, 3]); // 6
+     * Arrays::foldl(Math::add(), 0, [1, 2, 3]); // 6
      *
      * @example
-     * ArrayList::foldl(Logic::and(), True, [True, True]); // True
+     * Arrays::foldl(Logic::and(), True, [True, True]); // True
      *
      * @example
-     * ArrayList::foldl(Logic::and(), True, [True, True, False]); // False
+     * Arrays::foldl(Logic::and(), True, [True, True, False]); // False
      *
      * @type (b -> a -> b) -> b -> [a] -> b
      *
@@ -503,11 +503,11 @@ class ArrayList extends Module
      *
      * @example
      * $combinator = function($a, $b) { return $a + $b; };
-     * ArrayList::zipWith($combinator, [1, 2, 3], [0, 8, -1]); // [1, 10, 2]
+     * Arrays::zipWith($combinator, [1, 2, 3], [0, 8, -1]); // [1, 10, 2]
      *
      * @example
      * $combinator = function($a, $b) { return $a - $b; };
-     * ArrayList::zipWith($combinator, [0], [1, 2, 3]); // [-1]
+     * Arrays::zipWith($combinator, [0], [1, 2, 3]); // [-1]
      *
      * @type (a -> b -> c) -> [a] -> [b] -> [c]
      *
@@ -534,7 +534,7 @@ class ArrayList extends Module
      * are not the same length, the resultant array will always be the same length as the shorter array.
      *
      * @example
-     * ArrayList::zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]
+     * Arrays::zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]
      *
      * @type [a] -> [b] -> [(a, b)]
      *
@@ -555,7 +555,7 @@ class ArrayList extends Module
      * but returns the elements that fail as well.
      *
      * @example
-     * ArrayList::bifurcate($isEven, [1, 2, 3, 4, 5]); // [[2, 4], [1, 3, 5]]
+     * Arrays::bifurcate($isEven, [1, 2, 3, 4, 5]); // [[2, 4], [1, 3, 5]]
      *
      * @type (a -> Bool) -> [a] -> ([a], [a])
      *
@@ -586,10 +586,10 @@ class ArrayList extends Module
      * the elements. If n is greater than the length of the array, returns an empty array.
      *
      * @example
-     * ArrayList::drop(2, [1, 2, 3, 4]); // [3, 4]
+     * Arrays::drop(2, [1, 2, 3, 4]); // [3, 4]
      *
      * @example
-     * ArrayList::drop(4, [1, 2]); // []
+     * Arrays::drop(4, [1, 2]); // []
      *
      * @type Int -> [a] -> [a]
      *
@@ -611,7 +611,7 @@ class ArrayList extends Module
      *
      * @example
      * $greaterThanOne = function($n) { return $n > 1; };
-     * ArrayList::dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]
+     * Arrays::dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]
      *
      * @type (a -> Bool) -> [a] -> [a]
      *
@@ -640,7 +640,7 @@ class ArrayList extends Module
      * array if n is greater than the array length.
      *
      * @example
-     * ArrayList::take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]
+     * Arrays::take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]
      *
      * @type Int -> [a] -> [a]
      *
@@ -661,7 +661,7 @@ class ArrayList extends Module
      *
      * @example
      * $greaterThanOne = function($n) { return $n > 1; };
-     * ArrayList::takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]
+     * Arrays::takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]
      *
      * @type (a -> Bool) -> [a] -> [a]
      *
@@ -691,7 +691,7 @@ class ArrayList extends Module
      * Flip the order of a given array. Does not modify the original array.
      *
      * @example
-     * ArrayList::reverse([1, 2, 3]); // [3, 2, 1]
+     * Arrays::reverse([1, 2, 3]); // [3, 2, 1]
      *
      * @type [a] -> [a]
      *
@@ -710,7 +710,7 @@ class ArrayList extends Module
      * arrays of arbitrary dimension.
      *
      * @example
-     * ArrayList::flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]
+     * Arrays::flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]
      *
      * @type [a] -> [b]
      *
@@ -736,10 +736,10 @@ class ArrayList extends Module
      * it does not.
      *
      * @example
-     * ArrayList::contains(1, [1, 2, 3]); // true
+     * Arrays::contains(1, [1, 2, 3]); // true
      *
      * @example
-     * ArrayList::contains('a', ['b', 'c', 'd']); // false
+     * Arrays::contains('a', ['b', 'c', 'd']); // false
      *
      * @type a -> [a] -> Bool
      *
@@ -759,7 +759,7 @@ class ArrayList extends Module
      * the results into an array of length n.
      *
      * @example
-     * ArrayList::replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']
+     * Arrays::replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']
      *
      * @type Int -> a -> [a]
      *
@@ -784,7 +784,7 @@ class ArrayList extends Module
      * Given a list, return only unique values
      *
      * @example
-     * ArrayList::unique([1, 2, 2, 4]); // [1, 2, 4]
+     * Arrays::unique([1, 2, 2, 4]); // [1, 2, 4]
      *
      * @type [a] -> [a]
      *
@@ -802,7 +802,7 @@ class ArrayList extends Module
      * Return the last n items from a list
      *
      * @example
-     * ArrayList::takeLast(2, [1, 2, 2, 4]); // [2, 4]
+     * Arrays::takeLast(2, [1, 2, 2, 4]); // [2, 4]
      *
      * @type Int -> [a] -> [a]
      *

@@ -6,7 +6,7 @@ use Closure;
 use Traversable;
 use Vector\Core\Module;
 use Vector\Lib\Lambda;
-use Vector\Lib\ArrayList;
+use Vector\Lib\Arrays;
 use Vector\Typeclass\FunctorInterface;
 
 /**
@@ -28,7 +28,7 @@ abstract class Functor extends Module
          * If $container is a simple array, just defer to array_map
          */
         if (is_array($container)) {
-            return ArrayList::map($f, $container);
+            return Arrays::map($f, $container);
         }
 
         /**

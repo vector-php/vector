@@ -30,7 +30,7 @@ pages:
             -
                 Lib:
                     -
-                        ArrayList: auto-generate/Vector/Lib/ArrayList.md
+                        Arrays: auto-generate/Vector/Lib/Arrays.md
                     -
                         Lambda: auto-generate/Vector/Lib/Lambda.md
                     -
@@ -38,7 +38,7 @@ pages:
                     -
                         Math: auto-generate/Vector/Lib/Math.md
                     -
-                        Object: auto-generate/Vector/Lib/Object.md
+                        Objects: auto-generate/Vector/Lib/Object.md
                     -
                         Strings: auto-generate/Vector/Lib/Strings.md
             -

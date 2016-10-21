@@ -13,12 +13,12 @@ It gives you useful helpers for composing simple functions into more complex one
 ## Show Me Some Code
 Autoloading Functions? A snap.
 ```
-use Vector\Lib\ArrayList;
+use Vector\Lib\Arrays;
 ```
 
 Currying? Completely free.
 ```
-$addOne = ArrayList::map(function($a) { return $a + 1; });
+$addOne = Arrays::map(function($a) { return $a + 1; });
 $addOne([1, 2, 3]); // [2, 3, 4]
 ```
 

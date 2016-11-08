@@ -3,7 +3,12 @@
 namespace Vector\Test\Control;
 
 use Vector\Control\Pattern;
+use Vector\Control\Type;
 
+/**
+ * Class PatternTest
+ * @package Vector\Test\Control
+ */
 class PatternTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -31,5 +36,29 @@ class PatternTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(2, $f(2, 2));
         $this->assertEquals(1, $f(1));
+    }
+
+    public function testThatItMatchesOnType()
+    {
+        $f = function ($a) {
+            /** @noinspection PhpParamsInspection */
+            return Pattern::match([
+                [
+                    Type::string(),
+                    function() {
+                        return 1;
+                    }
+                ],
+                [
+                    Type::int(),
+                    function() {
+                        return 2;
+                    }
+                ]
+            ])(...func_get_args());
+        };
+
+        $this->assertEquals(1, $f('hello'));
+        $this->assertEquals(2, $f(1));
     }
 }

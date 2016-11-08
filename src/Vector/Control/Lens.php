@@ -8,8 +8,8 @@ use Vector\Data\Identity;
 use Vector\Data\Constant;
 
 use Vector\Lib\Lambda;
-use Vector\Lib\ArrayList;
-use Vector\Lib\Object;
+use Vector\Lib\Arrays;
+use Vector\Lib\Objects;
 
 /**
  * Class Lens
@@ -95,7 +95,7 @@ class Lens extends Module
         });
 
         /** @noinspection PhpParamsInspection */
-        $indexLens = self::makeLens(ArrayList::index(), $arraySetter);
+        $indexLens = self::makeLens(Arrays::index(), $arraySetter);
 
         return $indexLens($index);
     }
@@ -109,7 +109,7 @@ class Lens extends Module
         });
 
         /** @noinspection PhpParamsInspection */
-        $propLens = self::makeLens(Object::getProp(), $objectSetter);
+        $propLens = self::makeLens(Objects::getProp(), $objectSetter);
 
         return $propLens($prop);
     }

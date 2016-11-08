@@ -1,6 +1,6 @@
 <?php
 
-namespace Vector\Control\Exception;
+namespace Vector\Core\Exception;
 
 /**
  * Class IncompletePatternMatchException

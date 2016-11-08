@@ -2,13 +2,11 @@
 
 namespace Vector\Control;
 
-use Vector\Control\Exception\IncompletePatternMatchException;
+use Vector\Core\Exception\IncompletePatternMatchException;
 use Vector\Core\Module;
 
 use Vector\Lib\{
-    ArrayList,
-    Logic,
-    Lambda
+    Arrays, Logic, Lambda
 };
 
 /**
@@ -56,11 +54,11 @@ abstract class Pattern extends Module
             $patternApplies = function ($pattern) use ($args) {
                 /** @noinspection PhpParamsInspection */
                 return Logic::all(
-                    ArrayList::zipWith(
+                    Arrays::zipWith(
                         Lambda::apply(),
-                        ArrayList::map(
+                        Arrays::map(
                             self::make(),
-                            ArrayList::init($pattern)
+                            Arrays::init($pattern)
                         ),
                         $args
                     )
@@ -70,9 +68,9 @@ abstract class Pattern extends Module
             try {
                 /** @noinspection PhpParamsInspection */
                 $getMatchedImplementation = Lambda::compose(
-                    ArrayList::last(),
-                    ArrayList::first($patternApplies),
-                    ArrayList::filter(function ($pattern) use ($args) {
+                    Arrays::last(),
+                    Arrays::first($patternApplies),
+                    Arrays::filter(function ($pattern) use ($args) {
                         return (count($pattern) - 1) === (count($args));
                     })
                 );
@@ -88,23 +86,27 @@ abstract class Pattern extends Module
     }
 
     /**
-     * @param $pattern
      * @param $subject
+     * @param $pattern
      * @return bool
+     * @internal param $pattern
+     * @internal param $subject
      */
-    protected static function __number($pattern, $subject)
+    protected static function __number($subject, $pattern)
     {
-        return is_numeric($subject) && $pattern == $subject;
+        return Type::number($subject) && $pattern === $subject;
     }
 
     /**
-     * @param $pattern
      * @param $subject
+     * @param $pattern
      * @return bool
+     * @internal param $pattern
+     * @internal param $subject
      */
-    protected static function __string($pattern, $subject)
+    protected static function __string($subject, $pattern)
     {
-        return is_string($subject) && $pattern == $subject;
+        return Type::string($subject) && $pattern === $subject;
     }
 
     /**

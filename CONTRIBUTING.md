@@ -17,6 +17,11 @@
 `buildTestEnvironments` will build the Docker environments, and `runTests` will execute them. You only need to run `buildTestEnvironments` the first time you run them, and any time
 a new PHP environment is added to the testing environments directory.
 
+## Check Coverage
+```
+phpdbg -qrr ./vendor/bin/phpunit --coverage-text
+```
+
 ## Doc Blocks
 Your docblocks should follow this style, since they're used in generating the documentation.
 

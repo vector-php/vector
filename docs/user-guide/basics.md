@@ -43,14 +43,14 @@ and for their scoped nature.
 Functions in Vector are organized into modules, which each have some related functionality or 'theme.' Simply call the function
 you want to use as though it were a normal static function on the module in question.
 
-For instance, if we want to use in the Vector wrapper function for `count` called `length` from the `ArrayList` module, we would
+For instance, if we want to use in the Vector wrapper function for `count` called `length` from the `Arrays` module, we would
 write:
 
 ```php
-Vector\Lib\ArrayList::length([1, 2, 3]); // 3
+Vector\Lib\Arrays::length([1, 2, 3]); // 3
 ```
 
-If you look at the ArrayList class in Vector\Lib, you'll notice that there is not actually a `length` function defined anywhere. Rather, there's a `__length`
+If you look at the Arrays class in Vector\Lib, you'll notice that there is not actually a `length` function defined anywhere. Rather, there's a `__length`
 function that looks something like this:
 
 ```php
@@ -66,7 +66,7 @@ It's important to note that calling a function on a module with no arguments wil
 when invoked. For instance:
 
 ```php
-$length = Vector\Lib\ArrayList::length();
+$length = Vector\Lib\Arrays::length();
 $length([1, 2, 3]); // 3
 ```
 
@@ -161,13 +161,13 @@ can be mixed and matched to create more complex functions from very simple compo
 ## Lifting
 
 Let's use our `$toFahrenheit` function from before, but imagine instead that we want to apply it to a list of temperatures. Instead of looping over the
-list in a procedural way, let's use `map` from the ArrayList module.
+list in a procedural way, let's use `map` from the Arrays module.
 
 ```php
 // Our list of temperatures
 $data = [50.0, 176.0, 212.0];
 
-ArrayList::map($toFahrenheit, $data); // Returns [10, 80, 100]
+Arrays::map($toFahrenheit, $data); // Returns [10, 80, 100]
 ```
 
 If you've ever used PHP's `array_map` before, you should recognize what's going on. `map` is taking a function with one input and one output, and sequentially
@@ -185,7 +185,7 @@ them one degree higher.
 // The Math module provides a mean function, and we're using $add and $toFahrenheit from above
 $correctedMeanTemp = Lambda::compose(
     Math::mean(),
-    ArrayList::map(
+    Arrays::map(
         Lambda::compose($toFahrenheit, $add(1))
     )
 );

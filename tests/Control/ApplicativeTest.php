@@ -4,8 +4,9 @@ namespace Vector\Test\Control;
 
 use Vector\Control\Applicative;
 use Vector\Control\Functor;
+use Vector\Core\Module;
 use Vector\Data\Identity;
-use Vector\Lib\ArrayList;
+use Vector\Lib\Arrays;
 use Vector\Lib\Math;
 
 /**
@@ -42,6 +43,20 @@ class ApplicativeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * LiftA3 calls off to pure and apply for array arguments - test
+     * that it hands arrays off properly
+     */
+    public function testLiftA3_arrayArgument()
+    {
+        $liftA3 = Applicative::using('liftA3');
+        $add3 = Module::curry(function ($a, $b, $c) {
+            return $a + $b + $c;
+        });
+
+        $this->assertEquals($liftA3([], $add3, [1, 2], [2], [3]), [6, 7]);
+    }
+
+    /**
      * Apply should operator applicative instances
      * The applicative instance is effectively a vector cross product
      */
@@ -51,7 +66,7 @@ class ApplicativeTest extends \PHPUnit_Framework_TestCase
         $add  = Math::using('add');
 
         /** @noinspection PhpParamsInspection */
-        $sum = ArrayList::foldl(
+        $sum = Arrays::foldl(
             $liftA2(Identity::class, $add),
             Identity::identity(0),
             [Identity::identity(1), Identity::identity(2), Identity::identity(3)]

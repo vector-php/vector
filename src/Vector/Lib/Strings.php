@@ -37,7 +37,7 @@ class Strings extends Module
      * @param  String $original Thing to append to
      * @return String           Concatenated strings
      */
-    protected static function __concat($addition, $original)
+    protected static function __concat(string $addition, string $original) : string
     {
         return $original . $addition;
     }
@@ -64,10 +64,11 @@ class Strings extends Module
      * @param  String $string Thing to split into pieces
      * @return array          List of chunks from splitting the string
      */
-    protected static function __split($on, $string)
+    protected static function __split(string $on, string $string) : array
     {
-        if ($on === '')
+        if ($on === '') {
             return str_split($string);
+        }
 
         return array_filter(explode($on, $string));
     }
@@ -90,7 +91,7 @@ class Strings extends Module
      * @param  String $str    String to run test on
      * @return Bool           Whether or not the string starts with the substring
      */
-    protected static function __startsWith($subStr, $str)
+    protected static function __startsWith(string $subStr, string $str) : bool
     {
         return substr($str, 0, strlen($subStr)) === $subStr;
     }
@@ -108,7 +109,7 @@ class Strings extends Module
      * @param  String $str Original string
      * @return String      Lowercase string
      */
-    protected static function __toLowercase($str)
+    protected static function __toLowercase(string $str) : string
     {
         return strtolower($str);
     }
@@ -126,7 +127,7 @@ class Strings extends Module
      * @param  String $str Original string
      * @return String      Uppercase string
      */
-    protected static function __toUppercase($str)
+    protected static function __toUppercase(string $str) : string
     {
         return strtoupper($str);
     }
@@ -145,7 +146,7 @@ class Strings extends Module
      * @param  String $str string to trim
      * @return string
      */
-    protected static function __trim($str)
+    protected static function __trim(string $str) : string
     {
         return trim($str);
     }
@@ -168,7 +169,7 @@ class Strings extends Module
      * @param  String $string string to be chomped
      * @return string
      */
-    protected static function __lchomp($toChomp, $string)
+    protected static function __lchomp(string $toChomp, string $string) : string
     {
         $length = strlen($toChomp);
 
@@ -197,7 +198,7 @@ class Strings extends Module
      * @param  String $string string to be chomped
      * @return string
      */
-    protected static function __rchomp($toChomp, $string)
+    protected static function __rchomp(string $toChomp, string $string) : string
     {
         $length = strlen($toChomp);
 
@@ -226,9 +227,10 @@ class Strings extends Module
      * @param  String $string string to be chomped
      * @return string
      */
-    protected static function __chomp($toChomp, $string)
+    protected static function __chomp(string $toChomp, string $string) : string
     {
-        $chomp = Lambda::compose(self::lChomp($toChomp), self::rChomp($toChomp));
+        /** @noinspection PhpParamsInspection */
+        $chomp = Lambda::compose(self::lchomp($toChomp), self::rchomp($toChomp));
 
         return $chomp($string);
     }
@@ -251,7 +253,7 @@ class Strings extends Module
      * @param  array  $string List of strings to join together
      * @return String         Joined string based on delimiter
      */
-    protected static function __join($on, $string)
+    protected static function __join(string $on, array $string) : string
     {
         return implode($on, $string);
     }
@@ -264,13 +266,14 @@ class Strings extends Module
      * @example
      * Strings::replace('test', 'passes', 'this test']); // 'this passes'
      *
-     * @type String -> String -> String
-     *
      * @param  String $substring Substring to find
+     * @param $replacement
      * @param  String $string Replacement string
      * @return String $string Result after replacement
+     * @internal param String $ -> String -> String
+     *
      */
-    protected static function __replace($substring, $replacement, $string)
+    protected static function __replace(string $substring, string $replacement, string $string) : string
     {
         return str_replace($substring, $replacement, $string);
     }

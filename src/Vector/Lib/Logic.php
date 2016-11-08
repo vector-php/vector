@@ -4,7 +4,7 @@ namespace Vector\Lib;
 
 use Vector\Core\Module;
 
-use Vector\Lib\ArrayList;
+use Vector\Lib\Arrays;
 
 /**
  * @method static callable orCombinator() orCombinator($fs, $a)
@@ -47,7 +47,7 @@ class Logic extends Module
      */
     protected static function __orCombinator(array $fs, $a)
     {
-        return self::any(ArrayList::map(function ($c) use ($a) {
+        return self::any(Arrays::map(function ($c) use ($a) {
             return $c($a);
         }, $fs));
     }
@@ -74,7 +74,7 @@ class Logic extends Module
      */
     protected static function __andCombinator(array $fs, $a)
     {
-        return self::all(ArrayList::map(function ($c) use ($a) {
+        return self::all(Arrays::map(function ($c) use ($a) {
             return $c($a);
         }, $fs));
     }
@@ -340,7 +340,7 @@ class Logic extends Module
     protected static function __all($arr)
     {
         /** @noinspection PhpParamsInspection */
-        return ArrayList::foldl(self::logicalAnd(), true, $arr);
+        return Arrays::foldl(self::logicalAnd(), true, $arr);
     }
 
     /**
@@ -362,6 +362,6 @@ class Logic extends Module
     protected static function __any($arr)
     {
         /** @noinspection PhpParamsInspection */
-        return ArrayList::foldl(self::logicalOr(), false, $arr);
+        return Arrays::foldl(self::logicalOr(), false, $arr);
     }
 }

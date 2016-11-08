@@ -13,7 +13,7 @@ use Vector\Euclid\Doc\ModuleDoc;
 use Vector\Control\Lens;
 use Vector\Control\Functor;
 use Vector\Data\Either;
-use Vector\Lib\ArrayList;
+use Vector\Lib\Arrays;
 use Vector\Lib\Strings;
 use Vector\Lib\Lambda;
 
@@ -50,7 +50,7 @@ class GenerateDocumentationCommand extends Command
         $namespaceToPath = Lambda::compose(Strings::concat('.md'), Strings::join('/'), Strings::split('\\'));
 
         // Given a fully qualified namespace, create the containing directory
-        $namespaceToDir = Lambda::compose(Strings::join('/'), ArrayList::init(), Strings::split('\\'));
+        $namespaceToDir = Lambda::compose(Strings::join('/'), Arrays::init(), Strings::split('\\'));
 
         // A tree that represents the organization of the modules we're generating documentation for
         $moduleDirectory = [];
@@ -69,7 +69,7 @@ class GenerateDocumentationCommand extends Command
             );
 
             // Sort the functions in the docs alphabetically
-            $functions = ArrayList::sort(function($fA, $fB) {
+            $functions = Arrays::sort(function($fA, $fB) {
                 return $fA->properName() <=> $fB->properName();
             }, $moduleDoc->getFunctionDocs());
 
@@ -199,7 +199,7 @@ class GenerateDocumentationCommand extends Command
         if (!is_array($dict))
             return $dict;
 
-        return ArrayList::mapIndexed(function($v, $k) {
+        return Arrays::mapIndexed(function($v, $k) {
             return [$k => $this->dictToList($v)];
         }, $dict);
     }

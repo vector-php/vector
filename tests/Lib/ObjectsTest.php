@@ -3,7 +3,7 @@
 namespace Vector\Test\Lib;
 
 use stdClass;
-use Vector\Lib\Object;
+use Vector\Lib\Objects;
 use Vector\Test\Control\Stub\TestObject;
 
 /**
@@ -17,7 +17,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsInstanceOf()
     {
-        $isInstanceOf = Object::using('isInstanceOf');
+        $isInstanceOf = Objects::using('isInstanceOf');
 
         $this->assertTrue($isInstanceOf(\stdClass::class, new \stdClass()));
         $this->assertFalse($isInstanceOf('nope', new \stdClass()));
@@ -31,7 +31,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
         $obj = new \stdClass();
         $obj->test = 'works';
 
-        self::assertEquals('works', Object::getProp('test', $obj));
+        self::assertEquals('works', Objects::getProp('test', $obj));
     }
 
     /**
@@ -43,7 +43,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
         $obj = new \stdClass();
         $obj->test = 'works';
 
-        Object::getProp('bad', $obj);
+        Objects::getProp('bad', $obj);
     }
 
     /**
@@ -55,7 +55,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
         $obj = new \stdClass();
         $obj->test = null;
 
-        Object::getProp('test', $obj);
+        Objects::getProp('test', $obj);
     }
 
     /**
@@ -63,7 +63,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetProp()
     {
-        $obj = Object::setProp('test', 'works', new \stdClass());
+        $obj = Objects::setProp('test', 'works', new \stdClass());
 
         self::assertEquals('works', $obj->test);
     }
@@ -73,7 +73,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvokeMethod()
     {
-        self::assertEquals('works', Object::invokeMethod('getValue', new TestObject()));
+        self::assertEquals('works', Objects::invokeMethod('getValue', new TestObject()));
     }
 
     /**
@@ -85,7 +85,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
         $object->a = 'a';
         $object->b = 'b';
 
-        $assigned = Object::assign(['a' => 0, 'b' => 1], $object);
+        $assigned = Objects::assign(['a' => 0, 'b' => 1], $object);
 
         $shouldBe = new stdClass();
         $shouldBe->a = 0;

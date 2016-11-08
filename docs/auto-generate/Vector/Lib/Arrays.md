@@ -1,4 +1,4 @@
-## bifurcate[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L546)
+## bifurcate[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L546)
 
 __Array Bifurcation__ :: (a -> Bool) -> [a] -> ([a], [a])
 
@@ -7,12 +7,12 @@ of elements that pass the test, and another array of elements that don't. Simila
 but returns the elements that fail as well.
 
 ```
-ArrayList::bifurcate($isEven, [1, 2, 3, 4, 5]); // [[2, 4], [1, 3, 5]]
+Arrays::bifurcate($isEven, [1, 2, 3, 4, 5]); // [[2, 4], [1, 3, 5]]
 ```
 
 ---
 
-## concat[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L417)
+## concat[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L417)
 
 __Array Concatenation__ :: [a] -> [a] -> [a]
 
@@ -21,26 +21,26 @@ to the end of the first. Defers to php build-in function `array_merge`,
 so repeated keys will be overwritten.
 
 ```
-ArrayList::concat([1, 2], [2, 3]); // [1, 2, 2, 3]
-ArrayList::concat(['a' => 1, 'b' => 2], ['a' => 'foo', 'c' => 3]); // ['a' => 'foo', 'b' => 2, 'c' => 3]
+Arrays::concat([1, 2], [2, 3]); // [1, 2, 2, 3]
+Arrays::concat(['a' => 1, 'b' => 2], ['a' => 'foo', 'c' => 3]); // ['a' => 'foo', 'b' => 2, 'c' => 3]
 ```
 
 ---
 
-## cons[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L60)
+## cons[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L60)
 
 __Cons Operator__ :: a -> [a] -> [a]
 
 Given a value and an array, append that value to the end of the array.
 
 ```
-ArrayList::cons(3, [1, 2]); // [1, 2, 3]
-ArrayList::cons(1, []); // [1]
+Arrays::cons(3, [1, 2]); // [1, 2, 3]
+Arrays::cons(1, []); // [1]
 ```
 
 ---
 
-## contains[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L729)
+## contains[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L729)
 
 __Array Contains Element__ :: a -> [a] -> Bool
 
@@ -48,13 +48,13 @@ Returns true if a given array contains the item to test, or false if
 it does not.
 
 ```
-ArrayList::contains(1, [1, 2, 3]); // true
-ArrayList::contains('a', ['b', 'c', 'd']); // false
+Arrays::contains(1, [1, 2, 3]); // true
+Arrays::contains('a', ['b', 'c', 'd']); // false
 ```
 
 ---
 
-## drop[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L579)
+## drop[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L579)
 
 __Drop Elements__ :: Int -> [a] -> [a]
 
@@ -62,13 +62,13 @@ Given some number n, drop n elements from an input array and return the rest of
 the elements. If n is greater than the length of the array, returns an empty array.
 
 ```
-ArrayList::drop(2, [1, 2, 3, 4]); // [3, 4]
-ArrayList::drop(4, [1, 2]); // []
+Arrays::drop(2, [1, 2, 3, 4]); // [3, 4]
+Arrays::drop(4, [1, 2]); // []
 ```
 
 ---
 
-## dropWhile[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L601)
+## dropWhile[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L601)
 
 __Drop Elements with Predicate__ :: (a -> Bool) -> [a] -> [a]
 
@@ -78,12 +78,12 @@ Return the array without all of those elements.
 
 ```
 $greaterThanOne = function($n) { return $n > 1; };
-ArrayList::dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]
+Arrays::dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]
 ```
 
 ---
 
-## filter[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L350)
+## filter[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L350)
 
 __Filter a List__ :: (a -> Bool) -> [a] -> [a]
 
@@ -92,14 +92,14 @@ either true or false, return a list of all the elements
 of the input list that pass the test.
 
 ```
-ArrayList::filter(function($a) { return $a > 2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function
-ArrayList::filter(function($a) { return $a > 2; }, ['foo' => 1, 'bar' => 3]); // ['foo' => 1]
-ArrayList::filter(Math::lte(2), [1, 2, 3, 4, 5]); // [1, 2], using `lte` from the Math module
+Arrays::filter(function($a) { return $a > 2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function
+Arrays::filter(function($a) { return $a > 2; }, ['foo' => 1, 'bar' => 3]); // ['foo' => 1]
+Arrays::filter(Math::lte(2), [1, 2, 3, 4, 5]); // [1, 2], using `lte` from the Math module
 ```
 
 ---
 
-## flatten[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L699)
+## flatten[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L699)
 
 __Array Flatten__ :: [a] -> [b]
 
@@ -107,12 +107,12 @@ Flattens a nested array structure into a single-dimensional array. Can handle
 arrays of arbitrary dimension.
 
 ```
-ArrayList::flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]
+Arrays::flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]
 ```
 
 ---
 
-## foldl[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L471)
+## foldl[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L471)
 
 __List Fold - From Left__ :: (b -> a -> b) -> b -> [a] -> b
 
@@ -122,14 +122,14 @@ reduce.
 
 ```
 $add = function($a, $b) { return $a + $b; };
-ArrayList::foldl(Math::add(), 0, [1, 2, 3]); // 6
-ArrayList::foldl(Logic::and(), True, [True, True]); // True
-ArrayList::foldl(Logic::and(), True, [True, True, False]); // False
+Arrays::foldl(Math::add(), 0, [1, 2, 3]); // 6
+Arrays::foldl(Logic::and(), True, [True, True]); // True
+Arrays::foldl(Logic::and(), True, [True, True, False]); // False
 ```
 
 ---
 
-## groupBy[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L86)
+## groupBy[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L86)
 
 __Group By__ :: (a -> String) -> [a] -> [[a]]
 
@@ -142,12 +142,12 @@ $testCase = [1, 2, 3, 4, 5, 6, 7];
 $keyGen = function($a) {
     return ($a <= 3) ? 'small' : 'big';
 };
-ArrayList::groupBy($keyGen, $testCase); // ['small' => [1, 2, 3], 'big' => [4, 5, 6, 7]]
+Arrays::groupBy($keyGen, $testCase); // ['small' => [1, 2, 3], 'big' => [4, 5, 6, 7]]
 ```
 
 ---
 
-## head[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L117)
+## head[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L117)
 
 __List Head__ :: [a] -> a
 
@@ -156,14 +156,14 @@ properly for key/value arrays, e.g. arrays whose first element may not necessari
 be index 0. If an empty array is given, head throws an Exception.
 
 ```
-ArrayList::head([1, 2, 3]); // 1
-ArrayList::head(['a' => 1, 'b' => 2]); // 1
-ArrayList::head([]); // Exception thrown
+Arrays::head([1, 2, 3]); // 1
+Arrays::head(['a' => 1, 'b' => 2]); // 1
+Arrays::head([]); // Exception thrown
 ```
 
 ---
 
-## index[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L312)
+## index[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L312)
 
 __List Index__ :: Int -> [a] -> a
 
@@ -171,14 +171,14 @@ Returns the element of a list at the given index. Throws an exception
 if the given index does not exist in the list.
 
 ```
-ArrayList::index(0, [1, 2, 3]); // 1
-ArrayList::index('foo', ['bar' => 1, 'foo' => 2]); // 2
-ArrayList::index('baz', [1, 2, 3]); // Exception thrown
+Arrays::index(0, [1, 2, 3]); // 1
+Arrays::index('foo', ['bar' => 1, 'foo' => 2]); // 2
+Arrays::index('baz', [1, 2, 3]); // Exception thrown
 ```
 
 ---
 
-## init[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L233)
+## init[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L233)
 
 __Initial List Values__ :: [a] -> [a]
 
@@ -187,13 +187,13 @@ key/value arrays as well as 'regular' arrays. If an empty or single-value array 
 returns an empty array.
 
 ```
-ArrayList::init([1, 2, 3]); // [1, 2]
-ArrayList::init(['a' => 1, 'b' => 2]); // ['a' => 1];
+Arrays::init([1, 2, 3]); // [1, 2]
+Arrays::init(['a' => 1, 'b' => 2]); // ['a' => 1];
 ```
 
 ---
 
-## keys[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L372)
+## keys[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L372)
 
 __Array Keys__ :: [a] -> [b]
 
@@ -201,13 +201,13 @@ Returns the keys of an associative key/value array. Returns numerical indexes
 for non key/value arrays.
 
 ```
-ArrayList::keys(['a' => 1, 'b' => 2]); // ['a', 'b']
-ArrayList::keys([1, 2, 3]); // [0, 1, 2]
+Arrays::keys(['a' => 1, 'b' => 2]); // ['a', 'b']
+Arrays::keys([1, 2, 3]); // [0, 1, 2]
 ```
 
 ---
 
-## last[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L260)
+## last[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L260)
 
 __Last List Value__ :: [a] -> a
 
@@ -215,27 +215,27 @@ Returns the last element of an array, e.g. the complement of `init`. Works on ke
 arrays as well as 'regular' arrays. If an empty array is given, throws an exception.
 
 ```
-ArrayList::last([1, 2, 3]); // 3
-ArrayList::last(['a' => 1, 'b' => 2]); // 2
-ArrayList::last([]); // Exception thrown
+Arrays::last([1, 2, 3]); // 3
+Arrays::last(['a' => 1, 'b' => 2]); // 2
+Arrays::last([]); // Exception thrown
 ```
 
 ---
 
-## length[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L284)
+## length[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L284)
 
 __Array Length__ :: [a] -> a
 
 Returns the length of a list or array. Wraps php `count` function.
 
 ```
-ArrayList::length([1, 2, 3]); // 3
-ArrayList::length(['a' => 1, 'b' => 2]); // 2
+Arrays::length([1, 2, 3]); // 3
+Arrays::length(['a' => 1, 'b' => 2]); // 2
 ```
 
 ---
 
-## map[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L140)
+## map[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L140)
 
 __Array Map__ :: (a -> b) -> [a] -> [b]
 
@@ -243,12 +243,12 @@ Given some function and a list of arbitrary length, return a new array that is t
 result of calling the given function on each element of the original list.
 
 ```
-ArrayList::map($add(1), [1, 2, 3]); // [2, 3, 4]
+Arrays::map($add(1), [1, 2, 3]); // [2, 3, 4]
 ```
 
 ---
 
-## mapIndexed[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L162)
+## mapIndexed[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L162)
 
 __Array Map Indexed__ :: (a -> b -> c) -> [a] -> [c]
 
@@ -258,12 +258,12 @@ of the mapping function is the value, and the second argument is the key or inde
 mapped over.
 
 ```
-ArrayList::mapIndexed($filterEvenIndexes, [1, 2, 3]); // [null, 2, null]
+Arrays::mapIndexed($filterEvenIndexes, [1, 2, 3]); // [null, 2, null]
 ```
 
 ---
 
-## replicate[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L749)
+## replicate[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L749)
 
 __Replicate Item__ :: Int -> a -> [a]
 
@@ -271,24 +271,24 @@ Given some integer n and an item to repeat, repeat that item and place
 the results into an array of length n.
 
 ```
-ArrayList::replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']
+Arrays::replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']
 ```
 
 ---
 
-## reverse[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L680)
+## reverse[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L680)
 
 __Array Reverse__ :: [a] -> [a]
 
 Flip the order of a given array. Does not modify the original array.
 
 ```
-ArrayList::reverse([1, 2, 3]); // [3, 2, 1]
+Arrays::reverse([1, 2, 3]); // [3, 2, 1]
 ```
 
 ---
 
-## setIndex[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L441)
+## setIndex[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L441)
 
 __Set Array Value__ :: a -> b -> [b] -> [b]
 
@@ -296,13 +296,13 @@ Sets the value of an array at the given index; works for non-numerical indexes.
 The value is set in an immutable way, so the original array is not modified.
 
 ```
-ArrayList::setValue(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]
-ArrayList::setValue('c', 3, ['a' => 1, 'b' => 2]); // ['a' => 1, 'b' => 2, 'c' => 3]
+Arrays::setValue(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]
+Arrays::setValue('c', 3, ['a' => 1, 'b' => 2]); // ['a' => 1, 'b' => 2, 'c' => 3]
 ```
 
 ---
 
-## sort[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L185)
+## sort[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L185)
 
 __Array Sort__ :: (a -> a -> Int) -> [a] -> [a]
 
@@ -313,12 +313,12 @@ first argument is ordered after the second.
 
 ```
 $comp = function($a, $b) { return $a <=> $b; };
-ArrayList::sort($comp, [3, 2, 1]);
+Arrays::sort($comp, [3, 2, 1]);
 ```
 
 ---
 
-## tail[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L210)
+## tail[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L210)
 
 __List Tail__ :: [a] -> [a]
 
@@ -327,13 +327,13 @@ key/value arrays as well as 'regular' arrays. If an empty array of an array of o
 is given, returns an empty array.
 
 ```
-ArrayList::([1, 2, 3]); // [2, 3]
-ArrayList::(['a' => 1, 'b' => 2]); // ['b' => 2];
+Arrays::([1, 2, 3]); // [2, 3]
+Arrays::(['a' => 1, 'b' => 2]); // ['b' => 2];
 ```
 
 ---
 
-## take[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L630)
+## take[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L630)
 
 __Take Elements__ :: Int -> [a] -> [a]
 
@@ -341,24 +341,24 @@ Given some number n, return the first n elements of a given array. Returns the w
 array if n is greater than the array length.
 
 ```
-ArrayList::take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]
+Arrays::take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]
 ```
 
 ---
 
-## takeLast[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L792)
+## takeLast[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L792)
 
 __takeLast__ :: Int -> [a] -> [a]
 
 Return the last n items from a list
 
 ```
-ArrayList::takeLast(2, [1, 2, 2, 4]); // [2, 4]
+Arrays::takeLast(2, [1, 2, 2, 4]); // [2, 4]
 ```
 
 ---
 
-## takeWhile[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L651)
+## takeWhile[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L651)
 
 __Take Elements with Predicate__ :: (a -> Bool) -> [a] -> [a]
 
@@ -367,37 +367,37 @@ that all pass the test, until the test fails.
 
 ```
 $greaterThanOne = function($n) { return $n > 1; };
-ArrayList::takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]
+Arrays::takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]
 ```
 
 ---
 
-## unique[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L773)
+## unique[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L773)
 
 __Unique__ :: [a] -> [a]
 
 Given a list, return only unique values
 
 ```
-ArrayList::unique([1, 2, 2, 4]); // [1, 2, 4]
+Arrays::unique([1, 2, 2, 4]); // [1, 2, 4]
 ```
 
 ---
 
-## values[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L393)
+## values[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L393)
 
 __Array Values__ :: [a] -> [a]
 
 Returns the values of an associative key/value array.
 
 ```
-ArrayList::values(['a' => 1, 'b' => 2]); // [1, 2]
-ArrayList::values([1, 2, 3]); // [1, 2, 3]
+Arrays::values(['a' => 1, 'b' => 2]); // [1, 2]
+Arrays::values([1, 2, 3]); // [1, 2, 3]
 ```
 
 ---
 
-## zip[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L524)
+## zip[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L524)
 
 __Array Zip__ :: [a] -> [b] -> [(a, b)]
 
@@ -405,12 +405,12 @@ Given two arrays a and b, return a new array where each element is a tuple of a 
 are not the same length, the resultant array will always be the same length as the shorter array.
 
 ```
-ArrayList::zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]
+Arrays::zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]
 ```
 
 ---
 
-## zipWith[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/ArrayList.php#L498)
+## zipWith[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L498)
 
 __Custom Array Zip__ :: (a -> b -> c) -> [a] -> [b] -> [c]
 
@@ -420,9 +420,9 @@ always be the same length as the shorter array, i.e. the zip stops when it runs 
 
 ```
 $combinator = function($a, $b) { return $a + $b; };
-ArrayList::zipWith($combinator, [1, 2, 3], [0, 8, -1]); // [1, 10, 2]
+Arrays::zipWith($combinator, [1, 2, 3], [0, 8, -1]); // [1, 10, 2]
 $combinator = function($a, $b) { return $a - $b; };
-ArrayList::zipWith($combinator, [0], [1, 2, 3]); // [-1]
+Arrays::zipWith($combinator, [0], [1, 2, 3]); // [-1]
 ```
 
 ---

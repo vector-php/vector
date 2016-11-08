@@ -22,12 +22,18 @@ use Vector\Lib\{
  */
 abstract class Pattern extends Module
 {
+    const _ = 'ANY_PATTERN_PLACEHOLDER_CHARACTER';
+
     /**
      * @param $pattern
      * @return mixed
      */
     protected static function __make($pattern)
     {
+        if ($pattern === self::_) {
+            return self::any();
+        }
+
         switch (gettype($pattern)) {
             case 'string':
                 return self::string($pattern);

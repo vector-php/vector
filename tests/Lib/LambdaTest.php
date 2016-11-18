@@ -4,6 +4,7 @@ namespace Vector\Test\Lib;
 
 use Vector\Core\Module;
 use Vector\Lib\Lambda;
+use Vector\Lib\Math;
 
 class LambdaTest extends \PHPUnit_Framework_TestCase
 {
@@ -103,5 +104,12 @@ class LambdaTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(4, $subtract(2, 6)); // 6 - 2
         $this->assertEquals(-4, $flippedSubtract(2, 6)); // 2 - 6
+    }
+
+    public function testDot()
+    {
+        $add2ThenAdd1 = Lambda::dot(Math::add(1), Math::add(2));
+
+        $this->assertEquals(3, $add2ThenAdd1(0));
     }
 }

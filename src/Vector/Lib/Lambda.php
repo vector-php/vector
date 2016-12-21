@@ -25,7 +25,7 @@ abstract class Lambda extends Module
 
     protected static function __dot($f, $g)
     {
-        return function($x) {
+        return function ($x) use ($f, $g) {
             return $f($g($x));
         };
     }

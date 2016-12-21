@@ -229,4 +229,12 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 
         Stub\TestFunctions::using('someFunctionThatDoesNotExist');
     }
+
+    public function testCurryingNativeFunctions()
+    {
+        $implode = Module::curry('implode');
+        $implodeCommas = $implode(',');
+
+        $this->assertEquals('a,b,c', $implodeCommas(['a', 'b', 'c']));
+    }
 }

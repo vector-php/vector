@@ -163,9 +163,9 @@ abstract class Module
      * @param  Callable $f Function to get arity for
      * @return Int         Number of arguments for $f
      */
-    protected static function getArity(Callable $f)
+    protected static function getArity(callable $f)
     {
-        if ($f instanceof \Closure) {
+        if (is_string($f) || $f instanceof \Closure) {
             $reflector = (new \ReflectionFunction($f));
         } else {
             $reflector = (new \ReflectionMethod($f[0], $f[1]));

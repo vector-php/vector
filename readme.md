@@ -16,6 +16,11 @@ It gives you useful helpers for composing simple functions into more complex one
 ## PHP Version Support
 - 7.0 +
 
+## Install
+```php
+composer require vector/core
+```
+
 ## Show Me Some Code
 Autoloading Functions? A snap.
 ```

@@ -17,7 +17,7 @@ It gives you useful helpers for composing simple functions into more complex one
 - 7.0 +
 
 ## Install
-```php
+```
 composer require vector/core
 ```
 

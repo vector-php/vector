@@ -12,4 +12,4 @@
 
 4. Write a Medium post and post to /r/php
 
-5. Count bills
+5. Count stacks

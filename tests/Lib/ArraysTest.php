@@ -8,6 +8,10 @@ use Vector\Core\Exception\IndexOutOfBoundsException;
 use Vector\Lib\Arrays;
 use Vector\Data\Maybe;
 
+/**
+ * Class ArraysTest
+ * @package Vector\Test\Lib
+ */
 class ArraysTest extends \PHPUnit_Framework_TestCase
 {
     protected $testCase;

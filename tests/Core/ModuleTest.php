@@ -2,10 +2,11 @@
 
 namespace Vector\Test\Core;
 
+use PHPUnit\Framework\TestCase;
 use Vector\Core\Module;
 use Vector\Core\Exception\FunctionNotFoundException;
 
-class ModuleTest extends \PHPUnit_Framework_TestCase
+class ModuleTest extends TestCase
 {
     /**
      * Test to make sure we can pull functions off the capsule and they'll return closures

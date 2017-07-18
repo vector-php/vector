@@ -2,6 +2,7 @@
 
 namespace Vector\Test\Control;
 
+use PHPUnit\Framework\TestCase;
 use Vector\Control\Pattern;
 use Vector\Control\Type;
 
@@ -9,7 +10,7 @@ use Vector\Control\Type;
  * Class PatternTest
  * @package Vector\Test\Control
  */
-class PatternTest extends \PHPUnit_Framework_TestCase
+class PatternTest extends TestCase
 {
     /**
      * Tests the we have an informative error when no arguments are given

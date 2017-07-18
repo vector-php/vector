@@ -2,6 +2,7 @@
 
 namespace Vector\Test\Lib;
 
+use PHPUnit\Framework\TestCase;
 use Vector\Core\Exception\EmptyListException;
 use Vector\Core\Exception\IndexOutOfBoundsException;
 
@@ -12,7 +13,7 @@ use Vector\Data\Maybe;
  * Class ArraysTest
  * @package Vector\Test\Lib
  */
-class ArraysTest extends \PHPUnit_Framework_TestCase
+class ArraysTest extends TestCase
 {
     protected $testCase;
 

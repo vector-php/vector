@@ -2,13 +2,14 @@
 
 namespace Vector\Test\Control;
 
+use PHPUnit\Framework\TestCase;
 use Vector\Control\Type;
 
 /**
  * Class TypeTest
  * @package Vector\Test\Control
  */
-class TypeTest extends \PHPUnit_Framework_TestCase
+class TypeTest extends TestCase
 {
     /**
      * @method static bool string() string($value) check if value is a string

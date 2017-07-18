@@ -3,6 +3,7 @@
 namespace Vector\Test\Lib;
 
 use stdClass;
+use PHPUnit\Framework\TestCase;
 use Vector\Lib\Objects;
 use Vector\Test\Control\Stub\TestObject;
 
@@ -10,7 +11,7 @@ use Vector\Test\Control\Stub\TestObject;
  * Class ObjectTest
  * @package Vector\Test\Lib
  */
-class ObjectTest extends \PHPUnit_Framework_TestCase
+class ObjectTest extends TestCase
 {
     /**
      * Test that instanceOf works as intended

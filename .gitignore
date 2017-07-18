@@ -1,5 +1,6 @@
 /vendor
-/build/logs
+/build
 /site
 /.idea
 /.DS_Store
+/coverage-report

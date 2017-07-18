@@ -2,13 +2,14 @@
 
 namespace Vector\Test\Lib;
 
+use PHPUnit\Framework\TestCase;
 use Vector\Lib\Strings;
 
 /**
  * Class StringsTest
  * @package Vector\Test\Lib
  */
-class StringsTest extends \PHPUnit_Framework_TestCase
+class StringsTest extends TestCase
 {
     /**
      * Tests that lchomp works in an expected case

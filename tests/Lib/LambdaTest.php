@@ -2,11 +2,12 @@
 
 namespace Vector\Test\Lib;
 
+use PHPUnit\Framework\TestCase;
 use Vector\Core\Module;
 use Vector\Lib\Lambda;
 use Vector\Lib\Math;
 
-class LambdaTest extends \PHPUnit_Framework_TestCase
+class LambdaTest extends TestCase
 {
     /**
      * Test that compose works - compose goes back to front

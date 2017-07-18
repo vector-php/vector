@@ -2,9 +2,10 @@
 
 namespace Vector\Test\Lib;
 
+use PHPUnit\Framework\TestCase;
 use Vector\Lib\Math;
 
-class MathTest extends \PHPUnit_Framework_TestCase
+class MathTest extends TestCase
 {
     /**
      * Test that you can add two numbers together

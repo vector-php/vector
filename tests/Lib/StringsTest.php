@@ -124,4 +124,20 @@ class StringsTest extends TestCase
         $this->assertEquals('123', $toLowercase('123'));
         $this->assertEquals('asdf', $toLowercase('ASDf'));
     }
+
+    public function testToUppercase()
+    {
+        $this->assertEquals('123', Strings::toUppercase('123'));
+        $this->assertEquals('ASDF', Strings::toUppercase('asdf'));
+    }
+
+    public function testTrim()
+    {
+        $this->assertEquals('asdf', Strings::trim(' asdf '));
+    }
+
+    public function testReplace()
+    {
+        $this->assertEquals(Strings::replace('test', 'passes', 'this test'), 'this passes');
+    }
 }

@@ -3,8 +3,11 @@
 namespace Vector\Test\Lib;
 
 use PHPUnit\Framework\TestCase;
-use Vector\Core\Exception\EmptyListException;
-use Vector\Core\Exception\IndexOutOfBoundsException;
+use Vector\Core\Exception\{
+    EmptyListException,
+    IndexOutOfBoundsException,
+    ElementNotFoundException
+};
 
 use Vector\Lib\Arrays;
 use Vector\Data\Maybe;
@@ -425,6 +428,59 @@ class ArraysTest extends TestCase
         $this->assertEquals(
             [2, 4],
             Arrays::takeLast(2, [1, 1, 2, 4])
+        );
+    }
+
+    public function testZip_simpleArrays()
+    {
+        $a = [1, 2, 3];
+        $b = ['a', 'b', 'c'];
+
+        $this->assertEquals(
+            [[1, 'a'], [2, 'b'], [3, 'c']],
+            Arrays::zip($a, $b)
+        );
+    }
+
+    public function testZip_hardArrays()
+    {
+        $a = [1, 2, 3];
+        $c = [[1, 0], [2, 0], [3, 1]];
+
+        $this->assertEquals(
+            [[1, [1, 0]], [2, [2, 0]], [3, [3, 1]]],
+            Arrays::zip($a, $c)
+        );
+    }
+
+    public function testFirst_findsElement()
+    {
+        $isEven = function($a) { return $a % 2 == 0; };
+        $numbers = [1, 5, 7, 4, 9];
+
+        $this->assertEquals(
+            4,
+            Arrays::first($isEven, $numbers)
+        );
+    }
+
+    public function testFirst_throwsException()
+    {
+        $isEven = function($a) { return $a % 2 == 0; };
+        $numbers = [1, 5, 7, 11, 9];
+
+        $this->expectException(ElementNotFoundException::class);
+        Arrays::first($isEven, $numbers);
+    }
+
+    public function testBifurcate()
+    {
+        $isEven = function($a) { return $a % 2 == 0; };
+        $numbers = [1, 5, 7, 4, 9];
+
+        $this->assertEquals(
+            [[4], [1, 5, 7, 9]],
+            Arrays::bifurcate($isEven, $numbers)
         );
     }
 }

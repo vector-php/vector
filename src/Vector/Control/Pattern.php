@@ -38,10 +38,13 @@ abstract class Pattern extends Module
 
         switch (gettype($pattern)) {
             case 'string':
+                return self::string($pattern);
             case 'integer':
+                return self::number($pattern);
             case 'double':
-            case 'array':
-                return Logic::eqStrict($pattern);
+                return self::number($pattern);
+//            case 'array':
+//                return self::string($pattern);
             default:
                 return $pattern;
         }
@@ -64,16 +67,15 @@ abstract class Pattern extends Module
                 return [$pattern, $callback];
             }, $patterns);
 
-            // [a] -> Bool
-            $patternApplies = function ($patternAndCallback) use ($args) {
-//                [$pattern, $callback] = $patternAndCallback;
-                var_dump($patternAndCallback);die();
-
+            $patternApplies = function ($pattern) use ($args) {
                 /** @noinspection PhpParamsInspection */
                 return Logic::all(
                     Arrays::zipWith(
                         Lambda::apply(),
-                        self::make($pattern),
+                        Arrays::map(
+                            self::make(),
+                            Arrays::init($pattern)
+                        ),
                         $args
                     )
                 );

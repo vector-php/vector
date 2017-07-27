@@ -19,34 +19,41 @@ use Vector\Lib\{
  * @method static mixed make($pattern)
  * @method static bool any()
  * @method static bool just()
- * @method static bool string($pattern)
- * @method static bool number($pattern)
+ * @method static bool nothing()
+ * @method static bool string()
+ * @method static bool number()
  */
 abstract class Pattern extends Module
 {
-    const _ = 'ANY_PATTERN_PLACEHOLDER_CHARACTER';
-
     /**
      * @param $pattern
      * @return mixed
      */
     protected static function __make($pattern)
     {
-        if ($pattern === self::_) {
-            return self::any();
-        }
-
         switch (gettype($pattern)) {
             case 'string':
-                return self::string($pattern);
             case 'integer':
-                return self::number($pattern);
             case 'double':
-                return self::number($pattern);
-//            case 'array':
-//                return self::string($pattern);
+            case 'array':
+                return Logic::eqStrict($pattern);
             default:
                 return $pattern;
+        }
+    }
+
+    private static function checkPatterns(array $patterns)
+    {
+        foreach ($patterns as $patternAndCallback) {
+            [$pattern, $callback] = $patternAndCallback;
+
+            if (!is_callable($pattern)) {
+                throw new \InvalidArgumentException('Invalid pattern. Patterns must be callables. Maybe you meant `Logic::eq()`?');
+            }
+
+            if (!is_callable($callback)) {
+                throw new \InvalidArgumentException('Invalid callback for pattern.');
+            }
         }
     }
 
@@ -57,25 +64,16 @@ abstract class Pattern extends Module
     protected static function __match(array $patterns)
     {
         return function (...$args) use ($patterns) {
-            $patterns = Arrays::map(function ($patternAndCallback) {
+            self::checkPatterns($patterns);
+
+            $patternApplies = function ($patternAndCallback) use ($args) {
                 [$pattern, $callback] = $patternAndCallback;
 
-                if (!is_callable($callback)) {
-                    throw new \InvalidArgumentException('Invalid callback for pattern.');
-                }
-
-                return [$pattern, $callback];
-            }, $patterns);
-
-            $patternApplies = function ($pattern) use ($args) {
                 /** @noinspection PhpParamsInspection */
                 return Logic::all(
                     Arrays::zipWith(
                         Lambda::apply(),
-                        Arrays::map(
-                            self::make(),
-                            Arrays::init($pattern)
-                        ),
+                        [self::make($pattern)],
                         $args
                     )
                 );
@@ -154,6 +152,17 @@ abstract class Pattern extends Module
     protected static function __just($subject)
     {
         return Type::just($subject);
+    }
+
+    /**
+     * @param $subject
+     * @return bool
+     * @internal param $pattern
+     * @internal param $subject
+     */
+    protected static function __nothing($subject)
+    {
+        return Type::nothing($subject);
     }
 
     /**

@@ -9,6 +9,8 @@ use Vector\Typeclass\MonadInterface;
 /**
  * Class Maybe
  * @package Vector\Data
+ * @method static callable just($value)
+ * @method static callable nothing()
  */
 class Maybe extends Module implements MonadInterface
 {

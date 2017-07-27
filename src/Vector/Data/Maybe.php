@@ -63,10 +63,22 @@ class Maybe extends Module implements MonadInterface
 
     // Maybe Methods
 
-    protected static function __extract()
+    public function isJust()
     {
-        return $this->isJust
-            ? $this->heldValue
-            : null;
+        return $this->isJust;
+    }
+
+    public function isNothing()
+    {
+        return !$this->isJust;
+    }
+
+    public function extract()
+    {
+        if ($this->isNothing()) {
+            throw new \Exception('cannot extract nothing');
+        }
+
+        return $this->heldValue;
     }
 }

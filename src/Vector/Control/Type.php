@@ -3,6 +3,7 @@
 namespace Vector\Control;
 
 use Vector\Core\Module;
+use Vector\Data\Maybe;
 
 /**
  * Class Type
@@ -15,6 +16,8 @@ use Vector\Core\Module;
  * @method static bool object() object($value) check if value is an object
  * @method static bool array() array($value) check if value is an array
  * @method static bool null() null($value) check if value is null
+ * @method static bool just() just($value) check if value is just
+ * @method static bool nothing() nothing($value) check if value is nothing
  */
 class Type extends Module
 {
@@ -88,5 +91,23 @@ class Type extends Module
     protected static function __null($value) : bool
     {
         return is_null($value);
+    }
+
+    /**
+     * @param $value
+     * @return bool
+     */
+    protected static function __just($value) : bool
+    {
+        return $value instanceof Maybe && $value->isJust();
+    }
+
+    /**
+     * @param $value
+     * @return bool
+     */
+    protected static function __nothing($value) : bool
+    {
+        return $value instanceof Maybe && $value->isNothing();
     }
 }

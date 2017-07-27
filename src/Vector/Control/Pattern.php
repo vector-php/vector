@@ -2,9 +2,12 @@
 
 namespace Vector\Control;
 
+use ReflectionFunction;
+use Vector\Core\Exception\ElementNotFoundException;
 use Vector\Core\Exception\IncompletePatternMatchException;
 use Vector\Core\Module;
 
+use Vector\Data\Maybe;
 use Vector\Lib\{
     Arrays, Logic, Lambda
 };
@@ -13,8 +16,9 @@ use Vector\Lib\{
  * Class Pattern
  * @package Vector\Control
  * @method static mixed match(array $patterns)
- * @method static bool any()
  * @method static mixed make($pattern)
+ * @method static bool any()
+ * @method static bool just()
  * @method static bool string($pattern)
  * @method static bool number($pattern)
  */
@@ -34,10 +38,10 @@ abstract class Pattern extends Module
 
         switch (gettype($pattern)) {
             case 'string':
-                return self::string($pattern);
             case 'integer':
             case 'double':
-                return self::number($pattern);
+            case 'array':
+                return Logic::eqStrict($pattern);
             default:
                 return $pattern;
         }
@@ -50,16 +54,26 @@ abstract class Pattern extends Module
     protected static function __match(array $patterns)
     {
         return function (...$args) use ($patterns) {
+            $patterns = Arrays::map(function ($patternAndCallback) {
+                [$pattern, $callback] = $patternAndCallback;
+
+                if (!is_callable($callback)) {
+                    throw new \InvalidArgumentException('Invalid callback for pattern.');
+                }
+
+                return [$pattern, $callback];
+            }, $patterns);
+
             // [a] -> Bool
-            $patternApplies = function ($pattern) use ($args) {
+            $patternApplies = function ($patternAndCallback) use ($args) {
+//                [$pattern, $callback] = $patternAndCallback;
+                var_dump($patternAndCallback);die();
+
                 /** @noinspection PhpParamsInspection */
                 return Logic::all(
                     Arrays::zipWith(
                         Lambda::apply(),
-                        Arrays::map(
-                            self::make(),
-                            Arrays::init($pattern)
-                        ),
+                        self::make($pattern),
                         $args
                     )
                 );
@@ -67,19 +81,27 @@ abstract class Pattern extends Module
 
             try {
                 /** @noinspection PhpParamsInspection */
-                $getMatchedImplementation = Lambda::compose(
-                    Arrays::last(),
+                $getMatchedPatternAndImplementation = Lambda::compose(
                     Arrays::first($patternApplies),
                     Arrays::filter(function ($pattern) use ($args) {
                         return (count($pattern) - 1) === (count($args));
                     })
                 );
 
+                [$matchedPattern, $matchedImplementation] = $getMatchedPatternAndImplementation($patterns);
+
+                /**
+                 * Extract Just
+                 */
+                if ((new ReflectionFunction($matchedPattern))->getStaticVariables()['f'][1] === '__just') {
+                    return $matchedImplementation($args[0]->extract());
+                }
+
                 return call_user_func_array(
-                    $getMatchedImplementation($patterns),
+                    $matchedImplementation,
                     $args
                 );
-            } catch (\Exception $e) {
+            } catch (ElementNotFoundException $e) {
                 throw new IncompletePatternMatchException('Incomplete pattern match expression.');
             }
         };
@@ -107,6 +129,29 @@ abstract class Pattern extends Module
     protected static function __string($subject, $pattern)
     {
         return Type::string($subject) && $pattern === $subject;
+    }
+
+    /**
+     * @param $subject
+     * @param $pattern
+     * @return bool
+     * @internal param $pattern
+     * @internal param $subject
+     */
+    protected static function __array($subject, $pattern)
+    {
+        return Type::array($subject) && $pattern === $subject;
+    }
+
+    /**
+     * @param $subject
+     * @return bool
+     * @internal param $pattern
+     * @internal param $subject
+     */
+    protected static function __just($subject)
+    {
+        return Type::just($subject);
     }
 
     /**

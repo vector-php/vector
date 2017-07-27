@@ -20,14 +20,14 @@ class PatternTest extends \PHPUnit_Framework_TestCase
             return Pattern::match([
                 [
                     Pattern::any(),
-                    function() {
+                    function () {
                         return 1;
                     }
                 ],
                 [
                     Pattern::any(),
                     Pattern::any(),
-                    function() {
+                    function () {
                         return 2;
                     }
                 ]
@@ -45,13 +45,13 @@ class PatternTest extends \PHPUnit_Framework_TestCase
             return Pattern::match([
                 [
                     Type::string(),
-                    function() {
+                    function () {
                         return 1;
                     }
                 ],
                 [
                     Type::int(),
-                    function() {
+                    function () {
                         return 2;
                     }
                 ]

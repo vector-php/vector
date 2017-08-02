@@ -20,7 +20,7 @@ use Vector\Core\Module;
  * @method static int length($list) Return the length of a list.
  * @method static int index($i, $list) Return the element of a list at index 'i'.
  * @method static array filter($f, $arr) Return a filtered array with every element passing test 'f'.
- * @method static mixed first($arr) Return a filtered array with every element passing test 'f'.
+ * @method static mixed first($f, $arr) Return the first element that passes test 'f'.
  * @method static array keys($arr) Return the keys of a list.
  * @method static array values($arr) Return the values of a list.
  * @method static array concat($a, $b) Return two lists concatenated together.

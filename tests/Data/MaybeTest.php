@@ -2,6 +2,7 @@
 
 namespace Vector\Test\Data;
 
+use Vector\Data\Just;
 use Vector\Data\Maybe;
 use Vector\Test\Data\Generic\ApplicativeLaws;
 

@@ -3,10 +3,10 @@
 namespace Vector\Test\Control;
 
 use Vector\Control\Pattern;
-use Vector\Control\Type;
+use Vector\Data\Just;
 use Vector\Data\Maybe;
+use Vector\Data\Nothing;
 use Vector\Lib\Lambda;
-use Vector\Lib\Logic;
 
 /**
  * Class PatternTest
@@ -20,15 +20,12 @@ class PatternTest extends \PHPUnit_Framework_TestCase
     public function testThatItMatchesOnArity()
     {
         $match = Pattern::match([
-            [
-                Pattern::any(),
-                Lambda::always(1)
-            ],
-            [
-                Pattern::any(),
-                Pattern::any(),
-                Lambda::always(2)
-            ]
+            function (int $a) {
+                 return Lambda::always(1);
+            },
+            function (int $a, int $b) {
+                return Lambda::always(2);
+            },
         ]);
 
         $this->assertEquals(2, $match(2, 2));
@@ -38,14 +35,12 @@ class PatternTest extends \PHPUnit_Framework_TestCase
     public function testThatItMatchesOnType()
     {
         $match = Pattern::match([
-            [
-                Type::string(),
-                Lambda::always(1)
-            ],
-            [
-                Type::int(),
-                Lambda::always(2)
-            ]
+            function (string $value) {
+                return Lambda::always(1);
+            },
+            function (int $value) {
+                return Lambda::always(2);
+            },
         ]);
 
         $this->assertEquals(1, $match('hello'));
@@ -55,9 +50,16 @@ class PatternTest extends \PHPUnit_Framework_TestCase
     public function testThatCanExtractJust()
     {
         $match = Pattern::match([
-            [Pattern::just(), function ($value) {
-                return $value + 1;
-            }],
+            function ($x) {
+                return function () {
+                    return Lambda::always('nothing');
+                };
+            },
+            function (Just $value) {
+                return function ($extracted) {
+                    return $extracted + 1;
+                };
+            },
         ]);
 
         $this->assertEquals(2, $match(Maybe::just(1)));
@@ -66,48 +68,37 @@ class PatternTest extends \PHPUnit_Framework_TestCase
     public function testThatCanMatchOnNothing()
     {
         $match = Pattern::match([
-            [Pattern::nothing(), function () {
-                return 'nothing';
-            }],
+            function (Just $value) {
+                return Lambda::always('just');
+            },
+            function (Nothing $_) {
+                return Lambda::always('nothing');
+            },
         ]);
 
         $this->assertEquals('nothing', $match(Maybe::nothing()));
     }
 
-    public function testThatCanMatchUsingLambdaAlways()
+    public function testThatCanMatchUsingEmptyParams()
     {
         $match = Pattern::match([
-            [Lambda::always(), function () {
-                return 'always';
-            }],
+            function () {
+                return Lambda::always('always');
+            }
         ]);
 
         $this->assertEquals('always', $match('w/e'));
     }
 
-    public function testThatCanMatchOnValuesUsingLogic()
+    public function testThatCanMatchExplicitValues()
     {
         $match = Pattern::match([
-            [Logic::eqStrict(1), function () {
-                return 'yep';
-            }],
+            [[1, 2, 3], function () {
+                return Lambda::always('test');
+            }]
         ]);
 
-        $this->assertEquals('yep', $match(1));
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testThatThrowsOnNonCallable()
-    {
-        $match = Pattern::match([
-            [1, function () {
-                return 'yep';
-            }],
-        ]);
-
-        $this->assertEquals('yep', $match(1));
+        $this->assertEquals('test', $match(1, 2, 3));
     }
 
     /**
@@ -116,9 +107,9 @@ class PatternTest extends \PHPUnit_Framework_TestCase
     public function testThatThrowsOnNoMatchingPattern()
     {
         $match = Pattern::match([
-            [Pattern::just(), function ($value) {
-                return $value + 1;
-            }],
+            function (string $value) {
+                return $value . 'asdf';
+            },
         ]);
 
         $this->assertEquals(2, $match(1));

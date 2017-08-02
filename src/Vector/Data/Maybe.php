@@ -2,6 +2,7 @@
 
 namespace Vector\Data;
 
+use Exception;
 use Vector\Control\Functor;
 use Vector\Core\Module;
 use Vector\Typeclass\MonadInterface;
@@ -12,35 +13,26 @@ use Vector\Typeclass\MonadInterface;
  * @method static callable just($value)
  * @method static callable nothing()
  */
-class Maybe extends Module implements MonadInterface
+abstract class Maybe extends Module implements MonadInterface
 {
-    private $heldValue;
-    private $isJust;
-
-    private function __construct($value, $isJust)
-    {
-        $this->heldValue = $value;
-        $this->isJust = $isJust;
-    }
-
     // Constructors
 
     protected static function __just($value)
     {
-        return new Maybe($value, true);
+        return new Just($value);
     }
 
     protected static function __nothing()
     {
-        return new Maybe(null, false);
+        return new Nothing;
     }
 
     // Interface Contracts
 
     public function fmap(callable $f)
     {
-        return $this->isJust
-            ? self::just($f($this->heldValue))
+        return $this instanceof Just
+            ? self::just($f($this->extract()))
             : $this;
     }
 
@@ -51,15 +43,15 @@ class Maybe extends Module implements MonadInterface
 
     public function apply($a)
     {
-        return $this->isJust
-            ? Functor::fmap($this->heldValue, $a)
+        return $this instanceof Just
+            ? Functor::fmap($this->extract(), $a)
             : $this;
     }
 
     public function bind(callable $f)
     {
-        return $this->isJust
-            ? $f($this->heldValue)
+        return $this instanceof Just
+            ? $f($this->extract())
             : $this;
     }
 
@@ -67,20 +59,11 @@ class Maybe extends Module implements MonadInterface
 
     public function isJust()
     {
-        return $this->isJust;
+        return $this instanceof Just;
     }
 
     public function isNothing()
     {
-        return !$this->isJust;
-    }
-
-    public function extract()
-    {
-        if ($this->isNothing()) {
-            throw new \Exception('cannot extract nothing');
-        }
-
-        return $this->heldValue;
+        return ! $this->isJust();
     }
 }

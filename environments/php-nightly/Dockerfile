@@ -1,3 +1,3 @@
-FROM php:7-cli
+FROM tommymuehle/docker-alpine-php-nightly
 WORKDIR "/home/vector"
 CMD ["./vendor/bin/phpunit"]

@@ -1,8 +1,10 @@
 language: php
 php:
-    - 7.0
     - 7.1
     - nightly
+matrix:
+    allow_failures:
+        - php: nightly
 before_script:
     - composer install --dev --no-interaction
     - composer dump-autoload

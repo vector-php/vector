@@ -8,6 +8,7 @@ use Vector\Core\Module;
  * @method static callable pipe() pipe(...$fs)
  * @method static callable compose() compose(...$fs)
  * @method static callable k() k($k)
+ * @method static callable always() always($value)
  * @method static mixed id() id($a)
  * @method static mixed flip() flip($f)
  * @method static mixed apply() apply($f, $x)
@@ -104,5 +105,10 @@ abstract class Lambda extends Module
     protected static function __id($a)
     {
         return $a;
+    }
+
+    protected static function __always($value)
+    {
+        return static::k($value);
     }
 }

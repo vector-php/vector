@@ -4,7 +4,7 @@ namespace Vector\Test\Control\Stub;
 
 use Vector\Core\Module;
 use Vector\Typeclass\FunctorInterface;
-use Vector\Typeclass\IsFunctor;
+use Vector\Typeclass\simpleFunctorDefault;
 
 /**
  * Class TestMultipleTypeConstructor
@@ -12,7 +12,7 @@ use Vector\Typeclass\IsFunctor;
  */
 abstract class TestMultipleTypeConstructor extends Module implements FunctorInterface
 {
-    use IsFunctor;
+    use simpleFunctorDefault;
 
     public static function __ints(int $a, int $b, int $c)
     {

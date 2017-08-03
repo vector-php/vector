@@ -3,9 +3,9 @@
 namespace Vector\Data\Maybe;
 
 use Vector\Core\Module;
-use Vector\Typeclass\IsApplicative;
-use Vector\Typeclass\IsFunctor;
-use Vector\Typeclass\IsMonad;
+use Vector\Typeclass\simpleApplicativeDefault;
+use Vector\Typeclass\simpleFunctorDefault;
+use Vector\Typeclass\simpleMonadDefault;
 use Vector\Typeclass\MonadInterface;
 
 /**
@@ -16,9 +16,9 @@ use Vector\Typeclass\MonadInterface;
  */
 abstract class Maybe extends Module implements MonadInterface
 {
-    use IsFunctor;
-    use IsApplicative;
-    use IsMonad;
+    use simpleFunctorDefault;
+    use simpleApplicativeDefault;
+    use simpleMonadDefault;
 
     // Constructors
 

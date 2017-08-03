@@ -5,7 +5,7 @@ namespace Vector\Typeclass;
 /**
  * Trait Extractable
  */
-trait IsFunctor
+trait simpleFunctorDefault
 {
     /**
      * @param callable $f

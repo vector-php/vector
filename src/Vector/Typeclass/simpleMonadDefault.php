@@ -5,7 +5,7 @@ namespace Vector\Typeclass;
 /**
  * Trait IsMonad
  */
-trait IsMonad
+trait simpleMonadDefault
 {
     /**
      * @param callable $f

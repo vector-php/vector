@@ -7,7 +7,7 @@ use Vector\Control\Functor;
 /**
  * Trait IsApplicative
  */
-trait IsApplicative
+trait simpleApplicativeDefault
 {
     public static function pure($a)
     {

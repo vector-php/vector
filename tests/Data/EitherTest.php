@@ -20,7 +20,5 @@ class EitherTest extends ApplicativeLaws
             Either::left("error message"),
             Either::right(7),
         ];
-
-        $this->applicativeContext = Either::class;
     }
 }

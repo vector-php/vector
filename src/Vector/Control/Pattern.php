@@ -2,13 +2,15 @@
 
 namespace Vector\Control;
 
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
 use ReflectionFunction;
 use ReflectionParameter;
 use Vector\Core\Exception\ElementNotFoundException;
 use Vector\Core\Exception\IncompletePatternMatchException;
 use Vector\Core\Module;
 use Vector\Lib\Arrays;
-use Vector\Typeclass\MonadInterface;
+use Vector\Typeclass\FunctorInterface;
 
 /**
  * Class Pattern
@@ -67,11 +69,17 @@ abstract class Pattern extends Module
             };
 
             try {
-                $unwrappedArgs = array_map(function ($arg) {
-                    return $arg instanceof MonadInterface && method_exists($arg, 'extract')
-                        ? $arg->extract()
-                        : $arg;
-                }, $args);
+                $unwrappedArgs = iterator_to_array(
+                    new RecursiveIteratorIterator(
+                        new RecursiveArrayIterator(
+                            array_map(function ($arg) {
+                                return $arg instanceof FunctorInterface
+                                    ? $arg->extract()
+                                    : $arg;
+                            }, $args)
+                        )
+                    )
+                );
 
                 $matchingPattern = Arrays::first($patternApplies, $patterns);
 

@@ -3,10 +3,16 @@
 namespace Vector\Test\Control;
 
 use Vector\Control\Pattern;
-use Vector\Data\Just;
-use Vector\Data\Maybe;
-use Vector\Data\Nothing;
+use Vector\Data\Either\Either;
+use Vector\Data\Either\Left;
+use Vector\Data\Either\Right;
+use Vector\Data\Maybe\Just;
+use Vector\Data\Maybe\Maybe;
+use Vector\Data\Maybe\Nothing;
 use Vector\Lib\Lambda;
+use Vector\Test\Control\Stub\TestInts;
+use Vector\Test\Control\Stub\TestIntsAndString;
+use Vector\Test\Control\Stub\TestMultipleTypeConstructor;
 
 /**
  * Class PatternTest
@@ -21,7 +27,7 @@ class PatternTest extends \PHPUnit_Framework_TestCase
     {
         $match = Pattern::match([
             function (int $a) {
-                 return Lambda::always(1);
+                return Lambda::always(1);
             },
             function (int $a, int $b) {
                 return Lambda::always(2);
@@ -65,6 +71,24 @@ class PatternTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, $match(Maybe::just(1)));
     }
 
+    public function testThatCanExtractMultipleArgTypeConstructor()
+    {
+        $match = Pattern::match([
+            function (TestIntsAndString $intsAndString) {
+                return function (int $a, int $b, string $str) {
+                    return Lambda::always('nope');
+                };
+            },
+            function (TestInts $ints) {
+                return function (int $a, int $b, int $c) {
+                    return $a + $b + $c;
+                };
+            },
+        ]);
+
+        $this->assertEquals(6, $match(TestMultipleTypeConstructor::ints(1, 2, 3)));
+    }
+
     public function testThatCanMatchOnNothing()
     {
         $match = Pattern::match([
@@ -79,12 +103,68 @@ class PatternTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('nothing', $match(Maybe::nothing()));
     }
 
+    public function testThatCanMatchOnEitherRight()
+    {
+        $match = Pattern::match([
+            function (Right $value) {
+                return Lambda::id();
+            },
+            function (Left $error) {
+                return Lambda::id();
+            },
+        ]);
+
+        $this->assertEquals(1, $match(Either::right(1)));
+    }
+
+    public function testThatCanMatchOnEitherLeft()
+    {
+        $match = Pattern::match([
+            function (Right $value) {
+                return Lambda::id();
+            },
+            function (Left $error) {
+                return Lambda::id();
+            },
+        ]);
+
+        $this->assertEquals('something broke!', $match(Either::left('something broke!')));
+    }
+
+    public function testThatCanMatchOnEitherRightGeneratedFromMaybe()
+    {
+        $match = Pattern::match([
+            function (Left $error) {
+                return Lambda::id();
+            },
+            function (Right $value) {
+                return Lambda::always('works');
+            },
+        ]);
+
+        $this->assertEquals('works', $match(Either::fromMaybe('error', Maybe::just(5))));
+    }
+
+    public function testThatCanMatchOnEitherLeftGeneratedFromMaybe()
+    {
+        $match = Pattern::match([
+            function (Left $error) {
+                return Lambda::id();
+            },
+            function (Right $value) {
+                return Lambda::always('works');
+            },
+        ]);
+
+        $this->assertEquals('error', $match(Either::fromMaybe('error', Maybe::nothing())));
+    }
+
     public function testThatCanMatchUsingEmptyParams()
     {
         $match = Pattern::match([
             function () {
                 return Lambda::always('always');
-            }
+            },
         ]);
 
         $this->assertEquals('always', $match('w/e'));
@@ -95,7 +175,7 @@ class PatternTest extends \PHPUnit_Framework_TestCase
         $match = Pattern::match([
             [[1, 2, 3], function () {
                 return Lambda::always('test');
-            }]
+            }],
         ]);
 
         $this->assertEquals('test', $match(1, 2, 3));

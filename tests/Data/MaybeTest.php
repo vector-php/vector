@@ -2,8 +2,7 @@
 
 namespace Vector\Test\Data;
 
-use Vector\Data\Just;
-use Vector\Data\Maybe;
+use Vector\Data\Maybe\Maybe;
 use Vector\Test\Data\Generic\ApplicativeLaws;
 
 /**
@@ -18,9 +17,8 @@ class MaybeTest extends ApplicativeLaws
          * Used for ApplicativeLaws
          */
         $this->testCases = [
-            Maybe::just(7)
+            Maybe::just(7),
+            Maybe::nothing(),
         ];
-
-        $this->applicativeContext = Maybe::class;
     }
 }

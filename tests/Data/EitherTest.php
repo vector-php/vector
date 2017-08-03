@@ -2,8 +2,7 @@
 
 namespace Vector\Test\Data;
 
-use Vector\Data\Either;
-use Vector\Data\Maybe;
+use Vector\Data\Either\Either;
 use Vector\Test\Data\Generic\ApplicativeLaws;
 
 /**
@@ -18,8 +17,7 @@ class EitherTest extends ApplicativeLaws
          * Used for ApplicativeLaws
          */
         $this->testCases = [
-            Either::pure(7),
-            Either::left(7),
+            Either::left("error message"),
             Either::right(7),
         ];
 

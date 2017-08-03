@@ -1,6 +1,6 @@
 <?php
 
-namespace Vector\Data;
+namespace Vector\Data\Maybe;
 
 /**
  * Class Nothing

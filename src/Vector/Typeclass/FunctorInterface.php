@@ -14,4 +14,5 @@ interface FunctorInterface
      * @return mixed
      */
     public function fmap(callable $f);
+    public function extract();
 }

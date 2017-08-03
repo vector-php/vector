@@ -2,10 +2,13 @@
 
 namespace Vector\Test\Data\Generic;
 
-use Vector\Data\Constant;
 use Vector\Control\Functor;
 use Vector\Lib\Lambda;
 
+/**
+ * Class FunctorLaws
+ * @package Vector\Test\Data\Generic
+ */
 class FunctorLaws extends \PHPUnit_Framework_TestCase
 {
     protected $testCases;
@@ -33,8 +36,12 @@ class FunctorLaws extends \PHPUnit_Framework_TestCase
         $fmap = Functor::using('fmap');
         $testFunctorList = $this->testCases;
 
-        $funcG = function($a) { return $a + 1; };
-        $funcF = function($b) { return $b + 2; };
+        $funcG = function ($a) {
+            return $a + 1;
+        };
+        $funcF = function ($b) {
+            return $b + 2;
+        };
 
         foreach ($testFunctorList as $testFunctor) {
             $fmapCompose = $fmap($compose($funcG, $funcF), $testFunctor);

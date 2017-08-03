@@ -2,9 +2,10 @@
 
 namespace Vector\Test\Lib;
 
+use PHPUnit\Framework\TestCase;
 use Vector\Lib\Logic;
 
-class LogicTest extends \PHPUnit_Framework_TestCase
+class LogicTest extends TestCase
 {
     /**
      * Test that orCombinator works as intended

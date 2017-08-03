@@ -2,13 +2,14 @@
 
 namespace Vector\Test\Lib;
 
+use PHPUnit\Framework\TestCase;
 use Vector\Lib\Strings;
 
 /**
  * Class StringsTest
  * @package Vector\Test\Lib
  */
-class StringsTest extends \PHPUnit_Framework_TestCase
+class StringsTest extends TestCase
 {
     /**
      * Tests that lchomp works in an expected case
@@ -122,5 +123,21 @@ class StringsTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('123', $toLowercase('123'));
         $this->assertEquals('asdf', $toLowercase('ASDf'));
+    }
+
+    public function testToUppercase()
+    {
+        $this->assertEquals('123', Strings::toUppercase('123'));
+        $this->assertEquals('ASDF', Strings::toUppercase('asdf'));
+    }
+
+    public function testTrim()
+    {
+        $this->assertEquals('asdf', Strings::trim(' asdf '));
+    }
+
+    public function testReplace()
+    {
+        $this->assertEquals(Strings::replace('test', 'passes', 'this test'), 'this passes');
     }
 }

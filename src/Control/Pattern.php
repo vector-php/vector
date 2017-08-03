@@ -94,7 +94,7 @@ abstract class Pattern extends Module
      */
     protected static function __number($subject, $pattern)
     {
-        return Type::number($subject) && $pattern === $subject;
+        return Type::number($subject) && $pattern == $subject;
     }
 
     /**

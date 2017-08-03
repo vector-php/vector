@@ -2,7 +2,3 @@
 /.gitattributes export-ignore
 /.gitignore     export-ignore
 /phpunit.xml    export-ignore
-/docs           export-ignore
-/site           export-ignore
-/mkdocs.yml     export-ignore
-/testing        export-ignore

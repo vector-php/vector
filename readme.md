@@ -14,7 +14,7 @@ It provides built-in memoization for abstracting away time-consuming pure operat
 It gives you useful helpers for composing simple functions into more complex ones and gives you the building blocks you need to make data manipulation easier than ever, all while maintaining a simple and declarative module loading system so your dependencies are always clear and concise.
 
 ## PHP Version Support
-- 7.0 +
+- 7.1 +
 
 ## Install
 ```
@@ -44,4 +44,16 @@ Composition? No problem.
 ```
 $addSix = Lambda::compose(Math::add(4), Math::add(2));
 $addSix(4); // 10;
+```
+
+Pattern Matching? Of course.
+```
+Pattern::match([
+    function (Just $value) {
+        return Lambda::always('just');
+    },
+    function (Nothing $_) {
+        return Lambda::always('nothing');
+    },
+])(Maybe::just('just')); // 'just'
 ```

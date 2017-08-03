@@ -13,7 +13,13 @@ trait IsFunctor
      */
     public function fmap(callable $f)
     {
-        return new static($f(...$this->extract()));
+        $args = $this->extract();
+
+        if (empty($args) || !is_array($args)) {
+            return new static;
+        } else {
+            return new static($f(...$this->extract()));
+        }
     }
 
     /**

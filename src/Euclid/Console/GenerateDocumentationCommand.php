@@ -2,17 +2,14 @@
 
 namespace Vector\Euclid\Console;
 
-use Reflectionmethod;
-
-use phpDocumentor\Reflection\DocBlockFactory;
-
+use phpDocumentor\Reflection\DocBlock\Tags\Generic;
+use Vector\Control\Pattern;
+use Vector\Data\Either\Left;
+use Vector\Data\Either\Right;
 use Vector\Euclid\Doc\FunctionDocFactory;
 use Vector\Euclid\Doc\FunctionDocEmpty;
-use Vector\Euclid\Doc\FunctionDoc;
-use Vector\Euclid\Doc\ModuleDoc;
 use Vector\Control\Lens;
 use Vector\Control\Functor;
-use Vector\Data\Either;
 use Vector\Lib\Arrays;
 use Vector\Lib\Strings;
 use Vector\Lib\Lambda;
@@ -23,8 +20,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class GenerateDocumentationCommand
+ * @package Vector\Euclid\Console
+ */
 class GenerateDocumentationCommand extends Command
 {
+    const EOL = PHP_EOL . PHP_EOL;
+
     protected function configure()
     {
         $this
@@ -69,7 +72,7 @@ class GenerateDocumentationCommand extends Command
             );
 
             // Sort the functions in the docs alphabetically
-            $functions = Arrays::sort(function($fA, $fB) {
+            $functions = Arrays::sort(function ($fA, $fB) {
                 return $fA->properName() <=> $fB->properName();
             }, $moduleDoc->getFunctionDocs());
 
@@ -102,24 +105,74 @@ class GenerateDocumentationCommand extends Command
         if ($function instanceof FunctionDocEmpty) {
             $buffer .= '## ' . $function->properName() . $eol;
             $buffer .= $function->emptyDocMessage() . $eol;
-        }
-        // Otherwise generate the markdown content
-        else {
+        } else {
+            // Otherwise generate the markdown content
             $buffer .= '## ' . $function->properName();
             $buffer .= '[Source](' . $function->githubSource() . ')' . $eol;
-            $buffer .= '__' . $function->name() . '__ :: ' . Either::extract($function->type()) . $eol;
+            $buffer .= '__' . $function->name() . '__ :: ';
+            $buffer .= Pattern::match([
+                function (Right $right) {
+                    return function (Generic $generic) {
+                        return $generic->getDescription();
+                    };
+                },
+                function (Left $left) {
+                    return function ($value) {
+                        return $value;
+                    };
+                }
+            ])($function->type()) . $eol;
             $buffer .= $function->description() . $eol;
 
-            $buffer .= Either::extract(Functor::fmap(function($examples) use ($eol) {
-                $exampleBuffer = "";
-                $exampleBuffer .= '```' . PHP_EOL;
-                foreach ($examples as $example) {
-                    $exampleBuffer .= $example->getDescription() . PHP_EOL;
-                }
-                $exampleBuffer .= '```' . $eol;
+            $appended = Functor::fmap(function ($example) use ($eol) {
+                return Pattern::match([
+                    function (Right $examples) {
+                        return function ($examples) {
+                            $exampleBuffer = "";
+                            $exampleBuffer .= '```' . PHP_EOL;
+                            foreach ($examples as $example) {
+                                $exampleBuffer .= $example->getDescription() . PHP_EOL;
+                            }
+                            $exampleBuffer .= '```' . self::EOL;
 
-                return $exampleBuffer;
-            }, $function->examples()));
+                            return $exampleBuffer;
+                        };
+                    },
+                    function (Left $examples) {
+                        return Lambda::always('TODO');
+                    },
+                    function (Generic $generic) {
+                        $exampleBuffer = "";
+                        $exampleBuffer .= '```' . PHP_EOL;
+                        $exampleBuffer .= $generic->getDescription() . PHP_EOL;
+                        $exampleBuffer .= '```' . self::EOL;
+
+                        return $exampleBuffer;
+                    },
+                    function (string $a) {
+                        return $a . self::EOL;
+                    },
+                    function (array $examples) {
+                        $exampleBuffer = "";
+                        $exampleBuffer .= '```' . PHP_EOL;
+                        foreach ($examples as $example) {
+                            $exampleBuffer .= $example->getDescription() . PHP_EOL;
+                        }
+                        $exampleBuffer .= '```' . self::EOL;
+
+                        return $exampleBuffer;
+                    },
+                ])($example);
+            }, $function->examples());
+
+            $buffer .= Pattern::match([
+                function (Right $toAppend) {
+                    return Lambda::id();
+                },
+                function (Left $error) {
+                    return Lambda::always('TODO');
+                }
+            ])($appended);
         }
 
         $buffer .= '---' . $eol;

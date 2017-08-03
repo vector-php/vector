@@ -1,4 +1,4 @@
-## assign[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L64)
+## assign[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Objects.php#L64)
 
 __Assign Properties__ :: array props -> Object objOriginal -> Object objUpdated
 
@@ -14,7 +14,7 @@ Objects::assign(['value' => 'hi!'], new stdClass);
 
 ---
 
-## getProp[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L95)
+## getProp[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Objects.php#L95)
 
 __Get Property__ :: String -> Object a -> a
 
@@ -28,7 +28,7 @@ Objects::getValue('value', $obj); // 'hi!'
 
 ---
 
-## invokeMethod[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L123)
+## invokeMethod[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Objects.php#L123)
 
 __Invoke Method__ :: String -> Obj a -> mixed
 
@@ -45,7 +45,7 @@ Objects::invokeMethod('sayHi', $person); // 'hi!'
 
 ---
 
-## isInstanceOf[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L142)
+## isInstanceOf[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Objects.php#L142)
 
 __Is Instance Of__ :: String -> Obj a -> mixed
 
@@ -57,7 +57,7 @@ Objects::isInstanceOf('stdClass', (new stdClass())); // true
 
 ---
 
-## setProp[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Object.php#L37)
+## setProp[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Objects.php#L37)
 
 __Set Property__ :: String -> a -> Object a -> Object a
 

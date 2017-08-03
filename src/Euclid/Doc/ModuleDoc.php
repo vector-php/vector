@@ -7,10 +7,12 @@ use Reflector;
 use Vector\Lib\Lambda;
 use Vector\Lib\Logic;
 use Vector\Lib\Arrays;
-use Vector\Lib\Object;
+use Vector\Lib\Objects;
 
-use phpDocumentor\Reflection\DocBlockFactory;
-
+/**
+ * Class ModuleDoc
+ * @package Vector\Euclid\Doc
+ */
 class ModuleDoc
 {
     private $module;
@@ -18,7 +20,7 @@ class ModuleDoc
 
     public function __construct(Reflector $module)
     {
-        $makeFunctionDoc = function($function) {
+        $makeFunctionDoc = function ($function) {
             return FunctionDocFactory::createFunctionDocFromReflector($function);
         };
 
@@ -34,7 +36,7 @@ class ModuleDoc
     private function getFunctions()
     {
         $filterModule = Arrays::filter(
-            Lambda::compose(Logic::eq($this->module->name), Object::getProp('class'))
+            Lambda::compose(Logic::eq($this->module->name), Objects::getProp('class'))
         );
 
         return $filterModule($this->module->getMethods());

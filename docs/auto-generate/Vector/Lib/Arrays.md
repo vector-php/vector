@@ -1,4 +1,4 @@
-## bifurcate[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L546)
+## bifurcate[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L576)
 
 __Array Bifurcation__ :: (a -> Bool) -> [a] -> ([a], [a])
 
@@ -12,7 +12,7 @@ Arrays::bifurcate($isEven, [1, 2, 3, 4, 5]); // [[2, 4], [1, 3, 5]]
 
 ---
 
-## concat[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L417)
+## concat[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L441)
 
 __Array Concatenation__ :: [a] -> [a] -> [a]
 
@@ -27,7 +27,7 @@ Arrays::concat(['a' => 1, 'b' => 2], ['a' => 'foo', 'c' => 3]); // ['a' => 'foo'
 
 ---
 
-## cons[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L60)
+## cons[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L62)
 
 __Cons Operator__ :: a -> [a] -> [a]
 
@@ -40,7 +40,7 @@ Arrays::cons(1, []); // [1]
 
 ---
 
-## contains[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L729)
+## contains[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L758)
 
 __Array Contains Element__ :: a -> [a] -> Bool
 
@@ -54,7 +54,7 @@ Arrays::contains('a', ['b', 'c', 'd']); // false
 
 ---
 
-## drop[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L579)
+## drop[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L610)
 
 __Drop Elements__ :: Int -> [a] -> [a]
 
@@ -68,7 +68,7 @@ Arrays::drop(4, [1, 2]); // []
 
 ---
 
-## dropWhile[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L601)
+## dropWhile[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L632)
 
 __Drop Elements with Predicate__ :: (a -> Bool) -> [a] -> [a]
 
@@ -83,7 +83,7 @@ Arrays::dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]
 
 ---
 
-## filter[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L350)
+## filter[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L354)
 
 __Filter a List__ :: (a -> Bool) -> [a] -> [a]
 
@@ -99,7 +99,15 @@ Arrays::filter(Math::lte(2), [1, 2, 3, 4, 5]); // [1, 2], using `lte` from the M
 
 ---
 
-## flatten[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L699)
+## first[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L368)
+
+__First Element w/ Test__ :: No type given for this function.
+
+
+
+TODO---
+
+## flatten[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L728)
 
 __Array Flatten__ :: [a] -> [b]
 
@@ -112,7 +120,7 @@ Arrays::flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]
 
 ---
 
-## foldl[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L471)
+## foldl[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L495)
 
 __List Fold - From Left__ :: (b -> a -> b) -> b -> [a] -> b
 
@@ -129,9 +137,9 @@ Arrays::foldl(Logic::and(), True, [True, True, False]); // False
 
 ---
 
-## groupBy[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L86)
+## groupBy[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L88)
 
-__Group By__ :: (a -> String) -> [a] -> [[a]]
+__Group By__ :: No type given for this function.
 
 Given a function that turns an element into a string, map over a list of elements
 and return a multi-dimensional array with elements grouped together by their key
@@ -147,7 +155,7 @@ Arrays::groupBy($keyGen, $testCase); // ['small' => [1, 2, 3], 'big' => [4, 5, 6
 
 ---
 
-## head[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L117)
+## head[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L119)
 
 __List Head__ :: [a] -> a
 
@@ -163,7 +171,7 @@ Arrays::head([]); // Exception thrown
 
 ---
 
-## index[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L312)
+## index[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L316)
 
 __List Index__ :: Int -> [a] -> a
 
@@ -178,7 +186,7 @@ Arrays::index('baz', [1, 2, 3]); // Exception thrown
 
 ---
 
-## init[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L233)
+## init[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L236)
 
 __Initial List Values__ :: [a] -> [a]
 
@@ -193,7 +201,7 @@ Arrays::init(['a' => 1, 'b' => 2]); // ['a' => 1];
 
 ---
 
-## keys[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L372)
+## keys[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L396)
 
 __Array Keys__ :: [a] -> [b]
 
@@ -207,7 +215,7 @@ Arrays::keys([1, 2, 3]); // [0, 1, 2]
 
 ---
 
-## last[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L260)
+## last[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L263)
 
 __Last List Value__ :: [a] -> a
 
@@ -222,7 +230,7 @@ Arrays::last([]); // Exception thrown
 
 ---
 
-## length[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L284)
+## length[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L288)
 
 __Array Length__ :: [a] -> a
 
@@ -235,7 +243,7 @@ Arrays::length(['a' => 1, 'b' => 2]); // 2
 
 ---
 
-## map[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L140)
+## map[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L143)
 
 __Array Map__ :: (a -> b) -> [a] -> [b]
 
@@ -248,7 +256,7 @@ Arrays::map($add(1), [1, 2, 3]); // [2, 3, 4]
 
 ---
 
-## mapIndexed[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L162)
+## mapIndexed[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L165)
 
 __Array Map Indexed__ :: (a -> b -> c) -> [a] -> [c]
 
@@ -263,7 +271,7 @@ Arrays::mapIndexed($filterEvenIndexes, [1, 2, 3]); // [null, 2, null]
 
 ---
 
-## replicate[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L749)
+## replicate[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L778)
 
 __Replicate Item__ :: Int -> a -> [a]
 
@@ -276,7 +284,7 @@ Arrays::replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']
 
 ---
 
-## reverse[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L680)
+## reverse[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L709)
 
 __Array Reverse__ :: [a] -> [a]
 
@@ -288,7 +296,7 @@ Arrays::reverse([1, 2, 3]); // [3, 2, 1]
 
 ---
 
-## setIndex[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L441)
+## setIndex[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L465)
 
 __Set Array Value__ :: a -> b -> [b] -> [b]
 
@@ -302,7 +310,7 @@ Arrays::setValue('c', 3, ['a' => 1, 'b' => 2]); // ['a' => 1, 'b' => 2, 'c' => 3
 
 ---
 
-## sort[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L185)
+## sort[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L188)
 
 __Array Sort__ :: (a -> a -> Int) -> [a] -> [a]
 
@@ -318,7 +326,7 @@ Arrays::sort($comp, [3, 2, 1]);
 
 ---
 
-## tail[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L210)
+## tail[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L213)
 
 __List Tail__ :: [a] -> [a]
 
@@ -333,7 +341,7 @@ Arrays::(['a' => 1, 'b' => 2]); // ['b' => 2];
 
 ---
 
-## take[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L630)
+## take[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L660)
 
 __Take Elements__ :: Int -> [a] -> [a]
 
@@ -346,7 +354,7 @@ Arrays::take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]
 
 ---
 
-## takeLast[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L792)
+## takeLast[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L821)
 
 __takeLast__ :: Int -> [a] -> [a]
 
@@ -358,7 +366,7 @@ Arrays::takeLast(2, [1, 2, 2, 4]); // [2, 4]
 
 ---
 
-## takeWhile[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L651)
+## takeWhile[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L681)
 
 __Take Elements with Predicate__ :: (a -> Bool) -> [a] -> [a]
 
@@ -372,7 +380,7 @@ Arrays::takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]
 
 ---
 
-## unique[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L773)
+## unique[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L802)
 
 __Unique__ :: [a] -> [a]
 
@@ -384,7 +392,7 @@ Arrays::unique([1, 2, 2, 4]); // [1, 2, 4]
 
 ---
 
-## values[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L393)
+## values[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L417)
 
 __Array Values__ :: [a] -> [a]
 
@@ -397,7 +405,7 @@ Arrays::values([1, 2, 3]); // [1, 2, 3]
 
 ---
 
-## zip[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L524)
+## zip[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L548)
 
 __Array Zip__ :: [a] -> [b] -> [(a, b)]
 
@@ -410,7 +418,7 @@ Arrays::zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]
 
 ---
 
-## zipWith[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L498)
+## zipWith[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Arrays.php#L522)
 
 __Custom Array Zip__ :: (a -> b -> c) -> [a] -> [b] -> [c]
 

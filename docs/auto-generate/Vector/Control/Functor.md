@@ -4,7 +4,7 @@ ____ :: No type given for this function.
 
 
 
-No examples given for this function.---
+TODO---
 
 ## fmap[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Control/Functor.php#L26)
 
@@ -12,5 +12,5 @@ ____ :: No type given for this function.
 
 
 
-No examples given for this function.---
+TODO---
 

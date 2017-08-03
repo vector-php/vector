@@ -13,6 +13,7 @@ use Vector\Lib\Lambda;
 use Vector\Test\Control\Stub\TestInts;
 use Vector\Test\Control\Stub\TestIntsAndString;
 use Vector\Test\Control\Stub\TestMultipleTypeConstructor;
+use Vector\Test\Control\Stub\TestObject;
 
 /**
  * Class PatternTest
@@ -135,14 +136,18 @@ class PatternTest extends \PHPUnit_Framework_TestCase
     {
         $match = Pattern::match([
             function (Left $error) {
-                return Lambda::id();
+                return function (string $error) {
+                    return $error;
+                };
             },
             function (Right $value) {
-                return Lambda::always('works');
+                return function (int $value) {
+                    return $value;
+                };
             },
         ]);
 
-        $this->assertEquals('works', $match(Either::fromMaybe('error', Maybe::just(5))));
+        $this->assertEquals(5, $match(Either::fromMaybe('error', Maybe::just(5))));
     }
 
     public function testThatCanMatchOnEitherLeftGeneratedFromMaybe()
@@ -168,6 +173,17 @@ class PatternTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->assertEquals('always', $match('w/e'));
+    }
+
+    public function testThatCanMatchOnCustomObject()
+    {
+        $match = Pattern::match([
+            function (TestObject $object) {
+                return $object->getValue();
+            },
+        ]);
+
+        $this->assertEquals('works', $match(new TestObject()));
     }
 
     public function testThatCanMatchExplicitValues()

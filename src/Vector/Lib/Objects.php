@@ -20,7 +20,7 @@ class Objects extends Module
      * Sets a property on the object
      *
      * @example
-     * Object::setValue('value', new stdClass(), 'hi!');
+     * Objects::setValue('value', new stdClass(), 'hi!');
      * // object(stdClass)#1 (1) {
      * //   ["value"]=>
      * //   string(3) "hi!"
@@ -48,7 +48,7 @@ class Objects extends Module
      * Set/Update properties on the object using a key/value array
      *
      * @example
-     * Object::assign(['value' => 'hi!'], new stdClass);
+     * Objects::assign(['value' => 'hi!'], new stdClass);
      * // object(stdClass)#1 (1) {
      * //   ["value"]=>
      * //   string(3) "hi!"
@@ -82,7 +82,7 @@ class Objects extends Module
      * @example
      * $obj = new stdClass();
      * $obj->value = 'hi!';
-     * Object::getValue('value', $obj); // 'hi!'
+     * Objects::getValue('value', $obj); // 'hi!'
      *
      * @type String -> Object a -> a
      *
@@ -111,7 +111,7 @@ class Objects extends Module
      *      return "hi!";
      *  }
      * ));
-     * Object::invokeMethod('sayHi', $person); // 'hi!'
+     * Objects::invokeMethod('sayHi', $person); // 'hi!'
      *
      * @type String -> Obj a -> mixed
      *
@@ -130,7 +130,7 @@ class Objects extends Module
      * Checks if the object is an instance of the specified class
      *
      * @example
-     * Object::isInstanceOf('stdClass', (new stdClass())); // true
+     * Objects::isInstanceOf('stdClass', (new stdClass())); // true
      *
      * @type String -> Obj a -> mixed
      *

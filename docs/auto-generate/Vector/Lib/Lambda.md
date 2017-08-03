@@ -1,10 +1,28 @@
+## always
+
+This function is currently missing documentation.
+
+---
+
+## apply
+
+This function is currently missing documentation.
+
+---
+
 ## compose
 
 This function is currently missing documentation.
 
 ---
 
-## flip[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Lambda.php#L46)
+## dot
+
+This function is currently missing documentation.
+
+---
+
+## flip[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Lambda.php#L60)
 
 __Flip Combinator__ :: (a -> b -> c) -> b -> a -> c
 
@@ -18,7 +36,7 @@ Lambda::flip(Math::subtract())(2, 6); // -4
 
 ---
 
-## id[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Lambda.php#L92)
+## id[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Lambda.php#L106)
 
 __Identity Function__ :: a -> a
 
@@ -31,7 +49,7 @@ Lambda::id('foo'); // 'foo'
 
 ---
 
-## k[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Lambda.php#L70)
+## k[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Lambda.php#L84)
 
 __K Combinator__ :: a -> (b -> a)
 

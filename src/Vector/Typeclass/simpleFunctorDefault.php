@@ -32,7 +32,7 @@ trait simpleFunctorDefault
         if (empty($constructedValues)) {
             return new static;
         } else {
-            return array_values(get_object_vars($this));
+            return $constructedValues;
         }
     }
 }

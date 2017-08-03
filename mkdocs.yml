@@ -38,7 +38,7 @@ pages:
                     -
                         Math: auto-generate/Vector/Lib/Math.md
                     -
-                        Objects: auto-generate/Vector/Lib/Object.md
+                        Objects: auto-generate/Vector/Lib/Objects.md
                     -
                         Strings: auto-generate/Vector/Lib/Strings.md
             -

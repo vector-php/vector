@@ -4,11 +4,12 @@ namespace Vector\Euclid\Doc;
 
 use Reflector;
 use Vector\Lib\Arrays;
-use Vector\Data\{
-    Maybe,
-    Either
-};
+use Vector\Data\Either\Either;
 
+/**
+ * Class FunctionDoc
+ * @package Vector\Euclid\Doc
+ */
 class FunctionDoc
 {
     private $reflector;
@@ -49,8 +50,9 @@ class FunctionDoc
 
     public function examples()
     {
-        if (!isset($this->tags['example']))
+        if (!isset($this->tags['example'])) {
             return Either::left('No examples given for this function.');
+        }
 
         return count($this->tags['example'])
             ? Either::right($this->tags['example'])
@@ -85,7 +87,7 @@ class FunctionDoc
 
     private function collectTags()
     {
-        $tagName = function($tag) {
+        $tagName = function ($tag) {
             return $tag->getName();
         };
 
@@ -95,8 +97,9 @@ class FunctionDoc
     private function firstTagOr($errorMessage, $name)
     {
         try {
-            if (!isset($this->tags[$name]))
+            if (!isset($this->tags[$name])) {
                 throw new \Exception('Tag not found.');
+            }
 
             return Either::right(Arrays::head($this->tags[$name]));
         } catch (\Exception $e) {

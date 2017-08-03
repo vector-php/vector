@@ -1,4 +1,4 @@
-## chomp[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L230)
+## chomp[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L231)
 
 __Two-Sided Chomp__ :: String -> String
 
@@ -28,7 +28,7 @@ Strings::concat('World', $concat('ello', 'H')); // 'HelloWorld'
 
 ---
 
-## join[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L255)
+## join[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L257)
 
 __String Joining__ :: String -> [String] -> String
 
@@ -42,7 +42,7 @@ Strings::join('', ['a', 's', 'd', 'f']); // 'asdf'
 
 ---
 
-## lchomp[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L172)
+## lchomp[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L173)
 
 __Left Chomp__ :: String -> String
 
@@ -58,7 +58,7 @@ Strings::lchomp('he', 'Hello World'); // 'Hello World'
 
 ---
 
-## rchomp[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L201)
+## rchomp[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L202)
 
 __Right Chomp__ :: String -> String
 
@@ -74,9 +74,9 @@ Strings::rchomp('LD', 'Hello World'); // 'Hello World'
 
 ---
 
-## replace[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L274)
+## replace[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L277)
 
-__String Replace__ :: String -> String -> String
+__String Replace__ :: No type given for this function.
 
 Replace all occurrences of the search string with the replacement string.
 
@@ -102,7 +102,7 @@ Strings::split('-', 'foo-bar-'); ['foo', 'bar']
 
 ---
 
-## startsWith[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L94)
+## startsWith[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L95)
 
 __Substring Match__ :: String -> String -> Bool
 
@@ -116,7 +116,7 @@ Strings::startsWith('foo', 'barfoo'); false
 
 ---
 
-## toLowercase[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L112)
+## toLowercase[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L113)
 
 __Lowercase Conversion__ :: String -> String
 
@@ -128,7 +128,7 @@ Strings::toLowercase('ASdf'); // 'asdf'
 
 ---
 
-## toUppercase[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L130)
+## toUppercase[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L131)
 
 __Uppercase Conversion__ :: String -> String
 
@@ -140,7 +140,7 @@ Strings::toUppercase('asdf'); // 'ASDF'
 
 ---
 
-## trim[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L149)
+## trim[Source](https://github.com/joseph-walker/vector/blob/master/src/Vector/Lib/Strings.php#L150)
 
 __Trim Whitespace__ :: String -> String
 

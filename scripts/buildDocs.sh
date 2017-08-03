@@ -6,7 +6,7 @@ php ./bin/vector.php docs:generate \
     Vector\\Lib\\Lambda \
     Vector\\Lib\\Logic \
     Vector\\Lib\\Math \
-    Vector\\Lib\\Object \
+    Vector\\Lib\\Objects \
     Vector\\Lib\\Strings \
     Vector\\Control\\Applicative \
     Vector\\Control\\Functor \

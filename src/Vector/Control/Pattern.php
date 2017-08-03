@@ -69,28 +69,48 @@ abstract class Pattern extends Module
             };
 
             try {
-                $unwrappedArgs = iterator_to_array(
-                    new RecursiveIteratorIterator(
-                        new RecursiveArrayIterator(
-                            array_map(function ($arg) {
-                                return $arg instanceof FunctorInterface
-                                    ? $arg->extract()
-                                    : $arg;
-                            }, $args)
-                        )
-                    )
-                );
+                $unwrappedArgs = self::flatten(array_map(function ($arg) {
+                    return $arg instanceof FunctorInterface
+                        ? $arg->extract()
+                        : $arg;
+                }, $args));
 
                 $matchingPattern = Arrays::first($patternApplies, $patterns);
 
                 if (is_array($matchingPattern)) {
-                    return $matchingPattern[1](...$args)(...$unwrappedArgs);
+                    $value = $matchingPattern[1](...$args);
+
+                    if (is_callable($value)) {
+                        return $value(...$unwrappedArgs);
+                    } else {
+                        return $value;
+                    }
                 } else {
-                    return $matchingPattern(...$args)(...$unwrappedArgs);
+                    $value = $matchingPattern(...$args);
+
+                    if (is_callable($value)) {
+                        return $value(...$unwrappedArgs);
+                    } else {
+                        return $value;
+                    }
                 }
             } catch (ElementNotFoundException $e) {
                 throw new IncompletePatternMatchException('Incomplete pattern match expression.');
             }
         };
+    }
+
+    private static function flatten(array $array)
+    {
+        $values = [];
+
+        array_walk_recursive(
+            $array,
+            function ($value) use (&$values) {
+                $values[] = $value;
+            }
+        );
+
+        return $values;
     }
 }

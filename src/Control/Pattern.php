@@ -56,13 +56,15 @@ abstract class Pattern extends Module
                 );
             }
 
-            // if key is a string, manually match
-            if (is_string($key)) {
-                /**
-                 * Upcoming Feature, Array DSL for matching via `x::xs` etc.
-                 */
-                throw new \Exception('Array DSL not available.');
-            }
+
+            /**
+             * Upcoming Feature, Array DSL for matching via `x::xs` etc.
+             */
+//            // if key is a string, manually match
+//            if (is_string($key)) {
+//
+//                throw new \Exception('Array DSL not available.');
+//            }
 
             list($hasExtractable, $unwrappedArgs) = self::unwrapArgs($args);
 
@@ -121,34 +123,31 @@ abstract class Pattern extends Module
     {
         list($key, $pattern) = $pattern;
 
-        if (is_string($key)) {
-            /**
-             * Upcoming Feature, Array DSL for matching via `x::xs` etc.
-             */
+        /**
+         * Upcoming Feature, Array DSL for matching via `x::xs` etc.
+         */
+//        if (is_string($key)) {
+//            return false;
+//        }
 
-            return false;
-        } else {
-            $reflected = new ReflectionFunction($pattern);
+        $reflected = new ReflectionFunction($pattern);
 
-            $patternParameterTypes = array_map(function (ReflectionParameter $parameter) {
-                if ($class = $parameter->getClass()) {
-                    return $class->getName();
-                } elseif ($type = $parameter->getType()) {
-                    return (string) $type;
-                }
+        $patternParameterTypes = array_map(function (ReflectionParameter $parameter) {
+            if ($class = $parameter->getClass()) {
+                return $class->getName();
+            }
 
-                return null;
-            }, $reflected->getParameters());
+            return (string) $parameter->getType();
+        }, $reflected->getParameters());
 
-            /**
-             * Check count/type of params
-             */
-            return count($patternParameterTypes) === 0
-                || (
-                    count($parameterTypes) === count($patternParameterTypes)
-                    && $parameterTypes === $patternParameterTypes
-                );
-        }
+        /**
+         * Check count/type of params
+         */
+        return count($patternParameterTypes) === 0
+            || (
+                count($parameterTypes) === count($patternParameterTypes)
+                && $parameterTypes === $patternParameterTypes
+            );
     }
 
     /**

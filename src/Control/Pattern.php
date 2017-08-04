@@ -134,7 +134,7 @@ abstract class Pattern extends Module
                 if ($class = $parameter->getClass()) {
                     return $class->getName();
                 } elseif ($type = $parameter->getType()) {
-                    return $type->getName();
+                    return (string) $type;
                 }
 
                 return null;

@@ -45,3 +45,19 @@ Composition? No problem.
 $addSix = Lambda::compose(Math::add(4), Math::add(2));
 $addSix(4); // 10;
 ```
+
+Pattern Matching? Of course. (For Maybe/Either see vector/functors)
+```
+Pattern::match([
+    function (Just $value) {
+        return function (string $unwrapped) {
+            return $unwrapped;
+        };
+    },
+    function (Nothing $_) {
+        return function () {
+            return 'nothing';
+        };
+    },
+])(Maybe::just('just')); // 'just'
+```

@@ -2,120 +2,170 @@
 
 namespace Vector\Control;
 
+use ReflectionFunction;
+use ReflectionParameter;
+use Vector\Core\Exception\ElementNotFoundException;
 use Vector\Core\Exception\IncompletePatternMatchException;
+use Vector\Core\Exception\InvalidPatternMatchException;
 use Vector\Core\Module;
-
-use Vector\Lib\{
-    Arrays, Logic, Lambda
-};
+use Vector\Lib\Arrays;
 
 /**
  * Class Pattern
  * @package Vector\Control
- * @method static mixed match(array $patterns)
- * @method static bool any()
- * @method static mixed make($pattern)
- * @method static bool string($pattern)
- * @method static bool number($pattern)
+ * @method static mixed match(array $patterns) : mixed
+ * @method static mixed getType($param) : string
+ * @method static mixed patternApplies(array $parameterTypes, array $args, array $pattern) : bool
  */
 abstract class Pattern extends Module
 {
-    const _ = 'ANY_PATTERN_PLACEHOLDER_CHARACTER';
-
     /**
-     * @param $pattern
-     * @return mixed
+     * Get type OR class for params, as well as re-mapping inconsistencies
+     * @param $param
+     * @return string
      */
-    protected static function __make($pattern)
+    protected static function __getType($param)
     {
-        if ($pattern === self::_) {
-            return self::any();
-        }
+        $type = is_object($param)
+            ? get_class($param)
+            : gettype($param);
 
-        switch (gettype($pattern)) {
-            case 'string':
-                return self::string($pattern);
-            case 'integer':
-            case 'double':
-                return self::number($pattern);
-            default:
-                return $pattern;
-        }
+        return $type === 'integer' ? 'int' : $type;
     }
 
     /**
+     * Pattern Matching. Use switch-case for explicit values, this for everything else.
      * @param array $patterns
-     * @return \Closure
+     * @return mixed
      */
     protected static function __match(array $patterns)
     {
         return function (...$args) use ($patterns) {
-            // [a] -> Bool
-            $patternApplies = function ($pattern) use ($args) {
-                /** @noinspection PhpParamsInspection */
-                return Logic::all(
-                    Arrays::zipWith(
-                        Lambda::apply(),
-                        Arrays::map(
-                            self::make(),
-                            Arrays::init($pattern)
-                        ),
-                        $args
-                    )
-                );
-            };
+            $parameterTypes = array_map(self::getType(), $args);
 
             try {
-                /** @noinspection PhpParamsInspection */
-                $getMatchedImplementation = Lambda::compose(
-                    Arrays::last(),
-                    Arrays::first($patternApplies),
-                    Arrays::filter(function ($pattern) use ($args) {
-                        return (count($pattern) - 1) === (count($args));
-                    })
-                );
+                $keysToValues = Arrays::zip(array_keys($patterns), array_values($patterns));
 
-                return call_user_func_array(
-                    $getMatchedImplementation($patterns),
-                    $args
+                list($key, $matchingPattern) = Arrays::first(
+                    Pattern::patternApplies($parameterTypes, $args),
+                    $keysToValues
                 );
-            } catch (\Exception $e) {
-                throw new IncompletePatternMatchException('Incomplete pattern match expression.');
+            } catch (ElementNotFoundException $e) {
+                throw new IncompletePatternMatchException(
+                    'Incomplete pattern match expression. (missing ' . implode(', ', $parameterTypes) . ')'
+                );
             }
+
+            // if key is a string, manually match
+            if (is_string($key)) {
+                /**
+                 * Upcoming Feature, Array DSL for matching via `x::xs` etc.
+                 */
+                throw new \Exception('Array DSL not available.');
+            }
+
+            list($hasExtractable, $unwrappedArgs) = self::unwrapArgs($args);
+
+            $value = $matchingPattern(...$args);
+            $isCallable = is_callable($value);
+
+            if ($hasExtractable && ! $isCallable) {
+                throw new InvalidPatternMatchException(
+                    'Invalid pattern match expression. (one of ' . implode(', ', $parameterTypes)
+                    . ' requires a callback to unwrap)'
+                );
+            }
+
+            /**
+             * Extractable requires a callback to feed args into.
+             */
+            if ($hasExtractable && $isCallable) {
+                return $matchingPattern(...$args)(...$unwrappedArgs);
+            }
+
+            /**
+             * No extractable so we can just return the value directly.
+             */
+            return $value;
         };
     }
 
     /**
-     * @param $subject
-     * @param $pattern
-     * @return bool
-     * @internal param $pattern
-     * @internal param $subject
+     * Extracts args from Extractable values
+     * @param array $args
+     * @return array
      */
-    protected static function __number($subject, $pattern)
+    private static function unwrapArgs(array $args) : array
     {
-        return Type::number($subject) && $pattern == $subject;
+        $hasExtractable = false;
+
+        $unwrappedArgs = self::flatten(array_map(function ($arg) use (&$hasExtractable) {
+            if (method_exists($arg, 'extract')) {
+                $hasExtractable = true;
+                return $arg->extract();
+            }
+
+            return $arg;
+        }, $args));
+
+        return [$hasExtractable, $unwrappedArgs];
     }
 
     /**
-     * @param $subject
-     * @param $pattern
+     * @param array $parameterTypes
+     * @param array $args
+     * @param array $pattern
      * @return bool
-     * @internal param $pattern
-     * @internal param $subject
      */
-    protected static function __string($subject, $pattern)
+    protected static function __patternApplies(array $parameterTypes, array $args, array $pattern) : bool
     {
-        return Type::string($subject) && $pattern === $subject;
+        list($key, $pattern) = $pattern;
+
+        if (is_string($key)) {
+            /**
+             * Upcoming Feature, Array DSL for matching via `x::xs` etc.
+             */
+
+            return false;
+        } else {
+            $reflected = new ReflectionFunction($pattern);
+
+            $patternParameterTypes = array_map(function (ReflectionParameter $parameter) {
+                if ($class = $parameter->getClass()) {
+                    return $class->getName();
+                } elseif ($type = $parameter->getType()) {
+                    return $type->getName();
+                }
+
+                return null;
+            }, $reflected->getParameters());
+
+            /**
+             * Check count/type of params
+             */
+            return count($patternParameterTypes) === 0
+                || (
+                    count($parameterTypes) === count($patternParameterTypes)
+                    && $parameterTypes === $patternParameterTypes
+                );
+        }
     }
 
     /**
-     * @param $pattern
-     * @param $subject
-     * @return bool
+     * @param array $array
+     * @return array
      */
-    protected static function __any($pattern, $subject)
+    private static function flatten(array $array) : array
     {
-        return true;
+        $values = [];
+
+        array_walk_recursive(
+            $array,
+            function ($value) use (&$values) {
+                $values[] = $value;
+            }
+        );
+
+        return $values;
     }
 }

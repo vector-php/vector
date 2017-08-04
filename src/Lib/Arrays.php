@@ -27,6 +27,7 @@ use Vector\Core\Module;
  * @method static array setValue($key, $arr, $val) Return a list with the element at index 'key' set to 'val'.
  * @method static mixed foldl($f, $seed, $list) Return the result of folding 'f' over a list with initial value 'seed', from the left.
  * @method static array zipWith($f, $a, $b) Return two lists combined by combinator 'f'.
+ * @method static array zip($a, $b) Return two lists combined into a tuple (2 array).
  * @method static drop($n, $list) Return a list with 'n' elements removed from the front.
  * @method static dropWhile($predicate, $list) Return a list with elements removed so long as they pass 'predicate'.
  * @method static take($n, $list) Return the first 'n' elements of a list.

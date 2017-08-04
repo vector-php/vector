@@ -4,8 +4,11 @@ namespace Vector\Test\Control;
 
 use PHPUnit\Framework\TestCase;
 use Vector\Control\Pattern;
-use Vector\Control\Type;
-use Vector\Core\Exception\IncompletePatternMatchException;
+use Vector\Test\Control\Stub\TestChildTypeA;
+use Vector\Test\Control\Stub\TestChildTypeB;
+use Vector\Test\Control\Stub\TestExtractableObject;
+use Vector\Test\Control\Stub\TestObject;
+use Vector\Test\Control\Stub\TestParentType;
 
 /**
  * Class PatternTest
@@ -13,95 +16,137 @@ use Vector\Core\Exception\IncompletePatternMatchException;
  */
 class PatternTest extends TestCase
 {
-    public function testThatItMakesPatterns()
-    {
-        $this->assertEquals(Pattern::make(Pattern::_), Pattern::any());
-        $this->assertEquals(Pattern::make('asdf'), Pattern::string('asdf'));
-        $this->assertEquals(Pattern::make(5), Pattern::string(5));
-        $this->assertEquals(Pattern::make(3.14), Pattern::string(3.14));
-    }
-
     /**
      * Tests the we have an informative error when no arguments are given
      */
     public function testThatItMatchesOnArity()
     {
-        $f = function ($a) {
-            return Pattern::match([
-                [
-                    Pattern::any(),
-                    function() {
-                        return 1;
-                    }
-                ],
-                [
-                    Pattern::any(),
-                    Pattern::any(),
-                    function() {
-                        return 2;
-                    }
-                ]
-            ])(...func_get_args());
-        };
+        $match = Pattern::match([
+            function (int $a) {
+                return 1;
+            },
+            function (int $a, int $b) {
+                return 2;
+            },
+        ]);
 
-        $this->assertEquals(2, $f(2, 2));
-        $this->assertEquals(1, $f(1));
+        $this->assertEquals(2, $match(2, 2));
+        $this->assertEquals(1, $match(1));
     }
 
     public function testThatItMatchesOnType()
     {
-        $f = function ($a) {
-            /** @noinspection PhpParamsInspection */
-            return Pattern::match([
-                [
-                    Type::string(),
-                    function() {
-                        return 1;
-                    }
-                ],
-                [
-                    Type::int(),
-                    function() {
-                        return 2;
-                    }
-                ]
-            ])(...func_get_args());
+        $match = Pattern::match([
+            function (string $value) {
+                return 1;
+            },
+            function (int $value) {
+                return 2;
+            },
+        ]);
+
+        $this->assertEquals(1, $match('hello'));
+        $this->assertEquals(2, $match(1));
+    }
+
+    public function testThatCanMatchOnEitherRight()
+    {
+        $match = Pattern::match([
+            function (TestChildTypeA $value) {
+                return function (int $value) {
+                    return $value + 1;
+                };
+            },
+            function (TestChildTypeB $value) {
+                return function (int $value) {
+                    return $value + 2;
+                };
+            },
+        ]);
+
+        $this->assertEquals(3, $match(TestParentType::typeB(1)));
+    }
+
+    /**
+     * @expectedException \Vector\Core\Exception\InvalidPatternMatchException
+     */
+    public function testThatThrowsWhenNonCallbackValueForWrappedMatch()
+    {
+        $match = Pattern::match([
+            function (TestExtractableObject $a) {
+                return 'need callback';
+            },
+        ]);
+
+        $this->assertEquals('always', $match(new TestExtractableObject(1)));
+    }
+
+    public function testThatCanMatchUsingEmptyParams()
+    {
+        $match = Pattern::match([
+            function () {
+                return 'always';
+            },
+        ]);
+
+        $this->assertEquals('always', $match('w/e'));
+    }
+
+    /**
+     * Use php for things you can use php for.
+     */
+    public function testThatCanMatchOnExplicitValues()
+    {
+        $match = function ($value) {
+            switch ($value) {
+                case [1, 3]:
+                    return false;
+                case [1, 2, 3]:
+                    return true;
+                default:
+                    return false;
+            }
         };
 
-        $this->assertEquals(1, $f('hello'));
-        $this->assertEquals(2, $f(1));
+        $this->assertEquals(true, $match([1, 2, 3]));
     }
 
-    public function testThatItRequiresCompletePatterns()
+    public function testThatCanMatchOnCustomObject()
     {
-        $f = function($a) {
-            return Pattern::match([
-                [ 0, function() { return 'a'; } ],
-                [ 1, function() { return 'b'; } ],
-            ])(...func_get_args());
-        };
+        $match = Pattern::match([
+            function (TestObject $object) {
+                return $object->getValue();
+            },
+        ]);
 
-        $this->expectException(IncompletePatternMatchException::class);
-        $f(5);
+        $this->assertEquals('works', $match(new TestObject()));
     }
 
-    public function testThatNumbersArePatternMatched()
+    public function testThatCanMatchArityOnCustomObjects()
     {
-        $this->assertEquals(Pattern::number(3, 3), true);
-        $this->assertEquals(Pattern::number(3, 3.0), true);
-        $this->assertEquals(Pattern::number(3, 'asdf'), false);
+        $match = Pattern::match([
+            function (TestObject $object) {
+                return $object->getValue();
+            },
+            function (TestObject $object1, TestObject $object2) {
+                return 'ok';
+            },
+        ]);
+
+        $this->assertEquals('ok', $match(new TestObject(), new TestObject()));
     }
 
-    public function testThatStringsArePatternMatched()
+    /**
+     * @expectedException \Vector\Core\Exception\IncompletePatternMatchException
+     */
+    public function testThatThrowsOnNoMatchingPattern()
     {
-        $this->assertEquals(Pattern::string('foo', 'foo'), true);
-        $this->assertEquals(Pattern::string('foo', 'bar'), false);
-    }
+        $match = Pattern::match([
+            function (string $value) {
+                return $value . 'asdf';
+            },
+        ]);
 
-    public function testThatAnyIsPatternMatched()
-    {
-        $this->assertEquals(Pattern::any(null, 'foo'), true);
-        $this->assertEquals(Pattern::any(null, 1), true);
-        $this->assertEquals(Pattern::any(null, [1, 2, 3]), true);
+        $this->assertEquals(2, $match(1));
     }
 }

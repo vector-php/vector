@@ -1,14 +1,15 @@
 language: php
 php:
-    - 7.0
     - 7.1
+    - 7.2
+    - 7.3
     - nightly
-before_script:
-    - composer install --dev --no-interaction
-    - composer dump-autoload
 matrix:
     allow_failures:
         - php: nightly
+before_script:
+    - composer install --dev --no-interaction
+    - composer dump-autoload
 script:
     - mkdir -p build/logs
     - phpdbg -qrr ./vendor/bin/phpunit

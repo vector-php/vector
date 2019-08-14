@@ -1,6 +1,6 @@
 /vendor
 /build
-/site
 /.idea
 /.DS_Store
 /coverage-report
+/index.php

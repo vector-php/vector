@@ -10,8 +10,8 @@
 - Alternatively if you have Docker Engine installed, you can run tests in multiple PHP environments at once. Just run the following commands from the root directory:
 
 ```
-> composer buildTestEnvironments
-> composer runTests
+> sudo composer buildTestEnvironments
+> sudo composer runTests
 ```
 
 `buildTestEnvironments` will build the Docker environments, and `runTests` will execute them. You only need to run `buildTestEnvironments` the first time you run them, and any time
@@ -23,7 +23,7 @@ phpdbg -qrr ./vendor/bin/phpunit --coverage-text
 ```
 
 ## Doc Blocks
-Your docblocks should follow this style, since they're used in generating the documentation.
+Your docblocks should follow this style.
 
 ```
 
@@ -42,14 +42,3 @@ Your docblocks should follow this style, since they're used in generating the do
  */
 
 ```
-
-## Generating documentation
-*Requires `mkdocs` -- http://www.mkdocs.org/*
-
-To generate and run documentation locally, run the command `composer runDocs`. If you only want to regenerate the documentation without previewing it, you can run
-`composer buildDocs`.
-
-## Deploying Documentation
-*This only applies to contributors with administrator access to the repository.*
-
-To deploy the documentation, run the `composer deployDocs` command.

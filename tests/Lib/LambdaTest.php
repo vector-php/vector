@@ -97,7 +97,7 @@ class LambdaTest extends TestCase
     {
         $flip = Lambda::using('flip');
 
-        $subtract = function($a, $b) {
+        $subtract = function ($a, $b) {
             return $b - $a;
         };
 
@@ -112,5 +112,10 @@ class LambdaTest extends TestCase
         $add2ThenAdd1 = Lambda::dot(Math::add(1), Math::add(2));
 
         $this->assertEquals(3, $add2ThenAdd1(0));
+    }
+
+    public function testApply()
+    {
+        $this->assertEquals(2, Lambda::apply(Math::add(1), 1));
     }
 }

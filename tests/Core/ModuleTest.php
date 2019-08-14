@@ -132,6 +132,17 @@ class ModuleTest extends TestCase
     }
 
     /**
+     * Test that passing an argument unpacking operator to a curried function works
+     */
+    public function testCurriedArgumentUnpacking()
+    {
+        $twoArgFunction = Stub\TestFunctions::twoArgFunction();
+
+        $this->assertInstanceOf('\\Closure', $twoArgFunction(...[true]));
+        $this->assertEquals($twoArgFunction(...[true, true]), true);
+    }
+
+    /**
      * Tests the currying of variadic functions
      */
     public function testVariadicFunctionIsCurried()

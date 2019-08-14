@@ -17,8 +17,8 @@ abstract class Lambda extends Module
 {
     protected static function __pipe(...$fs)
     {
-        return function($inputArg) use ($fs) {
-            return array_reduce($fs, function($carry, $f) {
+        return function ($inputArg) use ($fs) {
+            return array_reduce($fs, function ($carry, $f) {
                 return $f($carry);
             }, $inputArg);
         };

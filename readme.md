@@ -1,4 +1,4 @@
-![Vector Core](./docs/logo.png)
+![Vector Core](./logo.png)
 
 [![Build Status](https://travis-ci.org/joseph-walker/vector.svg?branch=master)](https://travis-ci.org/joseph-walker/vector)
 [![Coverage Status](https://coveralls.io/repos/github/joseph-walker/vector/badge.svg?branch=master)](https://coveralls.io/github/joseph-walker/vector?branch=master)
@@ -46,14 +46,18 @@ $addSix = Lambda::compose(Math::add(4), Math::add(2));
 $addSix(4); // 10;
 ```
 
-Pattern Matching? Of course.
+Pattern Matching? Of course. (For Maybe/Either see vector/functors)
 ```
 Pattern::match([
     function (Just $value) {
-        return Lambda::always('just');
+        return function (string $unwrapped) {
+            return $unwrapped;
+        };
     },
     function (Nothing $_) {
-        return Lambda::always('nothing');
+        return function () {
+            return 'nothing';
+        };
     },
 ])(Maybe::just('just')); // 'just'
 ```

@@ -4,17 +4,11 @@ namespace Vector\Test\Control;
 
 use PHPUnit\Framework\TestCase;
 use Vector\Control\Pattern;
-use Vector\Data\Either\Either;
-use Vector\Data\Either\Left;
-use Vector\Data\Either\Right;
-use Vector\Data\Maybe\Just;
-use Vector\Data\Maybe\Maybe;
-use Vector\Data\Maybe\Nothing;
-use Vector\Lib\Lambda;
-use Vector\Test\Control\Stub\TestInts;
-use Vector\Test\Control\Stub\TestIntsAndString;
-use Vector\Test\Control\Stub\TestMultipleTypeConstructor;
+use Vector\Test\Control\Stub\TestChildTypeA;
+use Vector\Test\Control\Stub\TestChildTypeB;
+use Vector\Test\Control\Stub\TestExtractableObject;
 use Vector\Test\Control\Stub\TestObject;
+use Vector\Test\Control\Stub\TestParentType;
 
 /**
  * Class PatternTest
@@ -29,10 +23,10 @@ class PatternTest extends TestCase
     {
         $match = Pattern::match([
             function (int $a) {
-                return Lambda::always(1);
+                return 1;
             },
             function (int $a, int $b) {
-                return Lambda::always(2);
+                return 2;
             },
         ]);
 
@@ -44,10 +38,10 @@ class PatternTest extends TestCase
     {
         $match = Pattern::match([
             function (string $value) {
-                return Lambda::always(1);
+                return 1;
             },
             function (int $value) {
-                return Lambda::always(2);
+                return 2;
             },
         ]);
 
@@ -55,125 +49,66 @@ class PatternTest extends TestCase
         $this->assertEquals(2, $match(1));
     }
 
-    public function testThatCanExtractJust()
-    {
-        $match = Pattern::match([
-            function ($x) {
-                return function () {
-                    return Lambda::always('nothing');
-                };
-            },
-            function (Just $value) {
-                return function ($extracted) {
-                    return $extracted + 1;
-                };
-            },
-        ]);
-
-        $this->assertEquals(2, $match(Maybe::just(1)));
-    }
-
-    public function testThatCanExtractMultipleArgTypeConstructor()
-    {
-        $match = Pattern::match([
-            function (TestIntsAndString $intsAndString) {
-                return function (int $a, int $b, string $str) {
-                    return Lambda::always('nope');
-                };
-            },
-            function (TestInts $ints) {
-                return function (int $a, int $b, int $c) {
-                    return $a + $b + $c;
-                };
-            },
-        ]);
-
-        $this->assertEquals(6, $match(TestMultipleTypeConstructor::ints(1, 2, 3)));
-    }
-
-    public function testThatCanMatchOnNothing()
-    {
-        $match = Pattern::match([
-            function (Just $value) {
-                return Lambda::always('just');
-            },
-            function (Nothing $_) {
-                return Lambda::always('nothing');
-            },
-        ]);
-
-        $this->assertEquals('nothing', $match(Maybe::nothing()));
-    }
-
     public function testThatCanMatchOnEitherRight()
     {
         $match = Pattern::match([
-            function (Right $value) {
-                return Lambda::id();
-            },
-            function (Left $error) {
-                return Lambda::id();
-            },
-        ]);
-
-        $this->assertEquals(1, $match(Either::right(1)));
-    }
-
-    public function testThatCanMatchOnEitherLeft()
-    {
-        $match = Pattern::match([
-            function (Right $value) {
-                return Lambda::id();
-            },
-            function (Left $error) {
-                return Lambda::id();
-            },
-        ]);
-
-        $this->assertEquals('something broke!', $match(Either::left('something broke!')));
-    }
-
-    public function testThatCanMatchOnEitherRightGeneratedFromMaybe()
-    {
-        $match = Pattern::match([
-            function (Left $error) {
-                return function (string $error) {
-                    return $error;
-                };
-            },
-            function (Right $value) {
+            function (TestChildTypeA $value) {
                 return function (int $value) {
-                    return $value;
+                    return $value + 1;
+                };
+            },
+            function (TestChildTypeB $value) {
+                return function (int $value) {
+                    return $value + 2;
                 };
             },
         ]);
 
-        $this->assertEquals(5, $match(Either::fromMaybe('error', Maybe::just(5))));
+        $this->assertEquals(3, $match(TestParentType::typeB(1)));
     }
 
-    public function testThatCanMatchOnEitherLeftGeneratedFromMaybe()
+    /**
+     * @expectedException \Vector\Core\Exception\InvalidPatternMatchException
+     */
+    public function testThatThrowsWhenNonCallbackValueForWrappedMatch()
     {
         $match = Pattern::match([
-            function (Left $error) {
-                return Lambda::id();
-            },
-            function (Right $value) {
-                return Lambda::always('works');
+            function (TestExtractableObject $a) {
+                return 'need callback';
             },
         ]);
 
-        $this->assertEquals('error', $match(Either::fromMaybe('error', Maybe::nothing())));
+        $this->assertEquals('always', $match(new TestExtractableObject(1)));
     }
 
     public function testThatCanMatchUsingEmptyParams()
     {
         $match = Pattern::match([
             function () {
-                return Lambda::always('always');
+                return 'always';
             },
         ]);
 
         $this->assertEquals('always', $match('w/e'));
+    }
+
+    /**
+     * Use php for things you can use php for.
+     */
+    public function testThatCanMatchOnExplicitValues()
+    {
+        $match = function ($value) {
+            switch ($value) {
+                case [1, 3]:
+                    return false;
+                case [1, 2, 3]:
+                    return true;
+                default:
+                    return false;
+            }
+        };
+
+        $this->assertEquals(true, $match([1, 2, 3]));
     }
 
     public function testThatCanMatchOnCustomObject()
@@ -187,15 +122,18 @@ class PatternTest extends TestCase
         $this->assertEquals('works', $match(new TestObject()));
     }
 
-    public function testThatCanMatchExplicitValues()
+    public function testThatCanMatchArityOnCustomObjects()
     {
         $match = Pattern::match([
-            [[1, 2, 3], function () {
-                return Lambda::always('test');
-            }],
+            function (TestObject $object) {
+                return $object->getValue();
+            },
+            function (TestObject $object1, TestObject $object2) {
+                return 'ok';
+            },
         ]);
 
-        $this->assertEquals('test', $match(1, 2, 3));
+        $this->assertEquals('ok', $match(new TestObject(), new TestObject()));
     }
 
     /**

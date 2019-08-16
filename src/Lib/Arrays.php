@@ -25,7 +25,7 @@ use Vector\Core\Module;
  * @method static array values($arr) Return the values of a list.
  * @method static array concat($a, $b) Return two lists concatenated together.
  * @method static array setValue($key, $arr, $val) Return a list with the element at index 'key' set to 'val'.
- * @method static mixed foldl($f, $seed, $list) Return the result of folding 'f' over a list with initial value 'seed', from the left.
+ * @method static mixed reduce($f, $seed, $list) Executes a reducer function (that you provide) on each element of the list, resulting in a single output value.
  * @method static array zipWith($f, $a, $b) Return two lists combined by combinator 'f'.
  * @method static array zip($a, $b) Return two lists combined into a tuple (2 array).
  * @method static drop($n, $list) Return a list with 'n' elements removed from the front.
@@ -87,7 +87,7 @@ class Arrays extends Module
      */
     protected static function __groupBy(callable $keyGen, array $list) : array
     {
-        return self::foldl(function ($group, $element) use ($keyGen) {
+        return self::reduce(function ($group, $element) use ($keyGen) {
             $group[$keyGen($element)][] = $element;
             return $group;
         }, [], $list);
@@ -469,30 +469,28 @@ class Arrays extends Module
     }
 
     /**
-     * List Fold - From Left
+     * List Reduce
      *
-     * Fold a list by iterating over the list from left to right. Pass each element, one by one, into
-     * the fold function $f, and carry its value over to the next iteration. Also referred to as array
-     * reduce.
+     * Executes a reducer function (that you provide) on each element of the array, resulting in a single output value.
      *
      * @example
      * $add = function($a, $b) { return $a + $b; };
-     * Arrays::foldl(Math::add(), 0, [1, 2, 3]); // 6
+     * Arrays::reduce(Math::add(), 0, [1, 2, 3]); // 6
      *
      * @example
-     * Arrays::foldl(Logic::and(), True, [True, True]); // True
+     * Arrays::reduce(Logic::and(), True, [True, True]); // True
      *
      * @example
-     * Arrays::foldl(Logic::and(), True, [True, True, False]); // False
+     * Arrays::reduce(Logic::and(), True, [True, True, False]); // False
      *
      * @type (b -> a -> b) -> b -> [a] -> b
      *
-     * @param  callable $f    Function to use in each iteration if the fold
-     * @param  mixed    $seed The initial value to use in the  fold function along with the first element
-     * @param  array    $list The list to fold over
-     * @return mixed          The result of applying the fold function to each element one by one
+     * @param  callable $f    Function to use in each iteration of the reduce
+     * @param  mixed    $seed The initial value to use in the reduce function along with the first element
+     * @param  array    $list The list to reduce
+     * @return mixed          The result of applying the reduce function to each element one by one
      */
-    protected static function __foldl(callable $f, $seed, array $list)
+    protected static function __reduce(callable $f, $seed, array $list)
     {
         return array_reduce($list, $f, $seed);
     }

@@ -65,7 +65,7 @@ class Objects extends Module
         $obj = clone $objOriginal;
 
         /** @noinspection PhpParamsInspection */
-        return Arrays::foldl(
+        return Arrays::reduce(
             function ($obj, $setter) {
                 return $setter($obj);
             },

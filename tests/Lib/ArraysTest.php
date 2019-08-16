@@ -10,7 +10,6 @@ use Vector\Core\Exception\{
 };
 
 use Vector\Lib\Arrays;
-use Vector\Data\Maybe;
 
 /**
  * Class ArraysTest
@@ -268,15 +267,15 @@ class ArraysTest extends TestCase
     }
 
     /**
-     * Tests foldl by reducing an array with an add function
+     * Tests reduce by reducing an array with an add function
      */
-    public function testFoldL()
+    public function testReduce()
     {
-        $foldl = Arrays::using('foldl');
+        $reduce = Arrays::using('reduce');
 
         $reducer = function($a, $b) { return $a + $b; };
 
-        $this->assertEquals(6, $foldl($reducer, 0, [1, 2, 3]));
+        $this->assertEquals(6, $reduce($reducer, 0, [1, 2, 3]));
     }
 
     /**

@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: phpearth/php:7.4-cli
+    - uses: docker://phpearth/php:7.4-cli
 
     - name: Validate composer.json and composer.lock
       run: composer validate

@@ -1,10 +1,6 @@
 ![Vector Core](./logo.png)
 
-[![Build Status](https://travis-ci.org/joseph-walker/vector.svg?branch=master)](https://travis-ci.org/joseph-walker/vector)
-[![Coverage Status](https://coveralls.io/repos/github/joseph-walker/vector/badge.svg?branch=master)](https://coveralls.io/github/joseph-walker/vector?branch=master)
 [![Badge Status](https://img.shields.io/badge/badge%20status-dank-brightgreen.svg)](https://niceme.me/)
-
-[Read the Docs](http://joseph-walker.github.io/vector/)
 
 ## The Elevator Pitch
 Vector gives your functions superpowers.
@@ -14,7 +10,7 @@ It provides built-in memoization for abstracting away time-consuming pure operat
 It gives you useful helpers for composing simple functions into more complex ones and gives you the building blocks you need to make data manipulation easier than ever, all while maintaining a simple and declarative module loading system so your dependencies are always clear and concise.
 
 ## PHP Version Support
-- 7.0 +
+- 7.4 +
 
 ## Install
 ```
@@ -49,15 +45,7 @@ $addSix(4); // 10;
 Pattern Matching? Of course. (For Maybe/Either see vector/functors)
 ```
 Pattern::match([
-    function (Just $value) {
-        return function (string $unwrapped) {
-            return $unwrapped;
-        };
-    },
-    function (Nothing $_) {
-        return function () {
-            return 'nothing';
-        };
-    },
+    fn(Just $value) => fn(string $unwrapped) => $unwrapped,
+    fn(Nothing $value) => fn() => 'nothing',
 ])(Maybe::just('just')); // 'just'
 ```

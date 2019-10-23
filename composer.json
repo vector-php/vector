@@ -20,7 +20,7 @@
         }
     },
     "require": {
-        "php": "^7.0",
+        "php": "^7.4",
         "phpdocumentor/reflection-docblock": "^3.2",
         "satooshi/php-coveralls": "^1.0"
     },

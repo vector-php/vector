@@ -9,6 +9,9 @@ use Vector\Core\Exception\InvalidPatternMatchException;
 use Vector\Data\Maybe\Just;
 use Vector\Data\Maybe\Maybe;
 use Vector\Data\Maybe\Nothing;
+use Vector\Data\Result\Err;
+use Vector\Data\Result\Ok;
+use Vector\Data\Result\Result;
 use Vector\Test\Control\Stub\TestChildTypeA;
 use Vector\Test\Control\Stub\TestChildTypeB;
 use Vector\Test\Control\Stub\TestExtractableObject;
@@ -44,6 +47,26 @@ class PatternTest extends TestCase
 
         $this->assertEquals(1, $match('hello'));
         $this->assertEquals(2, $match(1));
+    }
+
+    public function testThatCanMatchOnResultOk()
+    {
+        $match = Pattern::match([
+            fn(Ok $value) => fn(int $value) => $value + 2,
+            fn(Err $error) => 'nothing',
+        ]);
+
+        $this->assertEquals(3, $match(Result::ok(1)));
+    }
+
+    public function testThatCanMatchOnResultErr()
+    {
+        $match = Pattern::match([
+            fn(Ok $value) => fn(int $value) => $value + 2,
+            fn(Err $error) => fn(string $error) => $error,
+        ]);
+
+        $this->assertEquals("something wen't wrong.", $match(Result::err("something wen't wrong.")));
     }
 
     public function testThatCanMatchOnMaybeJust()

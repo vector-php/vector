@@ -8,12 +8,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - uses: docker://phpearth/php:7.4-cli
-
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Setup PHP
+      uses: shivammathur/setup-php@master
+      with:
+        php-version: '7.4'
+        extension-csv: mbstring, dom
+    - name: Check PHP Version
+      run: php -v
     - name: Validate composer.json and composer.lock
       run: composer validate
-
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
 

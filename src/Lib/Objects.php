@@ -33,7 +33,7 @@ class Objects extends Module
      * @param  Object $obj Object
      * @return Object $obj Object
      */
-    protected static function __setProp($key, $val, $obj)
+    protected static function setProp($key, $val, $obj)
     {
         $newObj = clone $obj;
 
@@ -60,7 +60,7 @@ class Objects extends Module
      * @param $objOriginal
      * @return mixed
      */
-    protected static function __assign($props, $objOriginal)
+    protected static function assign($props, $objOriginal)
     {
         $obj = clone $objOriginal;
 
@@ -91,7 +91,7 @@ class Objects extends Module
      * @return mixed $val value
      * @throws UndefinedPropertyException
      */
-    protected static function __getProp($prop, $obj)
+    protected static function getProp($prop, $obj)
     {
         if (!isset($obj->{$prop})) {
             throw new UndefinedPropertyException("'getProp' function tried to access undefined property '$prop'");
@@ -119,7 +119,7 @@ class Objects extends Module
      * @param Object $obj Object
      * @return mixed $val value
      */
-    protected static function __invokeMethod($method, $obj)
+    protected static function invokeMethod($method, $obj)
     {
         return call_user_func([$obj, $method]);
     }
@@ -138,7 +138,7 @@ class Objects extends Module
      * @param Object $given Object
      * @return mixed $val value
      */
-    protected static function __isInstanceOf($expected, $given)
+    protected static function isInstanceOf($expected, $given)
     {
         return $given instanceof $expected;
     }

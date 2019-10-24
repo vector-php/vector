@@ -22,19 +22,19 @@ class Either extends Module implements MonadInterface
 
     // Constructors
 
-    protected static function __left($error)
+    protected static function left($error)
     {
         return new Left($error);
     }
 
-    protected static function __right($value)
+    protected static function right($value)
     {
         return new Right($value);
     }
 
     // Either Methods
 
-    protected static function __fromMaybe($leftValue, $maybeValue)
+    protected static function fromMaybe($leftValue, $maybeValue)
     {
         return $maybeValue instanceof Just
             ? Either::right($maybeValue->extract()[0])

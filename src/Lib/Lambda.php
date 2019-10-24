@@ -15,7 +15,7 @@ use Vector\Core\Module;
  */
 abstract class Lambda extends Module
 {
-    protected static function __pipe(...$fs)
+    protected static function pipe(...$fs)
     {
         return function ($inputArg) use ($fs) {
             return array_reduce($fs, function ($carry, $f) {
@@ -24,19 +24,19 @@ abstract class Lambda extends Module
         };
     }
 
-    protected static function __dot($f, $g)
+    protected static function dot($f, $g)
     {
         return function ($x) use ($f, $g) {
             return $f($g($x));
         };
     }
 
-    protected static function __apply($f, $x)
+    protected static function apply($f, $x)
     {
         return $f($x);
     }
 
-    protected static function __compose(...$fs)
+    protected static function compose(...$fs)
     {
         return self::pipe(...array_reverse($fs));
     }
@@ -56,7 +56,7 @@ abstract class Lambda extends Module
      * @param  \Closure $f Function to flip
      * @return \Closure    Flipped function
      */
-    protected static function __flip($f)
+    protected static function flip($f)
     {
         return self::curry(function($a, $b) use ($f) {
             return $f($b, $a);
@@ -80,7 +80,7 @@ abstract class Lambda extends Module
      * @param  mixed    $k Value to express in the combinator
      * @return \Closure    Expression which always returns $k
      */
-    protected static function __k($k)
+    protected static function k($k)
     {
         return function(...$null) use ($k)
         {
@@ -102,12 +102,12 @@ abstract class Lambda extends Module
      * @param  mixed $a Value to return
      * @return mixed    The given value, unchanged
      */
-    protected static function __id($a)
+    protected static function id($a)
     {
         return $a;
     }
 
-    protected static function __always($value)
+    protected static function always($value)
     {
         return static::k($value);
     }

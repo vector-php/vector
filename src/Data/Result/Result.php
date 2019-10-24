@@ -15,12 +15,12 @@ abstract class Result extends Module implements MonadInterface
     use simpleApplicativeDefault;
     use simpleMonadDefault;
 
-    protected static function __ok($value)
+    protected static function ok($value)
     {
         return new Ok($value);
     }
 
-    protected static function __err($err)
+    protected static function err($err)
     {
         return new Err($err);
     }

@@ -45,7 +45,7 @@ class Logic extends Module
      * @param mixed $a value to test
      * @return \Closure test for or using provided functions
      */
-    protected static function __orCombinator(array $fs, $a)
+    protected static function orCombinator(array $fs, $a)
     {
         return self::any(Arrays::map(function ($c) use ($a) {
             return $c($a);
@@ -72,7 +72,7 @@ class Logic extends Module
      * @param mixed $a value to test
      * @return \Closure test for or using provided functions
      */
-    protected static function __andCombinator(array $fs, $a)
+    protected static function andCombinator(array $fs, $a)
     {
         return self::all(Arrays::map(function ($c) use ($a) {
             return $c($a);
@@ -96,7 +96,7 @@ class Logic extends Module
      * @param  mixed $b Second value
      * @return Bool Result of OR
      */
-    protected static function __logicalOr($a, $b)
+    protected static function logicalOr($a, $b)
     {
         return $a || $b;
     }
@@ -118,7 +118,7 @@ class Logic extends Module
      * @param  mixed $a value
      * @return Bool Result of NOT
      */
-    protected static function __logicalNot($a)
+    protected static function logicalNot($a)
     {
         return !$a;
     }
@@ -140,7 +140,7 @@ class Logic extends Module
      * @param  mixed $b Second value
      * @return Bool Result of AND
      */
-    protected static function __logicalAnd($a, $b)
+    protected static function logicalAnd($a, $b)
     {
         return $a && $b;
     }
@@ -162,7 +162,7 @@ class Logic extends Module
      * @param  mixed $b Value to test
      * @return Bool is $b greater than $a
      */
-    protected static function __gt($a, $b)
+    protected static function gt($a, $b)
     {
         return $b > $a;
     }
@@ -184,7 +184,7 @@ class Logic extends Module
      * @param  mixed $b Value to test
      * @return Bool is $b greater than or equal to $a
      */
-    protected static function __gte($a, $b)
+    protected static function gte($a, $b)
     {
         return $b >= $a;
     }
@@ -206,7 +206,7 @@ class Logic extends Module
      * @param  mixed $b Value to test
      * @return Bool is $b less than $a
      */
-    protected static function __lt($a, $b)
+    protected static function lt($a, $b)
     {
         return $b < $a;
     }
@@ -228,7 +228,7 @@ class Logic extends Module
      * @param  mixed $b Value to test
      * @return Bool is $b less than or equal to $a
      */
-    protected static function __lte($a, $b)
+    protected static function lte($a, $b)
     {
         return $b <= $a;
     }
@@ -250,7 +250,7 @@ class Logic extends Module
      * @param  mixed $b Second value
      * @return Bool is $a equal to $b
      */
-    protected static function __eq($a, $b)
+    protected static function eq($a, $b)
     {
         return $a == $b;
     }
@@ -272,7 +272,7 @@ class Logic extends Module
      * @param  mixed $b Second value
      * @return Bool is $a equal to $b
      */
-    protected static function __eqStrict($a, $b)
+    protected static function eqStrict($a, $b)
     {
         return $a === $b;
     }
@@ -294,7 +294,7 @@ class Logic extends Module
      * @param  mixed $b Second value
      * @return Bool is $a not equal to $b
      */
-    protected static function __notEq($a, $b)
+    protected static function notEq($a, $b)
     {
         return $a != $b;
     }
@@ -316,7 +316,7 @@ class Logic extends Module
      * @param  mixed $b Second value
      * @return Bool is $a not equal to $b
      */
-    protected static function __notEqStrict($a, $b)
+    protected static function notEqStrict($a, $b)
     {
         return $a !== $b;
     }
@@ -337,7 +337,7 @@ class Logic extends Module
      * @param  array $arr Values to test
      * @return Bool are all values truthy
      */
-    protected static function __all($arr)
+    protected static function all($arr)
     {
         /** @noinspection PhpParamsInspection */
         return Arrays::reduce(self::logicalAnd(), true, $arr);
@@ -359,7 +359,7 @@ class Logic extends Module
      * @param  array $arr Values to test
      * @return Bool are any values truthy
      */
-    protected static function __any($arr)
+    protected static function any($arr)
     {
         /** @noinspection PhpParamsInspection */
         return Arrays::reduce(self::logicalOr(), false, $arr);

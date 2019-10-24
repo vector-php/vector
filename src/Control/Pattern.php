@@ -24,7 +24,7 @@ abstract class Pattern extends Module
      * @param $param
      * @return string
      */
-    protected static function __getType($param)
+    protected static function getType($param)
     {
         $type = is_object($param)
             ? get_class($param)
@@ -38,7 +38,7 @@ abstract class Pattern extends Module
      * @param array $patterns
      * @return mixed
      */
-    protected static function __match(array $patterns)
+    protected static function match(array $patterns)
     {
         return function (...$args) use ($patterns) {
             $parameterTypes = array_map(self::getType(), $args);
@@ -119,7 +119,7 @@ abstract class Pattern extends Module
      * @param array $pattern
      * @return bool
      */
-    protected static function __patternApplies(array $parameterTypes, array $args, array $pattern) : bool
+    protected static function patternApplies(array $parameterTypes, array $args, array $pattern) : bool
     {
         list($key, $pattern) = $pattern;
 

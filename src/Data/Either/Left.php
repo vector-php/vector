@@ -16,7 +16,7 @@ class Left extends Either
     {
         $this->error = $error;
     }
-//    protected static function __fromMaybe($leftValue, $maybeValue)
+//    protected static function fromMaybe($leftValue, $maybeValue)
 //    {
 //        return Maybe::isJust($maybeValue)
 //            ? Either::right(Maybe::extract($maybeValue))

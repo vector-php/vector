@@ -80,7 +80,7 @@ abstract class Module
      * @param  Callable $f Function to curry
      * @return Callable    The result of currying the original function.
      */
-    protected static function __curry(Callable $f)
+    protected static function curry(Callable $f)
     {
         // Curry a function of unknown arity
         return self::curryWithArity($f, self::getArity($f));
@@ -199,23 +199,21 @@ abstract class Module
         $context = get_called_class();
 
         $fulfilledRequest = array_map(function($f) use ($context) {
-            // Append a '__' to the name we're looking for
-            $internalName = '__' . $f;
 
             // See if we've already fulfilled the request for this function. If so, just return the cached one.
-            if (array_key_exists($context, static::$fulfillmentCache) && array_key_exists($internalName, static::$fulfillmentCache[$context]))
-                return static::$fulfillmentCache[$context][$internalName];
+            if (array_key_exists($context, static::$fulfillmentCache) && array_key_exists($f, static::$fulfillmentCache[$context]))
+                return static::$fulfillmentCache[$context][$f];
 
             // If we haven't fulfilled it already, check to see if it even exists
-            if (!method_exists($context, $internalName))
+            if (!method_exists($context, $f))
                 throw new FunctionNotFoundException("Function $f not found in module $context");
 
             // Check to see if we're memoizing this function, or the whole module. Otherwise, carry on.
             if ($context::$memoize === true || in_array($f, $context::$memoize)) {
-                $functionInContext = self::memoize([$context, $internalName]);
+                $functionInContext = self::memoize([$context, $f]);
             }
             else
-                $functionInContext = [$context, $internalName];
+                $functionInContext = [$context, $f];
 
             // If the function exists, then see if we're supposed to curry it. If not, just return it in a closure.
             if ($context::$doNotCurry === true || (is_array($context::$doNotCurry) && in_array($f, $context::$doNotCurry))) {
@@ -225,10 +223,10 @@ abstract class Module
             }
             // Otherwise, curry it
             else
-                $fulfillment = self::curryWithArity($functionInContext, self::getArity([$context, $internalName]));
+                $fulfillment = self::curryWithArity($functionInContext, self::getArity([$context, $f]));
 
             // Then store it in our cache so we can short circuit this process in the future
-            self::$fulfillmentCache[$context][$internalName] = $fulfillment;
+            self::$fulfillmentCache[$context][$f] = $fulfillment;
 
             // And return it
             return $fulfillment;

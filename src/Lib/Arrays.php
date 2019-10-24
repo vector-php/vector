@@ -59,7 +59,7 @@ class Arrays extends Module
      * @param  array $arr Array to add value to
      * @return array      Array with value added
      */
-    protected static function __cons($a, array $arr) : array
+    protected static function cons($a, array $arr) : array
     {
         $arr[] = $a;
         return $arr;
@@ -85,7 +85,7 @@ class Arrays extends Module
      * @internal param $ (a -> String) -> [a] -> [[a]]
      *
      */
-    protected static function __groupBy(callable $keyGen, array $list) : array
+    protected static function groupBy(callable $keyGen, array $list) : array
     {
         return self::reduce(function ($group, $element) use ($keyGen) {
             $group[$keyGen($element)][] = $element;
@@ -116,7 +116,7 @@ class Arrays extends Module
      * @param  array $list Key/Value array or List
      * @return Mixed       First element of $list
      */
-    protected static function __head(array $list)
+    protected static function head(array $list)
     {
         if (count($list) === 0) {
             throw new EmptyListException("'head' function is undefined for empty lists.");
@@ -140,7 +140,7 @@ class Arrays extends Module
      * @param  array    $list List to call function on
      * @return array          New list of elements after calling $f for the original list elements
      */
-    protected static function __map(callable $f, array $list) : array
+    protected static function map(callable $f, array $list) : array
     {
         return array_map($f, $list);
     }
@@ -162,7 +162,7 @@ class Arrays extends Module
      * @param  array    $list List to call function on
      * @return array          New list of elements after calling $f for the original list elements
      */
-    protected static function __mapIndexed(callable $f, array $list) : array
+    protected static function mapIndexed(callable $f, array $list) : array
     {
         return array_map($f, $list, array_keys($list));
     }
@@ -185,7 +185,7 @@ class Arrays extends Module
      * @param  array    $list The list to sort
      * @return array          The sorted list
      */
-    protected static function __sort(callable $comp, array $list) : array
+    protected static function sort(callable $comp, array $list) : array
     {
         usort($list, $comp);
 
@@ -210,7 +210,7 @@ class Arrays extends Module
      * @param  array $list Key/Value array or List
      * @return array       $list without the first element
      */
-    protected static function __tail(array $list) : array
+    protected static function tail(array $list) : array
     {
         return array_slice($list, 1, count($list));
     }
@@ -233,7 +233,7 @@ class Arrays extends Module
      * @param  array $list Key/Value array or List
      * @return array       $list without the last element
      */
-    protected static function __init(array $list) : array
+    protected static function init(array $list) : array
     {
         return array_slice($list, 0, count($list) - 1);
     }
@@ -260,7 +260,7 @@ class Arrays extends Module
      * @param  array $list Key/Value array or List
      * @return Mixed       The last element of $list
      */
-    protected static function __last(array $list)
+    protected static function last(array $list)
     {
         if (count($list) === 0) {
             throw new EmptyListException("'last' function is undefined for empty lists.");
@@ -285,7 +285,7 @@ class Arrays extends Module
      * @param  array $list Key/Value array or List
      * @return Int         Length of $list
      */
-    protected static function __length(array $list) : int
+    protected static function length(array $list) : int
     {
         return count($list);
     }
@@ -313,7 +313,7 @@ class Arrays extends Module
      * @param  array $list List to get index from
      * @return Mixed       Item from $list and index $i
      */
-    protected static function __index($i, array $list)
+    protected static function index($i, array $list)
     {
         /**
          * isset is much faster at the common case (non-null values)
@@ -351,7 +351,7 @@ class Arrays extends Module
      * @param  array    $arr List to filter
      * @return array         Result of filtering the list
      */
-    protected static function __filter(callable $f, array $arr) : array
+    protected static function filter(callable $f, array $arr) : array
     {
         return array_filter($arr, $f);
     }
@@ -365,7 +365,7 @@ class Arrays extends Module
      * @throws ElementNotFoundException
      * @internal param $ (a -> Bool) -> [a] -> a
      */
-    protected static function __first(callable $f, array $arr)
+    protected static function first(callable $f, array $arr)
     {
         foreach ($arr as $a) {
             if ($f($a) === true) {
@@ -393,7 +393,7 @@ class Arrays extends Module
      * @param  array $arr List to get keys from
      * @return array      The keys of $arr
      */
-    protected static function __keys(array $arr) : array
+    protected static function keys(array $arr) : array
     {
         return array_keys($arr);
     }
@@ -414,7 +414,7 @@ class Arrays extends Module
      * @param  array $arr Key/Value array
      * @return array      Indexed array with values of $arr
      */
-    protected static function __values(array $arr) : array
+    protected static function values(array $arr) : array
     {
         return array_values($arr);
     }
@@ -438,7 +438,7 @@ class Arrays extends Module
      * @param  array $b List to append
      * @return array    Concatenated list of $a and $b
      */
-    protected static function __concat(array $a, array $b) : array
+    protected static function concat(array $a, array $b) : array
     {
         return array_merge($a, $b);
     }
@@ -462,7 +462,7 @@ class Arrays extends Module
      * @param  array $arr Array to modify
      * @return array      Result of setting $arr[$key] = $val
      */
-    protected static function __setIndex($key, $val, array $arr) : array
+    protected static function setIndex($key, $val, array $arr) : array
     {
         $arr[$key] = $val;
         return $arr;
@@ -490,7 +490,7 @@ class Arrays extends Module
      * @param  array    $list The list to reduce
      * @return mixed          The result of applying the reduce function to each element one by one
      */
-    protected static function __reduce(callable $f, $seed, array $list)
+    protected static function reduce(callable $f, $seed, array $list)
     {
         return array_reduce($list, $f, $seed);
     }
@@ -517,7 +517,7 @@ class Arrays extends Module
      * @param  array    $b The second array to use in the combinator
      * @return array       The result of calling f with each element of a and b in series
      */
-    protected static function __zipWith(callable $f, array $a, array $b) : array
+    protected static function zipWith(callable $f, array $a, array $b) : array
     {
         $result = [];
 
@@ -543,7 +543,7 @@ class Arrays extends Module
      * @param  array $b The second array to use when zipping
      * @return array    Array of tuples from a and b combined
      */
-    protected static function __zip(array $a, array $b) : array
+    protected static function zip(array $a, array $b) : array
     {
         return self::zipWith(
             function ($a, $b) {
@@ -571,7 +571,7 @@ class Arrays extends Module
      * @return array          An array with two elements; the first is the list that passed the test,
      *                        and the second element is the list that failed the test
      */
-    protected static function __bifurcate(callable $test, array $arr) : array
+    protected static function bifurcate(callable $test, array $arr) : array
     {
         $resPass = [];
         $resFail = [];
@@ -605,7 +605,7 @@ class Arrays extends Module
      * @param  array $list List to drop elements from
      * @return array       Original list minus n elements from the front
      */
-    protected static function __drop(int $n, array $list) : array
+    protected static function drop(int $n, array $list) : array
     {
         return array_slice($list, $n, count($list));
     }
@@ -627,7 +627,7 @@ class Arrays extends Module
      * @param  array    $list      List to drop from
      * @return array               List with elements removed from the front
      */
-    protected static function __dropWhile(callable $predicate, array $list) : array
+    protected static function dropWhile(callable $predicate, array $list) : array
     {
         foreach ($list as $item) {
             if ($predicate($item)) {
@@ -655,7 +655,7 @@ class Arrays extends Module
      * @param  array $list Array to take elements from
      * @return array       First n elements of the array
      */
-    protected static function __take(int $n, array $list) : array
+    protected static function take(int $n, array $list) : array
     {
         return array_slice($list, 0, $n);
     }
@@ -676,7 +676,7 @@ class Arrays extends Module
      * @param  array    $list      List to take elements from
      * @return array               First elements of list that all pass the $predicate
      */
-    protected static function __takeWhile(callable $predicate, array $list) : array
+    protected static function takeWhile(callable $predicate, array $list) : array
     {
         $result = [];
 
@@ -704,7 +704,7 @@ class Arrays extends Module
      * @param  array $list Array to flip
      * @return array       Array in the reverse order
      */
-    protected static function __reverse(array $list) : array
+    protected static function reverse(array $list) : array
     {
         return array_reverse($list);
     }
@@ -723,7 +723,7 @@ class Arrays extends Module
      * @param  array $list Nested array to flatten
      * @return array       Result of flattening $list into a 1-dimensional list
      */
-    protected static function __flatten(array $list) : array
+    protected static function flatten(array $list) : array
     {
         $iter = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($list));
         $flat = [];
@@ -753,7 +753,7 @@ class Arrays extends Module
      * @param  array $list Array to test for the existence of $item in
      * @return bool        Whether or not $item is in $list
      */
-    protected static function __contains($item, array $list) : bool
+    protected static function contains($item, array $list) : bool
     {
         return in_array($item, $list);
     }
@@ -773,7 +773,7 @@ class Arrays extends Module
      * @param  mixed $item Item to repeat
      * @return array       Array with $n items
      */
-    protected static function __replicate(int $n, $item) : array
+    protected static function replicate(int $n, $item) : array
     {
         $result = [];
 
@@ -797,7 +797,7 @@ class Arrays extends Module
      * @param  array $list List of items to make unique
      * @return array Original list minus duplicates
      */
-    protected static function __unique(array $list) : array
+    protected static function unique(array $list) : array
     {
         return array_values(array_flip(array_flip($list)));
     }
@@ -816,7 +816,7 @@ class Arrays extends Module
      * @param  array $list List of items
      * @return array last n items
      */
-    protected static function __takeLast(int $n, array $list) : array
+    protected static function takeLast(int $n, array $list) : array
     {
         return array_slice($list, -$n, count($list));
     }

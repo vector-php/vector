@@ -37,7 +37,7 @@ class Strings extends Module
      * @param  String $original Thing to append to
      * @return String           Concatenated strings
      */
-    protected static function __concat(string $addition, string $original) : string
+    protected static function concat(string $addition, string $original) : string
     {
         return $original . $addition;
     }
@@ -64,7 +64,7 @@ class Strings extends Module
      * @param  String $string Thing to split into pieces
      * @return array          List of chunks from splitting the string
      */
-    protected static function __split(string $on, string $string) : array
+    protected static function split(string $on, string $string) : array
     {
         if ($on === '') {
             return str_split($string);
@@ -91,7 +91,7 @@ class Strings extends Module
      * @param  String $str    String to run test on
      * @return Bool           Whether or not the string starts with the substring
      */
-    protected static function __startsWith(string $subStr, string $str) : bool
+    protected static function startsWith(string $subStr, string $str) : bool
     {
         return substr($str, 0, strlen($subStr)) === $subStr;
     }
@@ -109,7 +109,7 @@ class Strings extends Module
      * @param  String $str Original string
      * @return String      Lowercase string
      */
-    protected static function __toLowercase(string $str) : string
+    protected static function toLowercase(string $str) : string
     {
         return strtolower($str);
     }
@@ -127,7 +127,7 @@ class Strings extends Module
      * @param  String $str Original string
      * @return String      Uppercase string
      */
-    protected static function __toUppercase(string $str) : string
+    protected static function toUppercase(string $str) : string
     {
         return strtoupper($str);
     }
@@ -146,7 +146,7 @@ class Strings extends Module
      * @param  String $str string to trim
      * @return string
      */
-    protected static function __trim(string $str) : string
+    protected static function trim(string $str) : string
     {
         return trim($str);
     }
@@ -169,7 +169,7 @@ class Strings extends Module
      * @param  String $string string to be chomped
      * @return string
      */
-    protected static function __lchomp(string $toChomp, string $string) : string
+    protected static function lchomp(string $toChomp, string $string) : string
     {
         $length = strlen($toChomp);
 
@@ -198,7 +198,7 @@ class Strings extends Module
      * @param  String $string string to be chomped
      * @return string
      */
-    protected static function __rchomp(string $toChomp, string $string) : string
+    protected static function rchomp(string $toChomp, string $string) : string
     {
         $length = strlen($toChomp);
 
@@ -227,7 +227,7 @@ class Strings extends Module
      * @param  String $string string to be chomped
      * @return string
      */
-    protected static function __chomp(string $toChomp, string $string) : string
+    protected static function chomp(string $toChomp, string $string) : string
     {
         /** @noinspection PhpParamsInspection */
         $chomp = Lambda::compose(self::lchomp($toChomp), self::rchomp($toChomp));
@@ -253,7 +253,7 @@ class Strings extends Module
      * @param  array  $string List of strings to join together
      * @return String         Joined string based on delimiter
      */
-    protected static function __join(string $on, array $string) : string
+    protected static function join(string $on, array $string) : string
     {
         return implode($on, $string);
     }
@@ -273,7 +273,7 @@ class Strings extends Module
      * @internal param String $ -> String -> String
      *
      */
-    protected static function __replace(string $substring, string $replacement, string $string) : string
+    protected static function replace(string $substring, string $replacement, string $string) : string
     {
         return str_replace($substring, $replacement, $string);
     }

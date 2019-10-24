@@ -26,7 +26,7 @@ abstract class Maybe extends Module implements MonadInterface
      * @param $value
      * @return Just
      */
-    protected static function __just($value)
+    protected static function just($value)
     {
         return new Just($value);
     }
@@ -34,7 +34,7 @@ abstract class Maybe extends Module implements MonadInterface
     /**
      * @return Nothing
      */
-    protected static function __nothing()
+    protected static function nothing()
     {
         return new Nothing;
     }

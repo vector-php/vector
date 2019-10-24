@@ -4,6 +4,8 @@ namespace Vector\Test\Control;
 
 use PHPUnit\Framework\TestCase;
 use Vector\Control\Pattern;
+use Vector\Core\Exception\IncompletePatternMatchException;
+use Vector\Core\Exception\InvalidPatternMatchException;
 use Vector\Data\Maybe\Just;
 use Vector\Data\Maybe\Maybe;
 use Vector\Data\Maybe\Nothing;
@@ -84,11 +86,10 @@ class PatternTest extends TestCase
         $this->assertEquals(3, $match(TestParentType::typeB(1)));
     }
 
-    /**
-     * @expectedException \Vector\Core\Exception\InvalidPatternMatchException
-     */
     public function testThatThrowsWhenNonCallbackValueForWrappedMatch()
     {
+        $this->expectException(InvalidPatternMatchException::class);
+
         $match = Pattern::match([
             fn(TestExtractableObject $a) => 'need callback',
         ]);
@@ -143,11 +144,10 @@ class PatternTest extends TestCase
         $this->assertEquals('ok', $match(new TestObject(), new TestObject()));
     }
 
-    /**
-     * @expectedException \Vector\Core\Exception\IncompletePatternMatchException
-     */
     public function testThatThrowsOnNoMatchingPattern()
     {
+        $this->expectException(IncompletePatternMatchException::class);
+
         $match = Pattern::match([
             fn(string $value) => $value . 'asdf',
         ]);

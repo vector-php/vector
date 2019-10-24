@@ -1,48 +1,61 @@
 ![Vector Core](./logo.png)
-
 [![Badge Status](https://img.shields.io/badge/badge%20status-dank-brightgreen.svg)](https://niceme.me/)
 
 ## The Elevator Pitch
-Vector gives your functions superpowers.
-It lets you autoload your functions with Composer without having to mess with autoloading individual files.
-It allows you to automatically curry your userland functions with zero effort on your part.
-It provides built-in memoization for abstracting away time-consuming pure operations.
-It gives you useful helpers for composing simple functions into more complex ones and gives you the building blocks you need to make data manipulation easier than ever, all while maintaining a simple and declarative module loading system so your dependencies are always clear and concise.
+Vector gives you php functional superpowers.
+- The evolution:
+    - `array_map(fn($a) => $a + 1, [1, 2, 3])` (_Native PHP_)
+    - `collect([1, 2, 3])->map(fn($a) => $a + 1)` (_Laravel Collections_)
+    - `Arrays::map(fn($a) => $a + 1)([1, 2, 3])` (_Vector_)
+
+- You can add currying to any function, it isn't only limited to Vector built ins.
+    - `Module::curry('implode')(',')('a,b,c')` `// ['a', 'b', 'c']`
+
+- Create functional pipelines as first class citizens
+    - `Lambda::pipe(Math::add(4), Math::add(2))(1)` `// 7`
 
 ## PHP Version Support
-- 7.4 +
+- 7.4+
 
 ## Install
 ```
 composer require vector/core
 ```
 
-## Show Me Some Code
-Autoloading Functions? A snap.
+## Show Me Some More Code
+More automatic currying.
 ```
-use Vector\Lib\Arrays;
-```
-
-Currying? Completely free.
-```
-$addOne = Arrays::map(function($a) { return $a + 1; });
+$addOne = Arrays::map(Math::add(1));
 $addOne([1, 2, 3]); // [2, 3, 4]
 ```
 
-Memoization? Batteries included.
+Create your own auto curried methods on a Class that extends `Vector\Core\Module`.
 ```
 Class MyFunctions extends Module {
-    protected $memoize = ['myFunction'];
+    protected static __curriedFunction() {
+
+    }
 }
 ```
 
-Composition? No problem.
+Memoize easily.
 ```
-$addSix = Lambda::compose(Math::add(4), Math::add(2));
+Class MyFunctions extends Module {
+    protected $memoize = ['myFunction'];
+
+    protected static myFunction() {
+
+    }
+}
+```
+
+Composition (Functional Pipelines)? No problem.
+```
+$addSix = Lambda::compose(Math::add(4), Math::add(2)); // (Or ::pipe for the opposite flow direction)
 $addSix(4); // 10;
 ```
 
-Pattern Matching? Of course. (For Maybe/Either see vector/functors)
+Pattern Matching.
 ```
 Pattern::match([
     fn(Just $value) => fn(string $unwrapped) => $unwrapped,

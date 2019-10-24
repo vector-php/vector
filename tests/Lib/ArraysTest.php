@@ -19,7 +19,7 @@ class ArraysTest extends TestCase
 {
     protected $testCase;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->testCase = [0, 1, 2, 3];
     }

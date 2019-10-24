@@ -4,6 +4,7 @@ namespace Vector\Test\Lib;
 
 use stdClass;
 use PHPUnit\Framework\TestCase;
+use Vector\Core\Exception\UndefinedPropertyException;
 use Vector\Lib\Objects;
 use Vector\Test\Control\Stub\TestObject;
 
@@ -11,7 +12,7 @@ use Vector\Test\Control\Stub\TestObject;
  * Class ObjectTest
  * @package Vector\Test\Lib
  */
-class ObjectTest extends TestCase
+class ObjectsTest extends TestCase
 {
     /**
      * Test that instanceOf works as intended
@@ -37,10 +38,10 @@ class ObjectTest extends TestCase
 
     /**
      * Test throws exception on undefined property
-     * @expectedException \Vector\Core\Exception\UndefinedPropertyException
      */
     public function testGetPropThrows()
     {
+        $this->expectException(UndefinedPropertyException::class);
         $obj = new \stdClass();
         $obj->test = 'works';
 
@@ -49,10 +50,11 @@ class ObjectTest extends TestCase
 
     /**
      * Test throws exception on undefined or null property
-     * @expectedException \Vector\Core\Exception\UndefinedPropertyException
      */
     public function testGetPropThrowsNullValue()
     {
+        $this->expectException(UndefinedPropertyException::class);
+
         $obj = new \stdClass();
         $obj->test = null;
 

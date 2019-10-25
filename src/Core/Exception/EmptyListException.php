@@ -2,7 +2,9 @@
 
 namespace Vector\Core\Exception;
 
-class EmptyListException extends \Exception
+use Exception;
+
+class EmptyListException extends Exception
 {
     
 }

@@ -2,15 +2,8 @@
 
 namespace Vector\Typeclass;
 
-/**
- * Trait IsMonad
- */
-trait simpleMonadDefault
+trait SimpleMonadDefault
 {
-    /**
-     * @param callable $f
-     * @return mixed
-     */
     public function bind(callable $f)
     {
         return $f(...$this->extract());

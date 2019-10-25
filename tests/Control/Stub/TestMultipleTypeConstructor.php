@@ -6,10 +6,6 @@ use Vector\Core\Module;
 use Vector\Typeclass\FunctorInterface;
 use Vector\Typeclass\simpleFunctorDefault;
 
-/**
- * Class TestMultipleTypeConstructor
- * @package Vector\Test\Control\Stub
- */
 abstract class TestMultipleTypeConstructor extends Module implements FunctorInterface
 {
     use simpleFunctorDefault;

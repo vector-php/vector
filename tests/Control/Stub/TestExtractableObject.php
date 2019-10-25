@@ -4,10 +4,6 @@ namespace Vector\Test\Control\Stub;
 
 use Vector\Control\Extractable;
 
-/**
- * Class TestExtractableObject
- * @package Vector\Test\Control\Stub
- */
 class TestExtractableObject implements Extractable
 {
     private $value;

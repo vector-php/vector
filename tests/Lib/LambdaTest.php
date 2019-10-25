@@ -3,19 +3,17 @@
 namespace Vector\Test\Lib;
 
 use PHPUnit\Framework\TestCase;
-use Vector\Core\Module;
 use Vector\Lib\Lambda;
 use Vector\Lib\Math;
+use Vector\Test\Lib\Stub\TestFunctions;
 
 class LambdaTest extends TestCase
 {
-    /**
-     * Test that compose works - compose goes back to front
-     */
-    public function testCompose()
+    /** @test */
+    function compose_order_is_back_to_front()
     {
         $compose = Lambda::using('compose');
-        list($timesTwo, $plusTwo) = Stub\TestFunctions::using('timesTwo', 'plusTwo');
+        list($timesTwo, $plusTwo) = TestFunctions::using('timesTwo', 'plusTwo');
 
         $composeSingle = $compose($plusTwo);
         $composeDouble = $compose($timesTwo, $plusTwo);
@@ -27,14 +25,15 @@ class LambdaTest extends TestCase
         $this->assertEquals($composeDouble(2), 8);
     }
 
-    /**
-     * Test any edge cases that might pop up in Compose - things
-     * like returning null values
-     */
-    public function testComposeEdgeCases()
+    /** @test */
+    function compose_null_value_handling()
     {
         $compose = Lambda::using('compose');
-        list($returnsTrue, $invertsBool, $expectsNotNull) = Stub\TestFunctions::using('returnsTrue', 'invertsBool', 'expectsNotNull');
+        [$returnsTrue, $invertsBool, $expectsNotNull] = TestFunctions::using(
+            'returnsTrue',
+            'invertsBool',
+            'expectsNotNull'
+        );
 
         $shouldBeFalse = $compose($invertsBool, $returnsTrue);
         $shouldBeTrue = $compose($invertsBool, $invertsBool, $returnsTrue);
@@ -48,13 +47,11 @@ class LambdaTest extends TestCase
         $this->assertEquals(true, $shouldBeNull(null));
     }
 
-    /**
-     * Test that pipe works - pipe goes front to back
-     */
-    public function testPipe()
+    /** @test */
+    function pipe_order_is_front_to_back()
     {
         $pipe = Lambda::using('pipe');
-        list($timesTwo, $plusTwo) = Stub\TestFunctions::using('timesTwo', 'plusTwo');
+        [$timesTwo, $plusTwo] = TestFunctions::using('timesTwo', 'plusTwo');
 
         $pipeSingle = $pipe($plusTwo);
         $pipeDouble = $pipe($timesTwo, $plusTwo);
@@ -66,10 +63,8 @@ class LambdaTest extends TestCase
         $this->assertEquals($pipeDouble(2), 6);
     }
 
-    /**
-     * Test the constant function
-     */
-    public function testK()
+    /** @test */
+    function k()
     {
         $k = Lambda::using('k');
 
@@ -79,10 +74,8 @@ class LambdaTest extends TestCase
         $this->assertEquals(2, $constant(1, 2, 3));
     }
 
-    /**
-     * Test the identity function
-     */
-    public function testId()
+    /** @test */
+    function id()
     {
         $id = Lambda::using('id');
 
@@ -90,10 +83,8 @@ class LambdaTest extends TestCase
         $this->assertEquals('foo', $id('foo'));
     }
 
-    /**
-     * Test the function flipper
-     */
-    public function testFlip()
+    /** @test */
+    function flip()
     {
         $flip = Lambda::using('flip');
 
@@ -107,14 +98,16 @@ class LambdaTest extends TestCase
         $this->assertEquals(-4, $flippedSubtract(2, 6)); // 2 - 6
     }
 
-    public function testDot()
+    /** @test */
+    function dot()
     {
         $add2ThenAdd1 = Lambda::dot(Math::add(1), Math::add(2));
 
         $this->assertEquals(3, $add2ThenAdd1(0));
     }
 
-    public function testApply()
+    /** @test */
+    function apply()
     {
         $this->assertEquals(2, Lambda::apply(Math::add(1), 1));
     }

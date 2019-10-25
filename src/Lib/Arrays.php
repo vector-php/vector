@@ -2,43 +2,45 @@
 
 namespace Vector\Lib;
 
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
 use Vector\Core\Exception\ElementNotFoundException;
 use Vector\Core\Exception\EmptyListException;
 use Vector\Core\Exception\IndexOutOfBoundsException;
-
 use Vector\Core\Module;
 
 /**
- * @method static array groupBy(callable $keyGen, array $list) Return a grouping of $list elements grouped by the $keyGen function.
- * @method static array cons() cons($a, array $arr) Return $arr with $a appended to the end.
- * @method static mixed head() head(array $list) Return the first element of a list.
- * @method static array map() map(Callable $f, array $list) Return a transformed list.
- * @method static array mapIndexed() mapIndexed(Callable $f, array $list) Return a transformed list, receives indexes.
- * @method static mixed tail($list) Return a list sans first element.
- * @method static mixed init($list) Return a list sans last element.
- * @method static mixed last($list) Return the last element of a list.
- * @method static int length($list) Return the length of a list.
- * @method static int index($i, $list) Return the element of a list at index 'i'.
- * @method static array filter($f, $arr) Return a filtered array with every element passing test 'f'.
- * @method static mixed first($arr) Return a filtered array with every element passing test 'f'.
- * @method static array keys($arr) Return the keys of a list.
- * @method static array values($arr) Return the values of a list.
- * @method static array concat($a, $b) Return two lists concatenated together.
- * @method static array setValue($key, $arr, $val) Return a list with the element at index 'key' set to 'val'.
- * @method static mixed reduce($f, $seed, $list) Executes a reducer function (that you provide) on each element of the list, resulting in a single output value.
- * @method static array zipWith($f, $a, $b) Return two lists combined by combinator 'f'.
- * @method static array zip($a, $b) Return two lists combined into a tuple (2 array).
- * @method static drop($n, $list) Return a list with 'n' elements removed from the front.
- * @method static dropWhile($predicate, $list) Return a list with elements removed so long as they pass 'predicate'.
- * @method static take($n, $list) Return the first 'n' elements of a list.
- * @method static takeWhile($predicate, $list) Return the first elements of a list that all pass 'predicate'.
- * @method static reverse($list) Return a list in the reverse order.
- * @method static flatten($list) Return a flattened list.
- * @method static contains($item, $list) Return whether or not a list contains 'item'.
- * @method static replicate($n, $item) Return 'item' repeated 'n' times into a list.
- * @method static unique($list) Return unique values as list.
- * @method static sort($comp, $list) Given a function that compares two values, sort an array.
- * @method static takeLast($a, $list) Return the last n items from a list.
+ * @method static groupBy(...$args)
+ * @method static cons(...$args)
+ * @method static head(...$args)
+ * @method static map(...$args)
+ * @method static mapIndexed(...$args)
+ * @method static tail(...$args)
+ * @method static init(...$args)
+ * @method static last(...$args)
+ * @method static length(...$args)
+ * @method static index(...$args)
+ * @method static filter(...$args)
+ * @method static first(...$args)
+ * @method static keys(...$args)
+ * @method static values(...$args)
+ * @method static concat(...$args)
+ * @method static setValue(...$args)
+ * @method static reduce(...$args)
+ * @method static zipWith(...$args)
+ * @method static zip(...$args)
+ * @method static drop(...$args)
+ * @method static dropWhile(...$args)
+ * @method static take(...$args)
+ * @method static takeWhile(...$args)
+ * @method static reverse(...$args)
+ * @method static flatten(...$args)
+ * @method static contains(...$args)
+ * @method static replicate(...$args)
+ * @method static unique(...$args)
+ * @method static sort(...$args)
+ * @method static takeLast(...$args)
+ * @method static bifurcate(...$args)
  */
 class Arrays extends Module
 {
@@ -47,19 +49,19 @@ class Arrays extends Module
      *
      * Given a value and an array, append that value to the end of the array.
      *
-     * @example
-     * Arrays::cons(3, [1, 2]); // [1, 2, 3]
-     *
+     * @param mixed $a Value to add to array
+     * @param array $arr Array to add value to
+     * @return array      Array with value added
      * @example
      * Arrays::cons(1, []); // [1]
      *
      * @type a -> [a] -> [a]
      *
-     * @param  mixed $a   Value to add to array
-     * @param  array $arr Array to add value to
-     * @return array      Array with value added
+     * @example
+     * Arrays::cons(3, [1, 2]); // [1, 2, 3]
+     *
      */
-    protected static function cons($a, array $arr) : array
+    protected static function __cons($a, array $arr): array
     {
         $arr[] = $a;
         return $arr;
@@ -72,6 +74,9 @@ class Arrays extends Module
      * and return a multi-dimensional array with elements grouped together by their key
      * generator.
      *
+     * @param callable|\Closure $keyGen Key generating function
+     * @param array $list List to group
+     * @return array Multidimensional array of grouped elements
      * @example
      * $testCase = [1, 2, 3, 4, 5, 6, 7];
      * $keyGen = function($a) {
@@ -79,13 +84,10 @@ class Arrays extends Module
      * };
      * Arrays::groupBy($keyGen, $testCase); // ['small' => [1, 2, 3], 'big' => [4, 5, 6, 7]]
      *
-     * @param callable|\Closure $keyGen Key generating function
-     * @param  array $list List to group
-     * @return array Multidimensional array of grouped elements
      * @internal param $ (a -> String) -> [a] -> [[a]]
      *
      */
-    protected static function groupBy(callable $keyGen, array $list) : array
+    protected static function __groupBy(callable $keyGen, array $list)
     {
         return self::reduce(function ($group, $element) use ($keyGen) {
             $group[$keyGen($element)][] = $element;
@@ -100,6 +102,10 @@ class Arrays extends Module
      * properly for key/value arrays, e.g. arrays whose first element may not necessarily
      * be index 0. If an empty array is given, head throws an Exception.
      *
+     * @param array $list Key/Value array or List
+     * @return Mixed       First element of $list
+     * @throws \Vector\Core\Exception\EmptyListException if argument is empty list
+     *
      * @example
      * Arrays::head([1, 2, 3]); // 1
      *
@@ -111,12 +117,8 @@ class Arrays extends Module
      *
      * @type [a] -> a
      *
-     * @throws \Vector\Core\Exception\EmptyListException if argument is empty list
-     *
-     * @param  array $list Key/Value array or List
-     * @return Mixed       First element of $list
      */
-    protected static function head(array $list)
+    protected static function __head(array $list)
     {
         if (count($list) === 0) {
             throw new EmptyListException("'head' function is undefined for empty lists.");
@@ -131,16 +133,16 @@ class Arrays extends Module
      * Given some function and a list of arbitrary length, return a new array that is the
      * result of calling the given function on each element of the original list.
      *
+     * @param callable $f Function to call for each element
+     * @param array $list List to call function on
+     * @return array          New list of elements after calling $f for the original list elements
      * @example
      * Arrays::map($add(1), [1, 2, 3]); // [2, 3, 4]
      *
      * @type (a -> b) -> [a] -> [b]
      *
-     * @param  callable $f    Function to call for each element
-     * @param  array    $list List to call function on
-     * @return array          New list of elements after calling $f for the original list elements
      */
-    protected static function map(callable $f, array $list) : array
+    protected static function __map(callable $f, array $list): array
     {
         return array_map($f, $list);
     }
@@ -153,16 +155,16 @@ class Arrays extends Module
      * of the mapping function is the value, and the second argument is the key or index of the array being
      * mapped over.
      *
+     * @param callable $f Function to call for each element
+     * @param array $list List to call function on
+     * @return array          New list of elements after calling $f for the original list elements
      * @example
      * Arrays::mapIndexed($filterEvenIndexes, [1, 2, 3]); // [null, 2, null]
      *
      * @type (a -> b -> c) -> [a] -> [c]
      *
-     * @param  callable $f    Function to call for each element
-     * @param  array    $list List to call function on
-     * @return array          New list of elements after calling $f for the original list elements
      */
-    protected static function mapIndexed(callable $f, array $list) : array
+    protected static function __mapIndexed(callable $f, array $list): array
     {
         return array_map($f, $list, array_keys($list));
     }
@@ -175,17 +177,17 @@ class Arrays extends Module
      * first argument is ordered before the second, 0 if it's the same ordering, and 1 if
      * first argument is ordered after the second.
      *
+     * @param callable $comp The comparison function
+     * @param array $list The list to sort
+     * @return array          The sorted list
      * @example
      * $comp = function($a, $b) { return $a <=> $b; };
      * Arrays::sort($comp, [3, 2, 1]);
      *
      * @type (a -> a -> Int) -> [a] -> [a]
      *
-     * @param  callable $comp The comparison function
-     * @param  array    $list The list to sort
-     * @return array          The sorted list
      */
-    protected static function sort(callable $comp, array $list) : array
+    protected static function __sort(callable $comp, array $list): array
     {
         usort($list, $comp);
 
@@ -199,6 +201,8 @@ class Arrays extends Module
      * key/value arrays as well as 'regular' arrays. If an empty array of an array of one element
      * is given, returns an empty array.
      *
+     * @param array $list Key/Value array or List
+     * @return array       $list without the first element
      * @example
      * Arrays::([1, 2, 3]); // [2, 3]
      *
@@ -207,10 +211,8 @@ class Arrays extends Module
      *
      * @type [a] -> [a]
      *
-     * @param  array $list Key/Value array or List
-     * @return array       $list without the first element
      */
-    protected static function tail(array $list) : array
+    protected static function __tail(array $list): array
     {
         return array_slice($list, 1, count($list));
     }
@@ -222,6 +224,8 @@ class Arrays extends Module
      * key/value arrays as well as 'regular' arrays. If an empty or single-value array is given,
      * returns an empty array.
      *
+     * @param array $list Key/Value array or List
+     * @return array       $list without the last element
      * @example
      * Arrays::init([1, 2, 3]); // [1, 2]
      *
@@ -230,10 +234,8 @@ class Arrays extends Module
      *
      * @type [a] -> [a]
      *
-     * @param  array $list Key/Value array or List
-     * @return array       $list without the last element
      */
-    protected static function init(array $list) : array
+    protected static function __init(array $list): array
     {
         return array_slice($list, 0, count($list) - 1);
     }
@@ -243,6 +245,10 @@ class Arrays extends Module
      *
      * Returns the last element of an array, e.g. the complement of `init`. Works on key/value
      * arrays as well as 'regular' arrays. If an empty array is given, throws an exception.
+     *
+     * @param array $list Key/Value array or List
+     * @return Mixed       The last element of $list
+     * @throws \Vector\Core\Exception\EmptyListException if argument is empty list
      *
      * @example
      * Arrays::last([1, 2, 3]); // 3
@@ -255,12 +261,8 @@ class Arrays extends Module
      *
      * @type [a] -> a
      *
-     * @throws \Vector\Core\Exception\EmptyListException if argument is empty list
-     *
-     * @param  array $list Key/Value array or List
-     * @return Mixed       The last element of $list
      */
-    protected static function last(array $list)
+    protected static function __last(array $list)
     {
         if (count($list) === 0) {
             throw new EmptyListException("'last' function is undefined for empty lists.");
@@ -274,6 +276,8 @@ class Arrays extends Module
      *
      * Returns the length of a list or array. Wraps php `count` function.
      *
+     * @param array $list Key/Value array or List
+     * @return Int         Length of $list
      * @example
      * Arrays::length([1, 2, 3]); // 3
      *
@@ -282,10 +286,8 @@ class Arrays extends Module
      *
      * @type [a] -> a
      *
-     * @param  array $list Key/Value array or List
-     * @return Int         Length of $list
      */
-    protected static function length(array $list) : int
+    protected static function __length(array $list): int
     {
         return count($list);
     }
@@ -296,8 +298,10 @@ class Arrays extends Module
      * Returns the element of a list at the given index. Throws an exception
      * if the given index does not exist in the list.
      *
-     * @example
-     * Arrays::index(0, [1, 2, 3]); // 1
+     * @param Int $i Index to get
+     * @param array $list List to get index from
+     * @return Mixed       Item from $list and index $i
+     * @throws \Vector\Core\Exception\IndexOutOfBoundsException if the requested index does not exist
      *
      * @example
      * Arrays::index('foo', ['bar' => 1, 'foo' => 2]); // 2
@@ -307,21 +311,19 @@ class Arrays extends Module
      *
      * @type Int -> [a] -> a
      *
-     * @throws \Vector\Core\Exception\IndexOutOfBoundsException if the requested index does not exist
+     * @example
+     * Arrays::index(0, [1, 2, 3]); // 1
      *
-     * @param  Int   $i    Index to get
-     * @param  array $list List to get index from
-     * @return Mixed       Item from $list and index $i
      */
-    protected static function index($i, array $list)
+    protected static function __index($i, array $list)
     {
         /**
          * isset is much faster at the common case (non-null values)
          * but it falls down when the value is null, so we fallback to
          * array_key_exists (slower).
          */
-        if (!isset($list[$i]) && !array_key_exists($i, $list)) {
-            throw new IndexOutOfBoundsException("'index' function tried to access non-existent index '$i'");
+        if (! isset($list[$i]) && ! array_key_exists($i, $list)) {
+            throw new IndexOutOfBoundsException("'index' function tried to access non-existent index '{$i}'");
         }
 
         return $list[$i];
@@ -336,6 +338,9 @@ class Arrays extends Module
      *
      * @note 'filter' preserves the keys of a key/value array - it only looks at values
      *
+     * @param Callable $f Test function - should take an `a` and return a Bool
+     * @param array $arr List to filter
+     * @return array         Result of filtering the list
      * @example
      * Arrays::filter(function($a) { return $a > 2; }, [1, 2, 3, 4, 5]); // [3, 4, 5], using an inline function
      *
@@ -347,11 +352,8 @@ class Arrays extends Module
      *
      * @type (a -> Bool) -> [a] -> [a]
      *
-     * @param  Callable $f   Test function - should take an `a` and return a Bool
-     * @param  array    $arr List to filter
-     * @return array         Result of filtering the list
      */
-    protected static function filter(callable $f, array $arr) : array
+    protected static function __filter(callable $f, array $arr): array
     {
         return array_filter($arr, $f);
     }
@@ -365,7 +367,7 @@ class Arrays extends Module
      * @throws ElementNotFoundException
      * @internal param $ (a -> Bool) -> [a] -> a
      */
-    protected static function first(callable $f, array $arr)
+    protected static function __first(callable $f, array $arr)
     {
         foreach ($arr as $a) {
             if ($f($a) === true) {
@@ -373,7 +375,7 @@ class Arrays extends Module
             }
         }
 
-        throw new ElementNotFoundException();
+        throw new ElementNotFoundException;
     }
 
     /**
@@ -382,6 +384,8 @@ class Arrays extends Module
      * Returns the keys of an associative key/value array. Returns numerical indexes
      * for non key/value arrays.
      *
+     * @param array $arr List to get keys from
+     * @return array      The keys of $arr
      * @example
      * Arrays::keys(['a' => 1, 'b' => 2]); // ['a', 'b']
      *
@@ -390,10 +394,8 @@ class Arrays extends Module
      *
      * @type [a] -> [b]
      *
-     * @param  array $arr List to get keys from
-     * @return array      The keys of $arr
      */
-    protected static function keys(array $arr) : array
+    protected static function __keys(array $arr): array
     {
         return array_keys($arr);
     }
@@ -403,6 +405,8 @@ class Arrays extends Module
      *
      * Returns the values of an associative key/value array.
      *
+     * @param array $arr Key/Value array
+     * @return array      Indexed array with values of $arr
      * @example
      * Arrays::values(['a' => 1, 'b' => 2]); // [1, 2]
      *
@@ -411,10 +415,8 @@ class Arrays extends Module
      *
      * @type [a] -> [a]
      *
-     * @param  array $arr Key/Value array
-     * @return array      Indexed array with values of $arr
      */
-    protected static function values(array $arr) : array
+    protected static function __values(array $arr): array
     {
         return array_values($arr);
     }
@@ -426,19 +428,19 @@ class Arrays extends Module
      * to the end of the first. Defers to php build-in function `array_merge`,
      * so repeated keys will be overwritten.
      *
-     * @example
-     * Arrays::concat([1, 2], [2, 3]); // [1, 2, 2, 3]
-     *
+     * @param array $a List to be appended to
+     * @param array $b List to append
+     * @return array    Concatenated list of $a and $b
      * @example
      * Arrays::concat(['a' => 1, 'b' => 2], ['a' => 'foo', 'c' => 3]); // ['a' => 'foo', 'b' => 2, 'c' => 3]
      *
      * @type [a] -> [a] -> [a]
      *
-     * @param  array $a List to be appended to
-     * @param  array $b List to append
-     * @return array    Concatenated list of $a and $b
+     * @example
+     * Arrays::concat([1, 2], [2, 3]); // [1, 2, 2, 3]
+     *
      */
-    protected static function concat(array $a, array $b) : array
+    protected static function __concat(array $a, array $b): array
     {
         return array_merge($a, $b);
     }
@@ -449,6 +451,10 @@ class Arrays extends Module
      * Sets the value of an array at the given index; works for non-numerical indexes.
      * The value is set in an immutable way, so the original array is not modified.
      *
+     * @param Mixed $key Element of index to modify
+     * @param Mixed $val Value to set $arr[$key] to
+     * @param array $arr Array to modify
+     * @return array      Result of setting $arr[$key] = $val
      * @example
      * Arrays::setValue(0, 'foo', [1, 2, 3]); // ['foo', 2, 3]
      *
@@ -457,12 +463,8 @@ class Arrays extends Module
      *
      * @type a -> b -> [b] -> [b]
      *
-     * @param  Mixed $key Element of index to modify
-     * @param  Mixed $val Value to set $arr[$key] to
-     * @param  array $arr Array to modify
-     * @return array      Result of setting $arr[$key] = $val
      */
-    protected static function setIndex($key, $val, array $arr) : array
+    protected static function __setIndex($key, $val, array $arr): array
     {
         $arr[$key] = $val;
         return $arr;
@@ -473,10 +475,10 @@ class Arrays extends Module
      *
      * Executes a reducer function (that you provide) on each element of the array, resulting in a single output value.
      *
-     * @example
-     * $add = function($a, $b) { return $a + $b; };
-     * Arrays::reduce(Math::add(), 0, [1, 2, 3]); // 6
-     *
+     * @param callable $f Function to use in each iteration of the reduce
+     * @param mixed $seed The initial value to use in the reduce function along with the first element
+     * @param array $list The list to reduce
+     * @return mixed          The result of applying the reduce function to each element one by one
      * @example
      * Arrays::reduce(Logic::and(), True, [True, True]); // True
      *
@@ -485,12 +487,12 @@ class Arrays extends Module
      *
      * @type (b -> a -> b) -> b -> [a] -> b
      *
-     * @param  callable $f    Function to use in each iteration of the reduce
-     * @param  mixed    $seed The initial value to use in the reduce function along with the first element
-     * @param  array    $list The list to reduce
-     * @return mixed          The result of applying the reduce function to each element one by one
+     * @example
+     * $add = function($a, $b) { return $a + $b; };
+     * Arrays::reduce(Math::add(), 0, [1, 2, 3]); // 6
+     *
      */
-    protected static function reduce(callable $f, $seed, array $list)
+    protected static function __reduce(callable $f, $seed, array $list)
     {
         return array_reduce($list, $f, $seed);
     }
@@ -502,6 +504,10 @@ class Arrays extends Module
      * f(ai, bi) into a new array c. If a and b are not the same length, the resultant array will
      * always be the same length as the shorter array, i.e. the zip stops when it runs out of pairs.
      *
+     * @param Callable $f The function used to combine $a and $b
+     * @param array $a The first array to use in the combinator
+     * @param array $b The second array to use in the combinator
+     * @return array       The result of calling f with each element of a and b in series
      * @example
      * $combinator = function($a, $b) { return $a + $b; };
      * Arrays::zipWith($combinator, [1, 2, 3], [0, 8, -1]); // [1, 10, 2]
@@ -512,12 +518,8 @@ class Arrays extends Module
      *
      * @type (a -> b -> c) -> [a] -> [b] -> [c]
      *
-     * @param  Callable $f The function used to combine $a and $b
-     * @param  array    $a The first array to use in the combinator
-     * @param  array    $b The second array to use in the combinator
-     * @return array       The result of calling f with each element of a and b in series
      */
-    protected static function zipWith(callable $f, array $a, array $b) : array
+    protected static function __zipWith(callable $f, array $a, array $b): array
     {
         $result = [];
 
@@ -534,16 +536,16 @@ class Arrays extends Module
      * Given two arrays a and b, return a new array where each element is a tuple of a and b. If a and b
      * are not the same length, the resultant array will always be the same length as the shorter array.
      *
+     * @param array $a The first array to use when zipping
+     * @param array $b The second array to use when zipping
+     * @return array    Array of tuples from a and b combined
      * @example
      * Arrays::zip([1, 2, 3], ['a', 'b', 'c']); // [[1, 'a'], [2, 'b'], [3, 'c']]
      *
      * @type [a] -> [b] -> [(a, b)]
      *
-     * @param  array $a The first array to use when zipping
-     * @param  array $b The second array to use when zipping
-     * @return array    Array of tuples from a and b combined
      */
-    protected static function zip(array $a, array $b) : array
+    protected static function __zip(array $a, array $b): array
     {
         return self::zipWith(
             function ($a, $b) {
@@ -561,17 +563,17 @@ class Arrays extends Module
      * of elements that pass the test, and another array of elements that don't. Similar to filter,
      * but returns the elements that fail as well.
      *
+     * @param callable $test Test to use when bifurcating the array
+     * @param array $arr Array to split apart
+     * @return array          An array with two elements; the first is the list that passed the test,
+     *                        and the second element is the list that failed the test
      * @example
      * Arrays::bifurcate($isEven, [1, 2, 3, 4, 5]); // [[2, 4], [1, 3, 5]]
      *
      * @type (a -> Bool) -> [a] -> ([a], [a])
      *
-     * @param  callable $test Test to use when bifurcating the array
-     * @param  array    $arr  Array to split apart
-     * @return array          An array with two elements; the first is the list that passed the test,
-     *                        and the second element is the list that failed the test
      */
-    protected static function bifurcate(callable $test, array $arr) : array
+    protected static function __bifurcate(callable $test, array $arr): array
     {
         $resPass = [];
         $resFail = [];
@@ -593,19 +595,19 @@ class Arrays extends Module
      * Given some number n, drop n elements from an input array and return the rest of
      * the elements. If n is greater than the length of the array, returns an empty array.
      *
-     * @example
-     * Arrays::drop(2, [1, 2, 3, 4]); // [3, 4]
-     *
+     * @param Int $n The number of elements to drop
+     * @param array $list List to drop elements from
+     * @return array       Original list minus n elements from the front
      * @example
      * Arrays::drop(4, [1, 2]); // []
      *
      * @type Int -> [a] -> [a]
      *
-     * @param  Int   $n    The number of elements to drop
-     * @param  array $list List to drop elements from
-     * @return array       Original list minus n elements from the front
+     * @example
+     * Arrays::drop(2, [1, 2, 3, 4]); // [3, 4]
+     *
      */
-    protected static function drop(int $n, array $list) : array
+    protected static function __drop(int $n, array $list): array
     {
         return array_slice($list, $n, count($list));
     }
@@ -617,17 +619,17 @@ class Arrays extends Module
      * at the front, testing each element along the way, until that function returns false.
      * Return the array without all of those elements.
      *
+     * @param callable $predicate Function to use for testing
+     * @param array $list List to drop from
+     * @return array               List with elements removed from the front
      * @example
      * $greaterThanOne = function($n) { return $n > 1; };
      * Arrays::dropWhile($greaterThanOne, [2, 4, 6, 1, 2, 3]); // [1, 2, 3]
      *
      * @type (a -> Bool) -> [a] -> [a]
      *
-     * @param  callable $predicate Function to use for testing
-     * @param  array    $list      List to drop from
-     * @return array               List with elements removed from the front
      */
-    protected static function dropWhile(callable $predicate, array $list) : array
+    protected static function __dropWhile(callable $predicate, array $list): array
     {
         foreach ($list as $item) {
             if ($predicate($item)) {
@@ -646,16 +648,16 @@ class Arrays extends Module
      * Given some number n, return the first n elements of a given array. Returns the whole
      * array if n is greater than the array length.
      *
+     * @param int $n Number of elements to take
+     * @param array $list Array to take elements from
+     * @return array       First n elements of the array
      * @example
      * Arrays::take(3, [1, 2, 3, 4, 5]); // [1, 2, 3]
      *
      * @type Int -> [a] -> [a]
      *
-     * @param  int   $n    Number of elements to take
-     * @param  array $list Array to take elements from
-     * @return array       First n elements of the array
      */
-    protected static function take(int $n, array $list) : array
+    protected static function __take(int $n, array $list): array
     {
         return array_slice($list, 0, $n);
     }
@@ -666,17 +668,17 @@ class Arrays extends Module
      * Given some function that returns true or false, return the first elements of the array
      * that all pass the test, until the test fails.
      *
+     * @param callable $predicate Function to use for testing each element
+     * @param array $list List to take elements from
+     * @return array               First elements of list that all pass the $predicate
      * @example
      * $greaterThanOne = function($n) { return $n > 1; };
      * Arrays::takeWhile($greaterThanOne, [5, 5, 5, 1, 5, 5]); // [5, 5, 5]
      *
      * @type (a -> Bool) -> [a] -> [a]
      *
-     * @param  callable $predicate Function to use for testing each element
-     * @param  array    $list      List to take elements from
-     * @return array               First elements of list that all pass the $predicate
      */
-    protected static function takeWhile(callable $predicate, array $list) : array
+    protected static function __takeWhile(callable $predicate, array $list): array
     {
         $result = [];
 
@@ -696,15 +698,15 @@ class Arrays extends Module
      *
      * Flip the order of a given array. Does not modify the original array.
      *
+     * @param array $list Array to flip
+     * @return array       Array in the reverse order
      * @example
      * Arrays::reverse([1, 2, 3]); // [3, 2, 1]
      *
      * @type [a] -> [a]
      *
-     * @param  array $list Array to flip
-     * @return array       Array in the reverse order
      */
-    protected static function reverse(array $list) : array
+    protected static function __reverse(array $list): array
     {
         return array_reverse($list);
     }
@@ -715,17 +717,17 @@ class Arrays extends Module
      * Flattens a nested array structure into a single-dimensional array. Can handle
      * arrays of arbitrary dimension.
      *
+     * @param array $list Nested array to flatten
+     * @return array       Result of flattening $list into a 1-dimensional list
      * @example
      * Arrays::flatten([1, [2], [[[3, 4, [5]]]]]); // [1, 2, 3, 4, 5]
      *
      * @type [a] -> [b]
      *
-     * @param  array $list Nested array to flatten
-     * @return array       Result of flattening $list into a 1-dimensional list
      */
-    protected static function flatten(array $list) : array
+    protected static function __flatten(array $list): array
     {
-        $iter = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($list));
+        $iter = new RecursiveIteratorIterator(new RecursiveArrayIterator($list));
         $flat = [];
 
         foreach ($iter as $item) {
@@ -741,19 +743,19 @@ class Arrays extends Module
      * Returns true if a given array contains the item to test, or false if
      * it does not.
      *
-     * @example
-     * Arrays::contains(1, [1, 2, 3]); // true
-     *
+     * @param mixed $item Item to test for
+     * @param array $list Array to test for the existence of $item in
+     * @return bool        Whether or not $item is in $list
      * @example
      * Arrays::contains('a', ['b', 'c', 'd']); // false
      *
      * @type a -> [a] -> Bool
      *
-     * @param  mixed $item Item to test for
-     * @param  array $list Array to test for the existence of $item in
-     * @return bool        Whether or not $item is in $list
+     * @example
+     * Arrays::contains(1, [1, 2, 3]); // true
+     *
      */
-    protected static function contains($item, array $list) : bool
+    protected static function __contains($item, array $list): bool
     {
         return in_array($item, $list);
     }
@@ -764,16 +766,16 @@ class Arrays extends Module
      * Given some integer n and an item to repeat, repeat that item and place
      * the results into an array of length n.
      *
+     * @param int $n Times to repeat some item
+     * @param mixed $item Item to repeat
+     * @return array       Array with $n items
      * @example
      * Arrays::replicate(5, 'foo'); // ['foo', 'foo', 'foo', 'foo', 'foo']
      *
      * @type Int -> a -> [a]
      *
-     * @param  int   $n    Times to repeat some item
-     * @param  mixed $item Item to repeat
-     * @return array       Array with $n items
      */
-    protected static function replicate(int $n, $item) : array
+    protected static function __replicate(int $n, $item): array
     {
         $result = [];
 
@@ -789,15 +791,15 @@ class Arrays extends Module
      *
      * Given a list, return only unique values
      *
+     * @param array $list List of items to make unique
+     * @return array Original list minus duplicates
      * @example
      * Arrays::unique([1, 2, 2, 4]); // [1, 2, 4]
      *
      * @type [a] -> [a]
      *
-     * @param  array $list List of items to make unique
-     * @return array Original list minus duplicates
      */
-    protected static function unique(array $list) : array
+    protected static function __unique(array $list): array
     {
         return array_values(array_flip(array_flip($list)));
     }
@@ -807,16 +809,16 @@ class Arrays extends Module
      *
      * Return the last n items from a list
      *
+     * @param int number of items to take starting at the end of the list
+     * @param array $list List of items
+     * @return array last n items
      * @example
      * Arrays::takeLast(2, [1, 2, 2, 4]); // [2, 4]
      *
      * @type Int -> [a] -> [a]
      *
-     * @param  int number of items to take starting at the end of the list
-     * @param  array $list List of items
-     * @return array last n items
      */
-    protected static function takeLast(int $n, array $list) : array
+    protected static function __takeLast(int $n, array $list): array
     {
         return array_slice($list, -$n, count($list));
     }

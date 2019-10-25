@@ -23,42 +23,44 @@ composer require vector/core
 ```
 
 ## Show Me Some More Code
+
 More automatic currying.
-```
+```php
 $addOne = Arrays::map(Math::add(1));
 $addOne([1, 2, 3]); // [2, 3, 4]
 ```
 
-Create your own auto curried methods on a Class that extends `Vector\Core\Module`.
-```
-Class MyFunctions extends Module {
-    protected static __curriedFunction() {
-
-    }
-}
-```
-
-Memoize easily.
-```
-Class MyFunctions extends Module {
-    protected $memoize = ['myFunction'];
-
-    protected static myFunction() {
-
-    }
-}
-```
-
-Composition (Functional Pipelines)? No problem.
-```
+First class composition (Functional Pipelines).
+```php
 $addSix = Lambda::compose(Math::add(4), Math::add(2)); // (Or ::pipe for the opposite flow direction)
 $addSix(4); // 10;
 ```
 
 Pattern Matching.
-```
+```php
 Pattern::match([
     fn(Just $value) => fn(string $unwrapped) => $unwrapped,
     fn(Nothing $value) => fn() => 'nothing',
 ])(Maybe::just('just')); // 'just'
+```
+
+Granular control flow (without try/catch).
+```php
+$errorHandler = function (Err $err) {
+    return Pattern::match([
+        function (QueryException $exception) {
+            Log::info($exception);
+            return response(404);
+        },
+        function (DBException $exception) {
+            Log::error($exception);
+            return response(500);
+        },
+    ]);
+};
+
+return Pattern::match([
+    fn(Ok $value) => fn(User $user) => $user,
+    $errorHandler
+])(Result::from(fn() => User::findOrFail(1)));
 ```

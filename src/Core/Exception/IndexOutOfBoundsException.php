@@ -2,7 +2,9 @@
 
 namespace Vector\Core\Exception;
 
-class IndexOutOfBoundsException extends \Exception
+use Exception;
+
+class IndexOutOfBoundsException extends Exception
 {
 
 }

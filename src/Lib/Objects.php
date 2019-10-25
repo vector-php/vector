@@ -6,11 +6,11 @@ use Vector\Core\Exception\UndefinedPropertyException;
 use Vector\Core\Module;
 
 /**
- * @method static callable getProp($key, $obj)
- * @method static callable setProp($prop, $val, $obj)
- * @method static callable invokeMethod($method, $obj)
- * @method static callable isInstanceOf($expected, $given)
- * @method static callable assign($expected, $given)
+ * @method static callable getProp(...$args)
+ * @method static callable setProp(...$args)
+ * @method static callable invokeMethod(...$args)
+ * @method static callable isInstanceOf(...$args)
+ * @method static callable assign(...$args)
  */
 class Objects extends Module
 {
@@ -19,6 +19,10 @@ class Objects extends Module
      *
      * Sets a property on the object
      *
+     * @param String $key Property to set
+     * @param mixed $val Value
+     * @param Object $obj Object
+     * @return Object $obj Object
      * @example
      * Object::setValue('value', new stdClass(), 'hi!');
      * // object(stdClass)#1 (1) {
@@ -28,12 +32,8 @@ class Objects extends Module
      *
      * @type String -> a -> Object a -> Object a
      *
-     * @param  String $key Property to set
-     * @param  mixed  $val Value
-     * @param  Object $obj Object
-     * @return Object $obj Object
      */
-    protected static function setProp($key, $val, $obj)
+    protected static function __setProp($key, $val, $obj)
     {
         $newObj = clone $obj;
 
@@ -47,6 +47,9 @@ class Objects extends Module
      *
      * Set/Update properties on the object using a key/value array
      *
+     * @param $props
+     * @param $objOriginal
+     * @return mixed
      * @example
      * Object::assign(['value' => 'hi!'], new stdClass);
      * // object(stdClass)#1 (1) {
@@ -56,11 +59,8 @@ class Objects extends Module
      *
      * @type array props -> Object objOriginal -> Object objUpdated
      *
-     * @param $props
-     * @param $objOriginal
-     * @return mixed
      */
-    protected static function assign($props, $objOriginal)
+    protected static function __assign($props, $objOriginal)
     {
         $obj = clone $objOriginal;
 
@@ -79,6 +79,10 @@ class Objects extends Module
      *
      * Gets a property on the object
      *
+     * @param String $prop Property to get
+     * @param Object $obj Object
+     * @return mixed $val value
+     * @throws UndefinedPropertyException
      * @example
      * $obj = new stdClass();
      * $obj->value = 'hi!';
@@ -86,15 +90,11 @@ class Objects extends Module
      *
      * @type String -> Object a -> a
      *
-     * @param String $prop Property to get
-     * @param Object $obj Object
-     * @return mixed $val value
-     * @throws UndefinedPropertyException
      */
-    protected static function getProp($prop, $obj)
+    protected static function __getProp($prop, $obj)
     {
-        if (!isset($obj->{$prop})) {
-            throw new UndefinedPropertyException("'getProp' function tried to access undefined property '$prop'");
+        if (! isset($obj->{$prop})) {
+            throw new UndefinedPropertyException("'getProp' function tried to access undefined property '{$prop}'");
         }
 
         return $obj->{$prop};
@@ -105,6 +105,9 @@ class Objects extends Module
      *
      * Invokes a method on the object
      *
+     * @param String $method Method to call
+     * @param Object $obj Object
+     * @return mixed $val value
      * @example
      * $person = new stdObject(array(
      *  "sayHi" => function() {
@@ -115,11 +118,8 @@ class Objects extends Module
      *
      * @type String -> Obj a -> mixed
      *
-     * @param String $method Method to call
-     * @param Object $obj Object
-     * @return mixed $val value
      */
-    protected static function invokeMethod($method, $obj)
+    protected static function __invokeMethod($method, $obj)
     {
         return call_user_func([$obj, $method]);
     }
@@ -129,16 +129,16 @@ class Objects extends Module
      *
      * Checks if the object is an instance of the specified class
      *
+     * @param String $expected Class
+     * @param Object $given Object
+     * @return mixed $val value
      * @example
      * Object::isInstanceOf('stdClass', (new stdClass())); // true
      *
      * @type String -> Obj a -> mixed
      *
-     * @param String $expected Class
-     * @param Object $given Object
-     * @return mixed $val value
      */
-    protected static function isInstanceOf($expected, $given)
+    protected static function __isInstanceOf($expected, $given)
     {
         return $given instanceof $expected;
     }

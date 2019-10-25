@@ -2,32 +2,30 @@
 
 namespace Vector\Core;
 
+use Closure;
+use ReflectionFunction;
+use ReflectionMethod;
 use Vector\Core\Exception\FunctionNotFoundException;
 
 /**
- * Class Module
- * @package Vector\Core
- * @method static callable curry(callable $f) Given some callable f, curry it so that its arguments can be applied in chunks.
+ * @method static callable curry(...$args)
  */
 abstract class Module
 {
     /**
      * An array of functions on this module to memoize automatically
-     * @var array
      */
     protected static $memoize = [];
 
     /**
      * A memoized cache of all the function requests fulfilled by this module
-     * @var array
      */
-    protected static $fulfillmentCache = [];
+    protected static array $fulfillmentCache = [];
 
     /**
      * An array of function names to NOT curry when being fulfilled from the 'using' method
-     * @var array
      */
-    protected static $doNotCurry = ['curry'];
+    protected static array $doNotCurry = ['curry'];
 
     /**
      * Alternative Module Loading
@@ -48,8 +46,8 @@ abstract class Module
      * $head([1, 2, 3]); // 1
      * ```
      *
-     * @param  string $name Name of the function to call
-     * @param  mixed  $args Arguments to pass to the function
+     * @param string $name Name of the function to call
+     * @param mixed $args Arguments to pass to the function
      * @return mixed        Result of proxying off to the requested function
      */
     public static function __callStatic($name, $args)
@@ -71,16 +69,17 @@ abstract class Module
      * };
      *
      * $myCurriedFunction = $curry($myFunction);
-     * $myCurriedFunction(1); // Callable
+     * $myCurriedFunction(1); // callable
      * $myCurriedFunction(1)(1); // 2, PHP7 Only
      * ```
      *
      * @type (* -> *) -> * -> *
      *
-     * @param  Callable $f Function to curry
-     * @return Callable    The result of currying the original function.
+     * @param callable $f Function to curry
+     * @return callable    The result of currying the original function.
+     * @throws \ReflectionException
      */
-    protected static function curry(Callable $f)
+    protected static function __curry(callable $f)
     {
         // Curry a function of unknown arity
         return self::curryWithArity($f, self::getArity($f));
@@ -90,27 +89,28 @@ abstract class Module
      * Curry a function with a specific arity. This is used internally
      * to curry functions that accept variadic arguments, e.g. for memoized functions.
      *
-     * @param  Callable $f           Function to curry
-     * @param  Int      $arity       Arity of $f
-     * @param  array    $appliedArgs The arguments already applied to the curried function. This
+     * @param callable $f Function to curry
+     * @param Int $arity Arity of $f
+     * @param array $appliedArgs The arguments already applied to the curried function. This
      *                               argument is for internal use only.
-     * @return Callable              The result of currying the original function.
+     * @return callable              The result of currying the original function.
      */
-    protected static function curryWithArity(Callable $f, $arity, $appliedArgs = [])
+    protected static function curryWithArity(callable $f, $arity, $appliedArgs = [])
     {
         // Return a new function where we use the arguments already closed over,
         // and merge them with the arguments we get from the new function.
-        return function(...$suppliedArgs) use ($f, $appliedArgs, $arity) {
+        return function (...$suppliedArgs) use ($f, $appliedArgs, $arity) {
             $args = array_merge($appliedArgs, $suppliedArgs);
 
             // If we have enough arguments, apply them to the internally curried function
             // closed over from the original function call.
-            if (count($args) >= $arity)
+            if (count($args) >= $arity) {
                 return call_user_func_array($f, $args);
-            // Otherwise, recursively call curry again, passing in the arguments supplied
-            // from this call
-            else
+            } else {
+                // Otherwise, recursively call curry again, passing in the arguments supplied
+                // from this call
                 return self::curryWithArity($f, $arity, $args);
+            }
         };
     }
 
@@ -128,18 +128,18 @@ abstract class Module
      * $myFastFunction(1, 2); // Instantaneous response
      * ```
      *
-     * @type (* -> *) -> * -> *
      *
-     * @param  Callable $f Function to memoize
-     * @return Callable    Memoized funciton $f
+     * @param callable $f Function to memoize
+     * @return callable    Memoized funciton $f
      */
-    protected static function memoize(Callable $f)
+    protected static function memoize(callable $f)
     {
-        return function(...$args) use ($f) {
+        return function (...$args) use ($f) {
             static $cache;
 
-            if ($cache === null)
+            if ($cache === null) {
                 $cache = [];
+            }
 
             $key = serialize($args);
 
@@ -160,15 +160,16 @@ abstract class Module
      * Returns the arity of a funciton, e.g. the number of arguments it
      * expects to recieve before it returns a value.
      *
-     * @param  Callable $f Function to get arity for
+     * @param callable $f Function to get arity for
      * @return Int         Number of arguments for $f
+     * @throws \ReflectionException
      */
     protected static function getArity(callable $f)
     {
-        if (is_string($f) || $f instanceof \Closure) {
-            $reflector = (new \ReflectionFunction($f));
+        if (is_string($f) || $f instanceof Closure) {
+            $reflector = (new ReflectionFunction($f));
         } else {
-            $reflector = (new \ReflectionMethod($f[0], $f[1]));
+            $reflector = (new ReflectionMethod($f[0], $f[1]));
         }
 
         // Count the number of arguments the function is asking for
@@ -184,13 +185,13 @@ abstract class Module
      * split apart using PHP's internal `list` function.
      *
      * ```
-     * $myFunc = MyModule::using('myFunc'); // Callable
-     * list($foo, $bar) = MyModule::using('foo', 'bar'); // $foo = Callable, $bar = Callable
+     * $myFunc = MyModule::using('myFunc'); // callable
+     * list($foo, $bar) = MyModule::using('foo', 'bar'); // $foo = callable, $bar = callable
      * ```
      *
      * @type String -> (* -> *)
      *
-     * @param  array    $requestedFunctions Variadic list of strings, function names to request
+     * @param array $requestedFunctions Variadic list of strings, function names to request
      * @return callable                     A single callable, or an array of callable representing
      *                                      the fulfilled request for functions from the module
      */
@@ -198,35 +199,43 @@ abstract class Module
     {
         $context = get_called_class();
 
-        $fulfilledRequest = array_map(function($f) use ($context) {
+        $fulfilledRequest = array_map(function ($f) use ($context) {
+            // Append a '__' to the name we're looking for
+            $internalName = '__' . $f;
 
             // See if we've already fulfilled the request for this function. If so, just return the cached one.
-            if (array_key_exists($context, static::$fulfillmentCache) && array_key_exists($f, static::$fulfillmentCache[$context]))
-                return static::$fulfillmentCache[$context][$f];
+            if (array_key_exists($context, static::$fulfillmentCache)
+                && array_key_exists($internalName, static::$fulfillmentCache[$context])
+            ) {
+                return static::$fulfillmentCache[$context][$internalName];
+            }
 
             // If we haven't fulfilled it already, check to see if it even exists
-            if (!method_exists($context, $f))
-                throw new FunctionNotFoundException("Function $f not found in module $context");
+            if (! method_exists($context, $internalName)) {
+                throw new FunctionNotFoundException("Function {$f} not found in module {$context}");
+            }
 
             // Check to see if we're memoizing this function, or the whole module. Otherwise, carry on.
             if ($context::$memoize === true || in_array($f, $context::$memoize)) {
-                $functionInContext = self::memoize([$context, $f]);
+                $functionInContext = self::memoize([$context, $internalName]);
+            } else {
+                $functionInContext = [$context, $internalName];
             }
-            else
-                $functionInContext = [$context, $f];
 
             // If the function exists, then see if we're supposed to curry it. If not, just return it in a closure.
-            if ($context::$doNotCurry === true || (is_array($context::$doNotCurry) && in_array($f, $context::$doNotCurry))) {
-                $fulfillment = function(...$args) use ($functionInContext) {
+            if ($context::$doNotCurry === true
+                || (is_array($context::$doNotCurry) && in_array($f, $context::$doNotCurry))
+            ) {
+                $fulfillment = function (...$args) use ($functionInContext) {
                     return call_user_func_array($functionInContext, $args);
                 };
+            } else {
+                // Otherwise, curry it
+                $fulfillment = self::curryWithArity($functionInContext, self::getArity([$context, $internalName]));
             }
-            // Otherwise, curry it
-            else
-                $fulfillment = self::curryWithArity($functionInContext, self::getArity([$context, $f]));
 
             // Then store it in our cache so we can short circuit this process in the future
-            self::$fulfillmentCache[$context][$f] = $fulfillment;
+            self::$fulfillmentCache[$context][$internalName] = $fulfillment;
 
             // And return it
             return $fulfillment;

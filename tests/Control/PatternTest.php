@@ -18,126 +18,127 @@ use Vector\Test\Control\Stub\TestExtractableObject;
 use Vector\Test\Control\Stub\TestObject;
 use Vector\Test\Control\Stub\TestParentType;
 
-/**
- * Class PatternTest
- * @package Vector\Test\Control
- */
 class PatternTest extends TestCase
 {
-    /**
-     * Tests the we have an informative error when no arguments are given
-     */
-    public function testThatItMatchesOnArity()
+    /** @test */
+    public function it_matches_arity_when_no_arguments_are_given()
     {
         $match = Pattern::match([
-            fn(int $a) => 1,
-            fn(int $a, int $b) => 2,
+            fn (int $a) => 1,
+            fn (int $a, int $b) => 2,
         ]);
 
         $this->assertEquals(2, $match(2, 2));
         $this->assertEquals(1, $match(1));
     }
 
-    public function testThatItMatchesOnType()
+    /** @test */
+    public function it_matches_on_type()
     {
         $match = Pattern::match([
-            fn(string $value) => 1,
-            fn(int $value) => 2,
+            fn (string $value) => 1,
+            fn (int $value) => 2,
         ]);
 
         $this->assertEquals(1, $match('hello'));
         $this->assertEquals(2, $match(1));
     }
 
-    public function testThatCanMatchOnResultOk()
+    /** @test */
+    public function it_can_match_on_result_ok()
     {
         $match = Pattern::match([
-            fn(Ok $value) => fn(int $value) => $value + 2,
-            fn(Err $error) => 'nothing',
+            fn (Ok $value) => fn (int $value) => $value + 2,
+            fn (Err $error) => 'nothing',
         ]);
 
         $this->assertEquals(3, $match(Result::ok(1)));
     }
 
-    public function testThatCanMatchOnResultErr()
+    /** @test */
+    public function it_can_match_on_result_err()
     {
         $match = Pattern::match([
-            fn(Ok $value) => fn(int $value) => $value + 2,
-            fn(Err $error) => fn(string $error) => $error,
+            fn (Ok $value) => fn (int $value) => $value + 2,
+            fn (Err $error) => fn (string $error) => $error,
         ]);
 
         $this->assertEquals("something wen't wrong.", $match(Result::err("something wen't wrong.")));
     }
 
-    public function testThatCanMatchOnMaybeJust()
+    /** @test */
+    public function it_can_match_on_maybe_just()
     {
         $match = Pattern::match([
-            fn(Just $value) => fn(int $value) => $value + 2,
-            fn(Nothing $_) => 'nothing',
+            fn (Just $value) => fn (int $value) => $value + 2,
+            fn (Nothing $_) => 'nothing',
         ]);
 
         $this->assertEquals(3, $match(Maybe::just(1)));
     }
 
-    public function testThatCanHaveDefaultCase()
+    /** @test */
+    public function it_can_match_on_default_case()
     {
         $match = Pattern::match([
-            fn(Just $value) => fn(int $value) => $value + 2,
-            fn() => fn() => 'default',
+            fn (Just $value) => fn (int $value) => $value + 2,
+            fn () => fn () => 'default',
         ]);
 
         $this->assertEquals('default', $match(Maybe::nothing()));
     }
 
-    public function testThatCanMatchOnMaybeNothing()
+    /** @test */
+    public function it_can_match_on_maybe_nothing()
     {
         $match = Pattern::match([
-            fn(Just $value) => fn(int $value) => $value + 2,
-            fn(Nothing $_) => fn() => 'nothing',
+            fn (Just $value) => fn (int $value) => $value + 2,
+            fn (Nothing $_) => fn () => 'nothing',
         ]);
 
         $this->assertEquals('nothing', $match(Maybe::nothing()));
     }
 
-    public function testThatCanMatchOnExtractable()
+    /** @test */
+    public function it_can_match_on_extractable()
     {
         $match = Pattern::match([
-            fn(TestChildTypeA $value) => fn(int $value) => $value + 1,
-            fn(TestChildTypeB $value) => fn(int $value) => $value + 2,
+            fn (TestChildTypeA $value) => fn (int $value) => $value + 1,
+            fn (TestChildTypeB $value) => fn (int $value) => $value + 2,
         ]);
 
         $this->assertEquals(3, $match(TestParentType::typeB(1)));
     }
 
-    public function testThatThrowsWhenNonCallbackValueForWrappedMatch()
+    /** @test */
+    public function it_throws_when_non_callback_value_for_wrapped_match()
     {
         $this->expectException(InvalidPatternMatchException::class);
 
         $match = Pattern::match([
-            fn(TestExtractableObject $a) => 'need callback',
+            fn (TestExtractableObject $a) => 'need callback',
         ]);
 
         $this->assertEquals('always', $match(new TestExtractableObject(1)));
     }
 
-    public function testThatCanMatchUsingEmptyParams()
+    /** @test */
+    public function can_match_using_empty_params()
     {
         $match = Pattern::match([
-            fn() => 'always',
+            fn () => 'always',
         ]);
 
         $this->assertEquals('always', $match('w/e'));
     }
 
-    /**
-     * Use php for things you can use php for.
-     */
-    public function testThatCanMatchOnExplicitValues()
+    /** @test */
+    public function switch_case_for_raw_values()
     {
         $match = function ($value) {
             switch ($value) {
                 case [1, 3]:
-                    return false;
+                    return 'a';
                 case [1, 2, 3]:
                     return true;
                 default:
@@ -148,31 +149,34 @@ class PatternTest extends TestCase
         $this->assertEquals(true, $match([1, 2, 3]));
     }
 
-    public function testThatCanMatchOnCustomObject()
+    /** @test */
+    public function can_match_on_custom_object()
     {
         $match = Pattern::match([
-            fn(TestObject $object) => $object->getValue(),
+            fn (TestObject $object) => $object->getValue(),
         ]);
 
         $this->assertEquals('works', $match(new TestObject()));
     }
 
-    public function testThatCanMatchArityOnCustomObjects()
+    /** @test */
+    public function it_can_match_arity_on_custom_objects()
     {
         $match = Pattern::match([
-            fn(TestObject $object) => $object->getValue(),
-            fn(TestObject $object, TestObject $object2) => 'ok',
+            fn (TestObject $object) => $object->getValue(),
+            fn (TestObject $object, TestObject $object2) => 'ok',
         ]);
 
         $this->assertEquals('ok', $match(new TestObject(), new TestObject()));
     }
 
-    public function testThatThrowsOnNoMatchingPattern()
+    /** @test */
+    function throws_on_no_matching_pattern()
     {
         $this->expectException(IncompletePatternMatchException::class);
 
         $match = Pattern::match([
-            fn(string $value) => $value . 'asdf',
+            fn (string $value) => $value . 'asdf',
         ]);
 
         $this->assertEquals(2, $match(1));

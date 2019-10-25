@@ -4,28 +4,33 @@ namespace Vector\Data\Result;
 
 use Exception;
 use Vector\Core\Module;
-use Vector\Typeclass\simpleApplicativeDefault;
-use Vector\Typeclass\simpleFunctorDefault;
-use Vector\Typeclass\simpleMonadDefault;
+use Vector\Typeclass\SimpleApplicativeDefault;
+use Vector\Typeclass\SimpleFunctorDefault;
+use Vector\Typeclass\SimpleMonadDefault;
 use Vector\Typeclass\MonadInterface;
 
+/**
+ * @method static callable ok($value)
+ * @method static callable err(...$args)
+ * @method static callable from(...$args)
+ */
 abstract class Result extends Module implements MonadInterface
 {
-    use simpleFunctorDefault;
-    use simpleApplicativeDefault;
-    use simpleMonadDefault;
+    use SimpleFunctorDefault;
+    use SimpleApplicativeDefault;
+    use SimpleMonadDefault;
 
-    protected static function ok($value)
+    protected static function __ok($value)
     {
         return new Ok($value);
     }
 
-    protected static function err($err)
+    protected static function __err($err)
     {
         return new Err($err);
     }
 
-    protected static function attempt(callable $f)
+    protected static function __from(callable $f)
     {
         try {
             return Result::ok($f());

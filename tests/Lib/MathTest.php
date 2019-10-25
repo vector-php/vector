@@ -7,140 +7,113 @@ use Vector\Lib\Math;
 
 class MathTest extends TestCase
 {
-    /**
-     * Test that you can add two numbers together
-     */
-    public function testAdd()
+    /** @test */
+    function add()
     {
-        $add = Math::using('add');
+        $add = Math::add();
 
         $this->assertEquals(5, $add(2, 3));
     }
 
-    /**
-     * Test that you can sum a list of numbers
-     */
-    public function testSum()
+    /** @test */
+    function sum()
     {
         $sum = Math::using('sum');
 
         $this->assertEquals(9, $sum([2, 3, 4]));
     }
 
-    /**
-     * Test that you can negate a number
-     */
-    public function testNegate()
+    /** @test */
+    function negate()
     {
         $negate = Math::using('negate');
 
         $this->assertEquals(-1, $negate(1));
     }
 
-    /**
-     * Test finding min of 2 numbers
-     */
-    public function testMin()
+    /** @test */
+    function min()
     {
         $this->assertEquals(1, Math::min(1, 5));
     }
 
-    /**
-     * Test finding max of 2 numbers
-     */
-    public function testMax()
+    /** @test */
+    function max()
     {
         $this->assertEquals(5, Math::max(1, 5));
     }
 
-    /**
-     * Test finding mean
-     */
-    public function testMean()
+    function mean()
     {
         $this->assertEquals(2, Math::mean([1, 2, 3]));
     }
 
-    /**
-     * Test that you can subtract two numbers. The second argument is subtracted
-     * from the first argument.
-     */
-    public function testSubtract()
+    /** @test */
+    function subtract_is_first_arg_from_second()
     {
         $subtract = Math::using('subtract');
 
         $this->assertEquals(5, $subtract(5, 10));
     }
 
-    /**
-     * Test that multiply works properly
-     */
-    public function testMultiply()
+    /** @test */
+    function multiply()
     {
         $multiply = Math::using('multiply');
 
         $this->assertEquals(10, $multiply(5, 2));
     }
 
-    /**
-     * Test that product works properly
-     */
-    public function testProduct()
+    /** @test */
+    function product()
     {
         $product = Math::using('product');
 
         $this->assertEquals(6, $product([1, 2, 3]));
     }
 
-    /**
-     * Test that product of empty list is 0
-     */
-    public function testProductEmptyIs0()
+    /** @test */
+    function product_of_empty_is_0()
     {
         $product = Math::using('product');
 
         $this->assertEquals(0, $product([]));
     }
 
-    /**
-     * Test that two numbers are divided. The first argument is the divisor, e.g.
-     * the denominator.
-     */
-    public function testDivide()
+    /** @test */
+    function divide_first_arg_is_divisor_second_is_denominator()
     {
         $divide = Math::using('divide');
 
         $this->assertEquals(4, $divide(2, 8));
     }
 
-    /**
-     * Test the modulus function. The first argument is the modulus. e.g. a, b = b % a
-     */
-    public function testMod()
+    /** @test */
+    function mod_first_arg_is_the_modulus()
     {
         $mod = Math::using('mod');
 
         $this->assertEquals(3, $mod(5, 8));
     }
 
-    /**
-     * Test the power function. The first argument is the power base. e.g. a, b = b ^ a
-     */
-    public function testPow()
+    /** @test */
+    function pow_first_arg_is_the_base()
     {
         $pow = Math::using('pow');
 
         $this->assertEquals(8, $pow(3, 2));
     }
 
-    public function testRange()
+    /** @test */
+    function range()
     {
         $range = Math::using('range');
 
         $this->assertEquals([1, 2, 3, 4, 5], $range(1, 1, 5));
     }
 
-    public function testRangeDoesntBreakOnExceedingSpecifiedRange()
+    /** @test */
+    function range_doesnt_break_on_exceeding_specified_range()
     {
         $range = Math::using('range');
 

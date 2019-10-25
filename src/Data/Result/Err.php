@@ -2,8 +2,6 @@
 
 namespace Vector\Data\Result;
 
-use Exception;
-
 class Err extends Result
 {
     protected $err;

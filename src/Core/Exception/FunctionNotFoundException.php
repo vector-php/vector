@@ -2,7 +2,9 @@
 
 namespace Vector\Core\Exception;
 
-class FunctionNotFoundException extends \Exception
+use Exception;
+
+class FunctionNotFoundException extends Exception
 {
 
 }

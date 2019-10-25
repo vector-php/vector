@@ -2,7 +2,9 @@
 
 namespace Vector\Core\Exception;
 
-class UndefinedPropertyException extends \Exception
+use Exception;
+
+class UndefinedPropertyException extends Exception
 {
 
 }

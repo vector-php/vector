@@ -2,10 +2,6 @@
 
 namespace Vector\Test\Control\Stub;
 
-/**
- * Class TestChildTypeA
- * @package Vector\Test\Control\Stub
- */
 class TestChildTypeA extends TestParentType
 {
     private $value;

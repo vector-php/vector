@@ -11,11 +11,7 @@ use Vector\Core\Module;
 use Vector\Lib\Arrays;
 
 /**
- * Class Pattern
- * @package Vector\Control
- * @method static mixed match(array $patterns) : mixed
- * @method static mixed getType($param) : string
- * @method static mixed patternApplies(array $parameterTypes, array $args, array $pattern) : bool
+ * @method static mixed match(...$args)
  */
 abstract class Pattern extends Module
 {
@@ -24,7 +20,7 @@ abstract class Pattern extends Module
      * @param $param
      * @return string
      */
-    protected static function getType($param)
+    protected static function __getType($param)
     {
         $type = is_object($param)
             ? get_class($param)
@@ -38,7 +34,7 @@ abstract class Pattern extends Module
      * @param array $patterns
      * @return mixed
      */
-    protected static function match(array $patterns)
+    protected static function __match(array $patterns)
     {
         return function (...$args) use ($patterns) {
             $parameterTypes = array_map(self::getType(), $args);
@@ -55,16 +51,6 @@ abstract class Pattern extends Module
                     'Incomplete pattern match expression. (missing ' . implode(', ', $parameterTypes) . ')'
                 );
             }
-
-
-            /**
-             * Upcoming Feature, Array DSL for matching via `x::xs` etc.
-             */
-//            // if key is a string, manually match
-//            if (is_string($key)) {
-//
-//                throw new \Exception('Array DSL not available.');
-//            }
 
             list($hasExtractable, $unwrappedArgs) = self::unwrapArgs($args);
 
@@ -97,7 +83,7 @@ abstract class Pattern extends Module
      * @param array $args
      * @return array
      */
-    private static function unwrapArgs(array $args) : array
+    protected static function unwrapArgs(array $args) : array
     {
         $hasExtractable = false;
 
@@ -118,22 +104,17 @@ abstract class Pattern extends Module
      * @param array $args
      * @param array $pattern
      * @return bool
+     * @throws \ReflectionException
      */
-    protected static function patternApplies(array $parameterTypes, array $args, array $pattern) : bool
+    protected static function __patternApplies(array $parameterTypes, array $args, array $pattern) : bool
     {
         list($key, $pattern) = $pattern;
-
-        /**
-         * Upcoming Feature, Array DSL for matching via `x::xs` etc.
-         */
-//        if (is_string($key)) {
-//            return false;
-//        }
 
         $reflected = new ReflectionFunction($pattern);
 
         $patternParameterTypes = array_map(function (ReflectionParameter $parameter) {
-            if ($class = $parameter->getClass()) {
+            $class = $parameter->getClass();
+            if ($class) {
                 return $class->getName();
             }
 

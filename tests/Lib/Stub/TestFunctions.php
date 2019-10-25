@@ -23,7 +23,7 @@ class TestFunctions extends Module
 
     protected static function __invertsBool($a)
     {
-        return !$a;
+        return ! $a;
     }
 
     protected static function __expectsNotNull($a)

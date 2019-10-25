@@ -30,7 +30,9 @@ class ModuleTest extends TestCase
         // Loading the function should add it to the cache
         TestFunctions::using('notAPureFunction');
 
-        $cache = TestFunctions::getFulfillmentCache()['Vector\Test\Core\Stub\TestFunctions'];
+        $cache = TestFunctions::getFulfillmentCache()[
+            'Vector\Test\Core\Stub\TestFunctions'
+        ];
 
         $this->assertArrayHasKey('__notAPureFunction', $cache);
     }

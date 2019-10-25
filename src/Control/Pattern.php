@@ -6,7 +6,6 @@ use ReflectionFunction;
 use ReflectionParameter;
 use Vector\Core\Exception\ElementNotFoundException;
 use Vector\Core\Exception\IncompletePatternMatchException;
-use Vector\Core\Exception\InvalidPatternMatchException;
 use Vector\Core\Module;
 use Vector\Lib\Arrays;
 

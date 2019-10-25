@@ -39,7 +39,7 @@ $addSix(4); // 10;
 Pattern Matching.
 ```php
 Pattern::match([
-    fn(Just $value) => $unwrapped,
+    fn(Just $value) => fn ($unwrapped) => $unwrapped,
     fn(Nothing $value) => 'nothing',
 ])(Maybe::just('just')); // 'just'
 ```
@@ -60,7 +60,7 @@ $errorHandler = function (Err $err) {
 };
 
 return Pattern::match([
-    fn(Ok $value) => $user,
+    fn(Ok $value) => fn (User $user) => $user,
     $errorHandler
 ])(Result::from(fn() => User::findOrFail(1)));
 ```

@@ -49,11 +49,11 @@ class PatternTest extends TestCase
     public function it_can_match_on_result_ok()
     {
         $match = Pattern::match([
-            fn (Ok $value) => fn (int $value) => $value + 2,
+            fn (Ok $value) => fn (string $value) => $value . 'bc',
             fn (Err $error) => 'nothing',
         ]);
 
-        $this->assertEquals(3, $match(Result::ok(1)));
+        $this->assertEquals('abc', $match(Result::ok('a')));
     }
 
     /** @test */
@@ -71,11 +71,11 @@ class PatternTest extends TestCase
     public function it_can_match_on_maybe_just()
     {
         $match = Pattern::match([
-            fn (Just $value) => $value + 2,
+            fn (Just $value) => fn (string $value) => $value . 'bc',
             fn (Nothing $_) => 'nothing',
         ]);
 
-        $this->assertEquals(3, $match(Maybe::just(1)));
+        $this->assertEquals('abc', $match(Maybe::just('a')));
     }
 
     /** @test */

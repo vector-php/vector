@@ -57,13 +57,6 @@ abstract class Pattern extends Module
             $value = $matchingPattern(...$args);
             $isCallable = is_callable($value);
 
-            if ($hasExtractable && ! $isCallable) {
-                throw new InvalidPatternMatchException(
-                    'Invalid pattern match expression. (one of ' . implode(', ', $parameterTypes)
-                    . ' requires a callback to unwrap)'
-                );
-            }
-
             /**
              * Extractable requires a callback to feed args into.
              */
@@ -72,7 +65,7 @@ abstract class Pattern extends Module
             }
 
             /**
-             * No extractable so we can just return the value directly.
+             * No extractable or callable so we can just return the value directly.
              */
             return $value;
         };

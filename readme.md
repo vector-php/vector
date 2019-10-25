@@ -9,7 +9,7 @@ Vector gives you php functional superpowers.
     - `Arrays::map(fn($a) => $a + 1)([1, 2, 3])` (_Vector_)
 
 - You can add currying to any function, it isn't only limited to Vector built ins.
-    - `Module::curry('implode')(',')('a,b,c')` `// ['a', 'b', 'c']`
+    - `Module::curry('explode')(',')('a,b,c')(PHP_INT_MAX)` `// ['a', 'b', 'c']`
 
 - Create functional pipelines as first class citizens
     - `Lambda::pipe(Math::add(4), Math::add(2))(1)` `// 7`
@@ -39,8 +39,8 @@ $addSix(4); // 10;
 Pattern Matching.
 ```php
 Pattern::match([
-    fn(Just $value) => fn(string $unwrapped) => $unwrapped,
-    fn(Nothing $value) => fn() => 'nothing',
+    fn(Just $value) => $unwrapped,
+    fn(Nothing $value) => 'nothing',
 ])(Maybe::just('just')); // 'just'
 ```
 
@@ -60,7 +60,7 @@ $errorHandler = function (Err $err) {
 };
 
 return Pattern::match([
-    fn(Ok $value) => fn(User $user) => $user,
+    fn(Ok $value) => $user,
     $errorHandler
 ])(Result::from(fn() => User::findOrFail(1)));
 ```

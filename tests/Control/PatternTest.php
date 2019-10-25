@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Vector\Control\Pattern;
 use Vector\Core\Exception\IncompletePatternMatchException;
 use Vector\Core\Exception\InvalidPatternMatchException;
+use Vector\Core\Module;
 use Vector\Data\Maybe\Just;
 use Vector\Data\Maybe\Maybe;
 use Vector\Data\Maybe\Nothing;
@@ -70,7 +71,7 @@ class PatternTest extends TestCase
     public function it_can_match_on_maybe_just()
     {
         $match = Pattern::match([
-            fn (Just $value) => fn (int $value) => $value + 2,
+            fn (Just $value) => $value + 2,
             fn (Nothing $_) => 'nothing',
         ]);
 
@@ -81,8 +82,8 @@ class PatternTest extends TestCase
     public function it_can_match_on_default_case()
     {
         $match = Pattern::match([
-            fn (Just $value) => fn (int $value) => $value + 2,
-            fn () => fn () => 'default',
+            fn (Just $value) => $value + 2,
+            fn () => 'default',
         ]);
 
         $this->assertEquals('default', $match(Maybe::nothing()));
@@ -92,8 +93,8 @@ class PatternTest extends TestCase
     public function it_can_match_on_maybe_nothing()
     {
         $match = Pattern::match([
-            fn (Just $value) => fn (int $value) => $value + 2,
-            fn (Nothing $_) => fn () => 'nothing',
+            fn (Just $value) => $value + 2,
+            fn (Nothing $_) => 'nothing',
         ]);
 
         $this->assertEquals('nothing', $match(Maybe::nothing()));
@@ -103,23 +104,31 @@ class PatternTest extends TestCase
     public function it_can_match_on_extractable()
     {
         $match = Pattern::match([
-            fn (TestChildTypeA $value) => fn (int $value) => $value + 1,
-            fn (TestChildTypeB $value) => fn (int $value) => $value + 2,
+            fn (TestChildTypeA $value) => $value + 1,
+            fn (TestChildTypeB $value) => $value + 2,
         ]);
 
         $this->assertEquals(3, $match(TestParentType::typeB(1)));
     }
 
     /** @test */
-    public function it_throws_when_non_callback_value_for_wrapped_match()
+    public function it_can_auto_unwrap_a_wrapped_match()
     {
-        $this->expectException(InvalidPatternMatchException::class);
-
         $match = Pattern::match([
-            fn (TestExtractableObject $a) => 'need callback',
+            fn (TestExtractableObject $a) => 'value',
         ]);
 
-        $this->assertEquals('always', $match(new TestExtractableObject(1)));
+        $this->assertEquals('value', $match(new TestExtractableObject(1)));
+    }
+
+    /** @test */
+    public function it_auto_calls_a_matched_callable_value()
+    {
+        $match = Pattern::match([
+            fn (TestExtractableObject $a) => fn ($a) => $a + 1,
+        ]);
+
+        $this->assertEquals(2, $match(new TestExtractableObject(1)));
     }
 
     /** @test */

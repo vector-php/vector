@@ -13,6 +13,7 @@ use Vector\Data\Maybe\Nothing;
 use Vector\Data\Result\Err;
 use Vector\Data\Result\Ok;
 use Vector\Data\Result\Result;
+use Vector\Lib\Strings;
 use Vector\Test\Control\Stub\TestChildTypeA;
 use Vector\Test\Control\Stub\TestChildTypeB;
 use Vector\Test\Control\Stub\TestExtractableObject;
@@ -93,7 +94,7 @@ class PatternTest extends TestCase
     public function it_can_match_on_maybe_nothing()
     {
         $match = Pattern::match([
-            fn (Just $value) => $value + 2,
+            fn (Just $value) => $value,
             fn (Nothing $_) => 'nothing',
         ]);
 
@@ -104,31 +105,31 @@ class PatternTest extends TestCase
     public function it_can_match_on_extractable()
     {
         $match = Pattern::match([
-            fn (TestChildTypeA $value) => $value + 1,
-            fn (TestChildTypeB $value) => $value + 2,
+            fn (TestChildTypeA $value) => Strings::concat('no'),
+            fn (TestChildTypeB $value) => Strings::concat('bc'),
         ]);
 
-        $this->assertEquals(3, $match(TestParentType::typeB(1)));
+        $this->assertEquals('abc', $match(TestParentType::typeB('a')));
     }
 
     /** @test */
-    public function it_can_auto_unwrap_a_wrapped_match()
+    public function it_can_auto_return_a_scalar_from_a_wrapped_match()
     {
         $match = Pattern::match([
             fn (TestExtractableObject $a) => 'value',
         ]);
 
-        $this->assertEquals('value', $match(new TestExtractableObject(1)));
+        $this->assertEquals('value', $match(new TestExtractableObject('a')));
     }
 
     /** @test */
     public function it_auto_calls_a_matched_callable_value()
     {
         $match = Pattern::match([
-            fn (TestExtractableObject $a) => fn ($a) => $a + 1,
+            fn (TestExtractableObject $a) => fn ($a) => $a . 'bc',
         ]);
 
-        $this->assertEquals(2, $match(new TestExtractableObject(1)));
+        $this->assertEquals('abc', $match(new TestExtractableObject('a')));
     }
 
     /** @test */

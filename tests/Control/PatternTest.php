@@ -5,8 +5,6 @@ namespace Vector\Test\Control;
 use PHPUnit\Framework\TestCase;
 use Vector\Control\Pattern;
 use Vector\Core\Exception\IncompletePatternMatchException;
-use Vector\Core\Exception\InvalidPatternMatchException;
-use Vector\Core\Module;
 use Vector\Data\Maybe\Just;
 use Vector\Data\Maybe\Maybe;
 use Vector\Data\Maybe\Nothing;

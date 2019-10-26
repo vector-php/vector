@@ -179,6 +179,25 @@ class PatternTest extends TestCase
     }
 
     /** @test */
+    public function it_uses_first_match_arity_on_optional_params()
+    {
+        $matchTest1 = Pattern::match([
+            fn (TestObject $object) => 'first',
+            fn (TestObject $object, ?TestObject $object2) => 'second',
+            fn (TestObject $object, TestObject $object2 = null) => 'third',
+        ]);
+
+        $matchTest2 = Pattern::match([
+            fn (TestObject $object) => 'first',
+            fn (TestObject $object, TestObject $object2 = null) => 'second',
+            fn (TestObject $object, TestObject $object2) => 'third',
+        ]);
+
+        $this->assertEquals('second', $matchTest1(new TestObject(), new TestObject()));
+        $this->assertEquals('second', $matchTest2(new TestObject(), new TestObject()));
+    }
+
+    /** @test */
     function throws_on_no_matching_pattern()
     {
         $this->expectException(IncompletePatternMatchException::class);

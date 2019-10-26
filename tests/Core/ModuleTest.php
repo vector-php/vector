@@ -3,8 +3,8 @@
 namespace Vector\Test\Core;
 
 use PHPUnit\Framework\TestCase;
-use Vector\Core\Module;
 use Vector\Core\Exception\FunctionNotFoundException;
+use Vector\Core\Module;
 use Vector\Test\Core\Stub\TestFunctions;
 
 class ModuleTest extends TestCase

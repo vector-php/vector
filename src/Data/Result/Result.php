@@ -4,10 +4,10 @@ namespace Vector\Data\Result;
 
 use Exception;
 use Vector\Core\Module;
+use Vector\Typeclass\MonadInterface;
 use Vector\Typeclass\SimpleApplicativeDefault;
 use Vector\Typeclass\SimpleFunctorDefault;
 use Vector\Typeclass\SimpleMonadDefault;
-use Vector\Typeclass\MonadInterface;
 
 /**
  * @method static callable ok($value)

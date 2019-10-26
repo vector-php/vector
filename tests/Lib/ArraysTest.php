@@ -3,9 +3,9 @@
 namespace Vector\Test\Lib;
 
 use PHPUnit\Framework\TestCase;
+use Vector\Core\Exception\ElementNotFoundException;
 use Vector\Core\Exception\EmptyListException;
 use Vector\Core\Exception\IndexOutOfBoundsException;
-use Vector\Core\Exception\ElementNotFoundException;
 use Vector\Lib\Arrays;
 
 class ArraysTest extends TestCase

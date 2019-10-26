@@ -5,7 +5,7 @@ namespace Vector\Lib;
 use Vector\Core\Module;
 
 /**
- * @method static string contact(...$args)
+ * @method static string concat(...$args)
  * @method static array split(...$args)
  * @method static string startsWith(...$args)
  * @method static string toLowercase(...$args)

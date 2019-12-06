@@ -4,24 +4,22 @@ namespace Vector\Lib;
 
 use Vector\Core\Module;
 
-use Vector\Lib\Arrays;
-
 /**
- * @method static callable orCombinator() orCombinator($fs, $a)
- * @method static callable andCombinator() andCombinator($fs, $a)
- * @method static bool logicalOr() logicalOr($f, $g)
- * @method static bool logicalNot() logicalNot($a)
- * @method static bool logicalAnd() logicalAnd($a, $b)
- * @method static bool gt() gt($a, $b)
- * @method static bool gte() gte($a, $b)
- * @method static bool lt() lt($a, $b)
- * @method static bool lte() lte($a, $b)
- * @method static bool eq() eq($a, $b)
- * @method static bool eqStrict() eqStrict($a, $b)
- * @method static bool notEq() notEq($a, $b)
- * @method static bool notEqStrict() notEqStrict($a, $b)
- * @method static bool all() all($arr)
- * @method static bool any() any($arr)
+ * @method static callable orCombinator(...$args)
+ * @method static callable andCombinator(...$args)
+ * @method static callable logicalOr(...$args)
+ * @method static callable logicalNot(...$args)
+ * @method static callable logicalAnd(...$args)
+ * @method static callable gt(...$args)
+ * @method static callable gte(...$args)
+ * @method static callable lt(...$args)
+ * @method static callable lte(...$args)
+ * @method static callable eq(...$args)
+ * @method static callable eqStrict(...$args)
+ * @method static callable notEq(...$args)
+ * @method static callable notEqStrict(...$args)
+ * @method static callable all(...$args)
+ * @method static callable any(...$args)
  */
 class Logic extends Module
 {
@@ -31,6 +29,9 @@ class Logic extends Module
      * Given n functions {f1, f2, ..., fn}, combine them in such a way to produce a new
      * function g that returns true given at least one of {f1(x), f2(x), ... fn(x)} return true.
      *
+     * @param array $fs array of functions to combine
+     * @param mixed $a value to test
+     * @return \Closure test for or using provided functions
      * @example
      * $funcF = function($x) { return $x >= 5; };
      * $funcG = function($x) { return $x == 0; };
@@ -41,9 +42,6 @@ class Logic extends Module
      *
      * @type [(a -> Bool)] -> a -> Bool
      *
-     * @param array $fs array of functions to combine
-     * @param mixed $a value to test
-     * @return \Closure test for or using provided functions
      */
     protected static function __orCombinator(array $fs, $a)
     {
@@ -58,6 +56,9 @@ class Logic extends Module
      * Given n functions {f1, f2, ..., fn}, combine them in such a way to produce a new
      * function g that returns true given {f1(x), f2(x), ... fn(x)} all return true.
      *
+     * @param array $fs array of functions to combine
+     * @param mixed $a value to test
+     * @return \Closure test for or using provided functions
      * @example
      * $funcF = function($x) { return $x < 5; };
      * $funcG = function($x) { return $x > 0; };
@@ -68,9 +69,6 @@ class Logic extends Module
      *
      * @type [(a -> Bool)] -> a -> Bool
      *
-     * @param array $fs array of functions to combine
-     * @param mixed $a value to test
-     * @return \Closure test for or using provided functions
      */
     protected static function __andCombinator(array $fs, $a)
     {
@@ -84,17 +82,17 @@ class Logic extends Module
      *
      * Returns true given $a OR $b returns true.
      *
-     * @example
-     * Logic::logicalOr(true, false); // True
-     *
+     * @param mixed $a First value
+     * @param mixed $b Second value
+     * @return Bool Result of OR
      * @example
      * Logic::logicalOr(false, false); // False
      *
      * @type Bool -> Bool -> Bool
      *
-     * @param  mixed $a First value
-     * @param  mixed $b Second value
-     * @return Bool Result of OR
+     * @example
+     * Logic::logicalOr(true, false); // True
+     *
      */
     protected static function __logicalOr($a, $b)
     {
@@ -107,6 +105,8 @@ class Logic extends Module
      * Returns true given $a is false.
      * Returns false given $a is true.
      *
+     * @param mixed $a value
+     * @return Bool Result of NOT
      * @example
      * Logic::logicalNot(true); // False
      *
@@ -115,12 +115,10 @@ class Logic extends Module
      *
      * @type Bool -> Bool
      *
-     * @param  mixed $a value
-     * @return Bool Result of NOT
      */
     protected static function __logicalNot($a)
     {
-        return !$a;
+        return ! $a;
     }
 
     /**
@@ -128,17 +126,17 @@ class Logic extends Module
      *
      * Returns true given $a AND $b are true.
      *
-     * @example
-     * Logic::logicalAnd(true, true); // True
-     *
+     * @param mixed $a First value
+     * @param mixed $b Second value
+     * @return Bool Result of AND
      * @example
      * Logic::logicalAnd(true, false); // False
      *
      * @type Bool -> Bool -> Bool
      *
-     * @param  mixed $a First value
-     * @param  mixed $b Second value
-     * @return Bool Result of AND
+     * @example
+     * Logic::logicalAnd(true, true); // True
+     *
      */
     protected static function __logicalAnd($a, $b)
     {
@@ -150,17 +148,17 @@ class Logic extends Module
      *
      * Returns true given $b is greater than $a.
      *
-     * @example
-     * Logic::gt(2, 1); // False
-     *
+     * @param mixed $a Value
+     * @param mixed $b Value to test
+     * @return Bool is $b greater than $a
      * @example
      * Logic::gt(1, 2); // True
      *
      * @type mixed -> mixed -> Bool
      *
-     * @param  mixed $a Value
-     * @param  mixed $b Value to test
-     * @return Bool is $b greater than $a
+     * @example
+     * Logic::gt(2, 1); // False
+     *
      */
     protected static function __gt($a, $b)
     {
@@ -172,17 +170,17 @@ class Logic extends Module
      *
      * Returns true given $b is greater than or equal to $a.
      *
-     * @example
-     * Logic::gte(1, 1); // True
-     *
+     * @param mixed $a Value
+     * @param mixed $b Value to test
+     * @return Bool is $b greater than or equal to $a
      * @example
      * Logic::gte(1, 2); // True
      *
      * @type mixed -> mixed -> Bool
      *
-     * @param  mixed $a Value
-     * @param  mixed $b Value to test
-     * @return Bool is $b greater than or equal to $a
+     * @example
+     * Logic::gte(1, 1); // True
+     *
      */
     protected static function __gte($a, $b)
     {
@@ -194,17 +192,17 @@ class Logic extends Module
      *
      * Returns true given $b is less than $a.
      *
-     * @example
-     * Logic::lt(2, 1); // True
-     *
+     * @param mixed $a Value
+     * @param mixed $b Value to test
+     * @return Bool is $b less than $a
      * @example
      * Logic::lt(1, 2); // False
      *
      * @type mixed -> mixed -> Bool
      *
-     * @param  mixed $a Value
-     * @param  mixed $b Value to test
-     * @return Bool is $b less than $a
+     * @example
+     * Logic::lt(2, 1); // True
+     *
      */
     protected static function __lt($a, $b)
     {
@@ -216,17 +214,17 @@ class Logic extends Module
      *
      * Returns true given $b is less than or equal to $a.
      *
-     * @example
-     * Logic::lte(1, 1); // True
-     *
+     * @param mixed $a Value
+     * @param mixed $b Value to test
+     * @return Bool is $b less than or equal to $a
      * @example
      * Logic::lte(2, 1); // True
      *
      * @type mixed -> mixed -> Bool
      *
-     * @param  mixed $a Value
-     * @param  mixed $b Value to test
-     * @return Bool is $b less than or equal to $a
+     * @example
+     * Logic::lte(1, 1); // True
+     *
      */
     protected static function __lte($a, $b)
     {
@@ -238,17 +236,17 @@ class Logic extends Module
      *
      * Returns true given $a equals $b
      *
-     * @example
-     * Logic::eq(1, 1); // True
-     *
+     * @param mixed $a First value
+     * @param mixed $b Second value
+     * @return Bool is $a equal to $b
      * @example
      * Logic::eq(1, 2); // False
      *
      * @type mixed -> mixed -> Bool
      *
-     * @param  mixed $a First value
-     * @param  mixed $b Second value
-     * @return Bool is $a equal to $b
+     * @example
+     * Logic::eq(1, 1); // True
+     *
      */
     protected static function __eq($a, $b)
     {
@@ -260,17 +258,17 @@ class Logic extends Module
      *
      * Returns true given $a equals $b
      *
-     * @example
-     * Logic::eqStrict(1, 1); // True
-     *
+     * @param mixed $a First value
+     * @param mixed $b Second value
+     * @return Bool is $a equal to $b
      * @example
      * Logic::eqStrict(1, '1'); // False
      *
      * @type mixed -> mixed -> Bool
      *
-     * @param  mixed $a First value
-     * @param  mixed $b Second value
-     * @return Bool is $a equal to $b
+     * @example
+     * Logic::eqStrict(1, 1); // True
+     *
      */
     protected static function __eqStrict($a, $b)
     {
@@ -282,17 +280,17 @@ class Logic extends Module
      *
      * Returns true given $a does not equal $b
      *
-     * @example
-     * Logic::notEq(1, 1); // False
-     *
+     * @param mixed $a First value
+     * @param mixed $b Second value
+     * @return Bool is $a not equal to $b
      * @example
      * Logic::notEq(1, 2); // True
      *
      * @type mixed -> mixed -> Bool
      *
-     * @param  mixed $a First value
-     * @param  mixed $b Second value
-     * @return Bool is $a not equal to $b
+     * @example
+     * Logic::notEq(1, 1); // False
+     *
      */
     protected static function __notEq($a, $b)
     {
@@ -304,17 +302,17 @@ class Logic extends Module
      *
      * Returns true given $a does not equal $b
      *
-     * @example
-     * Logic::notEqStrict(1, 2); // True
-     *
+     * @param mixed $a First value
+     * @param mixed $b Second value
+     * @return Bool is $a not equal to $b
      * @example
      * Logic::notEqStrict(1, '1'); // False
      *
      * @type mixed -> mixed -> Bool
      *
-     * @param  mixed $a First value
-     * @param  mixed $b Second value
-     * @return Bool is $a not equal to $b
+     * @example
+     * Logic::notEqStrict(1, 2); // True
+     *
      */
     protected static function __notEqStrict($a, $b)
     {
@@ -326,6 +324,8 @@ class Logic extends Module
      *
      * Returns true given all values are truthy
      *
+     * @param array $arr Values to test
+     * @return Bool are all values truthy
      * @example
      * Logic::all(1, 'asdf', true); // True
      *
@@ -334,8 +334,6 @@ class Logic extends Module
      *
      * @type array -> Bool
      *
-     * @param  array $arr Values to test
-     * @return Bool are all values truthy
      */
     protected static function __all($arr)
     {
@@ -348,6 +346,8 @@ class Logic extends Module
      *
      * Returns true given any values are truthy
      *
+     * @param array $arr Values to test
+     * @return Bool are any values truthy
      * @example
      * Logic::any(true, false); // True
      *
@@ -356,8 +356,6 @@ class Logic extends Module
      *
      * @type array -> Bool
      *
-     * @param  array $arr Values to test
-     * @return Bool are any values truthy
      */
     protected static function __any($arr)
     {

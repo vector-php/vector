@@ -5,17 +5,17 @@ namespace Vector\Lib;
 use Vector\Core\Module;
 
 /**
- * @method static string contact(string $a, string $b) Concatenates the first argument to the second argument.
- * @method static array split(string $delimiter, string $string) Split a string into parts based on a delimiter. Operates similar to php `explode`.
- * @method static string startsWith(string $substring, string $string) Determines if a string starts with a specific substring.
- * @method static string toLowercase(string $string) Converts a string to lowercase.
- * @method static string toUppercase(string $string) Converts a string to uppercase.
- * @method static string trim(string $string) Removes all leading and trailing whitespace from a string.
- * @method static string lchomp(string $string, string $toChomp) Removes the specified string from the left end of the target string.
- * @method static string rchomp(string $string, string $toChomp) Removes the specified string from thr right end of the target string.
- * @method static string chomp(string $string, string $toChomp) Removes the specified string from both ends of the target string.
- * @method static string join(string $string) Joins an array of strings together with a given delimiter.
- * @method static string replace(string $substring, string $replacement, string $string) Replace all occurrences of the search string with the replacement string.
+ * @method static string concat(...$args)
+ * @method static array split(...$args)
+ * @method static string startsWith(...$args)
+ * @method static string toLowercase(...$args)
+ * @method static string toUppercase(...$args)
+ * @method static string trim(...$args)
+ * @method static string lchomp(...$args)
+ * @method static string rchomp(...$args)
+ * @method static string chomp(...$args)
+ * @method static string join(...$args)
+ * @method static string replace(...$args)
  */
 class Strings extends Module
 {
@@ -25,19 +25,19 @@ class Strings extends Module
      * Concatenates the first argument to the second argument, provided both arguments
      * are strings. Defers to the PHP built-in concatenation.
      *
-     * @example
-     * Strings::concat('as', 'df'); // 'dfas'
-     *
+     * @param String $addition Thing to append
+     * @param String $original Thing to append to
+     * @return String           Concatenated strings
      * @example
      * Strings::concat('World', $concat('ello', 'H')); // 'HelloWorld'
      *
      * @type String -> String -> String
      *
-     * @param  String $addition Thing to append
-     * @param  String $original Thing to append to
-     * @return String           Concatenated strings
+     * @example
+     * Strings::concat('as', 'df'); // 'dfas'
+     *
      */
-    protected static function __concat(string $addition, string $original) : string
+    protected static function __concat(string $addition, string $original): string
     {
         return $original . $addition;
     }
@@ -49,6 +49,9 @@ class Strings extends Module
      * but is more consistent. Can split on empty delimiters, and trims out empty strings
      * after exploding.
      *
+     * @param String $on Split delimiter
+     * @param String $string Thing to split into pieces
+     * @return array          List of chunks from splitting the string
      * @example
      * Strings::split('-', 'Hello-World'); // ['Hello', 'World']
      *
@@ -60,11 +63,8 @@ class Strings extends Module
      *
      * @type String -> String -> [String]
      *
-     * @param  String $on     Split delimiter
-     * @param  String $string Thing to split into pieces
-     * @return array          List of chunks from splitting the string
      */
-    protected static function __split(string $on, string $string) : array
+    protected static function __split(string $on, string $string): array
     {
         if ($on === '') {
             return str_split($string);
@@ -79,19 +79,19 @@ class Strings extends Module
      * Determines if a string starts with a specific substring. Returns true if the string
      * matches the substring at its start, otherwise false.
      *
-     * @example
-     * Strings::startsWith('as', 'asdf'); true
-     *
+     * @param String $subStr Substring to test
+     * @param String $str String to run test on
+     * @return Bool           Whether or not the string starts with the substring
      * @example
      * Strings::startsWith('foo', 'barfoo'); false
      *
      * @type String -> String -> Bool
      *
-     * @param  String $subStr Substring to test
-     * @param  String $str    String to run test on
-     * @return Bool           Whether or not the string starts with the substring
+     * @example
+     * Strings::startsWith('as', 'asdf'); true
+     *
      */
-    protected static function __startsWith(string $subStr, string $str) : bool
+    protected static function __startsWith(string $subStr, string $str): bool
     {
         return substr($str, 0, strlen($subStr)) === $subStr;
     }
@@ -101,15 +101,15 @@ class Strings extends Module
      *
      * Converts a string to lowercase.
      *
+     * @param String $str Original string
+     * @return String      Lowercase string
      * @example
      * Strings::toLowercase('ASdf'); // 'asdf'
      *
      * @type String -> String
      *
-     * @param  String $str Original string
-     * @return String      Lowercase string
      */
-    protected static function __toLowercase(string $str) : string
+    protected static function __toLowercase(string $str): string
     {
         return strtolower($str);
     }
@@ -119,15 +119,15 @@ class Strings extends Module
      *
      * Converts a string to uppercase.
      *
+     * @param String $str Original string
+     * @return String      Uppercase string
      * @example
      * Strings::toUppercase('asdf'); // 'ASDF'
      *
      * @type String -> String
      *
-     * @param  String $str Original string
-     * @return String      Uppercase string
      */
-    protected static function __toUppercase(string $str) : string
+    protected static function __toUppercase(string $str): string
     {
         return strtoupper($str);
     }
@@ -138,15 +138,15 @@ class Strings extends Module
      * Removes all leading and trailing whitespace from a string. Defers to
      * PHP trim.
      *
+     * @param String $str string to trim
+     * @return string
      * @example
      * Strings::trim(' asdf '); // 'asdf'
      *
      * @type String -> String
      *
-     * @param  String $str string to trim
-     * @return string
      */
-    protected static function __trim(string $str) : string
+    protected static function __trim(string $str): string
     {
         return trim($str);
     }
@@ -158,6 +158,9 @@ class Strings extends Module
      * trim function, the substring to chomp is not a character mask -- rather it is a full
      * substring. This function is case sensitive.
      *
+     * @param String $toChomp string to chomp
+     * @param String $string string to be chomped
+     * @return string
      * @example
      * Strings::lchomp('He', 'Hello World'); // 'llo World'
      * Strings::lchomp('Hi', 'Hello World'); // 'Hello World'
@@ -165,11 +168,8 @@ class Strings extends Module
      *
      * @type String -> String
      *
-     * @param  String $toChomp string to chomp
-     * @param  String $string string to be chomped
-     * @return string
      */
-    protected static function __lchomp(string $toChomp, string $string) : string
+    protected static function __lchomp(string $toChomp, string $string): string
     {
         $length = strlen($toChomp);
 
@@ -187,6 +187,9 @@ class Strings extends Module
      * trim function, the substring to chomp is not a character mask -- rather it is a full
      * substring. This function is case sensitive.
      *
+     * @param String $toChomp string to chomp
+     * @param String $string string to be chomped
+     * @return string
      * @example
      * Strings::rchomp('ld', 'Hello World'); // 'Hello Wor'
      * Strings::rchomp('li', 'Hello World'); // 'Hello World'
@@ -194,11 +197,8 @@ class Strings extends Module
      *
      * @type String -> String
      *
-     * @param  String $toChomp string to chomp
-     * @param  String $string string to be chomped
-     * @return string
      */
-    protected static function __rchomp(string $toChomp, string $string) : string
+    protected static function __rchomp(string $toChomp, string $string): string
     {
         $length = strlen($toChomp);
 
@@ -216,6 +216,9 @@ class Strings extends Module
      * trim function, the substring to chomp is not a character mask -- rather it is a full
      * substring. This function is case sensitive.
      *
+     * @param String $toChomp string to chomp
+     * @param String $string string to be chomped
+     * @return string
      * @example
      * Strings::chomp('a', 'abccba'); // 'bccb'
      * Strings::chomp('ab', 'abccba'); // 'abccba'
@@ -223,11 +226,8 @@ class Strings extends Module
      *
      * @type String -> String
      *
-     * @param  String $toChomp string to chomp
-     * @param  String $string string to be chomped
-     * @return string
      */
-    protected static function __chomp(string $toChomp, string $string) : string
+    protected static function __chomp(string $toChomp, string $string): string
     {
         /** @noinspection PhpParamsInspection */
         $chomp = Lambda::compose(self::lchomp($toChomp), self::rchomp($toChomp));
@@ -241,19 +241,19 @@ class Strings extends Module
      * Joins an array of strings together with a given delimiter. Works similarly
      * to PHP `implode`. The inverse of `split`.
      *
-     * @example
-     * Strings::join(' ', ['Hello', 'World']); // 'Hello World'
-     *
+     * @param String $on Delimiter to join on
+     * @param array $string List of strings to join together
+     * @return String         Joined string based on delimiter
      * @example
      * Strings::join('', ['a', 's', 'd', 'f']); // 'asdf'
      *
      * @type String -> [String] -> String
      *
-     * @param  String $on     Delimiter to join on
-     * @param  array  $string List of strings to join together
-     * @return String         Joined string based on delimiter
+     * @example
+     * Strings::join(' ', ['Hello', 'World']); // 'Hello World'
+     *
      */
-    protected static function __join(string $on, array $string) : string
+    protected static function __join(string $on, array $string): string
     {
         return implode($on, $string);
     }
@@ -263,17 +263,17 @@ class Strings extends Module
      *
      * Replace all occurrences of the search string with the replacement string.
      *
+     * @param String $substring Substring to find
+     * @param $replacement
+     * @param String $string Replacement string
+     * @return String $string Result after replacement
      * @example
      * Strings::replace('test', 'passes', 'this test']); // 'this passes'
      *
-     * @param  String $substring Substring to find
-     * @param $replacement
-     * @param  String $string Replacement string
-     * @return String $string Result after replacement
      * @internal param String $ -> String -> String
      *
      */
-    protected static function __replace(string $substring, string $replacement, string $string) : string
+    protected static function __replace(string $substring, string $replacement, string $string): string
     {
         return str_replace($substring, $replacement, $string);
     }

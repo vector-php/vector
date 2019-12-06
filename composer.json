@@ -11,7 +11,7 @@
     "keywords": ["utility", "functional", "monad", "compose", "curry"],
     "license": "MIT",
     "require-dev": {
-        "phpunit/phpunit": "^6.2"
+        "phpunit/phpunit": "^8.4"
     },
     "autoload": {
         "psr-4": {
@@ -20,9 +20,7 @@
         }
     },
     "require": {
-        "php": "^7.0",
-        "phpdocumentor/reflection-docblock": "^3.2",
-        "satooshi/php-coveralls": "^1.0"
+        "php": "^7.4"
     },
     "scripts": {
         "runTests": "./scripts/runTests.sh",

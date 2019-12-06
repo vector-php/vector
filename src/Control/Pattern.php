@@ -6,16 +6,11 @@ use ReflectionFunction;
 use ReflectionParameter;
 use Vector\Core\Exception\ElementNotFoundException;
 use Vector\Core\Exception\IncompletePatternMatchException;
-use Vector\Core\Exception\InvalidPatternMatchException;
 use Vector\Core\Module;
 use Vector\Lib\Arrays;
 
 /**
- * Class Pattern
- * @package Vector\Control
- * @method static mixed match(array $patterns) : mixed
- * @method static mixed getType($param) : string
- * @method static mixed patternApplies(array $parameterTypes, array $args, array $pattern) : bool
+ * @method static mixed match(...$args)
  */
 abstract class Pattern extends Module
 {
@@ -56,27 +51,10 @@ abstract class Pattern extends Module
                 );
             }
 
-
-            /**
-             * Upcoming Feature, Array DSL for matching via `x::xs` etc.
-             */
-//            // if key is a string, manually match
-//            if (is_string($key)) {
-//
-//                throw new \Exception('Array DSL not available.');
-//            }
-
             list($hasExtractable, $unwrappedArgs) = self::unwrapArgs($args);
 
             $value = $matchingPattern(...$args);
             $isCallable = is_callable($value);
-
-            if ($hasExtractable && ! $isCallable) {
-                throw new InvalidPatternMatchException(
-                    'Invalid pattern match expression. (one of ' . implode(', ', $parameterTypes)
-                    . ' requires a callback to unwrap)'
-                );
-            }
 
             /**
              * Extractable requires a callback to feed args into.
@@ -86,7 +64,7 @@ abstract class Pattern extends Module
             }
 
             /**
-             * No extractable so we can just return the value directly.
+             * No extractable or callable so we can just return the value directly.
              */
             return $value;
         };
@@ -97,7 +75,7 @@ abstract class Pattern extends Module
      * @param array $args
      * @return array
      */
-    private static function unwrapArgs(array $args) : array
+    protected static function unwrapArgs(array $args) : array
     {
         $hasExtractable = false;
 
@@ -118,22 +96,17 @@ abstract class Pattern extends Module
      * @param array $args
      * @param array $pattern
      * @return bool
+     * @throws \ReflectionException
      */
     protected static function __patternApplies(array $parameterTypes, array $args, array $pattern) : bool
     {
         list($key, $pattern) = $pattern;
 
-        /**
-         * Upcoming Feature, Array DSL for matching via `x::xs` etc.
-         */
-//        if (is_string($key)) {
-//            return false;
-//        }
-
         $reflected = new ReflectionFunction($pattern);
 
         $patternParameterTypes = array_map(function (ReflectionParameter $parameter) {
-            if ($class = $parameter->getClass()) {
+            $class = $parameter->getClass();
+            if ($class) {
                 return $class->getName();
             }
 

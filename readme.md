@@ -1,63 +1,66 @@
 ![Vector Core](./logo.png)
-
-[![Build Status](https://travis-ci.org/joseph-walker/vector.svg?branch=master)](https://travis-ci.org/joseph-walker/vector)
-[![Coverage Status](https://coveralls.io/repos/github/joseph-walker/vector/badge.svg?branch=master)](https://coveralls.io/github/joseph-walker/vector?branch=master)
 [![Badge Status](https://img.shields.io/badge/badge%20status-dank-brightgreen.svg)](https://niceme.me/)
 
-[Read the Docs](http://joseph-walker.github.io/vector/)
-
 ## The Elevator Pitch
-Vector gives your functions superpowers.
-It lets you autoload your functions with Composer without having to mess with autoloading individual files.
-It allows you to automatically curry your userland functions with zero effort on your part.
-It provides built-in memoization for abstracting away time-consuming pure operations.
-It gives you useful helpers for composing simple functions into more complex ones and gives you the building blocks you need to make data manipulation easier than ever, all while maintaining a simple and declarative module loading system so your dependencies are always clear and concise.
+Vector gives you php functional superpowers.
+- The evolution:
+    - `array_map(fn($a) => $a + 1, [1, 2, 3])` (_Native PHP_)
+    - `collect([1, 2, 3])->map(fn($a) => $a + 1)` (_Laravel Collections_)
+    - `Arrays::map(fn($a) => $a + 1)([1, 2, 3])` (_Vector_)
+
+- You can add currying to any function, it isn't only limited to Vector built ins.
+    - `Module::curry('explode')(',')('a,b,c')(PHP_INT_MAX)` `// ['a', 'b', 'c']`
+
+- Create functional pipelines as first class citizens
+    - `Lambda::pipe(Math::add(4), Math::add(2))(1)` `// 7`
 
 ## PHP Version Support
-- 7.0 +
+- 7.4+
 
 ## Install
 ```
 composer require vector/core
 ```
 
-## Show Me Some Code
-Autoloading Functions? A snap.
-```
-use Vector\Lib\Arrays;
-```
+## Show Me Some More Code
 
-Currying? Completely free.
-```
-$addOne = Arrays::map(function($a) { return $a + 1; });
+More automatic currying.
+```php
+$addOne = Arrays::map(Math::add(1));
 $addOne([1, 2, 3]); // [2, 3, 4]
 ```
 
-Memoization? Batteries included.
-```
-Class MyFunctions extends Module {
-    protected $memoize = ['myFunction'];
-}
-```
-
-Composition? No problem.
-```
-$addSix = Lambda::compose(Math::add(4), Math::add(2));
+First class composition (Functional Pipelines).
+```php
+$addSix = Lambda::compose(Math::add(4), Math::add(2)); // (Or ::pipe for the opposite flow direction)
 $addSix(4); // 10;
 ```
 
-Pattern Matching? Of course. (For Maybe/Either see vector/functors)
-```
+Pattern Matching.
+```php
 Pattern::match([
-    function (Just $value) {
-        return function (string $unwrapped) {
-            return $unwrapped;
-        };
-    },
-    function (Nothing $_) {
-        return function () {
-            return 'nothing';
-        };
-    },
+    fn(Just $value) => fn ($unwrapped) => $unwrapped,
+    fn(Nothing $value) => 'nothing',
 ])(Maybe::just('just')); // 'just'
+```
+
+Granular control flow (without try/catch).
+```php
+$errorHandler = function (Err $err) {
+    return Pattern::match([
+        function (QueryException $exception) {
+            Log::info($exception);
+            return response(404);
+        },
+        function (DBException $exception) {
+            Log::error($exception);
+            return response(500);
+        },
+    ]);
+};
+
+return Pattern::match([
+    fn(Ok $value) => fn (User $user) => $user,
+    $errorHandler
+])(Result::from(fn() => User::findOrFail(1)));
 ```

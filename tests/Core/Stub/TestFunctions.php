@@ -6,7 +6,7 @@ use Vector\Core\Module;
 
 class TestFunctions extends Module
 {
-    protected static $doNotCurry = ['nonCurriedFunction'];
+    protected static array $doNotCurry = ['nonCurriedFunction'];
 
     protected static $memoize = true;
 

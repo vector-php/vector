@@ -2,10 +2,6 @@
 
 namespace Vector\Test\Control\Stub;
 
-/**
- * Class TestInts
- * @package Vector\Test\Control\Stub
- */
 class TestInts extends TestMultipleTypeConstructor
 {
     protected $a;

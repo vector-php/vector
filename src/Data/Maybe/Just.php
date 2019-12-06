@@ -2,10 +2,6 @@
 
 namespace Vector\Data\Maybe;
 
-/**
- * Class Just
- * @package Vector\Data
- */
 class Just extends Maybe
 {
     protected $value;

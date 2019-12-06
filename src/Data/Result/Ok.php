@@ -1,12 +1,8 @@
 <?php
 
-namespace Vector\Data\Either;
+namespace Vector\Data\Result;
 
-/**
- * Class Right
- * @package Vector\Data\Either
- */
-class Right extends Either
+class Ok extends Result
 {
     protected $value;
 

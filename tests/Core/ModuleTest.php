@@ -3,19 +3,18 @@
 namespace Vector\Test\Core;
 
 use PHPUnit\Framework\TestCase;
-use Vector\Core\Module;
 use Vector\Core\Exception\FunctionNotFoundException;
+use Vector\Core\Module;
+use Vector\Test\Core\Stub\TestFunctions;
 
 class ModuleTest extends TestCase
 {
-    /**
-     * Test to make sure we can pull functions off the capsule and they'll return closures
-     */
-    public function testUsingFunctions()
+    /** @test */
+    function can_load_function_via_using_functions()
     {
-        $noArgFunction = Stub\TestFunctions::Using('noArgFunction');
+        $noArgFunction = TestFunctions::using('noArgFunction');
 
-        $functionMap = Stub\TestFunctions::Using('noArgFunction', 'oneArgFunction');
+        $functionMap = TestFunctions::using('noArgFunction', 'oneArgFunction');
 
         // Test that singular-loading works
         $this->assertInstanceOf('\\Closure', $noArgFunction);
@@ -25,33 +24,29 @@ class ModuleTest extends TestCase
         $this->assertInstanceOf('\\Closure', $functionMap[1]);
     }
 
-    /**
-     * Test that the module caches function resolutions
-     */
-    public function testModuleCaching()
+    /** @test */
+    function module_caching()
     {
         // Loading the function should add it to the cache
-        $notAPureFunction = Stub\TestFunctions::using('notAPureFunction');
+        TestFunctions::using('notAPureFunction');
 
-        $cache = Stub\TestFunctions::getFulfillmentCache()['Vector\Test\Core\Stub\TestFunctions'];
+        $cache = TestFunctions::getFulfillmentCache()[
+            'Vector\Test\Core\Stub\TestFunctions'
+        ];
 
         $this->assertArrayHasKey('__notAPureFunction', $cache);
     }
 
-    /**
-     * Test alternative function calling scheme
-     */
-    public function testAlternativeFunctionPattern()
+    /** @test */
+    function test_alternative_function_pattern()
     {
-        $this->assertInstanceOf('\\Closure', Stub\TestFunctions::oneArgFunction());
+        $this->assertInstanceOf('\\Closure', TestFunctions::oneArgFunction());
     }
 
-    /**
-     * Tests that memoization works on the module
-     */
-    public function testMemoization()
+    /** @test */
+    function test_memoization()
     {
-        $memoizedFunction = Stub\TestFunctions::using('memoizedFunction');
+        $memoizedFunction = TestFunctions::using('memoizedFunction');
 
         // On the first run we expect side effects
         ob_start();
@@ -65,39 +60,32 @@ class ModuleTest extends TestCase
         $this->assertEquals($memoizedFunction(1, 2, 3), 6);
         $sideEffects = ob_get_clean();
 
-        $this->assertEquals($sideEffects, "");
+        $this->assertEquals($sideEffects, '');
     }
 
-    /**
-     * Test that caching on the Module core works by returning exact duplicates of the functions you request
-     */
-    public function testCachedFunctions()
+    /** @test */
+    function test_cached_functions()
     {
-        $noArgFunctionA = Stub\TestFunctions::Using('noArgFunction');
-        $noArgFunctionB = Stub\TestFunctions::Using('noArgFunction');
+        $noArgFunctionA = TestFunctions::using('noArgFunction');
+        $noArgFunctionB = TestFunctions::using('noArgFunction');
 
         $this->assertEquals($noArgFunctionA, $noArgFunctionB);
         $this->assertEquals($noArgFunctionA(), $noArgFunctionB());
     }
 
-    /**
-     * Test to make sure that a function in the function capsule with no arguments is
-     * curried properly
-     */
-    public function testNoArgFunctionIsCurried()
+    /** @test */
+    function no_arg_function_is_curried()
     {
-        $noArgFunction = Stub\TestFunctions::Using('noArgFunction');
+        $noArgFunction = TestFunctions::using('noArgFunction');
 
         // Invoking the function should return true
         $this->assertEquals($noArgFunction(), true);
     }
 
-    /**
-     * Test to make sure that one-argument functions are treated like normal functions
-     */
-    public function testOneArgFunctionIsCurried()
+    /** @test */
+    function one_arg_function_is_curried()
     {
-        $oneArgFunction = Stub\TestFunctions::Using('oneArgFunction');
+        $oneArgFunction = TestFunctions::using('oneArgFunction');
 
         // Invoking the curried function should be a closure
         $this->assertInstanceOf('\\Closure', $oneArgFunction());
@@ -106,12 +94,10 @@ class ModuleTest extends TestCase
         $this->assertEquals($oneArgFunction(true), true);
     }
 
-    /**
-     * Test that two-argument functions are curried and partially applicable
-     */
-    public function testTwoArgFunctionIsCurried()
+    /** @test */
+    function two_arg_function_is_curried()
     {
-        $twoArgFunction = Stub\TestFunctions::Using('twoArgFunction');
+        $twoArgFunction = TestFunctions::using('twoArgFunction');
 
         $oneArgApplied = $twoArgFunction(true);
 
@@ -131,23 +117,19 @@ class ModuleTest extends TestCase
         $this->assertEquals($oneArgApplied(true), true);
     }
 
-    /**
-     * Test that passing an argument unpacking operator to a curried function works
-     */
-    public function testCurriedArgumentUnpacking()
+    /** @test */
+    function test_curried_argument_unpacking()
     {
-        $twoArgFunction = Stub\TestFunctions::twoArgFunction();
+        $twoArgFunction = TestFunctions::twoArgFunction();
 
         $this->assertInstanceOf('\\Closure', $twoArgFunction(...[true]));
         $this->assertEquals($twoArgFunction(...[true, true]), true);
     }
 
-    /**
-     * Tests the currying of variadic functions
-     */
-    public function testVariadicFunctionIsCurried()
+    /** @test */
+    function test_variadic_function_is_curried()
     {
-        $variadicFunction = Stub\TestFunctions::Using('variadicFunction');
+        $variadicFunction = TestFunctions::using('variadicFunction');
 
         // Test zero arguments
         $this->assertInstanceOf('\\Closure', $variadicFunction());
@@ -159,13 +141,10 @@ class ModuleTest extends TestCase
         $this->assertEquals($variadicFunction('a', 'b'), ['a', 'b']);
     }
 
-    /**
-     * Tests the currying of functions that mix both normal arguments and variadic
-     * functions
-     */
-    public function testComplicatedVariadicFunctionIsCurried()
+    /** @test */
+    function test_complicated_variadic_function_is_curried()
     {
-        $variadicFunction = Stub\TestFunctions::Using('complexVariadicFunction');
+        $variadicFunction = TestFunctions::using('complexVariadicFunction');
 
         $oneArgApplied = $variadicFunction(true);
 
@@ -182,14 +161,11 @@ class ModuleTest extends TestCase
         $this->assertEquals($oneArgApplied('a', 'b'), ['a', 'b']);
     }
 
-    /**
-     * Tests that when a function capsule is set to not curry a specific function
-     * that it is not curried
-     */
-    public function testDoesNotCurryFunctionsCorrectly()
+    /** @test */
+    function test_can_not_curry_functions()
     {
         // Given a function with m arguments...
-        $nonCurriedFunction = Stub\TestFunctions::Using('nonCurriedFunction');
+        $nonCurriedFunction = TestFunctions::using('nonCurriedFunction');
 
         // Test that we can't just apply n arguments where n < m
         try {
@@ -204,15 +180,12 @@ class ModuleTest extends TestCase
         $this->assertEquals($nonCurriedFunction(true, true), true);
     }
 
-    /**
-     * Tests that curry works as a regular function off the function capsule for
-     * by-hand currying
-     */
-    public function testCurryWorksStandalone()
+    /** @test */
+    function curry_works_standalone()
     {
-        $curry = Module::Using('curry');
+        $curry = Module::using('curry');
 
-        $myInlineLambda = function($a, $b) {
+        $myInlineLambda = function ($a, $b) {
             return $a + $b;
         };
 
@@ -235,14 +208,16 @@ class ModuleTest extends TestCase
         $this->assertEquals(2, $myCurriedLambda(1, 1));
     }
 
-    public function testThatUsingReturnsExceptionForNonExistantFunction()
+    /** @test */
+    function using_returns_exception_for_non_existent_function()
     {
         $this->expectException(FunctionNotFoundException::class);
 
-        Stub\TestFunctions::using('someFunctionThatDoesNotExist');
+        TestFunctions::using('someFunctionThatDoesNotExist');
     }
 
-    public function testCurryingNativeFunctions()
+    /** @test */
+    function currying_native_functions()
     {
         $implode = Module::curry('implode');
         $implodeCommas = $implode(',');

@@ -7,116 +7,94 @@ use Vector\Lib\Logic;
 
 class LogicTest extends TestCase
 {
-    /**
-     * Test that orCombinator works as intended
-     */
-    public function testOrCombinator()
+    /** @test */
+    function or_combinator()
     {
         $orCombinator = Logic::using('orCombinator');
 
         $trueOrFalse = $orCombinator([
-            function($a){
+            function ($a) {
                 return $a === true;
-            }, function($a){
+            }, function ($a) {
                 return $a === false;
-            }
+            },
         ]);
 
         $this->assertTrue($trueOrFalse(true));
         $this->assertTrue($trueOrFalse(false));
     }
 
-    /**
-     * Test that andCombinator works as intended
-     */
-    public function testAndCombinator()
+    /** @test */
+    function and_combinator()
     {
         $andCombinator = Logic::using('andCombinator');
 
         $greaterThan0AndLessThan5 = $andCombinator([
-            function($a){
+            function ($a) {
                 return $a > 0;
-            }, function($a){
+            }, function ($a) {
                 return $a < 5;
-            }
+            },
         ]);
 
         $this->assertTrue($greaterThan0AndLessThan5(4));
         $this->assertFalse($greaterThan0AndLessThan5(7));
     }
 
-    /**
-     * Test that notEq works as intended
-     */
-    public function testNotEq()
+    /** @test */
+    function not_eq()
     {
         $notEq = Logic::using('notEq');
 
         $this->assertTrue($notEq(1, 2));
     }
 
-    /**
-     * Test that notEqStrict works as intended
-     */
-    public function testNotEqStrict()
+    /** @test */
+    function not_eq_strict()
     {
         $notEqStrict = Logic::using('notEqStrict');
 
         $this->assertTrue($notEqStrict(1, '1'));
     }
 
-    /**
-     * Test that not works as intended
-     */
-    public function testNot()
+    /** @test */
+    function not()
     {
         $this->assertEquals(Logic::logicalNot(false), true);
     }
 
-    /**
-     * Test that gt works as intended
-     */
-    public function testGt()
+    /** @test */
+    function gt()
     {
         $this->assertEquals(Logic::gt(1, 2), true);
     }
 
-    /**
-     * Test that gt works as intended
-     */
-    public function testGte()
+    /** @test */
+    function gte()
     {
         $this->assertEquals(Logic::gte(2, 2), true);
     }
 
-    /**
-     * Test that lt works as intended
-     */
-    public function testLt()
+    /** @test */
+    function lt()
     {
         $this->assertEquals(Logic::lt(2, 1), true);
     }
 
-    /**
-     * Test that lte works as intended
-     */
-    public function testLte()
+    /** @test */
+    function lte()
     {
         $this->assertEquals(Logic::lte(2, 2), true);
     }
 
-    /**
-     * Test that eq works as intended
-     */
-    public function testEq()
+    /** @test */
+    function eq()
     {
         $this->assertEquals(Logic::eq(2, '2'), true);
     }
 
-    /**
-     * Test that eqStrict works as intended
-     */
-    public function testEqStrict()
+    /** @test */
+    function eq_strict()
     {
         $this->assertEquals(Logic::eqStrict(2, '2'), false);
     }

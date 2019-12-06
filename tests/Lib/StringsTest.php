@@ -5,16 +5,10 @@ namespace Vector\Test\Lib;
 use PHPUnit\Framework\TestCase;
 use Vector\Lib\Strings;
 
-/**
- * Class StringsTest
- * @package Vector\Test\Lib
- */
 class StringsTest extends TestCase
 {
-    /**
-     * Tests that lchomp works in an expected case
-     */
-    public function testLchomp()
+    /** @test */
+    function lchomp()
     {
         // Base behavior
         $this->assertEquals(
@@ -29,10 +23,8 @@ class StringsTest extends TestCase
         );
     }
 
-    /**
-     * Tests that rchomp works in an expected case
-     */
-    public function testRchomp()
+    /** @test */
+    function rchomp()
     {
         // Base behavior
         $this->assertEquals(
@@ -47,10 +39,8 @@ class StringsTest extends TestCase
         );
     }
 
-    /**
-     * Tests that chomp works in an expected case
-     */
-    public function testChomp()
+    /** @test */
+    function chomp()
     {
         $this->assertEquals(
             ' that this is a test, ',
@@ -58,18 +48,14 @@ class StringsTest extends TestCase
         );
     }
 
-    /**
-     * Tests that chomp behaves intuitively, i.e. no character mask
-     */
-    public function testChompAsTrimReplacement()
+    /** @test */
+    function chomp_as_trim_replacement_no_char_mask()
     {
         $this->assertEquals('abc', Strings::chomp('bad', 'abc'));
     }
 
-    /**
-     * Tests that strings are concatenated like the PHP '.' operation
-     */
-    public function testStringConcatenation()
+    /** @test */
+    function concat()
     {
         $concat = Strings::using('concat');
 
@@ -77,10 +63,8 @@ class StringsTest extends TestCase
         $this->assertEquals('barbazfoo', $concat('foo', $concat('baz', 'bar')));
     }
 
-    /**
-     * Tests that split deferes to PHP explode
-     */
-    public function testSplitExplodesStrings()
+    /** @test */
+    function split()
     {
         $split = Strings::using('split');
 
@@ -90,10 +74,8 @@ class StringsTest extends TestCase
         $this->assertEquals([], $split(',', ''));
     }
 
-    /**
-     * Test that join defers to PHP implode
-     */
-    public function testJoinImplodesStrings()
+    /** @test */
+    function join()
     {
         $join = Strings::using('join');
 
@@ -102,10 +84,8 @@ class StringsTest extends TestCase
         $this->assertEquals('', $join('_', []));
     }
 
-    /**
-     * Tests that startsWith handles substrings properly
-     */
-    public function testStartsWithOnStrings()
+    /** @test */
+    function starts_with()
     {
         $startsWith = Strings::using('startsWith');
 
@@ -114,10 +94,8 @@ class StringsTest extends TestCase
         $this->assertEquals(false, $startsWith('baz', 'abazfoo'));
     }
 
-    /**
-     * Test that toLowercase defers to strtolower
-     */
-    public function testToLowerCaseOnStrings()
+    /** @test */
+    function to_lowercase()
     {
         $toLowercase = Strings::using('toLowercase');
 
@@ -125,18 +103,21 @@ class StringsTest extends TestCase
         $this->assertEquals('asdf', $toLowercase('ASDf'));
     }
 
-    public function testToUppercase()
+    /** @test */
+    function to_uppercase()
     {
         $this->assertEquals('123', Strings::toUppercase('123'));
         $this->assertEquals('ASDF', Strings::toUppercase('asdf'));
     }
 
-    public function testTrim()
+    /** @test */
+    function trim()
     {
         $this->assertEquals('asdf', Strings::trim(' asdf '));
     }
 
-    public function testReplace()
+    /** @test */
+    function replace()
     {
         $this->assertEquals(Strings::replace('test', 'passes', 'this test'), 'this passes');
     }

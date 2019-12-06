@@ -3,28 +3,22 @@
 namespace Vector\Test\Lib;
 
 use PHPUnit\Framework\TestCase;
-use Vector\Core\Exception\{
-    EmptyListException,
-    IndexOutOfBoundsException,
-    ElementNotFoundException
-};
-
+use Vector\Core\Exception\ElementNotFoundException;
+use Vector\Core\Exception\EmptyListException;
+use Vector\Core\Exception\IndexOutOfBoundsException;
 use Vector\Lib\Arrays;
 
-/**
- * Class ArraysTest
- * @package Vector\Test\Lib
- */
 class ArraysTest extends TestCase
 {
     protected $testCase;
 
-    protected function setUp()
+    function setUp(): void
     {
         $this->testCase = [0, 1, 2, 3];
     }
 
-    public function testSort()
+    /** @test */
+    function sort()
     {
         $sort = Arrays::using('sort');
 
@@ -41,10 +35,8 @@ class ArraysTest extends TestCase
         $this->assertEquals($arr, [3, 2, 1]);
     }
 
-    /**
-     * Test that cons appends to array and is immutable
-     */
-    public function testConsOperator()
+    /** @test */
+    function immutable_cons()
     {
         $cons = Arrays::using('cons');
 
@@ -53,31 +45,25 @@ class ArraysTest extends TestCase
         $this->assertEquals([0, 1, 2, 3], $this->testCase);
     }
 
-    /**
-     * Tests that head returns the first element of a list
-     */
-    public function testHead_returnsFirstElement()
+    /** @test */
+    function head_first_of_list()
     {
         $head = Arrays::Using('head');
 
         $this->assertEquals($head($this->testCase), 0);
     }
 
-    /**
-     * Tests that head returns the first elements of a list,
-     * even when it is not numerically indexed
-     */
-    public function testHead_returnsFirstElementNonNumericIndexed()
+    /** @test */
+    function head_returns_first_element_non_numeric_indexed()
     {
         $head = Arrays::Using('head');
 
         $this->assertEquals($head(['test' => 'works', 'another' => 'test', 'ok' => 1]), 'works');
     }
 
-    /**
-     * Expect that an EmptyListException is thrown for head on empty lists
-     */
-    public function testHead_undefinedOnEmptyList()
+
+    /** @test */
+    function head_undefined_on_empty_list()
     {
         $head = Arrays::Using('head');
         $this->expectException(EmptyListException::class);
@@ -85,81 +71,64 @@ class ArraysTest extends TestCase
         $head([]); // Throws Exception
     }
 
-    /**
-     * Test that tail returns the rest of a list sans first element
-     */
-    public function testTail()
+    /** @test */
+    function tail()
     {
         $tail = Arrays::Using('tail');
 
         $this->assertEquals($tail($this->testCase), [1, 2, 3]);
     }
 
-    /**
-     * Test that init returns the first chunk of an array
-     */
-    public function testInit()
+    /** @test */
+    function init()
     {
         $init = Arrays::Using('init');
 
         $this->assertEquals($init($this->testCase), [0, 1, 2]);
     }
 
-    /**
-     * Test that last returns the last element of a list
-     */
-    public function testLast_returnsLastElement()
+    /** @test */
+    function last()
     {
         $last = Arrays::Using('last');
 
         $this->assertEquals($last($this->testCase), 3);
     }
 
-    /**
-     * Expect that an EmptyListException is thrown for last on empty lists
-     */
-    public function testLast_undefinedOnEmptyList()
+    function last_undefined_on_empty_list()
     {
         $last = Arrays::Using('last');
         $this->expectException(EmptyListException::class);
 
-        $last([]); // Throws Exception
+        $last([]);
     }
 
-    /**
-     * Test that length returns the length of a list
-     */
-    public function testLength()
+    /** @test */
+    function length()
     {
         $length = Arrays::Using('length');
 
         $this->assertEquals($length($this->testCase), 4);
     }
 
-    /**
-     * Test that index returns the element of a list at the given index
-     */
-    public function testIndex_returnsElementAtIndex()
+    /** @test */
+    function index_returns_element_at_index()
     {
         $index = Arrays::Using('index');
 
         $this->assertEquals($index(2, $this->testCase), 2);
     }
 
-    /**
-     * Test that index returns existant index, even if the value is null
-     */
-    public function testIndex_returnsNullValue()
+    /** @test */
+    function index_returns_null_value()
     {
         $index = Arrays::Using('index');
 
         $this->assertEquals($index(0, [null]), null);
     }
 
-    /**
-     * Test that index throws an exception when requesting a non-existant index
-     */
-    public function testIndex_throwsExceptionForNoKey()
+    /** @test */
+    function index_throws_exception_for_no_key()
     {
         $index = Arrays::Using('index');
         $this->expectException(IndexOutOfBoundsException::class);
@@ -167,10 +136,8 @@ class ArraysTest extends TestCase
         $index(17, [1, 2, 3]);
     }
 
-    /**
-     * Test that mapIndexed receives an index
-     */
-    public function test_mapIndexed()
+    /** @test */
+    function map_indexed()
     {
         $mapIndexed = Arrays::Using('mapIndexed');
 
@@ -187,10 +154,8 @@ class ArraysTest extends TestCase
         ], $result);
     }
 
-    /**
-     * Test that concat handles normal arrays, and key/value arrays properly
-     */
-    public function testConcat()
+    /** @test */
+    function test_concat()
     {
         $concat = Arrays::Using('concat');
 
@@ -199,11 +164,8 @@ class ArraysTest extends TestCase
         $this->assertEquals(['foo' => 'baz', 'bar' => 2], $concat(['foo' => 1, 'bar' => 2], ['foo' => 'baz']));
     }
 
-    /**
-     * Test that set properly sets the value of an array at the index in an
-     * immutable way
-     */
-    public function testSet()
+    /** @test */
+    function set_index_is_immutable()
     {
         $set = Arrays::Using('setIndex');
 
@@ -211,10 +173,8 @@ class ArraysTest extends TestCase
         $this->assertEquals($this->testCase, [0, 1, 2, 3]);
     }
 
-    /**
-     * Test that keys returns the keys of a key/value array
-     */
-    public function testKeys()
+    /** @test */
+    function keys()
     {
         $keys = Arrays::using('keys');
 
@@ -222,10 +182,8 @@ class ArraysTest extends TestCase
         $this->assertEquals(['foo', 'bar', 'baz'], $keys(['foo' => 1, 'bar' => 2, 'baz' => 3]));
     }
 
-    /**
-     * Test that values returns key/value array values
-     */
-    public function testValues()
+    /** @test */
+    function values()
     {
         $values = Arrays::using('values');
 
@@ -233,29 +191,30 @@ class ArraysTest extends TestCase
         $this->assertEquals([1, 2, 3], $values(['foo' => 1, 'bar' => 2, 'baz' => 3]));
     }
 
-    /**
-     * Test that the filter function correctly filters an array of data
-     */
-    public function testFilter()
+    /** @test */
+    function filter()
     {
         $filter = Arrays::using('filter');
 
-        $id = function($a) { return true; };
-        $gt = function($b) { return $b >= 2; };
+        $id = function ($a) {
+            return true;
+        };
+        $gt = function ($b) {
+            return $b >= 2;
+        };
 
         $this->assertEquals([0, 1, 2, 3], $filter($id, $this->testCase));
         $this->assertEquals([2 => 2, 3 => 3], $filter($gt, $this->testCase));
     }
 
-    /**
-     * Test that the zipWith function works properly, specifically the cases
-     * where it is given arrays of unequal length
-     */
-    public function testZipWith()
+    /** @test */
+    function zip_with_on_unequal_length()
     {
         $zipWith = Arrays::using('zipWith');
 
-        $combinator = function($a, $b) { return $a + $b; };
+        $combinator = function ($a, $b) {
+            return $a + $b;
+        };
 
         $this->assertEquals([1, 2, 3], $zipWith($combinator, [5, 5, 5], [-4, -3, -2]));
         $this->assertequals([0], $zipWith($combinator, [5, 5, 5], [-5]));
@@ -266,22 +225,20 @@ class ArraysTest extends TestCase
         $this->assertEquals([2, 4], $zipWith($combinator, ['foo' => 1, 'bar' => 2], [1 => 1, 5 => 2]));
     }
 
-    /**
-     * Tests reduce by reducing an array with an add function
-     */
-    public function testReduce()
+    /** @test */
+    function reduce()
     {
         $reduce = Arrays::using('reduce');
 
-        $reducer = function($a, $b) { return $a + $b; };
+        $reducer = function ($a, $b) {
+            return $a + $b;
+        };
 
         $this->assertEquals(6, $reduce($reducer, 0, [1, 2, 3]));
     }
 
-    /**
-     * Tests that the drop function returns arrays without the leading elements
-     */
-    public function testDrop()
+    /** @test */
+    function drop()
     {
         $drop = Arrays::using('drop');
 
@@ -290,16 +247,17 @@ class ArraysTest extends TestCase
         $this->assertequals([], $drop(5, [1, 2, 3]));
     }
 
-    /**
-     * Dropwhile should return every element after the first element in a list
-     * returns false for the predicate
-     */
-    public function testDropWhile()
+    /** @test */
+    function drop_while()
     {
         $dropWhile = Arrays::using('dropWhile');
 
-        $lteThree = function($n) { return $n <= 3; };
-        $divByTwo = function($n) { return $n % 2 == 0; };
+        $lteThree = function ($n) {
+            return $n <= 3;
+        };
+        $divByTwo = function ($n) {
+            return $n % 2 == 0;
+        };
 
         $this->assertEquals([4, 5], $dropWhile($lteThree, [1, 2, 3, 4, 5]));
         $this->assertEquals([1, 2, 3], $dropWhile($divByTwo, [0, 2, 4, 6, 1, 2, 3]));
@@ -307,10 +265,8 @@ class ArraysTest extends TestCase
         $this->assertEquals([1, 3, 5], $dropWhile($divByTwo, [1, 3, 5]));
     }
 
-    /**
-     * Take should return the first n elements of an array
-     */
-    public function testTake()
+    /** @test */
+    function take()
     {
         $take = Arrays::using('take');
 
@@ -319,25 +275,24 @@ class ArraysTest extends TestCase
         $this->assertEquals([1, 2, 3], $take(10, [1, 2, 3]));
     }
 
-    /**
-     * TakeWhile should return the first elements of the array until the predicate returns
-     * false
-     */
-    public function testTakeWhile()
+    /** @test */
+    function take_while()
     {
         $takeWhile = Arrays::using('takeWhile');
 
-        $lteThree = function($n) { return $n <= 3; };
-        $divByTwo = function($n) { return $n % 2 == 0; };
+        $lteThree = function ($n) {
+            return $n <= 3;
+        };
+        $divByTwo = function ($n) {
+            return $n % 2 == 0;
+        };
 
         $this->assertEquals([1, 2, 3], $takeWhile($lteThree, [1, 2, 3, 4, 5]));
         $this->assertEquals([], $takeWhile($divByTwo, [1, 2, 4, 6]));
     }
 
-    /**
-     * Reverse should flip an array and not modify the original array
-     */
-    public function testReverse()
+    /** @test */
+    function reverse()
     {
         $reverse = Arrays::using('reverse');
 
@@ -347,11 +302,8 @@ class ArraysTest extends TestCase
         $this->assertEquals([1, 2, 3], $arr);
     }
 
-    /**
-     * Flatten should take a multidimensional array and turn it into a single
-     * dimensional array
-     */
-    public function testFlatten()
+    /** @test */
+    function flatten()
     {
         $flatten = Arrays::using('flatten');
 
@@ -362,10 +314,7 @@ class ArraysTest extends TestCase
         $this->assertEquals([1, 2, 3], $flatten($testCase2));
     }
 
-    /**
-     * Contains should return true if the given list contains the given value
-     */
-    public function testContains()
+    function contains_true_and_false()
     {
         $contains = Arrays::using('contains');
 
@@ -373,10 +322,8 @@ class ArraysTest extends TestCase
         $this->assertEquals(false, $contains(5, [1, 2, 3]));
     }
 
-    /**
-     * Replicate should repeat an item n times
-     */
-    public function testReplicate()
+    /** @test */
+    function replicate()
     {
         $replicate = Arrays::using('replicate');
 
@@ -384,10 +331,8 @@ class ArraysTest extends TestCase
         $this->assertEquals([], $replicate(0, 'foo'));
     }
 
-    /**
-     * Group By should create groups from lists
-     */
-    public function testGroupBy()
+    /** @test */
+    function group_by()
     {
         // Test a simple keygen
         $groupBy = Arrays::using('groupBy');
@@ -395,7 +340,7 @@ class ArraysTest extends TestCase
         $testCase = [1, 2, 3, 4, 5, 6, 7];
         $correctAnswer = ['even' => [2, 4, 6], 'odd' => [1, 3, 5, 7]];
 
-        $keyGen = function($a) {
+        $keyGen = function ($a) {
             return ($a % 2 == 0) ? 'even' : 'odd';
         };
 
@@ -408,10 +353,8 @@ class ArraysTest extends TestCase
         $this->assertEquals($groupBy(Arrays::index('foo'), $testCase), $correctAnswer);
     }
 
-    /**
-     * Unique should..unique
-     */
-    public function testUnique()
+    /** @test */
+    function unique()
     {
         $this->assertEquals(
             [1, 2, 4],
@@ -419,10 +362,8 @@ class ArraysTest extends TestCase
         );
     }
 
-    /**
-     * Test takeLast
-     */
-    public function testTakeLast()
+    /** @test */
+    function take_last()
     {
         $this->assertEquals(
             [2, 4],
@@ -430,7 +371,8 @@ class ArraysTest extends TestCase
         );
     }
 
-    public function testZip_simpleArrays()
+    /** @test */
+    function zip_simple_arrays()
     {
         $a = [1, 2, 3];
         $b = ['a', 'b', 'c'];
@@ -441,7 +383,8 @@ class ArraysTest extends TestCase
         );
     }
 
-    public function testZip_hardArrays()
+    /** @test */
+    function zip_hard_arrays()
     {
         $a = [1, 2, 3];
         $c = [[1, 0], [2, 0], [3, 1]];
@@ -452,9 +395,12 @@ class ArraysTest extends TestCase
         );
     }
 
-    public function testFirst_findsElement()
+    /** @test */
+    function first_can_find_element()
     {
-        $isEven = function($a) { return $a % 2 == 0; };
+        $isEven = function ($a) {
+            return $a % 2 == 0;
+        };
         $numbers = [1, 5, 7, 4, 9];
 
         $this->assertEquals(
@@ -463,18 +409,24 @@ class ArraysTest extends TestCase
         );
     }
 
-    public function testFirst_throwsException()
+    /** @test */
+    function first_throws_exception()
     {
-        $isEven = function($a) { return $a % 2 == 0; };
+        $isEven = function ($a) {
+            return $a % 2 == 0;
+        };
         $numbers = [1, 5, 7, 11, 9];
 
         $this->expectException(ElementNotFoundException::class);
         Arrays::first($isEven, $numbers);
     }
 
-    public function testBifurcate()
+    /** @test */
+    function bifurcate()
     {
-        $isEven = function($a) { return $a % 2 == 0; };
+        $isEven = function ($a) {
+            return $a % 2 == 0;
+        };
         $numbers = [1, 5, 7, 4, 9];
 
         $this->assertEquals(

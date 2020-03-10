@@ -110,7 +110,7 @@ abstract class Pattern extends Module
                 return $class->getName();
             }
 
-            return (string) $parameter->getType();
+            return (string) ($parameter->getType() ? $parameter->getType()->getName() : null);
         }, $reflected->getParameters());
 
         /**

@@ -2,6 +2,7 @@
 
 namespace Vector\Control;
 
+use ReflectionClass;
 use ReflectionFunction;
 use ReflectionParameter;
 use Vector\Core\Exception\ElementNotFoundException;
@@ -80,7 +81,7 @@ abstract class Pattern extends Module
         $hasExtractable = false;
 
         $unwrappedArgs = self::flatten(array_map(function ($arg) use (&$hasExtractable) {
-            if (method_exists($arg, 'extract')) {
+            if (is_object($arg) && method_exists($arg, 'extract')) {
                 $hasExtractable = true;
                 return $arg->extract();
             }
@@ -105,7 +106,9 @@ abstract class Pattern extends Module
         $reflected = new ReflectionFunction($pattern);
 
         $patternParameterTypes = array_map(function (ReflectionParameter $parameter) {
-            $class = $parameter->getClass();
+            $class = $parameter->getType() && !$parameter->getType()->isBuiltin()
+                ? new ReflectionClass($parameter->getType()->getName())
+                : null;
             if ($class) {
                 return $class->getName();
             }

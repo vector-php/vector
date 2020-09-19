@@ -2,12 +2,9 @@
 
 namespace Vector\Data\Result;
 
+use Vector\Typeclass\SimpleFunctorDefault;
+
 class Ok extends Result
 {
-    protected $value;
-
-    public function __construct($value)
-    {
-        $this->value = $value;
-    }
+    use SimpleFunctorDefault;
 }

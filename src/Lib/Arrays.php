@@ -4,10 +4,8 @@ namespace Vector\Lib;
 
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
-use Vector\Core\Exception\ElementNotFoundException;
-use Vector\Core\Exception\EmptyListException;
-use Vector\Core\Exception\IndexOutOfBoundsException;
 use Vector\Core\Module;
+use Vector\Data\Maybe\Maybe;
 
 /**
  * @method static groupBy(...$args)
@@ -100,31 +98,30 @@ class Arrays extends Module
      *
      * Returns the first element of a list, the element at index 0. Also functions
      * properly for key/value arrays, e.g. arrays whose first element may not necessarily
-     * be index 0. If an empty array is given, head throws an Exception.
+     * be index 0. If an empty array is given, head returns Nothing.
      *
      * @param array $list Key/Value array or List
-     * @return Mixed       First element of $list
-     * @throws \Vector\Core\Exception\EmptyListException if argument is empty list
+     * @return Mixed Just first element of $list or Nothing
      *
      * @example
-     * Arrays::head([1, 2, 3]); // 1
+     * Arrays::head([1, 2, 3]); // Just 1
      *
      * @example
-     * Arrays::head(['a' => 1, 'b' => 2]); // 1
+     * Arrays::head(['a' => 1, 'b' => 2]); // Just 1
      *
      * @example
-     * Arrays::head([]); // Exception thrown
+     * Arrays::head([]); // Nothing
      *
-     * @type [a] -> a
+     * @type [a] -> Maybe a
      *
      */
     protected static function __head(array $list)
     {
         if (count($list) === 0) {
-            throw new EmptyListException("'head' function is undefined for empty lists.");
+            return Maybe::nothing();
         }
 
-        return reset($list);
+        return Maybe::just(reset($list));
     }
 
     /**
@@ -244,20 +241,19 @@ class Arrays extends Module
      * Last List Value
      *
      * Returns the last element of an array, e.g. the complement of `init`. Works on key/value
-     * arrays as well as 'regular' arrays. If an empty array is given, throws an exception.
+     * arrays as well as 'regular' arrays. If an empty array is given, return Nothing.
      *
      * @param array $list Key/Value array or List
      * @return Mixed       The last element of $list
-     * @throws \Vector\Core\Exception\EmptyListException if argument is empty list
      *
      * @example
-     * Arrays::last([1, 2, 3]); // 3
+     * Arrays::last([1, 2, 3]); // Just 3
      *
      * @example
-     * Arrays::last(['a' => 1, 'b' => 2]); // 2
+     * Arrays::last(['a' => 1, 'b' => 2]); // Just 2
      *
      * @example
-     * Arrays::last([]); // Exception thrown
+     * Arrays::last([]); // Nothing
      *
      * @type [a] -> a
      *
@@ -265,10 +261,10 @@ class Arrays extends Module
     protected static function __last(array $list)
     {
         if (count($list) === 0) {
-            throw new EmptyListException("'last' function is undefined for empty lists.");
+            return Maybe::nothing();
         }
 
-        return array_slice($list, -1, 1)[0];
+        return Maybe::just(array_slice($list, -1, 1)[0]);
     }
 
     /**
@@ -295,27 +291,26 @@ class Arrays extends Module
     /**
      * List Index
      *
-     * Returns the element of a list at the given index. Throws an exception
-     * if the given index does not exist in the list.
+     * Returns the element of a list at the given index or Nothing.
+     *
      *
      * @param Int $i Index to get
      * @param array $list List to get index from
      * @return Mixed       Item from $list and index $i
-     * @throws \Vector\Core\Exception\IndexOutOfBoundsException if the requested index does not exist
      *
      * @example
-     * Arrays::index('foo', ['bar' => 1, 'foo' => 2]); // 2
+     * Arrays::index('foo', ['bar' => 1, 'foo' => 2]); // Just 2
      *
      * @example
-     * Arrays::index('baz', [1, 2, 3]); // Exception thrown
+     * Arrays::index('baz', [1, 2, 3]); // Nothing
      *
-     * @type Int -> [a] -> a
+     * @type Int -> [a] -> Maybe a
      *
      * @example
-     * Arrays::index(0, [1, 2, 3]); // 1
+     * Arrays::index(0, [1, 2, 3]); // Just 1
      *
      */
-    protected static function __index($i, array $list)
+    protected static function __index($i, array $list) : Maybe
     {
         /**
          * isset is much faster at the common case (non-null values)
@@ -323,10 +318,10 @@ class Arrays extends Module
          * array_key_exists (slower).
          */
         if (! isset($list[$i]) && ! array_key_exists($i, $list)) {
-            throw new IndexOutOfBoundsException("'index' function tried to access non-existent index '{$i}'");
+            return Maybe::nothing();
         }
 
-        return $list[$i];
+        return Maybe::just($list[$i]);
     }
 
     /**
@@ -364,18 +359,17 @@ class Arrays extends Module
      * @param callable $f
      * @param array $arr
      * @return mixed
-     * @throws ElementNotFoundException
      * @internal param $ (a -> Bool) -> [a] -> a
      */
     protected static function __first(callable $f, array $arr)
     {
         foreach ($arr as $a) {
             if ($f($a) === true) {
-                return $a;
+                return Maybe::just($a);
             }
         }
 
-        throw new ElementNotFoundException;
+        return Maybe::nothing();
     }
 
     /**

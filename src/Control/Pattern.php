@@ -8,6 +8,7 @@ use ReflectionParameter;
 use Vector\Core\Exception\ElementNotFoundException;
 use Vector\Core\Exception\IncompletePatternMatchException;
 use Vector\Core\Module;
+use Vector\Data\Maybe\Nothing;
 use Vector\Lib\Arrays;
 
 /**
@@ -42,10 +43,16 @@ abstract class Pattern extends Module
             try {
                 $keysToValues = Arrays::zip(array_keys($patterns), array_values($patterns));
 
-                list($key, $matchingPattern) = Arrays::first(
+                $val = Arrays::first(
                     Pattern::patternApplies($parameterTypes, $args),
                     $keysToValues
                 );
+//                var_dump(get_class($val));
+                if (get_class($val) === Nothing::class) {
+                    throw new ElementNotFoundException;
+                }
+//                var_dump($val);die();
+                $matchingPattern = $val->extract()[1];
             } catch (ElementNotFoundException $e) {
                 throw new IncompletePatternMatchException(
                     'Incomplete pattern match expression. (missing ' . implode(', ', $parameterTypes) . ')'
@@ -106,7 +113,7 @@ abstract class Pattern extends Module
         $reflected = new ReflectionFunction($pattern);
 
         $patternParameterTypes = array_map(function (ReflectionParameter $parameter) {
-            $class = $parameter->getType() && !$parameter->getType()->isBuiltin()
+            $class = $parameter->getType() && ! $parameter->getType()->isBuiltin()
                 ? new ReflectionClass($parameter->getType()->getName())
                 : null;
             if ($class) {

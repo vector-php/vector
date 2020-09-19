@@ -3,9 +3,8 @@
 namespace Vector\Test\Lib;
 
 use PHPUnit\Framework\TestCase;
-use Vector\Core\Exception\ElementNotFoundException;
 use Vector\Core\Exception\EmptyListException;
-use Vector\Core\Exception\IndexOutOfBoundsException;
+use Vector\Data\Maybe\Maybe;
 use Vector\Lib\Arrays;
 
 class ArraysTest extends TestCase
@@ -48,92 +47,88 @@ class ArraysTest extends TestCase
     /** @test */
     function head_first_of_list()
     {
-        $head = Arrays::Using('head');
-
-        $this->assertEquals($head($this->testCase), 0);
+        $this->assertEquals(Maybe::just(0), Arrays::head($this->testCase));
     }
 
     /** @test */
     function head_returns_first_element_non_numeric_indexed()
     {
-        $head = Arrays::Using('head');
-
-        $this->assertEquals($head(['test' => 'works', 'another' => 'test', 'ok' => 1]), 'works');
+        $this->assertEquals(Maybe::just('works'), Arrays::head(['test' => 'works', 'another' => 'test', 'ok' => 1]));
     }
 
 
     /** @test */
-    function head_undefined_on_empty_list()
+    function head_returns_nothing_on_empty_list()
     {
-        $head = Arrays::Using('head');
-        $this->expectException(EmptyListException::class);
-
-        $head([]); // Throws Exception
+        $this->assertEquals(Maybe::nothing(), Arrays::head([]));
     }
 
     /** @test */
     function tail()
     {
-        $tail = Arrays::Using('tail');
-
-        $this->assertEquals($tail($this->testCase), [1, 2, 3]);
+        $this->assertEquals([1, 2, 3], Arrays::tail($this->testCase));
     }
 
     /** @test */
     function init()
     {
-        $init = Arrays::Using('init');
-
-        $this->assertEquals($init($this->testCase), [0, 1, 2]);
+        $this->assertEquals([0, 1, 2], Arrays::init($this->testCase));
     }
 
     /** @test */
     function last()
     {
-        $last = Arrays::Using('last');
-
-        $this->assertEquals($last($this->testCase), 3);
+        $this->assertEquals(Maybe::just(3), Arrays::last($this->testCase));
     }
 
-    function last_undefined_on_empty_list()
+    /** @test */
+    function last_returns_nothing_on_empty_list()
     {
-        $last = Arrays::Using('last');
-        $this->expectException(EmptyListException::class);
-
-        $last([]);
+        $this->assertEquals(Maybe::nothing(), Arrays::last([]));
     }
 
     /** @test */
     function length()
     {
-        $length = Arrays::Using('length');
-
-        $this->assertEquals($length($this->testCase), 4);
+        $this->assertEquals(4, Arrays::length($this->testCase));
     }
 
     /** @test */
-    function index_returns_element_at_index()
+    function index_returns_element_at_index_as_just()
     {
-        $index = Arrays::Using('index');
-
-        $this->assertEquals($index(2, $this->testCase), 2);
+        $this->assertEquals(Maybe::just(2), Arrays::index(2, $this->testCase));
     }
 
     /** @test */
-    function index_returns_null_value()
+    function index_with_default_returns_value()
     {
-        $index = Arrays::Using('index');
+        $array = [
+            'first' => [
+                'second' => [
+                    'third' => 'final!',
+                ],
+            ],
+        ];
 
-        $this->assertEquals($index(0, [null]), null);
+        $answer = vector($array)
+            ->pipe(Arrays::index('first'))
+            ->pipe(Maybe::map(Arrays::index('second')))
+            ->pipe(Maybe::map(Arrays::index('third')))
+            ->pipe(Maybe::withDefault('not found'))();
+
+        $this->assertEquals('final!', $answer);
     }
 
     /** @test */
-    function index_throws_exception_for_no_key()
+    function index_returns_just_null_value_if_that_is_the_actual_value()
     {
-        $index = Arrays::Using('index');
-        $this->expectException(IndexOutOfBoundsException::class);
+        $this->assertEquals(Maybe::just(null), Arrays::index(0, [null]));
+    }
 
-        $index(17, [1, 2, 3]);
+    /** @test */
+    function index_returns_nothing_for_missing_key()
+    {
+        $this->assertEquals(Maybe::nothing(), Arrays::index(17, [1, 2, 3]));
     }
 
     /** @test */
@@ -332,11 +327,8 @@ class ArraysTest extends TestCase
     }
 
     /** @test */
-    function group_by()
+    function group_by_on_array()
     {
-        // Test a simple keygen
-        $groupBy = Arrays::using('groupBy');
-
         $testCase = [1, 2, 3, 4, 5, 6, 7];
         $correctAnswer = ['even' => [2, 4, 6], 'odd' => [1, 3, 5, 7]];
 
@@ -344,13 +336,35 @@ class ArraysTest extends TestCase
             return ($a % 2 == 0) ? 'even' : 'odd';
         };
 
-        $this->assertEquals($groupBy($keyGen, $testCase), $correctAnswer);
+        $this->assertEquals($correctAnswer, Arrays::groupBy($keyGen, $testCase));
+    }
 
-        // Test an object keygen
-        $testCase = [['foo' => 'bar', 'value' => 1], ['foo' => 'bar', 'value' => 2], ['foo' => 'baz', 'value' => 3]];
-        $correctAnswer = ['bar' => [['foo' => 'bar', 'value' => 1], ['foo' => 'bar', 'value' => 2]], 'baz' => [['foo' => 'baz', 'value' => 3]]];
+    /** @test */
+    function group_by_on_object()
+    {
+        $testCase = [
+            ['foo' => 'bar', 'value' => 1],
+            ['foo' => 'bar', 'value' => 2],
+            ['foo' => 'baz', 'value' => 3],
+            ['value' => 8],
+        ];
+        $correctAnswer = [
+            'bar' => [
+                ['foo' => 'bar', 'value' => 1],
+                ['foo' => 'bar', 'value' => 2],
+            ],
+            'baz' => [
+                ['foo' => 'baz', 'value' => 3],
+            ],
+            "doesn't have foo" => [
+                ['value' => 8],
+            ],
+        ];
 
-        $this->assertEquals($groupBy(Arrays::index('foo'), $testCase), $correctAnswer);
+        $this->assertEquals($correctAnswer, Arrays::groupBy(
+            fn($val) => vector($val)->pipe(Arrays::index('foo'))->pipe(Maybe::withDefault("doesn't have foo"))(),
+            $testCase
+        ));
     }
 
     /** @test */
@@ -404,21 +418,20 @@ class ArraysTest extends TestCase
         $numbers = [1, 5, 7, 4, 9];
 
         $this->assertEquals(
-            4,
+            Maybe::just(4),
             Arrays::first($isEven, $numbers)
         );
     }
 
     /** @test */
-    function first_throws_exception()
+    function first_returns_nothing_when_no_match_found()
     {
         $isEven = function ($a) {
             return $a % 2 == 0;
         };
         $numbers = [1, 5, 7, 11, 9];
 
-        $this->expectException(ElementNotFoundException::class);
-        Arrays::first($isEven, $numbers);
+        $this->assertEquals(Maybe::nothing(), Arrays::first($isEven, $numbers));
     }
 
     /** @test */

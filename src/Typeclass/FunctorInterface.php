@@ -2,8 +2,11 @@
 
 namespace Vector\Typeclass;
 
+/**
+ * @method static callable map($value)
+ */
 interface FunctorInterface
 {
-    public function fmap(callable $f);
+    public static function __map(callable $f, FunctorInterface $value);
     public function extract();
 }

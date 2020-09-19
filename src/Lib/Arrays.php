@@ -41,8 +41,9 @@ use Vector\Data\Maybe\Maybe;
  * @method static bifurcate(...$args)
  * @method static setIndex(...$args)
  */
-class Arrays extends Module
+class Arrays
 {
+    use Module;
     /**
      * Cons Operator
      *

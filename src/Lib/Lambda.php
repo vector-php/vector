@@ -13,8 +13,10 @@ use Vector\Core\Module;
  * @method static mixed flip(...$args)
  * @method static mixed apply(...$args)
  */
-abstract class Lambda extends Module
+abstract class Lambda
 {
+    use Module;
+
     protected static function __pipe(...$fs)
     {
         return function ($inputArg) use ($fs) {

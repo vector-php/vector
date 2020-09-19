@@ -21,8 +21,10 @@ use Vector\Core\Module;
  * @method static callable all(...$args)
  * @method static callable any(...$args)
  */
-class Logic extends Module
+class Logic
 {
+    use Module;
+
     /**
      * Logical Or Combinator
      *

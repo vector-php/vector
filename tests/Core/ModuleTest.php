@@ -25,42 +25,9 @@ class ModuleTest extends TestCase
     }
 
     /** @test */
-    function module_caching()
-    {
-        // Loading the function should add it to the cache
-        TestFunctions::using('notAPureFunction');
-
-        $cache = TestFunctions::getFulfillmentCache()[
-            'Vector\Test\Core\Stub\TestFunctions'
-        ];
-
-        $this->assertArrayHasKey('__notAPureFunction', $cache);
-    }
-
-    /** @test */
     function test_alternative_function_pattern()
     {
         $this->assertInstanceOf('\\Closure', TestFunctions::oneArgFunction());
-    }
-
-    /** @test */
-    function test_memoization()
-    {
-        $memoizedFunction = TestFunctions::using('memoizedFunction');
-
-        // On the first run we expect side effects
-        ob_start();
-        $this->assertEquals($memoizedFunction(1, 2, 3), 6);
-        $sideEffects = ob_get_clean();
-
-        $this->assertEquals($sideEffects, "I'm a side effect.");
-
-        // But on the second run we don't
-        ob_start();
-        $this->assertEquals($memoizedFunction(1, 2, 3), 6);
-        $sideEffects = ob_get_clean();
-
-        $this->assertEquals($sideEffects, '');
     }
 
     /** @test */

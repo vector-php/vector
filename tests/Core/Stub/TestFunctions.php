@@ -4,16 +4,9 @@ namespace Vector\Test\Core\Stub;
 
 use Vector\Core\Module;
 
-class TestFunctions extends Module
+class TestFunctions
 {
-    protected static array $doNotCurry = ['nonCurriedFunction'];
-
-    protected static $memoize = true;
-
-    public static function getFulfillmentCache()
-    {
-        return static::$fulfillmentCache;
-    }
+    use Module;
 
     protected static function __notAPureFunction()
     {

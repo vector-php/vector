@@ -12,8 +12,10 @@ use Vector\Core\Module;
  * @method static callable isInstanceOf(...$args)
  * @method static callable assign(...$args)
  */
-class Objects extends Module
+class Objects
 {
+    use Module;
+
     /**
      * Set Property
      *

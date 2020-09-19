@@ -13,8 +13,10 @@ use Vector\Lib\Arrays;
 /**
  * @method static mixed match(...$args)
  */
-abstract class Pattern extends Module
+abstract class Pattern
 {
+    use Module;
+
     /**
      * Get type OR class for params, as well as re-mapping inconsistencies
      * @param $param

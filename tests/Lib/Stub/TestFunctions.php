@@ -4,8 +4,10 @@ namespace Vector\Test\Lib\Stub;
 
 use Vector\Core\Module;
 
-class TestFunctions extends Module
+class TestFunctions
 {
+    use Module;
+
     protected static function __plusTwo($a)
     {
         return $a + 2;

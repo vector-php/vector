@@ -10,8 +10,10 @@ use Vector\Core\Module;
  * @method static callable err(...$args)
  * @method static callable from(...$args)
  */
-abstract class Result extends Module
+abstract class Result
 {
+    use Module;
+
     protected static function __ok($value)
     {
         return new Ok($value);

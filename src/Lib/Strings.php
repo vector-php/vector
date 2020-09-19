@@ -17,8 +17,10 @@ use Vector\Core\Module;
  * @method static string join(...$args)
  * @method static string replace(...$args)
  */
-class Strings extends Module
+class Strings
 {
+    use Module;
+
     /**
      * String Concatenation
      *

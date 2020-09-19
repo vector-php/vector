@@ -19,8 +19,10 @@ use Vector\Core\Module;
  * @method static callable pow(...$args)
  * @method static callable mean(...$args)
  */
-class Math extends Module
+class Math
 {
+    use Module;
+
     /**
      * Arithmetic Addition
      *

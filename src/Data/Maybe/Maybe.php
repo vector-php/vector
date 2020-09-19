@@ -12,8 +12,9 @@ use Vector\Typeclass\SimpleMonadDefault;
  * @method static callable nothing()
  * @method static callable withDefault($value)
  */
-abstract class Maybe extends Module
+abstract class Maybe
 {
+    use Module;
     use SimpleApplicativeDefault;
     use SimpleMonadDefault;
 

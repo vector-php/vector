@@ -39,6 +39,7 @@ use Vector\Data\Maybe\Maybe;
  * @method static sort(...$args)
  * @method static takeLast(...$args)
  * @method static bifurcate(...$args)
+ * @method static setIndex(...$args)
  */
 class Arrays extends Module
 {

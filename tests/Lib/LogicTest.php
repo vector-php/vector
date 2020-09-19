@@ -10,9 +10,7 @@ class LogicTest extends TestCase
     /** @test */
     function or_combinator()
     {
-        $orCombinator = Logic::using('orCombinator');
-
-        $trueOrFalse = $orCombinator([
+        $trueOrFalse = Logic::orCombinator([
             function ($a) {
                 return $a === true;
             }, function ($a) {
@@ -27,9 +25,7 @@ class LogicTest extends TestCase
     /** @test */
     function and_combinator()
     {
-        $andCombinator = Logic::using('andCombinator');
-
-        $greaterThan0AndLessThan5 = $andCombinator([
+        $greaterThan0AndLessThan5 = Logic::andCombinator([
             function ($a) {
                 return $a > 0;
             }, function ($a) {
@@ -44,17 +40,13 @@ class LogicTest extends TestCase
     /** @test */
     function not_eq()
     {
-        $notEq = Logic::using('notEq');
-
-        $this->assertTrue($notEq(1, 2));
+        $this->assertTrue(Logic::notEq(1, 2));
     }
 
     /** @test */
     function not_eq_strict()
     {
-        $notEqStrict = Logic::using('notEqStrict');
-
-        $this->assertTrue($notEqStrict(1, '1'));
+        $this->assertTrue(Logic::notEqStrict(1, '1'));
     }
 
     /** @test */

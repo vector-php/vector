@@ -5,7 +5,6 @@ namespace Vector\Control;
 use ReflectionClass;
 use ReflectionFunction;
 use ReflectionParameter;
-use Vector\Core\Exception\ElementNotFoundException;
 use Vector\Core\Exception\IncompletePatternMatchException;
 use Vector\Core\Module;
 use Vector\Data\Maybe\Nothing;
@@ -40,26 +39,23 @@ abstract class Pattern extends Module
         return function (...$args) use ($patterns) {
             $parameterTypes = array_map(self::getType(), $args);
 
-            try {
-                $keysToValues = Arrays::zip(array_keys($patterns), array_values($patterns));
+            $keysToValues = Arrays::zip(array_keys($patterns), array_values($patterns));
 
-                $val = Arrays::first(
-                    Pattern::patternApplies($parameterTypes, $args),
-                    $keysToValues
-                );
-//                var_dump(get_class($val));
-                if (get_class($val) === Nothing::class) {
-                    throw new ElementNotFoundException;
-                }
-//                var_dump($val);die();
-                $matchingPattern = $val->extract()[1];
-            } catch (ElementNotFoundException $e) {
+            $val = Arrays::first(
+                Pattern::patternApplies($parameterTypes, $args),
+                $keysToValues
+            );
+
+            // Can't use Pattern::match here because we lack tail call optimization.
+            if (get_class($val) === Nothing::class) {
                 throw new IncompletePatternMatchException(
                     'Incomplete pattern match expression. (missing ' . implode(', ', $parameterTypes) . ')'
                 );
             }
 
-            list($hasExtractable, $unwrappedArgs) = self::unwrapArgs($args);
+            $matchingPattern = $val->extract()[1];
+
+            [$hasExtractable, $unwrappedArgs] = self::unwrapArgs($args);
 
             $value = $matchingPattern(...$args);
             $isCallable = is_callable($value);
@@ -108,7 +104,7 @@ abstract class Pattern extends Module
      */
     protected static function __patternApplies(array $parameterTypes, array $args, array $pattern) : bool
     {
-        list($key, $pattern) = $pattern;
+        [$_, $pattern] = $pattern;
 
         $reflected = new ReflectionFunction($pattern);
 

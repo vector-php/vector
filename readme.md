@@ -26,20 +26,17 @@ Vector gives you php functional superpowers.
         - 👎 Unfortunately you can't do this with every type in the same elegant way (only works with collections)
     -  _Vector_
         ```php
-           v([1, 2, 3])
-               ->_(Arrays::map(Math::add(1))) // or `fn($a) => $a + 1)` 
-               ->_(Math::sum())();
+           vector([1, 2, 3])
+               ->pipe(Arrays::map(Math::add(1))) // or `fn($a) => $a + 1)` 
+               ->pipe(Math::sum())();
                // [2, 3, 4]
         ```
-        - 👍 Works super similarly to collections for arrays
+        - 👍 Works super similarly to collections, but just accepts & returns normal arrays (no ->toArray()-ing necessary) 
         - 👍 Works super similarly to collections for everything else too!
         - 👎 Unfortunately it is an extra dependency (we don't have the native pipe operator yet https://wiki.php.net/rfc/pipe-operator-v2)
 
 - You can add currying to any function, it isn't only limited to Vector built ins.
     - `Module::curry('explode')(',')('a,b,c')(PHP_INT_MAX)` `// ['a', 'b', 'c']`
-
-- Create functional pipelines as first class citizens
-    - `Lambda::pipe(Math::add(4), Math::add(2))(1)` `// 7`
 
 ## PHP Version Support
 - 7.4+
@@ -63,7 +60,7 @@ $addSix = Lambda::compose(Math::add(4), Math::add(2)); // (Or ::pipe for the opp
 $addSix(4); // 10;
 ```
 
-Pattern Matching.
+Pattern Matching (Maybe & Result monads included).
 ```php
 Pattern::match([
     fn(Just $value) => fn ($unwrapped) => $unwrapped,

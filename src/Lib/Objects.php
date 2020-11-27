@@ -2,18 +2,14 @@
 
 namespace Vector\Lib;
 
+use Vector\Core\Curry;
 use Vector\Core\Exception\UndefinedPropertyException;
 use Vector\Core\Module;
 
-/**
- * @method static callable getProp(...$args)
- * @method static callable setProp(...$args)
- * @method static callable invokeMethod(...$args)
- * @method static callable isInstanceOf(...$args)
- * @method static callable assign(...$args)
- */
-class Objects extends Module
+class Objects
 {
+    use Module;
+
     /**
      * Set Property
      *
@@ -32,8 +28,9 @@ class Objects extends Module
      *
      * @type String -> a -> Object a -> Object a
      *
-     */
-    protected static function __setProp($key, $val, $obj)
+      */
+    #[Curry]
+    protected static function setProp($key, $val, $obj)
     {
         $newObj = clone $obj;
 
@@ -59,18 +56,18 @@ class Objects extends Module
      *
      * @type array props -> Object objOriginal -> Object objUpdated
      *
-     */
-    protected static function __assign($props, $objOriginal)
+      */
+    #[Curry]
+    protected static function assign($props, $objOriginal)
     {
         $obj = clone $objOriginal;
 
-        /** @noinspection PhpParamsInspection */
         return Arrays::reduce(
             function ($obj, $setter) {
                 return $setter($obj);
             },
             $obj,
-            Arrays::mapIndexed(Lambda::flip(self::setProp()), $props)
+            Arrays::mapIndexed(Lambda::flip(self::using('setProp')), $props)
         );
     }
 
@@ -90,8 +87,9 @@ class Objects extends Module
      *
      * @type String -> Object a -> a
      *
-     */
-    protected static function __getProp($prop, $obj)
+      */
+    #[Curry]
+    protected static function getProp($prop, $obj)
     {
         if (! isset($obj->{$prop})) {
             throw new UndefinedPropertyException("'getProp' function tried to access undefined property '{$prop}'");
@@ -118,8 +116,9 @@ class Objects extends Module
      *
      * @type String -> Obj a -> mixed
      *
-     */
-    protected static function __invokeMethod($method, $obj)
+      */
+    #[Curry]
+    protected static function invokeMethod($method, $obj)
     {
         return call_user_func([$obj, $method]);
     }
@@ -137,8 +136,9 @@ class Objects extends Module
      *
      * @type String -> Obj a -> mixed
      *
-     */
-    protected static function __isInstanceOf($expected, $given)
+      */
+    #[Curry]
+    protected static function isInstanceOf($expected, $given)
     {
         return $given instanceof $expected;
     }

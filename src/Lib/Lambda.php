@@ -3,19 +3,14 @@
 namespace Vector\Lib;
 
 use Vector\Core\Module;
+use Vector\Core\Curry;
 
-/**
- * @method static callable pipe(...$args)
- * @method static callable compose(...$args)
- * @method static callable k(...$args)
- * @method static callable always(...$args)
- * @method static mixed id(...$args)
- * @method static mixed flip(...$args)
- * @method static mixed apply(...$args)
- */
-abstract class Lambda extends Module
+abstract class Lambda
 {
-    protected static function __pipe(...$fs)
+    use Module;
+
+    #[Curry]
+    protected static function pipe(...$fs)
     {
         return function ($inputArg) use ($fs) {
             return array_reduce($fs, function ($carry, $f) {
@@ -24,19 +19,26 @@ abstract class Lambda extends Module
         };
     }
 
-    protected static function __dot($f, $g)
+    #[Curry]
+    protected static function dot($f, $g)
     {
         return function ($x) use ($f, $g) {
             return $f($g($x));
         };
     }
 
-    protected static function __apply($f, $x)
+    #[Curry]
+    protected static function apply($f, $x)
     {
         return $f($x);
     }
 
-    protected static function __compose(...$fs)
+    /**
+     * @param mixed ...$fs
+     * @return \Closure
+     */
+    #[Curry]
+    protected static function compose(...$fs)
     {
         return self::pipe(...array_reverse($fs));
     }
@@ -56,7 +58,8 @@ abstract class Lambda extends Module
      * @type (a -> b -> c) -> b -> a -> c
      *
      */
-    protected static function __flip($f)
+    #[Curry]
+    protected static function flip($f)
     {
         return self::curry(function ($a, $b) use ($f) {
             return $f($b, $a);
@@ -80,7 +83,8 @@ abstract class Lambda extends Module
      * @type a -> (b -> a)
      *
      */
-    protected static function __k($k)
+    #[Curry]
+    protected static function k($k)
     {
         return function (...$null) use ($k) {
             return $k;
@@ -101,12 +105,14 @@ abstract class Lambda extends Module
      * @type a -> a
      *
      */
-    protected static function __id($a)
+    #[Curry]
+    protected static function id($a)
     {
         return $a;
     }
 
-    protected static function __always($value)
+    #[Curry]
+    protected static function always($value)
     {
         return static::k($value);
     }

@@ -21,7 +21,7 @@ use Vector\Test\Control\Stub\TestParentType;
 class PatternTest extends TestCase
 {
     /** @test */
-    public function it_matches_arity_when_no_arguments_are_given()
+    function it_matches_arity_when_no_arguments_are_given()
     {
         $match = Pattern::match([
             fn (int $a) => 1,
@@ -33,7 +33,7 @@ class PatternTest extends TestCase
     }
 
     /** @test */
-    public function it_matches_on_type()
+    function it_matches_on_type()
     {
         $match = Pattern::match([
             fn (string $value) => 1,
@@ -45,7 +45,7 @@ class PatternTest extends TestCase
     }
 
     /** @test */
-    public function it_can_match_on_result_ok()
+    function it_can_match_on_result_ok()
     {
         $match = Pattern::match([
             fn (Ok $value) => fn (string $value) => $value . 'bc',
@@ -56,18 +56,18 @@ class PatternTest extends TestCase
     }
 
     /** @test */
-    public function it_can_match_on_result_err()
+    function it_can_match_on_result_err()
     {
         $match = Pattern::match([
             fn (Ok $value) => fn (int $value) => $value + 2,
-            fn (Err $error) => fn (string $error) => $error,
+            fn (Err $error) => fn ($error) => $error,
         ]);
 
         $this->assertEquals("something wen't wrong.", $match(Result::err("something wen't wrong.")));
     }
 
     /** @test */
-    public function it_can_match_on_maybe_just()
+    function it_can_match_on_maybe_just()
     {
         $match = Pattern::match([
             fn (Just $value) => fn (string $value) => $value . 'bc',
@@ -78,7 +78,7 @@ class PatternTest extends TestCase
     }
 
     /** @test */
-    public function it_can_match_on_default_case()
+    function it_can_match_on_default_case()
     {
         $match = Pattern::match([
             fn (Just $value) => $value + 2,
@@ -89,7 +89,7 @@ class PatternTest extends TestCase
     }
 
     /** @test */
-    public function it_can_match_on_maybe_nothing()
+    function it_can_match_on_maybe_nothing()
     {
         $match = Pattern::match([
             fn (Just $value) => $value,
@@ -100,7 +100,7 @@ class PatternTest extends TestCase
     }
 
     /** @test */
-    public function it_can_match_on_extractable()
+    function it_can_match_on_extractable()
     {
         $match = Pattern::match([
             fn (TestChildTypeA $value) => Strings::concat('no'),
@@ -111,17 +111,17 @@ class PatternTest extends TestCase
     }
 
     /** @test */
-    public function it_can_auto_return_a_scalar_from_a_wrapped_match()
+    function it_can_auto_return_a_scalar_from_a_wrapped_match()
     {
         $match = Pattern::match([
-            fn (TestExtractableObject $a) => 'value',
+            fn (TestExtractableObject $a) => 'string-value',
         ]);
 
-        $this->assertEquals('value', $match(new TestExtractableObject('a')));
+        $this->assertEquals('string-value', $match(new TestExtractableObject('a')));
     }
 
     /** @test */
-    public function it_auto_calls_a_matched_callable_value()
+    function it_auto_calls_a_matched_callable_value()
     {
         $match = Pattern::match([
             fn (TestExtractableObject $a) => fn ($a) => $a . 'bc',
@@ -131,7 +131,7 @@ class PatternTest extends TestCase
     }
 
     /** @test */
-    public function can_match_using_empty_params()
+    function can_match_using_empty_params()
     {
         $match = Pattern::match([
             fn () => 'always',
@@ -141,7 +141,7 @@ class PatternTest extends TestCase
     }
 
     /** @test */
-    public function switch_case_for_raw_values()
+    function switch_case_for_raw_values()
     {
         $match = function ($value) {
             switch ($value) {
@@ -158,28 +158,28 @@ class PatternTest extends TestCase
     }
 
     /** @test */
-    public function can_match_on_custom_object()
+    function can_match_on_custom_object()
     {
         $match = Pattern::match([
             fn (TestObject $object) => $object->getValue(),
         ]);
 
-        $this->assertEquals('works', $match(new TestObject()));
+        $this->assertEquals('works', $match(new TestObject));
     }
 
     /** @test */
-    public function it_can_match_arity_on_custom_objects()
+    function it_can_match_arity_on_custom_objects()
     {
         $match = Pattern::match([
             fn (TestObject $object) => $object->getValue(),
             fn (TestObject $object, TestObject $object2) => 'ok',
         ]);
 
-        $this->assertEquals('ok', $match(new TestObject(), new TestObject()));
+        $this->assertEquals('ok', $match(new TestObject, new TestObject));
     }
 
     /** @test */
-    public function it_uses_first_match_arity_on_optional_params()
+    function it_uses_first_match_arity_on_optional_params()
     {
         $matchTest1 = Pattern::match([
             fn (TestObject $object) => 'first',
@@ -193,8 +193,8 @@ class PatternTest extends TestCase
             fn (TestObject $object, TestObject $object2) => 'third',
         ]);
 
-        $this->assertEquals('second', $matchTest1(new TestObject(), new TestObject()));
-        $this->assertEquals('second', $matchTest2(new TestObject(), new TestObject()));
+        $this->assertEquals('second', $matchTest1(new TestObject, new TestObject));
+        $this->assertEquals('second', $matchTest2(new TestObject, new TestObject));
     }
 
     /** @test */

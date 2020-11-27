@@ -4,18 +4,42 @@
 ## The Elevator Pitch
 Vector gives you php functional superpowers.
 - The evolution:
-    - `array_map(fn($a) => $a + 1, [1, 2, 3])` (_Native PHP_)
-    - `collect([1, 2, 3])->map(fn($a) => $a + 1)` (_Laravel Collections_)
-    - `Arrays::map(fn($a) => $a + 1)([1, 2, 3])` (_Vector_)
+    - _Native PHP_
+        ```php
+          array_sum(
+              array_map(
+                  fn($a) => $a + 1,
+                  [1, 2, 3]
+              )
+          );
+          // 9
+        ```
+        - 👎 More than 1 or 2 function chains is unmaintainable
+    - _Laravel Collections_
+        ```php
+          collect([1, 2, 3])
+              ->map(fn($a) => $a + 1)
+              ->sum();
+              // 9
+        ```
+        - 👍 More than 1 or 2 function chains is unmaintainable
+        - 👎 Unfortunately you can't do this with every type in the same elegant way (only works with collections)
+    -  _Vector_
+        ```php
+           vector([1, 2, 3])
+               ->pipe(Arrays::map(Math::add(1))) // or `fn($a) => $a + 1)` 
+               ->pipe(Math::sum())();
+               // [2, 3, 4]
+        ```
+        - 👍 Works super similarly to collections, but just accepts & returns normal arrays (no ->toArray()-ing necessary) 
+        - 👍 Works super similarly to collections for everything else too!
+        - 👎 Unfortunately it is an extra dependency (we don't have the native pipe operator yet https://wiki.php.net/rfc/pipe-operator-v2)
 
 - You can add currying to any function, it isn't only limited to Vector built ins.
     - `Module::curry('explode')(',')('a,b,c')(PHP_INT_MAX)` `// ['a', 'b', 'c']`
 
-- Create functional pipelines as first class citizens
-    - `Lambda::pipe(Math::add(4), Math::add(2))(1)` `// 7`
-
 ## PHP Version Support
-- 7.4+
+- 8.0+
 
 ## Install
 ```
@@ -36,7 +60,7 @@ $addSix = Lambda::compose(Math::add(4), Math::add(2)); // (Or ::pipe for the opp
 $addSix(4); // 10;
 ```
 
-Pattern Matching.
+Pattern Matching (Maybe & Result monads included).
 ```php
 Pattern::match([
     fn(Just $value) => fn ($unwrapped) => $unwrapped,
@@ -63,4 +87,22 @@ return Pattern::match([
     fn(Ok $value) => fn (User $user) => $user,
     $errorHandler
 ])(Result::from(fn() => User::findOrFail(1)));
+```
+
+Make your own modules with auto-curried methods
+```php
+use Vector\Core\Curry;
+use Vector\Core\Module;
+
+class MyModule
+{
+    use Module;
+    
+    #[Curry]
+    protected static function myCurriedFunction($a, $b)
+    {
+        return $a + $b;
+    }
+}
+
 ```

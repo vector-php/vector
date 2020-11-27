@@ -3,57 +3,51 @@
 namespace Vector\Test\Core\Stub;
 
 use Vector\Core\Module;
+use Vector\Core\Curry;
 
-class TestFunctions extends Module
+class TestFunctions
 {
-    protected static array $doNotCurry = ['nonCurriedFunction'];
+    use Module;
 
-    protected static $memoize = true;
-
-    public static function getFulfillmentCache()
-    {
-        return static::$fulfillmentCache;
-    }
-
-    protected static function __notAPureFunction()
+    #[Curry]
+    protected static function notAPureFunction()
     {
         return true;
     }
 
-    protected static function __noArgFunction()
+    #[Curry]
+    protected static function noArgFunction()
     {
         return true;
     }
 
-    protected static function __oneArgFunction($a)
+    #[Curry]
+    protected static function oneArgFunction($a)
     {
         return true;
     }
 
-    protected static function __twoArgFunction($a, $b)
+    #[Curry]
+    protected static function twoArgFunction($a, $b)
     {
         return true;
     }
 
-    protected static function __variadicFunction(...$a)
+    #[Curry]
+    protected static function variadicFunction(...$a)
     {
         return $a;
     }
 
-    protected static function __complexVariadicFunction($a, ...$b)
+    #[Curry]
+    protected static function complexVariadicFunction($a, ...$b)
     {
         return $b;
     }
 
-    protected static function __nonCurriedFunction($a, $b)
+    #[Curry]
+    protected static function nonCurriedFunction($a, $b)
     {
         return true;
-    }
-
-    protected static function __memoizedFunction($a, $b, $c)
-    {
-        echo "I'm a side effect.";
-
-        return $a + $b + $c;
     }
 }

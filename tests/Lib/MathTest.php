@@ -18,17 +18,13 @@ class MathTest extends TestCase
     /** @test */
     function sum()
     {
-        $sum = Math::using('sum');
-
-        $this->assertEquals(9, $sum([2, 3, 4]));
+        $this->assertEquals(9, Math::sum([2, 3, 4]));
     }
 
     /** @test */
     function negate()
     {
-        $negate = Math::using('negate');
-
-        $this->assertEquals(-1, $negate(1));
+        $this->assertEquals(-1, Math::negate(1));
     }
 
     /** @test */
@@ -51,72 +47,54 @@ class MathTest extends TestCase
     /** @test */
     function subtract_is_first_arg_from_second()
     {
-        $subtract = Math::using('subtract');
-
-        $this->assertEquals(5, $subtract(5, 10));
+        $this->assertEquals(5, Math::subtract(5, 10));
     }
 
     /** @test */
     function multiply()
     {
-        $multiply = Math::using('multiply');
-
-        $this->assertEquals(10, $multiply(5, 2));
+        $this->assertEquals(10, Math::multiply(5, 2));
     }
 
     /** @test */
     function product()
     {
-        $product = Math::using('product');
-
-        $this->assertEquals(6, $product([1, 2, 3]));
+        $this->assertEquals(6, Math::product([1, 2, 3]));
     }
 
     /** @test */
     function product_of_empty_is_0()
     {
-        $product = Math::using('product');
-
-        $this->assertEquals(0, $product([]));
+        $this->assertEquals(0, Math::product([]));
     }
 
     /** @test */
     function divide_first_arg_is_divisor_second_is_denominator()
     {
-        $divide = Math::using('divide');
-
-        $this->assertEquals(4, $divide(2, 8));
+        $this->assertEquals(4, Math::divide(2, 8));
     }
 
     /** @test */
     function mod_first_arg_is_the_modulus()
     {
-        $mod = Math::using('mod');
-
-        $this->assertEquals(3, $mod(5, 8));
+        $this->assertEquals(3, Math::mod(5, 8));
     }
 
     /** @test */
     function pow_first_arg_is_the_base()
     {
-        $pow = Math::using('pow');
-
-        $this->assertEquals(8, $pow(3, 2));
+        $this->assertEquals(8, Math::pow(3, 2));
     }
 
     /** @test */
     function range()
     {
-        $range = Math::using('range');
-
-        $this->assertEquals([1, 2, 3, 4, 5], $range(1, 1, 5));
+        $this->assertEquals([1, 2, 3, 4, 5], Math::range(1, 1, 5));
     }
 
     /** @test */
     function range_doesnt_break_on_exceeding_specified_range()
     {
-        $range = Math::using('range');
-
-        $this->assertEquals([0], $range(5, 0, 0));
+        $this->assertEquals([0], Math::range(5, 0, 0));
     }
 }

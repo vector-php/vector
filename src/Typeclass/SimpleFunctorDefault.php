@@ -4,25 +4,15 @@ namespace Vector\Typeclass;
 
 trait SimpleFunctorDefault
 {
-    public function fmap(callable $f)
-    {
-        $args = $this->extract();
+    protected $value;
 
-        if (empty($args) || ! is_array($args)) {
-            return new static;
-        } else {
-            return new static($f(...$this->extract()));
-        }
+    public function __construct($value)
+    {
+        $this->value = $value;
     }
 
     public function extract()
     {
-        $constructedValues = array_values(get_object_vars($this));
-
-        if (empty($constructedValues)) {
-            return new static;
-        } else {
-            return $constructedValues;
-        }
+        return $this->value;
     }
 }

@@ -2,27 +2,13 @@
 
 namespace Vector\Lib;
 
+use Vector\Core\Curry;
 use Vector\Core\Module;
 
-/**
- * @method static callable orCombinator(...$args)
- * @method static callable andCombinator(...$args)
- * @method static callable logicalOr(...$args)
- * @method static callable logicalNot(...$args)
- * @method static callable logicalAnd(...$args)
- * @method static callable gt(...$args)
- * @method static callable gte(...$args)
- * @method static callable lt(...$args)
- * @method static callable lte(...$args)
- * @method static callable eq(...$args)
- * @method static callable eqStrict(...$args)
- * @method static callable notEq(...$args)
- * @method static callable notEqStrict(...$args)
- * @method static callable all(...$args)
- * @method static callable any(...$args)
- */
-class Logic extends Module
+class Logic
 {
+    use Module;
+
     /**
      * Logical Or Combinator
      *
@@ -42,10 +28,11 @@ class Logic extends Module
      *
      * @type [(a -> Bool)] -> a -> Bool
      *
-     */
-    protected static function __orCombinator(array $fs, $a)
+      */
+    #[Curry]
+    protected static function orCombinator(array $fs, $a)
     {
-        return self::any(Arrays::map(function ($c) use ($a) {
+        return self::using('any')(Arrays::map(function ($c) use ($a) {
             return $c($a);
         }, $fs));
     }
@@ -69,8 +56,9 @@ class Logic extends Module
      *
      * @type [(a -> Bool)] -> a -> Bool
      *
-     */
-    protected static function __andCombinator(array $fs, $a)
+      */
+    #[Curry]
+    protected static function andCombinator(array $fs, $a)
     {
         return self::all(Arrays::map(function ($c) use ($a) {
             return $c($a);
@@ -93,8 +81,9 @@ class Logic extends Module
      * @example
      * Logic::logicalOr(true, false); // True
      *
-     */
-    protected static function __logicalOr($a, $b)
+      */
+    #[Curry]
+    protected static function logicalOr($a, $b)
     {
         return $a || $b;
     }
@@ -115,8 +104,9 @@ class Logic extends Module
      *
      * @type Bool -> Bool
      *
-     */
-    protected static function __logicalNot($a)
+      */
+    #[Curry]
+    protected static function logicalNot($a)
     {
         return ! $a;
     }
@@ -137,8 +127,9 @@ class Logic extends Module
      * @example
      * Logic::logicalAnd(true, true); // True
      *
-     */
-    protected static function __logicalAnd($a, $b)
+      */
+    #[Curry]
+    protected static function logicalAnd($a, $b)
     {
         return $a && $b;
     }
@@ -159,8 +150,9 @@ class Logic extends Module
      * @example
      * Logic::gt(2, 1); // False
      *
-     */
-    protected static function __gt($a, $b)
+      */
+    #[Curry]
+    protected static function gt($a, $b)
     {
         return $b > $a;
     }
@@ -181,8 +173,9 @@ class Logic extends Module
      * @example
      * Logic::gte(1, 1); // True
      *
-     */
-    protected static function __gte($a, $b)
+      */
+    #[Curry]
+    protected static function gte($a, $b)
     {
         return $b >= $a;
     }
@@ -203,8 +196,9 @@ class Logic extends Module
      * @example
      * Logic::lt(2, 1); // True
      *
-     */
-    protected static function __lt($a, $b)
+      */
+    #[Curry]
+    protected static function lt($a, $b)
     {
         return $b < $a;
     }
@@ -225,8 +219,9 @@ class Logic extends Module
      * @example
      * Logic::lte(1, 1); // True
      *
-     */
-    protected static function __lte($a, $b)
+      */
+    #[Curry]
+    protected static function lte($a, $b)
     {
         return $b <= $a;
     }
@@ -247,8 +242,9 @@ class Logic extends Module
      * @example
      * Logic::eq(1, 1); // True
      *
-     */
-    protected static function __eq($a, $b)
+      */
+    #[Curry]
+    protected static function eq($a, $b)
     {
         return $a == $b;
     }
@@ -269,8 +265,9 @@ class Logic extends Module
      * @example
      * Logic::eqStrict(1, 1); // True
      *
-     */
-    protected static function __eqStrict($a, $b)
+      */
+    #[Curry]
+    protected static function eqStrict($a, $b)
     {
         return $a === $b;
     }
@@ -291,8 +288,9 @@ class Logic extends Module
      * @example
      * Logic::notEq(1, 1); // False
      *
-     */
-    protected static function __notEq($a, $b)
+      */
+    #[Curry]
+    protected static function notEq($a, $b)
     {
         return $a != $b;
     }
@@ -313,8 +311,9 @@ class Logic extends Module
      * @example
      * Logic::notEqStrict(1, 2); // True
      *
-     */
-    protected static function __notEqStrict($a, $b)
+      */
+    #[Curry]
+    protected static function notEqStrict($a, $b)
     {
         return $a !== $b;
     }
@@ -334,11 +333,11 @@ class Logic extends Module
      *
      * @type array -> Bool
      *
-     */
-    protected static function __all($arr)
+      */
+    #[Curry]
+    protected static function all($arr)
     {
-        /** @noinspection PhpParamsInspection */
-        return Arrays::reduce(self::logicalAnd(), true, $arr);
+        return Arrays::reduce(self::using('logicalAnd'), true, $arr);
     }
 
     /**
@@ -356,10 +355,10 @@ class Logic extends Module
      *
      * @type array -> Bool
      *
-     */
-    protected static function __any($arr)
+      */
+    #[Curry]
+    protected static function any($arr)
     {
-        /** @noinspection PhpParamsInspection */
-        return Arrays::reduce(self::logicalOr(), false, $arr);
+        return Arrays::reduce(self::using('logicalOr'), false, $arr);
     }
 }

@@ -2,9 +2,11 @@
 
 namespace Vector\Data\Maybe;
 
+use Vector\Typeclass\SimpleFunctorDefault;
+
 class Just extends Maybe
 {
-    protected $value;
+    use SimpleFunctorDefault;
 
     public function __construct($value)
     {

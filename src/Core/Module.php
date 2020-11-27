@@ -5,54 +5,38 @@ namespace Vector\Core;
 use Closure;
 use ReflectionFunction;
 use ReflectionMethod;
+use ReflectionAttribute;
 use Vector\Core\Exception\FunctionNotFoundException;
 
-/**
- * @method static callable curry(...$args)
- */
-abstract class Module
+trait Module
 {
-    /**
-     * An array of functions on this module to memoize automatically
-     */
-    protected static $memoize = [];
-
-    /**
-     * A memoized cache of all the function requests fulfilled by this module
-     */
-    protected static array $fulfillmentCache = [];
-
-    /**
-     * An array of function names to NOT curry when being fulfilled from the 'using' method
-     */
-    protected static array $doNotCurry = ['curry'];
-
-    /**
-     * Alternative Module Loading
-     *
-     * By utilizing the __callStatic magic method to intercept static method calls, we can
-     * proxy those calls off to the ::using() method of the module to make the functions in the
-     * module act like standard static PHP methods. The result is a more natural way of calling
-     * Vector functions that is more akin to native PHP.
-     *
-     * Invoking the function with no arguments results in a closure that is identical to
-     * requesting the function through a ::using() call.
-     *
-     * ```
-     * $increment = Math::add(1);
-     * $increment(5); // 6
-     *
-     * $head = Arrays::head();
-     * $head([1, 2, 3]); // 1
-     * ```
-     *
-     * @param string $name Name of the function to call
-     * @param mixed $args Arguments to pass to the function
-     * @return mixed        Result of proxying off to the requested function
-     */
     public static function __callStatic($name, $args)
     {
-        return call_user_func_array(self::using($name), $args);
+        // Check if it has the curry attribute
+        $reflectionMethod = new ReflectionMethod(self::class, $name);
+        $attributes = $reflectionMethod->getAttributes(
+            Curry::class,
+            ReflectionAttribute::IS_INSTANCEOF
+        );
+
+        if (!empty($attributes) && $reflectionMethod->isProtected()) {
+            return call_user_func_array(self::using($name), $args);
+        }
+
+        $bt = debug_backtrace();
+        $caller = array_shift($bt);
+        throw new FunctionNotFoundException(
+            "\n"
+            . "Attempted to call non-curried method: "
+            . self::class
+            . '::'
+            . $name
+            . "\n"
+            . $caller['file']
+            . ': on line '
+            . $caller['line']
+            . "\n\n"
+        );
     }
 
     /**
@@ -79,7 +63,7 @@ abstract class Module
      * @return callable    The result of currying the original function.
      * @throws \ReflectionException
      */
-    protected static function __curry(callable $f)
+    public static function curry(callable $f)
     {
         // Curry a function of unknown arity
         return self::curryWithArity($f, self::getArity($f));
@@ -110,46 +94,6 @@ abstract class Module
                 // Otherwise, recursively call curry again, passing in the arguments supplied
                 // from this call
                 return self::curryWithArity($f, $arity, $args);
-            }
-        };
-    }
-
-    /**
-     * Memoize a Function
-     *
-     * Provided a function $f, return a new function that keeps track of all calls to
-     * $f and caches their responses. Good for functions that have long-running execution times.
-     * Bad for functions that have side effects. But you don't write those now do you?
-     *
-     * ```
-     * $myFastFunction = $memoize($myBigFunction);
-     *
-     * $myFastFunction(1, 2); // Really long wait
-     * $myFastFunction(1, 2); // Instantaneous response
-     * ```
-     *
-     *
-     * @param callable $f Function to memoize
-     * @return callable    Memoized funciton $f
-     */
-    protected static function memoize(callable $f)
-    {
-        return function (...$args) use ($f) {
-            static $cache;
-
-            if ($cache === null) {
-                $cache = [];
-            }
-
-            $key = serialize($args);
-
-            if (array_key_exists($key, $cache)) {
-                return $cache[$key];
-            } else {
-                $result = call_user_func_array($f, $args);
-                $cache[$key] = $result;
-
-                return $result;
             }
         };
     }
@@ -201,44 +145,18 @@ abstract class Module
 
         $fulfilledRequest = array_map(function ($f) use ($context) {
             // Append a '__' to the name we're looking for
-            $internalName = '__' . $f;
-
-            // See if we've already fulfilled the request for this function. If so, just return the cached one.
-            if (array_key_exists($context, static::$fulfillmentCache)
-                && array_key_exists($internalName, static::$fulfillmentCache[$context])
-            ) {
-                return static::$fulfillmentCache[$context][$internalName];
-            }
+//            $internalName = '__' . $f;
+            $internalName = $f;
 
             // If we haven't fulfilled it already, check to see if it even exists
             if (! method_exists($context, $internalName)) {
                 throw new FunctionNotFoundException("Function {$f} not found in module {$context}");
             }
 
-            // Check to see if we're memoizing this function, or the whole module. Otherwise, carry on.
-            if ($context::$memoize === true || in_array($f, $context::$memoize)) {
-                $functionInContext = self::memoize([$context, $internalName]);
-            } else {
-                $functionInContext = [$context, $internalName];
-            }
+            $functionInContext = [$context, $internalName];
 
-            // If the function exists, then see if we're supposed to curry it. If not, just return it in a closure.
-            if ($context::$doNotCurry === true
-                || (is_array($context::$doNotCurry) && in_array($f, $context::$doNotCurry))
-            ) {
-                $fulfillment = function (...$args) use ($functionInContext) {
-                    return call_user_func_array($functionInContext, $args);
-                };
-            } else {
-                // Otherwise, curry it
-                $fulfillment = self::curryWithArity($functionInContext, self::getArity([$context, $internalName]));
-            }
-
-            // Then store it in our cache so we can short circuit this process in the future
-            self::$fulfillmentCache[$context][$internalName] = $fulfillment;
-
-            // And return it
-            return $fulfillment;
+            // curry the function
+            return self::curryWithArity($functionInContext, self::getArity([$context, $internalName]));
         }, $requestedFunctions);
 
         // If only one function was requested, return it. Otherwise keep it in an array for list() to work.

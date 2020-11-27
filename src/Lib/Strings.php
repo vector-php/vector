@@ -3,22 +3,12 @@
 namespace Vector\Lib;
 
 use Vector\Core\Module;
+use Vector\Core\Curry;
 
-/**
- * @method static string concat(...$args)
- * @method static array split(...$args)
- * @method static string startsWith(...$args)
- * @method static string toLowercase(...$args)
- * @method static string toUppercase(...$args)
- * @method static string trim(...$args)
- * @method static string lchomp(...$args)
- * @method static string rchomp(...$args)
- * @method static string chomp(...$args)
- * @method static string join(...$args)
- * @method static string replace(...$args)
- */
-class Strings extends Module
+class Strings
 {
+    use Module;
+
     /**
      * String Concatenation
      *
@@ -36,8 +26,9 @@ class Strings extends Module
      * @example
      * Strings::concat('as', 'df'); // 'dfas'
      *
-     */
-    protected static function __concat(string $addition, string $original): string
+      */
+    #[Curry]
+    protected static function concat(string $addition, string $original): string
     {
         return $original . $addition;
     }
@@ -63,8 +54,9 @@ class Strings extends Module
      *
      * @type String -> String -> [String]
      *
-     */
-    protected static function __split(string $on, string $string): array
+      */
+    #[Curry]
+    protected static function split(string $on, string $string): array
     {
         if ($on === '') {
             return str_split($string);
@@ -90,8 +82,9 @@ class Strings extends Module
      * @example
      * Strings::startsWith('as', 'asdf'); true
      *
-     */
-    protected static function __startsWith(string $subStr, string $str): bool
+      */
+    #[Curry]
+    protected static function startsWith(string $subStr, string $str): bool
     {
         return substr($str, 0, strlen($subStr)) === $subStr;
     }
@@ -108,8 +101,9 @@ class Strings extends Module
      *
      * @type String -> String
      *
-     */
-    protected static function __toLowercase(string $str): string
+      */
+    #[Curry]
+    protected static function toLowercase(string $str): string
     {
         return strtolower($str);
     }
@@ -126,8 +120,9 @@ class Strings extends Module
      *
      * @type String -> String
      *
-     */
-    protected static function __toUppercase(string $str): string
+      */
+    #[Curry]
+    protected static function toUppercase(string $str): string
     {
         return strtoupper($str);
     }
@@ -145,8 +140,9 @@ class Strings extends Module
      *
      * @type String -> String
      *
-     */
-    protected static function __trim(string $str): string
+      */
+    #[Curry]
+    protected static function trim(string $str): string
     {
         return trim($str);
     }
@@ -168,8 +164,9 @@ class Strings extends Module
      *
      * @type String -> String
      *
-     */
-    protected static function __lchomp(string $toChomp, string $string): string
+      */
+    #[Curry]
+    protected static function lchomp(string $toChomp, string $string): string
     {
         $length = strlen($toChomp);
 
@@ -197,8 +194,9 @@ class Strings extends Module
      *
      * @type String -> String
      *
-     */
-    protected static function __rchomp(string $toChomp, string $string): string
+      */
+    #[Curry]
+    protected static function rchomp(string $toChomp, string $string): string
     {
         $length = strlen($toChomp);
 
@@ -226,11 +224,11 @@ class Strings extends Module
      *
      * @type String -> String
      *
-     */
-    protected static function __chomp(string $toChomp, string $string): string
+      */
+    #[Curry]
+    protected static function chomp(string $toChomp, string $string): string
     {
-        /** @noinspection PhpParamsInspection */
-        $chomp = Lambda::compose(self::lchomp($toChomp), self::rchomp($toChomp));
+        $chomp = Lambda::compose(self::using('lchomp')($toChomp), self::using('rchomp')($toChomp));
 
         return $chomp($string);
     }
@@ -252,8 +250,9 @@ class Strings extends Module
      * @example
      * Strings::join(' ', ['Hello', 'World']); // 'Hello World'
      *
-     */
-    protected static function __join(string $on, array $string): string
+      */
+    #[Curry]
+    protected static function join(string $on, array $string): string
     {
         return implode($on, $string);
     }
@@ -272,8 +271,9 @@ class Strings extends Module
      *
      * @internal param String $ -> String -> String
      *
-     */
-    protected static function __replace(string $substring, string $replacement, string $string): string
+      */
+    #[Curry]
+    protected static function replace(string $substring, string $replacement, string $string): string
     {
         return str_replace($substring, $replacement, $string);
     }

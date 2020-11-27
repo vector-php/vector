@@ -4,46 +4,14 @@ namespace Vector\Lib;
 
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
-use Vector\Core\Exception\ElementNotFoundException;
-use Vector\Core\Exception\EmptyListException;
-use Vector\Core\Exception\IndexOutOfBoundsException;
 use Vector\Core\Module;
+use Vector\Data\Maybe\Maybe;
+use Vector\Core\Curry;
 
-/**
- * @method static groupBy(...$args)
- * @method static cons(...$args)
- * @method static head(...$args)
- * @method static map(...$args)
- * @method static mapIndexed(...$args)
- * @method static tail(...$args)
- * @method static init(...$args)
- * @method static last(...$args)
- * @method static length(...$args)
- * @method static index(...$args)
- * @method static filter(...$args)
- * @method static first(...$args)
- * @method static keys(...$args)
- * @method static values(...$args)
- * @method static concat(...$args)
- * @method static setValue(...$args)
- * @method static reduce(...$args)
- * @method static zipWith(...$args)
- * @method static zip(...$args)
- * @method static drop(...$args)
- * @method static dropWhile(...$args)
- * @method static take(...$args)
- * @method static takeWhile(...$args)
- * @method static reverse(...$args)
- * @method static flatten(...$args)
- * @method static contains(...$args)
- * @method static replicate(...$args)
- * @method static unique(...$args)
- * @method static sort(...$args)
- * @method static takeLast(...$args)
- * @method static bifurcate(...$args)
- */
-class Arrays extends Module
+class Arrays
 {
+    use Module;
+
     /**
      * Cons Operator
      *
@@ -61,7 +29,8 @@ class Arrays extends Module
      * Arrays::cons(3, [1, 2]); // [1, 2, 3]
      *
      */
-    protected static function __cons($a, array $arr): array
+    #[Curry]
+    protected static function cons($a, array $arr): array
     {
         $arr[] = $a;
         return $arr;
@@ -87,7 +56,8 @@ class Arrays extends Module
      * @internal param $ (a -> String) -> [a] -> [[a]]
      *
      */
-    protected static function __groupBy(callable $keyGen, array $list)
+    #[Curry]
+    protected static function groupBy(callable $keyGen, array $list)
     {
         return self::reduce(function ($group, $element) use ($keyGen) {
             $group[$keyGen($element)][] = $element;
@@ -100,31 +70,31 @@ class Arrays extends Module
      *
      * Returns the first element of a list, the element at index 0. Also functions
      * properly for key/value arrays, e.g. arrays whose first element may not necessarily
-     * be index 0. If an empty array is given, head throws an Exception.
+     * be index 0. If an empty array is given, head returns Nothing.
      *
      * @param array $list Key/Value array or List
-     * @return Mixed       First element of $list
-     * @throws \Vector\Core\Exception\EmptyListException if argument is empty list
+     * @return Mixed Just first element of $list or Nothing
      *
      * @example
-     * Arrays::head([1, 2, 3]); // 1
+     * Arrays::head([1, 2, 3]); // Just 1
      *
      * @example
-     * Arrays::head(['a' => 1, 'b' => 2]); // 1
+     * Arrays::head(['a' => 1, 'b' => 2]); // Just 1
      *
      * @example
-     * Arrays::head([]); // Exception thrown
+     * Arrays::head([]); // Nothing
      *
-     * @type [a] -> a
+     * @type [a] -> Maybe a
      *
      */
-    protected static function __head(array $list)
+    #[Curry]
+    protected static function head(array $list)
     {
         if (count($list) === 0) {
-            throw new EmptyListException("'head' function is undefined for empty lists.");
+            return Maybe::nothing();
         }
 
-        return reset($list);
+        return Maybe::just(reset($list));
     }
 
     /**
@@ -142,7 +112,8 @@ class Arrays extends Module
      * @type (a -> b) -> [a] -> [b]
      *
      */
-    protected static function __map(callable $f, array $list): array
+    #[Curry]
+    protected static function map(callable $f, array $list): array
     {
         return array_map($f, $list);
     }
@@ -164,7 +135,8 @@ class Arrays extends Module
      * @type (a -> b -> c) -> [a] -> [c]
      *
      */
-    protected static function __mapIndexed(callable $f, array $list): array
+    #[Curry]
+    protected static function mapIndexed(callable $f, array $list): array
     {
         return array_map($f, $list, array_keys($list));
     }
@@ -187,7 +159,8 @@ class Arrays extends Module
      * @type (a -> a -> Int) -> [a] -> [a]
      *
      */
-    protected static function __sort(callable $comp, array $list): array
+    #[Curry]
+    protected static function sort(callable $comp, array $list): array
     {
         usort($list, $comp);
 
@@ -212,7 +185,8 @@ class Arrays extends Module
      * @type [a] -> [a]
      *
      */
-    protected static function __tail(array $list): array
+    #[Curry]
+    protected static function tail(array $list): array
     {
         return array_slice($list, 1, count($list));
     }
@@ -235,7 +209,8 @@ class Arrays extends Module
      * @type [a] -> [a]
      *
      */
-    protected static function __init(array $list): array
+    #[Curry]
+    protected static function init(array $list): array
     {
         return array_slice($list, 0, count($list) - 1);
     }
@@ -244,31 +219,31 @@ class Arrays extends Module
      * Last List Value
      *
      * Returns the last element of an array, e.g. the complement of `init`. Works on key/value
-     * arrays as well as 'regular' arrays. If an empty array is given, throws an exception.
+     * arrays as well as 'regular' arrays. If an empty array is given, return Nothing.
      *
      * @param array $list Key/Value array or List
      * @return Mixed       The last element of $list
-     * @throws \Vector\Core\Exception\EmptyListException if argument is empty list
      *
      * @example
-     * Arrays::last([1, 2, 3]); // 3
+     * Arrays::last([1, 2, 3]); // Just 3
      *
      * @example
-     * Arrays::last(['a' => 1, 'b' => 2]); // 2
+     * Arrays::last(['a' => 1, 'b' => 2]); // Just 2
      *
      * @example
-     * Arrays::last([]); // Exception thrown
+     * Arrays::last([]); // Nothing
      *
      * @type [a] -> a
      *
      */
-    protected static function __last(array $list)
+    #[Curry]
+    protected static function last(array $list)
     {
         if (count($list) === 0) {
-            throw new EmptyListException("'last' function is undefined for empty lists.");
+            return Maybe::nothing();
         }
 
-        return array_slice($list, -1, 1)[0];
+        return Maybe::just(array_slice($list, -1, 1)[0]);
     }
 
     /**
@@ -287,7 +262,8 @@ class Arrays extends Module
      * @type [a] -> a
      *
      */
-    protected static function __length(array $list): int
+    #[Curry]
+    protected static function length(array $list): int
     {
         return count($list);
     }
@@ -295,27 +271,27 @@ class Arrays extends Module
     /**
      * List Index
      *
-     * Returns the element of a list at the given index. Throws an exception
-     * if the given index does not exist in the list.
+     * Returns the element of a list at the given index or Nothing.
+     *
      *
      * @param Int $i Index to get
      * @param array $list List to get index from
      * @return Mixed       Item from $list and index $i
-     * @throws \Vector\Core\Exception\IndexOutOfBoundsException if the requested index does not exist
      *
      * @example
-     * Arrays::index('foo', ['bar' => 1, 'foo' => 2]); // 2
+     * Arrays::index('foo', ['bar' => 1, 'foo' => 2]); // Just 2
      *
      * @example
-     * Arrays::index('baz', [1, 2, 3]); // Exception thrown
+     * Arrays::index('baz', [1, 2, 3]); // Nothing
      *
-     * @type Int -> [a] -> a
+     * @type Int -> [a] -> Maybe a
      *
      * @example
-     * Arrays::index(0, [1, 2, 3]); // 1
+     * Arrays::index(0, [1, 2, 3]); // Just 1
      *
      */
-    protected static function __index($i, array $list)
+    #[Curry]
+    protected static function index($i, array $list) : Maybe
     {
         /**
          * isset is much faster at the common case (non-null values)
@@ -323,10 +299,10 @@ class Arrays extends Module
          * array_key_exists (slower).
          */
         if (! isset($list[$i]) && ! array_key_exists($i, $list)) {
-            throw new IndexOutOfBoundsException("'index' function tried to access non-existent index '{$i}'");
+            return Maybe::nothing();
         }
 
-        return $list[$i];
+        return Maybe::just($list[$i]);
     }
 
     /**
@@ -353,7 +329,8 @@ class Arrays extends Module
      * @type (a -> Bool) -> [a] -> [a]
      *
      */
-    protected static function __filter(callable $f, array $arr): array
+    #[Curry]
+    protected static function filter(callable $f, array $arr): array
     {
         return array_filter($arr, $f);
     }
@@ -364,18 +341,18 @@ class Arrays extends Module
      * @param callable $f
      * @param array $arr
      * @return mixed
-     * @throws ElementNotFoundException
      * @internal param $ (a -> Bool) -> [a] -> a
-     */
-    protected static function __first(callable $f, array $arr)
+      */
+    #[Curry]
+    protected static function first(callable $f, array $arr)
     {
         foreach ($arr as $a) {
             if ($f($a) === true) {
-                return $a;
+                return Maybe::just($a);
             }
         }
 
-        throw new ElementNotFoundException;
+        return Maybe::nothing();
     }
 
     /**
@@ -395,7 +372,8 @@ class Arrays extends Module
      * @type [a] -> [b]
      *
      */
-    protected static function __keys(array $arr): array
+    #[Curry]
+    protected static function keys(array $arr): array
     {
         return array_keys($arr);
     }
@@ -416,7 +394,8 @@ class Arrays extends Module
      * @type [a] -> [a]
      *
      */
-    protected static function __values(array $arr): array
+    #[Curry]
+    protected static function values(array $arr): array
     {
         return array_values($arr);
     }
@@ -440,7 +419,8 @@ class Arrays extends Module
      * Arrays::concat([1, 2], [2, 3]); // [1, 2, 2, 3]
      *
      */
-    protected static function __concat(array $a, array $b): array
+    #[Curry]
+    protected static function concat(array $a, array $b): array
     {
         return array_merge($a, $b);
     }
@@ -464,7 +444,8 @@ class Arrays extends Module
      * @type a -> b -> [b] -> [b]
      *
      */
-    protected static function __setIndex($key, $val, array $arr): array
+    #[Curry]
+    protected static function setIndex($key, $val, array $arr): array
     {
         $arr[$key] = $val;
         return $arr;
@@ -492,7 +473,8 @@ class Arrays extends Module
      * Arrays::reduce(Math::add(), 0, [1, 2, 3]); // 6
      *
      */
-    protected static function __reduce(callable $f, $seed, array $list)
+    #[Curry]
+    protected static function reduce(callable $f, $seed, array $list)
     {
         return array_reduce($list, $f, $seed);
     }
@@ -519,7 +501,8 @@ class Arrays extends Module
      * @type (a -> b -> c) -> [a] -> [b] -> [c]
      *
      */
-    protected static function __zipWith(callable $f, array $a, array $b): array
+    #[Curry]
+    protected static function zipWith(callable $f, array $a, array $b): array
     {
         $result = [];
 
@@ -545,7 +528,8 @@ class Arrays extends Module
      * @type [a] -> [b] -> [(a, b)]
      *
      */
-    protected static function __zip(array $a, array $b): array
+    #[Curry]
+    protected static function zip(array $a, array $b): array
     {
         return self::zipWith(
             function ($a, $b) {
@@ -573,7 +557,8 @@ class Arrays extends Module
      * @type (a -> Bool) -> [a] -> ([a], [a])
      *
      */
-    protected static function __bifurcate(callable $test, array $arr): array
+    #[Curry]
+    protected static function bifurcate(callable $test, array $arr): array
     {
         $resPass = [];
         $resFail = [];
@@ -607,7 +592,8 @@ class Arrays extends Module
      * Arrays::drop(2, [1, 2, 3, 4]); // [3, 4]
      *
      */
-    protected static function __drop(int $n, array $list): array
+    #[Curry]
+    protected static function drop(int $n, array $list): array
     {
         return array_slice($list, $n, count($list));
     }
@@ -629,7 +615,8 @@ class Arrays extends Module
      * @type (a -> Bool) -> [a] -> [a]
      *
      */
-    protected static function __dropWhile(callable $predicate, array $list): array
+    #[Curry]
+    protected static function dropWhile(callable $predicate, array $list): array
     {
         foreach ($list as $item) {
             if ($predicate($item)) {
@@ -657,7 +644,8 @@ class Arrays extends Module
      * @type Int -> [a] -> [a]
      *
      */
-    protected static function __take(int $n, array $list): array
+    #[Curry]
+    protected static function take(int $n, array $list): array
     {
         return array_slice($list, 0, $n);
     }
@@ -678,7 +666,8 @@ class Arrays extends Module
      * @type (a -> Bool) -> [a] -> [a]
      *
      */
-    protected static function __takeWhile(callable $predicate, array $list): array
+    #[Curry]
+    protected static function takeWhile(callable $predicate, array $list): array
     {
         $result = [];
 
@@ -706,7 +695,8 @@ class Arrays extends Module
      * @type [a] -> [a]
      *
      */
-    protected static function __reverse(array $list): array
+    #[Curry]
+    protected static function reverse(array $list): array
     {
         return array_reverse($list);
     }
@@ -725,7 +715,8 @@ class Arrays extends Module
      * @type [a] -> [b]
      *
      */
-    protected static function __flatten(array $list): array
+    #[Curry]
+    protected static function flatten(array $list): array
     {
         $iter = new RecursiveIteratorIterator(new RecursiveArrayIterator($list));
         $flat = [];
@@ -755,7 +746,8 @@ class Arrays extends Module
      * Arrays::contains(1, [1, 2, 3]); // true
      *
      */
-    protected static function __contains($item, array $list): bool
+    #[Curry]
+    protected static function contains($item, array $list): bool
     {
         return in_array($item, $list);
     }
@@ -775,7 +767,8 @@ class Arrays extends Module
      * @type Int -> a -> [a]
      *
      */
-    protected static function __replicate(int $n, $item): array
+    #[Curry]
+    protected static function replicate(int $n, $item): array
     {
         $result = [];
 
@@ -799,7 +792,8 @@ class Arrays extends Module
      * @type [a] -> [a]
      *
      */
-    protected static function __unique(array $list): array
+    #[Curry]
+    protected static function unique(array $list): array
     {
         return array_values(array_flip(array_flip($list)));
     }
@@ -818,7 +812,8 @@ class Arrays extends Module
      * @type Int -> [a] -> [a]
      *
      */
-    protected static function __takeLast(int $n, array $list): array
+    #[Curry]
+    protected static function takeLast(int $n, array $list): array
     {
         return array_slice($list, -$n, count($list));
     }

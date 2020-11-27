@@ -2,25 +2,13 @@
 
 namespace Vector\Lib;
 
+use Vector\Core\Curry;
 use Vector\Core\Module;
 
-/**
- * @method static callable add(...$args)
- * @method static callable sum(...$args)
- * @method static callable negate(...$args)
- * @method static callable subtract(...$args)
- * @method static callable multiply(...$args)
- * @method static callable product(...$args)
- * @method static callable divide(...$args)
- * @method static callable mod(...$args)
- * @method static callable range(...$args)
- * @method static callable min(...$args)
- * @method static callable max(...$args)
- * @method static callable pow(...$args)
- * @method static callable mean(...$args)
- */
-class Math extends Module
+class Math
 {
+    use Module;
+
     /**
      * Arithmetic Addition
      *
@@ -38,8 +26,9 @@ class Math extends Module
      *
      * @type Number a => a -> a -> a
      *
-     */
-    protected static function __add($a, $b)
+      */
+    #[Curry]
+    protected static function add($a, $b)
     {
         return $a + $b;
     }
@@ -61,8 +50,9 @@ class Math extends Module
      *
      * @type Number a => [a] -> a
      *
-     */
-    protected static function __sum($a)
+      */
+    #[Curry]
+    protected static function sum($a)
     {
         return array_reduce($a, function ($carry, $item) use ($a) {
             $carry += $item;
@@ -85,8 +75,9 @@ class Math extends Module
      *
      * @type Number a => a -> a
      *
-     */
-    protected static function __negate($a)
+      */
+    #[Curry]
+    protected static function negate($a)
     {
         return -$a;
     }
@@ -107,8 +98,9 @@ class Math extends Module
      * @example
      * Math::subtract(4, 9); // 5
      *
-     */
-    protected static function __subtract($a, $b)
+      */
+    #[Curry]
+    protected static function subtract($a, $b)
     {
         return $b - $a;
     }
@@ -129,8 +121,9 @@ class Math extends Module
      * @example
      * Math::multiply(2, 4); // 8
      *
-     */
-    protected static function __multiply($a, $b)
+      */
+    #[Curry]
+    protected static function multiply($a, $b)
     {
         return $a * $b;
     }
@@ -151,8 +144,9 @@ class Math extends Module
      *
      * @type Number a => [a] -> a
      *
-     */
-    protected static function __product($a)
+      */
+    #[Curry]
+    protected static function product($a)
     {
         return empty($a)
             ? 0
@@ -178,8 +172,9 @@ class Math extends Module
      * @example
      * Math::divide(2, 8); // 4
      *
-     */
-    protected static function __divide($a, $b)
+      */
+    #[Curry]
+    protected static function divide($a, $b)
     {
         return $b / $a;
     }
@@ -204,8 +199,9 @@ class Math extends Module
      *
      * @type Int -> Int -> Int
      *
-     */
-    protected static function __mod($a, $b)
+      */
+    #[Curry]
+    protected static function mod($a, $b)
     {
         return $b % $a;
     }
@@ -234,8 +230,9 @@ class Math extends Module
      *
      * @type Number a => a -> a -> a
      *
-     */
-    protected static function __range($step, $first, $last)
+      */
+    #[Curry]
+    protected static function range($step, $first, $last)
     {
         return ($step + $first >= $last)
             ? [$first]
@@ -263,8 +260,9 @@ class Math extends Module
      *
      * @type Number a => a -> a -> a
      *
-     */
-    protected static function __min($a, $b)
+      */
+    #[Curry]
+    protected static function min($a, $b)
     {
         return min([$a, $b]);
     }
@@ -288,8 +286,9 @@ class Math extends Module
      *
      * @type Number a => a -> a -> a
      *
-     */
-    protected static function __max($a, $b)
+      */
+    #[Curry]
+    protected static function max($a, $b)
     {
         return max([$a, $b]);
     }
@@ -311,8 +310,9 @@ class Math extends Module
      * @example
      * Math::pow(2, 3); // 3 ^ 2 = 9
      *
-     */
-    protected static function __pow($a, $b)
+      */
+    #[Curry]
+    protected static function pow($a, $b)
     {
         return pow($b, $a);
     }
@@ -332,8 +332,9 @@ class Math extends Module
      *
      * @type Number a => [a] -> a
      *
-     */
-    protected static function __mean($arr)
+      */
+    #[Curry]
+    protected static function mean($arr)
     {
         return count($arr)
             ? array_sum($arr) / count($arr)

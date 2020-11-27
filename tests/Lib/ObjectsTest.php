@@ -3,10 +3,10 @@
 namespace Vector\Test\Lib;
 
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use Vector\Core\Exception\UndefinedPropertyException;
 use Vector\Lib\Objects;
 use Vector\Test\Control\Stub\TestObject;
-use stdClass;
 
 class ObjectsTest extends TestCase
 {

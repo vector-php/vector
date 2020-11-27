@@ -2,24 +2,25 @@
 
 namespace Vector\Control;
 
+use ReflectionClass;
 use ReflectionFunction;
 use ReflectionParameter;
-use Vector\Core\Exception\ElementNotFoundException;
 use Vector\Core\Exception\IncompletePatternMatchException;
 use Vector\Core\Module;
+use Vector\Data\Maybe\Nothing;
 use Vector\Lib\Arrays;
+use Vector\Core\Curry;
 
-/**
- * @method static mixed match(...$args)
- */
-abstract class Pattern extends Module
+abstract class Pattern
 {
+    use Module;
+
     /**
      * Get type OR class for params, as well as re-mapping inconsistencies
      * @param $param
      * @return string
      */
-    protected static function __getType($param)
+    private static function getType($param)
     {
         $type = is_object($param)
             ? get_class($param)
@@ -33,25 +34,29 @@ abstract class Pattern extends Module
      * @param array $patterns
      * @return mixed
      */
-    protected static function __match(array $patterns)
+    #[Curry]
+    protected static function match(array $patterns)
     {
         return function (...$args) use ($patterns) {
-            $parameterTypes = array_map(self::getType(), $args);
+            $parameterTypes = array_map(fn($arg) => self::getType($arg), $args);
 
-            try {
-                $keysToValues = Arrays::zip(array_keys($patterns), array_values($patterns));
+            $keysToValues = Arrays::zip(array_keys($patterns), array_values($patterns));
 
-                list($key, $matchingPattern) = Arrays::first(
-                    Pattern::patternApplies($parameterTypes, $args),
-                    $keysToValues
-                );
-            } catch (ElementNotFoundException $e) {
+            $val = Arrays::first(
+                fn ($pattern) => self::patternApplies($parameterTypes, $args, $pattern),
+                $keysToValues
+            );
+
+            // Can't use Pattern::match here because we lack tail call optimization.
+            if (get_class($val) === Nothing::class) {
                 throw new IncompletePatternMatchException(
                     'Incomplete pattern match expression. (missing ' . implode(', ', $parameterTypes) . ')'
                 );
             }
 
-            list($hasExtractable, $unwrappedArgs) = self::unwrapArgs($args);
+            $matchingPattern = $val->extract()[1];
+
+            [$hasExtractable, $unwrappedArgs] = self::unwrapArgs($args);
 
             $value = $matchingPattern(...$args);
             $isCallable = is_callable($value);
@@ -80,7 +85,7 @@ abstract class Pattern extends Module
         $hasExtractable = false;
 
         $unwrappedArgs = self::flatten(array_map(function ($arg) use (&$hasExtractable) {
-            if (method_exists($arg, 'extract')) {
+            if (is_object($arg) && method_exists($arg, 'extract')) {
                 $hasExtractable = true;
                 return $arg->extract();
             }
@@ -98,14 +103,16 @@ abstract class Pattern extends Module
      * @return bool
      * @throws \ReflectionException
      */
-    protected static function __patternApplies(array $parameterTypes, array $args, array $pattern) : bool
+    private static function patternApplies(array $parameterTypes, array $args, array $pattern) : bool
     {
-        list($key, $pattern) = $pattern;
+        [$_, $pattern] = $pattern;
 
         $reflected = new ReflectionFunction($pattern);
 
         $patternParameterTypes = array_map(function (ReflectionParameter $parameter) {
-            $class = $parameter->getClass();
+            $class = $parameter->getType() && ! $parameter->getType()->isBuiltin()
+                ? new ReflectionClass($parameter->getType()->getName())
+                : null;
             if ($class) {
                 return $class->getName();
             }

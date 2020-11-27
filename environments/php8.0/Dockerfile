@@ -1,3 +1,3 @@
-FROM php:7.4.0-cli
+FROM php:8.0.0
 WORKDIR "/home/vector"
 CMD ["./vendor/bin/phpunit"]

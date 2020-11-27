@@ -2,28 +2,43 @@
 
 namespace Vector\Data\Maybe;
 
+use Vector\Control\Pattern;
 use Vector\Core\Module;
-use Vector\Typeclass\MonadInterface;
 use Vector\Typeclass\SimpleApplicativeDefault;
-use Vector\Typeclass\SimpleFunctorDefault;
 use Vector\Typeclass\SimpleMonadDefault;
+use Vector\Core\Curry;
 
-/**
- * @method static callable just($value)
- * @method static callable nothing()
- */
-abstract class Maybe extends Module implements MonadInterface
+abstract class Maybe
 {
-    use SimpleFunctorDefault;
+    use Module;
     use SimpleApplicativeDefault;
     use SimpleMonadDefault;
 
-    protected static function __just($value)
+    #[Curry]
+    protected static function withDefault($defaultValue, Maybe $value)
+    {
+        return Pattern::match([
+            fn (Just $v) => $v->extract(),
+            fn (Nothing $_) => $defaultValue,
+        ])($value);
+    }
+
+    #[Curry]
+    protected static function map(callable $func, Maybe $value)
+    {
+        return Pattern::match([
+            fn (Just $v) => $func($v->extract()),
+            fn (Nothing $_) => Maybe::nothing(),
+        ])($value);
+    }
+
+    #[Curry]
+    protected static function just($value)
     {
         return new Just($value);
     }
 
-    protected static function __nothing()
+    public static function nothing()
     {
         return new Nothing;
     }

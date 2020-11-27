@@ -2,6 +2,10 @@
     "name": "vector/core",
     "authors": [
         {
+            "name": "Logan Henson",
+            "email": "logan@loganhenson.com"
+        },
+        {
             "name": "Joseph Walker",
             "email": "joseph.walker@outlook.com"
         }

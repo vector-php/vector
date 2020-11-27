@@ -39,7 +39,7 @@ Vector gives you php functional superpowers.
     - `Module::curry('explode')(',')('a,b,c')(PHP_INT_MAX)` `// ['a', 'b', 'c']`
 
 ## PHP Version Support
-- 7.4+
+- 8.0+
 
 ## Install
 ```
@@ -87,4 +87,22 @@ return Pattern::match([
     fn(Ok $value) => fn (User $user) => $user,
     $errorHandler
 ])(Result::from(fn() => User::findOrFail(1)));
+```
+
+Make your own modules with auto-curried methods
+```php
+use Vector\Core\Curry;
+use Vector\Core\Module;
+
+class MyModule
+{
+    use Module;
+    
+    #[Curry]
+    protected static function myCurriedFunction($a, $b)
+    {
+        return $a + $b;
+    }
+}
+
 ```

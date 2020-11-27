@@ -23,7 +23,7 @@
         "files": ["src/helpers.php"]
     },
     "require": {
-        "php": "^7.4"
+        "php": "^8.0"
     },
     "scripts": {
         "runTests": "./scripts/runTests.sh",

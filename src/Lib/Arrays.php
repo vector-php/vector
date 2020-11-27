@@ -6,44 +6,12 @@ use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use Vector\Core\Module;
 use Vector\Data\Maybe\Maybe;
+use Vector\Core\Curry;
 
-/**
- * @method static groupBy(...$args)
- * @method static cons(...$args)
- * @method static head(...$args)
- * @method static map(...$args)
- * @method static mapIndexed(...$args)
- * @method static tail(...$args)
- * @method static init(...$args)
- * @method static last(...$args)
- * @method static length(...$args)
- * @method static index(...$args)
- * @method static filter(...$args)
- * @method static first(...$args)
- * @method static keys(...$args)
- * @method static values(...$args)
- * @method static concat(...$args)
- * @method static setValue(...$args)
- * @method static reduce(...$args)
- * @method static zipWith(...$args)
- * @method static zip(...$args)
- * @method static drop(...$args)
- * @method static dropWhile(...$args)
- * @method static take(...$args)
- * @method static takeWhile(...$args)
- * @method static reverse(...$args)
- * @method static flatten(...$args)
- * @method static contains(...$args)
- * @method static replicate(...$args)
- * @method static unique(...$args)
- * @method static sort(...$args)
- * @method static takeLast(...$args)
- * @method static bifurcate(...$args)
- * @method static setIndex(...$args)
- */
 class Arrays
 {
     use Module;
+
     /**
      * Cons Operator
      *
@@ -61,7 +29,8 @@ class Arrays
      * Arrays::cons(3, [1, 2]); // [1, 2, 3]
      *
      */
-    protected static function __cons($a, array $arr): array
+    #[Curry]
+    protected static function cons($a, array $arr): array
     {
         $arr[] = $a;
         return $arr;
@@ -87,7 +56,8 @@ class Arrays
      * @internal param $ (a -> String) -> [a] -> [[a]]
      *
      */
-    protected static function __groupBy(callable $keyGen, array $list)
+    #[Curry]
+    protected static function groupBy(callable $keyGen, array $list)
     {
         return self::reduce(function ($group, $element) use ($keyGen) {
             $group[$keyGen($element)][] = $element;
@@ -117,7 +87,8 @@ class Arrays
      * @type [a] -> Maybe a
      *
      */
-    protected static function __head(array $list)
+    #[Curry]
+    protected static function head(array $list)
     {
         if (count($list) === 0) {
             return Maybe::nothing();
@@ -141,7 +112,8 @@ class Arrays
      * @type (a -> b) -> [a] -> [b]
      *
      */
-    protected static function __map(callable $f, array $list): array
+    #[Curry]
+    protected static function map(callable $f, array $list): array
     {
         return array_map($f, $list);
     }
@@ -163,7 +135,8 @@ class Arrays
      * @type (a -> b -> c) -> [a] -> [c]
      *
      */
-    protected static function __mapIndexed(callable $f, array $list): array
+    #[Curry]
+    protected static function mapIndexed(callable $f, array $list): array
     {
         return array_map($f, $list, array_keys($list));
     }
@@ -186,7 +159,8 @@ class Arrays
      * @type (a -> a -> Int) -> [a] -> [a]
      *
      */
-    protected static function __sort(callable $comp, array $list): array
+    #[Curry]
+    protected static function sort(callable $comp, array $list): array
     {
         usort($list, $comp);
 
@@ -211,7 +185,8 @@ class Arrays
      * @type [a] -> [a]
      *
      */
-    protected static function __tail(array $list): array
+    #[Curry]
+    protected static function tail(array $list): array
     {
         return array_slice($list, 1, count($list));
     }
@@ -234,7 +209,8 @@ class Arrays
      * @type [a] -> [a]
      *
      */
-    protected static function __init(array $list): array
+    #[Curry]
+    protected static function init(array $list): array
     {
         return array_slice($list, 0, count($list) - 1);
     }
@@ -260,7 +236,8 @@ class Arrays
      * @type [a] -> a
      *
      */
-    protected static function __last(array $list)
+    #[Curry]
+    protected static function last(array $list)
     {
         if (count($list) === 0) {
             return Maybe::nothing();
@@ -285,7 +262,8 @@ class Arrays
      * @type [a] -> a
      *
      */
-    protected static function __length(array $list): int
+    #[Curry]
+    protected static function length(array $list): int
     {
         return count($list);
     }
@@ -312,7 +290,8 @@ class Arrays
      * Arrays::index(0, [1, 2, 3]); // Just 1
      *
      */
-    protected static function __index($i, array $list) : Maybe
+    #[Curry]
+    protected static function index($i, array $list) : Maybe
     {
         /**
          * isset is much faster at the common case (non-null values)
@@ -350,7 +329,8 @@ class Arrays
      * @type (a -> Bool) -> [a] -> [a]
      *
      */
-    protected static function __filter(callable $f, array $arr): array
+    #[Curry]
+    protected static function filter(callable $f, array $arr): array
     {
         return array_filter($arr, $f);
     }
@@ -362,8 +342,9 @@ class Arrays
      * @param array $arr
      * @return mixed
      * @internal param $ (a -> Bool) -> [a] -> a
-     */
-    protected static function __first(callable $f, array $arr)
+      */
+    #[Curry]
+    protected static function first(callable $f, array $arr)
     {
         foreach ($arr as $a) {
             if ($f($a) === true) {
@@ -391,7 +372,8 @@ class Arrays
      * @type [a] -> [b]
      *
      */
-    protected static function __keys(array $arr): array
+    #[Curry]
+    protected static function keys(array $arr): array
     {
         return array_keys($arr);
     }
@@ -412,7 +394,8 @@ class Arrays
      * @type [a] -> [a]
      *
      */
-    protected static function __values(array $arr): array
+    #[Curry]
+    protected static function values(array $arr): array
     {
         return array_values($arr);
     }
@@ -436,7 +419,8 @@ class Arrays
      * Arrays::concat([1, 2], [2, 3]); // [1, 2, 2, 3]
      *
      */
-    protected static function __concat(array $a, array $b): array
+    #[Curry]
+    protected static function concat(array $a, array $b): array
     {
         return array_merge($a, $b);
     }
@@ -460,7 +444,8 @@ class Arrays
      * @type a -> b -> [b] -> [b]
      *
      */
-    protected static function __setIndex($key, $val, array $arr): array
+    #[Curry]
+    protected static function setIndex($key, $val, array $arr): array
     {
         $arr[$key] = $val;
         return $arr;
@@ -488,7 +473,8 @@ class Arrays
      * Arrays::reduce(Math::add(), 0, [1, 2, 3]); // 6
      *
      */
-    protected static function __reduce(callable $f, $seed, array $list)
+    #[Curry]
+    protected static function reduce(callable $f, $seed, array $list)
     {
         return array_reduce($list, $f, $seed);
     }
@@ -515,7 +501,8 @@ class Arrays
      * @type (a -> b -> c) -> [a] -> [b] -> [c]
      *
      */
-    protected static function __zipWith(callable $f, array $a, array $b): array
+    #[Curry]
+    protected static function zipWith(callable $f, array $a, array $b): array
     {
         $result = [];
 
@@ -541,7 +528,8 @@ class Arrays
      * @type [a] -> [b] -> [(a, b)]
      *
      */
-    protected static function __zip(array $a, array $b): array
+    #[Curry]
+    protected static function zip(array $a, array $b): array
     {
         return self::zipWith(
             function ($a, $b) {
@@ -569,7 +557,8 @@ class Arrays
      * @type (a -> Bool) -> [a] -> ([a], [a])
      *
      */
-    protected static function __bifurcate(callable $test, array $arr): array
+    #[Curry]
+    protected static function bifurcate(callable $test, array $arr): array
     {
         $resPass = [];
         $resFail = [];
@@ -603,7 +592,8 @@ class Arrays
      * Arrays::drop(2, [1, 2, 3, 4]); // [3, 4]
      *
      */
-    protected static function __drop(int $n, array $list): array
+    #[Curry]
+    protected static function drop(int $n, array $list): array
     {
         return array_slice($list, $n, count($list));
     }
@@ -625,7 +615,8 @@ class Arrays
      * @type (a -> Bool) -> [a] -> [a]
      *
      */
-    protected static function __dropWhile(callable $predicate, array $list): array
+    #[Curry]
+    protected static function dropWhile(callable $predicate, array $list): array
     {
         foreach ($list as $item) {
             if ($predicate($item)) {
@@ -653,7 +644,8 @@ class Arrays
      * @type Int -> [a] -> [a]
      *
      */
-    protected static function __take(int $n, array $list): array
+    #[Curry]
+    protected static function take(int $n, array $list): array
     {
         return array_slice($list, 0, $n);
     }
@@ -674,7 +666,8 @@ class Arrays
      * @type (a -> Bool) -> [a] -> [a]
      *
      */
-    protected static function __takeWhile(callable $predicate, array $list): array
+    #[Curry]
+    protected static function takeWhile(callable $predicate, array $list): array
     {
         $result = [];
 
@@ -702,7 +695,8 @@ class Arrays
      * @type [a] -> [a]
      *
      */
-    protected static function __reverse(array $list): array
+    #[Curry]
+    protected static function reverse(array $list): array
     {
         return array_reverse($list);
     }
@@ -721,7 +715,8 @@ class Arrays
      * @type [a] -> [b]
      *
      */
-    protected static function __flatten(array $list): array
+    #[Curry]
+    protected static function flatten(array $list): array
     {
         $iter = new RecursiveIteratorIterator(new RecursiveArrayIterator($list));
         $flat = [];
@@ -751,7 +746,8 @@ class Arrays
      * Arrays::contains(1, [1, 2, 3]); // true
      *
      */
-    protected static function __contains($item, array $list): bool
+    #[Curry]
+    protected static function contains($item, array $list): bool
     {
         return in_array($item, $list);
     }
@@ -771,7 +767,8 @@ class Arrays
      * @type Int -> a -> [a]
      *
      */
-    protected static function __replicate(int $n, $item): array
+    #[Curry]
+    protected static function replicate(int $n, $item): array
     {
         $result = [];
 
@@ -795,7 +792,8 @@ class Arrays
      * @type [a] -> [a]
      *
      */
-    protected static function __unique(array $list): array
+    #[Curry]
+    protected static function unique(array $list): array
     {
         return array_values(array_flip(array_flip($list)));
     }
@@ -814,7 +812,8 @@ class Arrays
      * @type Int -> [a] -> [a]
      *
      */
-    protected static function __takeLast(int $n, array $list): array
+    #[Curry]
+    protected static function takeLast(int $n, array $list): array
     {
         return array_slice($list, -$n, count($list));
     }

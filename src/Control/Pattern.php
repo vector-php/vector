@@ -9,10 +9,8 @@ use Vector\Core\Exception\IncompletePatternMatchException;
 use Vector\Core\Module;
 use Vector\Data\Maybe\Nothing;
 use Vector\Lib\Arrays;
+use Vector\Core\Curry;
 
-/**
- * @method static mixed match(...$args)
- */
 abstract class Pattern
 {
     use Module;
@@ -22,7 +20,7 @@ abstract class Pattern
      * @param $param
      * @return string
      */
-    protected static function __getType($param)
+    private static function getType($param)
     {
         $type = is_object($param)
             ? get_class($param)
@@ -36,15 +34,16 @@ abstract class Pattern
      * @param array $patterns
      * @return mixed
      */
-    protected static function __match(array $patterns)
+    #[Curry]
+    protected static function match(array $patterns)
     {
         return function (...$args) use ($patterns) {
-            $parameterTypes = array_map(self::getType(), $args);
+            $parameterTypes = array_map(fn($arg) => self::getType($arg), $args);
 
             $keysToValues = Arrays::zip(array_keys($patterns), array_values($patterns));
 
             $val = Arrays::first(
-                Pattern::patternApplies($parameterTypes, $args),
+                fn ($pattern) => self::patternApplies($parameterTypes, $args, $pattern),
                 $keysToValues
             );
 
@@ -104,7 +103,7 @@ abstract class Pattern
      * @return bool
      * @throws \ReflectionException
      */
-    protected static function __patternApplies(array $parameterTypes, array $args, array $pattern) : bool
+    private static function patternApplies(array $parameterTypes, array $args, array $pattern) : bool
     {
         [$_, $pattern] = $pattern;
 

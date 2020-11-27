@@ -6,19 +6,16 @@ use Vector\Control\Pattern;
 use Vector\Core\Module;
 use Vector\Typeclass\SimpleApplicativeDefault;
 use Vector\Typeclass\SimpleMonadDefault;
+use Vector\Core\Curry;
 
-/**
- * @method static callable just($value)
- * @method static callable nothing()
- * @method static callable withDefault($value)
- */
 abstract class Maybe
 {
     use Module;
     use SimpleApplicativeDefault;
     use SimpleMonadDefault;
 
-    public static function __withDefault($defaultValue, Maybe $value)
+    #[Curry]
+    protected static function withDefault($defaultValue, Maybe $value)
     {
         return Pattern::match([
             fn (Just $v) => $v->extract(),
@@ -26,7 +23,8 @@ abstract class Maybe
         ])($value);
     }
 
-    public static function __map(callable $func, Maybe $value)
+    #[Curry]
+    protected static function map(callable $func, Maybe $value)
     {
         return Pattern::match([
             fn (Just $v) => $func($v->extract()),
@@ -34,12 +32,13 @@ abstract class Maybe
         ])($value);
     }
 
-    protected static function __just($value)
+    #[Curry]
+    protected static function just($value)
     {
         return new Just($value);
     }
 
-    protected static function __nothing()
+    public static function nothing()
     {
         return new Nothing;
     }

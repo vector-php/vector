@@ -8,27 +8,32 @@ class TestFunctions
 {
     use Module;
 
-    protected static function __plusTwo($a)
+    #[Curry]
+    protected static function plusTwo($a)
     {
         return $a + 2;
     }
 
-    protected static function __timesTwo($a)
+    #[Curry]
+    protected static function timesTwo($a)
     {
         return $a * 2;
     }
 
-    protected static function __returnsTrue($a)
+    #[Curry]
+    protected static function returnsTrue($a)
     {
         return true;
     }
 
-    protected static function __invertsBool($a)
+    #[Curry]
+    protected static function invertsBool($a)
     {
         return ! $a;
     }
 
-    protected static function __expectsNotNull($a)
+    #[Curry]
+    protected static function expectsNotNull($a)
     {
         return $a !== null;
     }

@@ -5,39 +5,38 @@ namespace Vector\Core;
 use Closure;
 use ReflectionFunction;
 use ReflectionMethod;
+use ReflectionAttribute;
 use Vector\Core\Exception\FunctionNotFoundException;
 
-/**
- * @method static callable curry(...$args)
- */
 trait Module
 {
-    /**
-     * Alternative Module Loading
-     *
-     * By utilizing the __callStatic magic method to intercept static method calls, we can
-     * proxy those calls off to the ::using() method of the module to make the functions in the
-     * module act like standard static PHP methods. The result is a more natural way of calling
-     * Vector functions that is more akin to native PHP.
-     *
-     * Invoking the function with no arguments results in a closure that is identical to
-     * requesting the function through a ::using() call.
-     *
-     * ```
-     * $increment = Math::add(1);
-     * $increment(5); // 6
-     *
-     * $head = Arrays::head();
-     * $head([1, 2, 3]); // 1
-     * ```
-     *
-     * @param string $name Name of the function to call
-     * @param mixed $args Arguments to pass to the function
-     * @return mixed        Result of proxying off to the requested function
-     */
     public static function __callStatic($name, $args)
     {
-        return call_user_func_array(self::using($name), $args);
+        // Check if it has the curry attribute
+        $reflectionMethod = new ReflectionMethod(self::class, $name);
+        $attributes = $reflectionMethod->getAttributes(
+            Curry::class,
+            ReflectionAttribute::IS_INSTANCEOF
+        );
+
+        if (!empty($attributes) && $reflectionMethod->isProtected()) {
+            return call_user_func_array(self::using($name), $args);
+        }
+
+        $bt = debug_backtrace();
+        $caller = array_shift($bt);
+        throw new FunctionNotFoundException(
+            "\n"
+            . "Attempted to call non-curried method: "
+            . self::class
+            . '::'
+            . $name
+            . "\n"
+            . $caller['file']
+            . ': on line '
+            . $caller['line']
+            . "\n\n"
+        );
     }
 
     /**
@@ -64,7 +63,7 @@ trait Module
      * @return callable    The result of currying the original function.
      * @throws \ReflectionException
      */
-    protected static function __curry(callable $f)
+    public static function curry(callable $f)
     {
         // Curry a function of unknown arity
         return self::curryWithArity($f, self::getArity($f));
@@ -146,7 +145,8 @@ trait Module
 
         $fulfilledRequest = array_map(function ($f) use ($context) {
             // Append a '__' to the name we're looking for
-            $internalName = '__' . $f;
+//            $internalName = '__' . $f;
+            $internalName = $f;
 
             // If we haven't fulfilled it already, check to see if it even exists
             if (! method_exists($context, $internalName)) {

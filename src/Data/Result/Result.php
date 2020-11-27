@@ -4,27 +4,26 @@ namespace Vector\Data\Result;
 
 use Exception;
 use Vector\Core\Module;
+use Vector\Core\Curry;
 
-/**
- * @method static callable ok($value)
- * @method static callable err(...$args)
- * @method static callable from(...$args)
- */
 abstract class Result
 {
     use Module;
 
-    protected static function __ok($value)
+    #[Curry]
+    protected static function ok($value)
     {
         return new Ok($value);
     }
 
-    protected static function __err($err)
+    #[Curry]
+    protected static function err($err)
     {
         return new Err($err);
     }
 
-    protected static function __from(callable $f)
+    #[Curry]
+    protected static function from(callable $f)
     {
         try {
             return Result::ok($f());
